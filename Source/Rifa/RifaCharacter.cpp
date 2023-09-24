@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GameFramework/PhysicsVolume.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -49,6 +50,13 @@ ARifaCharacter::ARifaCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	RifaCharacterMovement = GetCharacterMovement();
+	PhysicsVolume = GetPhysicsVolume();
+	FlyHeight = 100.f;
+	FlyTime = 5.f;
+	JumpMaxCount = 2;
+	IsSwimming = false;
+	IsFlying = false;
 }
 
 void ARifaCharacter::BeginPlay()
@@ -83,6 +91,8 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
+		PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
+		PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
 
 	}
 
@@ -123,7 +133,45 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
+void ARifaCharacter::Fly()
+{
+	if (RifaCharacterMovement->IsFlying())
+	{
+		ClientCheatWalk();
+		GetWorld()->GetTimerManager().ClearTimer(FlyTimer);
+		IsFlying = false;
+		return;
+	}
+	PhysicsVolume->bWaterVolume = false;
+	GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ACharacter::ClientCheatWalk, FlyTime, false);
+	SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
+	RifaCharacterMovement->bCheatFlying = true;
+	IsFlying = true;
+	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+}
+void ARifaCharacter::Swim()
+{
+	IsSwimming = true;
+	StartLocation = GetActorLocation();
+	SetActorLocation(SwimStartLocation + GetActorUpVector() * FlyHeight);
+	RifaCharacterMovement->bCheatFlying = true;
+	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 
+	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, FlyTime, false);
+}
 
+void ARifaCharacter::ReturnWalk()
+{
+	IsSwimming = false;
+	ClientCheatWalk();
+	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
+}
+
+void ARifaCharacter::EndSwim()
+{
+	SetActorLocation(StartLocation);
+	IsSwimming = false;
+	ClientCheatWalk();
+}
 
 

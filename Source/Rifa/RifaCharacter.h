@@ -36,10 +36,25 @@ class ARifaCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
+	UPROPERTY()
+	UCharacterMovementComponent* RifaCharacterMovement;
+	UPROPERTY()
+	APhysicsVolume* PhysicsVolume;
 
 public:
 	ARifaCharacter();
-	
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly", meta = (AllowPrivateAccess = true))
+	float FlyHeight;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly", meta = (AllowPrivateAccess = true))
+	float FlyTime;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	FVector StartLocation;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	FVector SwimStartLocation;
+	UPROPERTY()
+	FTimerHandle FlyTimer;
+	UPROPERTY()
+	FTimerHandle SwimTimer;
 
 protected:
 
@@ -48,8 +63,18 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
-
+	UFUNCTION(BlueprintCallable)
+	void Fly();
+	UFUNCTION(BlueprintCallable)
+	void Swim();
+	UFUNCTION(BlueprintCallable)
+	void ReturnWalk();
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	bool IsSwimming;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	bool IsFlying;
+	UFUNCTION(BlueprintCallable)
+	void EndSwim();
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
