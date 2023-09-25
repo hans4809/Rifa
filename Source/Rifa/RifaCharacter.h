@@ -55,6 +55,8 @@ public:
 	FTimerHandle FlyTimer;
 	UPROPERTY()
 	FTimerHandle SwimTimer;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	bool IsSwimming;
 
 protected:
 
@@ -69,8 +71,6 @@ protected:
 	void Swim();
 	UFUNCTION(BlueprintCallable)
 	void ReturnWalk();
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
-	bool IsSwimming;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsFlying;
 	UFUNCTION(BlueprintCallable)
