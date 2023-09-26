@@ -91,8 +91,8 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
-		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
-		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
+		//EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
+		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
 

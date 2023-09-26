@@ -17,8 +17,9 @@ void URifaAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Super::NativeUpdateAnimation(DeltaSeconds);
 	auto Pawn = TryGetPawnOwner();
 	if (IsValid(RifaCharacter)){
-		Speed = RifaCharacter->GetVelocity().Size();
-		ShouldMove = (RifaCharacterMovementComponent->GetCurrentAcceleration() != FVector::ZeroVector) && (Speed > 3.0f);
+		Velocity = RifaCharacter->GetVelocity();
+		GroundSpeed = Velocity.Size();
+		ShouldMove = (RifaCharacterMovementComponent->GetCurrentAcceleration() != FVector::ZeroVector) && (GroundSpeed > 3.0f);
 		IsFalling = RifaCharacterMovementComponent->IsFalling();
 		IsSwim = RifaCharacter->IsSwimming;
 		IsFlying = RifaCharacterMovementComponent->IsFlying();
