@@ -15,7 +15,6 @@ void URifaAnimInstance::NativeBeginPlay()
 void URifaAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-	auto Pawn = TryGetPawnOwner();
 	if (IsValid(RifaCharacter)){
 		Velocity = RifaCharacter->GetVelocity();
 		GroundSpeed = Velocity.Size();
