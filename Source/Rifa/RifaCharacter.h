@@ -36,6 +36,10 @@ class ARifaCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* FlyAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SwimAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
@@ -55,6 +59,8 @@ public:
 	FTimerHandle FlyTimer;
 	UPROPERTY()
 	FTimerHandle SwimTimer;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	bool IsSwimming;
 
 protected:
 
@@ -69,8 +75,6 @@ protected:
 	void Swim();
 	UFUNCTION(BlueprintCallable)
 	void ReturnWalk();
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
-	bool IsSwimming;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsFlying;
 	UFUNCTION(BlueprintCallable)
