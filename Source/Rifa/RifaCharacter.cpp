@@ -10,6 +10,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/PhysicsVolume.h"
+#include "RIFASaveGame.h"
+#include "Trap.h"
+#include "Kismet/GameplayStatics.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -72,6 +75,22 @@ void ARifaCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+}
+
+void ARifaCharacter::Die(AActor* trap)
+{
+	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+	if (nullptr == RIFASaveGame)
+	{
+		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
+	}
+	Position = RIFASaveGame->SavePosition;
+	ItemList = RIFASaveGame->ItemList;
+	SetActorLocation(Position);
+	UE_LOG(LogTemp, Log, TEXT("Die"));
+
+	ATrap* Trap = Cast<ATrap>(trap);
+	Trap->isDie = false;
 }
 
 //////////////////////////////////////////////////////////////////////////

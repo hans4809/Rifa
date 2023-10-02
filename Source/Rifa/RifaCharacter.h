@@ -61,6 +61,12 @@ public:
 	FTimerHandle SwimTimer;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsSwimming;
+	UFUNCTION()
+	void Die(AActor* trap);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector Position;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int> ItemList;
 
 protected:
 
