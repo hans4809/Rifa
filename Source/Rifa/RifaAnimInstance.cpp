@@ -22,7 +22,5 @@ void URifaAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		IsFalling = RifaCharacterMovementComponent->IsFalling();
 		IsSwim = RifaCharacter->IsSwimming;
 		IsFlying = RifaCharacterMovementComponent->IsFlying();
-		//IsFlying = Cast<ARifaCharacter>(Character)->IsFlying;
-
 	}
 }
