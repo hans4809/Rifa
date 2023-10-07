@@ -32,6 +32,8 @@ void ASwitch_MoveObj::BeginPlay()
 	endV = End->GetComponentLocation();
 	timeDeltaTime = 0;
 	isStart = false;
+	canInteraction = true;
+	isInteraction = false;
 }
 
 void ASwitch_MoveObj::BeginMove()
@@ -42,6 +44,9 @@ void ASwitch_MoveObj::BeginMove()
 	Target->SetActorLocation(FMath::Lerp(startV, endV, timeDeltaTime / moveTime));
 	if (timeDeltaTime >= moveTime)
 	{
+		canInteraction = true;
+		isStart = false;
+		timeDeltaTime = 0;
 		GetWorldTimerManager().ClearTimer(fTimeHandler);
 	}
 }
@@ -56,17 +61,33 @@ void ASwitch_MoveObj::Tick(float DeltaTime)
 	}
 }
 
+void ASwitch_MoveObj::DoWork()
+{
+	if (!canInteraction)
+		return;
+	canInteraction = false;
+	GetWorldTimerManager().SetTimer(fTimeHandler, this, &ASwitch_MoveObj::BeginMove, 0.0005f, true, 1);
+}
+
 void ASwitch_MoveObj::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASwitch_MoveObj::OnCharacterOverlap);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &ASwitch_MoveObj::EndCharacterOverlap);
+}
+
+void ASwitch_MoveObj::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
+	if (RifaCharacter->InteractionTargetActor == this)
+		RifaCharacter->InteractionTargetActor = NULL;
 }
 
 void ASwitch_MoveObj::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (isStart) return;
 	UE_LOG(LogTemp, Log, TEXT("take"));
 	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
-	GetWorldTimerManager().SetTimer(fTimeHandler, this, &ASwitch_MoveObj::BeginMove, 0.0005f, true, 1);
+	RifaCharacter->InteractionTargetActor = this;
 }
+

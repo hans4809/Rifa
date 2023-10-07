@@ -61,6 +61,9 @@ public:
 	FTimerHandle SwimTimer;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsSwimming;
+
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	AActor* InteractionTargetActor;
 	UFUNCTION()
 	void Die(AActor* trap);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -85,6 +88,9 @@ protected:
 	bool IsFlying;
 	UFUNCTION(BlueprintCallable)
 	void EndSwim();
+	UFUNCTION(BlueprintCallable)
+	void Interaction();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
