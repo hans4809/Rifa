@@ -10,6 +10,10 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/PhysicsVolume.h"
+#include "RIFASaveGame.h"
+#include "Trap.h"
+#include "Switch.h"
+#include "Kismet/GameplayStatics.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,6 +78,22 @@ void ARifaCharacter::BeginPlay()
 	}
 }
 
+void ARifaCharacter::Die(AActor* trap)
+{
+	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+	if (nullptr == RIFASaveGame)
+	{
+		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
+	}
+	Position = RIFASaveGame->SavePosition;
+	ItemList = RIFASaveGame->ItemList;
+	SetActorLocation(Position);
+	UE_LOG(LogTemp, Log, TEXT("Die"));
+
+	ATrap* Trap = Cast<ATrap>(trap);
+	Trap->isDie = false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -95,7 +115,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Swim);
 		PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
-
+		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
 }
@@ -177,4 +197,12 @@ void ARifaCharacter::EndSwim()
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 }
 
+void ARifaCharacter::Interaction()
+{
+	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
+	if (target == nullptr)
+		return;
 
+	target->Interaction();
+	target->DoWork();
+}

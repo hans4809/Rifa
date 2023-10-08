@@ -62,6 +62,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsSwimming;
 
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	AActor* InteractionTargetActor;
+	UFUNCTION()
+	void Die(AActor* trap);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector Position;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int> ItemList;
+
 protected:
 
 	/** Called for movement input */
@@ -79,6 +88,9 @@ protected:
 	bool IsFlying;
 	UFUNCTION(BlueprintCallable)
 	void EndSwim();
+	UFUNCTION(BlueprintCallable)
+	void Interaction();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
