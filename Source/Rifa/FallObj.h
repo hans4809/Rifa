@@ -18,10 +18,6 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	virtual void PostInitializeComponents() override;
-
-	UFUNCTION()
-	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 	void FallCount();
@@ -33,9 +29,6 @@ protected:
 	FTimerHandle fTimeHandler;
 
 public:	
-	UPROPERTY(EditAnywhere)
-	class UBoxComponent* Trigger;
-
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Mesh;
 
@@ -54,4 +47,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	FRotator DefaultRotation;
+
+private:
+	UFUNCTION()
+	virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
 };

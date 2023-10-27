@@ -53,7 +53,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UBoxComponent* Trigger;
+	class UBoxComponent* Trigger;
 
 	virtual void DoWork();
 };
