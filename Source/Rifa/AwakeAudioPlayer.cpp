@@ -34,4 +34,3 @@ void UAwakeAudioPlayer::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	UGameplayStatics::PlaySoundAtLocation(this, soundToPlay, actorTarget->GetActorLocation());
 	// ...
 }
-
