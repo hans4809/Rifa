@@ -103,7 +103,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		
 		//Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		//Moving
@@ -111,10 +111,10 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
-		//EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
-		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Swim);
-		PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
-		PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
+		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Swim);
+		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
+		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
 		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
