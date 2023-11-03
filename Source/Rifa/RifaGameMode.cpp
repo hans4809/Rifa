@@ -3,6 +3,7 @@
 #include "RifaGameMode.h"
 #include "RifaCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "GameHUD.h"
 
 ARifaGameMode::ARifaGameMode()
 {
@@ -12,4 +13,22 @@ ARifaGameMode::ARifaGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+	/*static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_GameHUD.WG_GameHUD_C'"));
+	if (GameHUDWidgetAsset.Succeeded()) 
+	{
+		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
+	}*/
 }
+
+//void ARifaGameMode::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	if (IsValid(GameHUDWidgetClass)) 
+//	{
+//		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+//		if (IsValid(GameHUDWidget)) 
+//		{
+//			GameHUDWidget->AddToViewport();
+//		}
+//	}
+//}

@@ -40,6 +40,8 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* FlyAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SwimAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InventoryAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
@@ -61,7 +63,8 @@ public:
 	FTimerHandle SwimTimer;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsSwimming;
-
+	UPROPERTY()
+	bool First = true;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
@@ -70,6 +73,12 @@ public:
 	FVector Position;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int> ItemList;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat", meta = (AllowPrivateAccess = true))
+	float EnergyValue;
+	UFUNCTION(BlueprintCallable)
+	void EnableMouseCursor();
+	UFUNCTION(BlueprintCallable)
+	void DisableMouseCursor();
 
 protected:
 
@@ -81,6 +90,8 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void Fly();
 	UFUNCTION(BlueprintCallable)
+	void Inventory();
+	UFUNCTION(BlueprintCallable)
 	void Swim();
 	UFUNCTION(BlueprintCallable)
 	void ReturnWalk();
@@ -90,7 +101,16 @@ protected:
 	void EndSwim();
 	UFUNCTION(BlueprintCallable)
 	void Interaction();
-
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	class UGameHUD* GameHUDWidget;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	APlayerController* PlayerControllerReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<AHUD> RifaHUDClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	class ARifaHUD* RifaHUD;
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

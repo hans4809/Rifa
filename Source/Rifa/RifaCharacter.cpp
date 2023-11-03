@@ -14,6 +14,8 @@
 #include "Trap.h"
 #include "Switch.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameHUD.h"
+#include "RifaHUD.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,6 +23,16 @@
 
 ARifaCharacter::ARifaCharacter()
 {
+	static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_GameHUD.WG_GameHUD_C'"));
+	if (GameHUDWidgetAsset.Succeeded())
+	{
+		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
+	}
+	/*static ConstructorHelpers::FClassFinder<UGameHUD> HUDAsset(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_RifaHUD.BP_RifaHUD_C'"));
+	if (HUDAsset.Succeeded()) 
+	{
+		RifaHUDClass = HUDAsset.Class;
+	}*/
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -61,6 +73,7 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
+	PlayerControllerReference = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 }
 
 void ARifaCharacter::BeginPlay()
@@ -69,13 +82,25 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (PlayerControllerReference)
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerControllerReference->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if (IsValid(GameHUDWidget))
+		{
+			GameHUDWidget->AddToViewport();
+		}
+	}
+	/*if (IsValid(RifaHUDClass)) 
+	{
+		RifaHUD = Cast<ARifaHUD>(PlayerControllerReference->GetHUD());
+	}*/
 }
 
 void ARifaCharacter::Die(AActor* trap)
@@ -92,6 +117,24 @@ void ARifaCharacter::Die(AActor* trap)
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
+}
+
+void ARifaCharacter::EnableMouseCursor()
+{
+	PlayerControllerReference->SetInputMode(FInputModeGameAndUI());
+	/*if (RifaHUD != nullptr) {
+		RifaHUD->ShowCrossHair = false;
+	}*/
+	PlayerControllerReference->bShowMouseCursor = true;
+}
+
+void ARifaCharacter::DisableMouseCursor()
+{
+	PlayerControllerReference->SetInputMode(FInputModeGameOnly());
+	/*if (RifaHUD != nullptr) {
+		RifaHUD->ShowCrossHair = true;
+	}*/
+	PlayerControllerReference->bShowMouseCursor = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -111,8 +154,9 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
-		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
-		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::Inventory);
+		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
 		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
@@ -169,6 +213,22 @@ void ARifaCharacter::Fly()
 		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	}
 }
+void ARifaCharacter::Inventory()
+{
+	if (GameHUDWidget->ActivateInventory) 
+	{
+		if (First) {
+			GameHUDWidget->InventoryVisible = ESlateVisibility::Visible;
+			First = false;
+			EnableMouseCursor();
+		}
+		else {
+			GameHUDWidget->InventoryVisible = ESlateVisibility::Hidden;
+			First = true;
+			DisableMouseCursor();
+		}
+	}
+}
 void ARifaCharacter::Swim()
 {
 	IsSwimming = true;
@@ -200,8 +260,10 @@ void ARifaCharacter::EndSwim()
 void ARifaCharacter::Interaction()
 {
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
-	if (target == nullptr)
+	if (target == nullptr) 
+	{
 		return;
+	}
 
 	target->Interaction();
 	target->DoWork();
