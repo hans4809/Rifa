@@ -39,7 +39,7 @@ void UGameHUD::RefreshInventory_C()
 	tempArray.Add(Slot_3);
 	tempArray.Add(Slot_4);
 	SetActivateInventory(true);
-	for (int i = 0; i < tempArray.Num(); i++) 
+	/*for (int i = 0; i < tempArray.Num(); i++) 
 	{
 		if (GetInventory().Num() < i) 
 		{
@@ -50,7 +50,7 @@ void UGameHUD::RefreshInventory_C()
 		{
 			tempArray[i]->PickupImage = nullptr;
 		}
-	}
+	}*/
 }
 
 void UGameHUD::ButtonWasClicked_Evt(int SlotClicked)
