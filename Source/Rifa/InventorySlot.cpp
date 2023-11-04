@@ -2,4 +2,22 @@
 
 
 #include "InventorySlot.h"
+#include "Components/Button.h"
+
+void UInventorySlot::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+	ItemButton = Cast<UButton>(GetWidgetFromName(TEXT("ItemButton")));
+	ItemButton->OnClicked.AddDynamic(this, &UInventorySlot::ButtonWasClicked_Event);
+}
+void UInventorySlot::NativeDestruct()
+{
+	Super::NativeDestruct();
+	ButtonWasClicked.Clear();
+}
+void UInventorySlot::ButtonWasClicked_Event()
+{
+	if (ButtonWasClicked.IsBound() == true){ ButtonWasClicked.Broadcast(InventorySlot); }
+}
+
 

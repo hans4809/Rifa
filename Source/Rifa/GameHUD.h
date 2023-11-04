@@ -15,15 +15,16 @@ class RIFA_API UGameHUD : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	UGameHUD(const FObjectInitializer& ObjectInitializer);
+protected:
+	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	TSubclassOf<class ARifaCharacter> RifaCharacterClass;
+	TSubclassOf<ACharacter> RifaCharacterClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	class ARifaCharacter* CharacterReference;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category ="Binding", meta = (AllowPsrivateAccess = true))
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
 	bool ActivateInventory = true;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
-	ESlateVisibility InventoryVisible =  ESlateVisibility::Hidden;
+	ESlateVisibility InventoryVisible = ESlateVisibility::Hidden;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
 	ESlateVisibility ActionMenuVisible = ESlateVisibility::Hidden;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
@@ -33,6 +34,37 @@ public:
 	TArray<FItemStruct> Inventory;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	int InventorySlotClicked;
-protected:
-	void NativeConstruct() override;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> SlotClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_0;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_1;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_2;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_3;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_4;
+public:
+	UFUNCTION(BlueprintCallable)
+	void RefreshInventory_C();
+	UFUNCTION(BlueprintCallable)
+	void ButtonWasClicked_Evt(int SlotClicked);
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE ARifaCharacter* GetCharacterReference() { return CharacterReference; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE bool GetActivateInventory() { return ActivateInventory; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE void SetActivateInventory(bool _ActivateInventory) { ActivateInventory = _ActivateInventory; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE ESlateVisibility GetInventoryVisible() { return InventoryVisible; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE void SetInventoryVisible(ESlateVisibility _InventoryVisible) { InventoryVisible = _InventoryVisible; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE ESlateVisibility GetActionMenuVisible() { return ActionMenuVisible; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE void SetActionMenuVisible(ESlateVisibility _ActionMenuVisible) { ActionMenuVisible = _ActionMenuVisible; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE TArray<FItemStruct> GetInventory() { return Inventory; }
 };

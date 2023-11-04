@@ -24,7 +24,7 @@
 
 ARifaCharacter::ARifaCharacter()
 {
-	static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/WG_GameHUD_Origin.WG_GameHUD_C'"));
+	/*static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/WG_GameHUD_Origin.WG_GameHUD_C'"));
 	if (GameHUDWidgetAsset.Succeeded())
 	{
 		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
@@ -41,7 +41,7 @@ ARifaCharacter::ARifaCharacter()
 	else
 	{
 		RifaHUDClass = nullptr;
-	}
+	}*/
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -109,6 +109,12 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->AddToViewport();
 		}
 	}
+}
+
+void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
+{
+	Super::EndPlay(EndReason);
+	PickupItem.Clear();
 }
 
 void ARifaCharacter::Die(AActor* trap)
@@ -223,15 +229,15 @@ void ARifaCharacter::Fly()
 }
 void ARifaCharacter::Inventory()
 {
-	if (GameHUDWidget->ActivateInventory) 
+	if (GameHUDWidget->GetActivateInventory()) 
 	{
 		if (First) {
-			GameHUDWidget->InventoryVisible = ESlateVisibility::Visible;
+			GameHUDWidget->SetInventoryVisible(ESlateVisibility::Visible);
 			First = false;
 			EnableMouseCursor();
 		}
 		else {
-			GameHUDWidget->InventoryVisible = ESlateVisibility::Hidden;
+			GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
 			First = true;
 			DisableMouseCursor();
 		}
@@ -270,8 +276,9 @@ void ARifaCharacter::Interaction()
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{
-		if (GameHUDWidget->Inventory.Num() < 5) 
+		if (GameHUDWidget->GetInventory().Num() < 5)
 		{
+			if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
 			return;
 		}
 		return;
