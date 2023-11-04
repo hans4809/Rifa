@@ -16,6 +16,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameHUD.h"
 #include "RifaHUD.h"
+#include "UObject/ConstructorHelpers.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -27,6 +28,10 @@ ARifaCharacter::ARifaCharacter()
 	if (GameHUDWidgetAsset.Succeeded())
 	{
 		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
+	}
+	else 
+	{
+		GameHUDWidgetClass = nullptr;
 	}
 	/*static ConstructorHelpers::FClassFinder<UGameHUD> HUDAsset(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_RifaHUD.BP_RifaHUD_C'"));
 	if (HUDAsset.Succeeded()) 
