@@ -106,8 +106,6 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class UGameHUD* GameHUDWidget;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	APlayerController* PlayerControllerReference;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	TSubclassOf<AHUD> RifaHUDClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class ARifaHUD* RifaHUD;

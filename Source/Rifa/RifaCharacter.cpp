@@ -24,7 +24,7 @@
 
 ARifaCharacter::ARifaCharacter()
 {
-	static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_GameHUD.WG_GameHUD_C'"));
+	static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/WG_GameHUD_Origin.WG_GameHUD_C'"));
 	if (GameHUDWidgetAsset.Succeeded())
 	{
 		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
@@ -33,11 +33,15 @@ ARifaCharacter::ARifaCharacter()
 	{
 		GameHUDWidgetClass = nullptr;
 	}
-	/*static ConstructorHelpers::FClassFinder<UGameHUD> HUDAsset(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_RifaHUD.BP_RifaHUD_C'"));
+	static ConstructorHelpers::FClassFinder<ARifaHUD> HUDAsset(TEXT("/Script/Engine.Blueprint'/Game/BluePrint/BP_RifaHUD.BP_RifaHUD_C'"));
 	if (HUDAsset.Succeeded()) 
 	{
 		RifaHUDClass = HUDAsset.Class;
-	}*/
+	}
+	else
+	{
+		RifaHUDClass = nullptr;
+	}
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -78,7 +82,6 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
-	PlayerControllerReference = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 }
 
 void ARifaCharacter::BeginPlay()
@@ -87,11 +90,15 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (PlayerControllerReference)
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerControllerReference->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
+		if (IsValid(RifaHUDClass))
+		{
+			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
 	if (IsValid(GameHUDWidgetClass))
@@ -102,10 +109,6 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->AddToViewport();
 		}
 	}
-	/*if (IsValid(RifaHUDClass)) 
-	{
-		RifaHUD = Cast<ARifaHUD>(PlayerControllerReference->GetHUD());
-	}*/
 }
 
 void ARifaCharacter::Die(AActor* trap)
@@ -126,20 +129,20 @@ void ARifaCharacter::Die(AActor* trap)
 
 void ARifaCharacter::EnableMouseCursor()
 {
-	PlayerControllerReference->SetInputMode(FInputModeGameAndUI());
-	/*if (RifaHUD != nullptr) {
+	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
+	if (RifaHUD != nullptr) {
 		RifaHUD->ShowCrossHair = false;
-	}*/
-	PlayerControllerReference->bShowMouseCursor = true;
+	}
+	Cast<APlayerController>(Controller)->bShowMouseCursor = true;
 }
 
 void ARifaCharacter::DisableMouseCursor()
 {
-	PlayerControllerReference->SetInputMode(FInputModeGameOnly());
-	/*if (RifaHUD != nullptr) {
+	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
+	if (RifaHUD != nullptr) {
 		RifaHUD->ShowCrossHair = true;
-	}*/
-	PlayerControllerReference->bShowMouseCursor = false;
+	}
+	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -267,6 +270,10 @@ void ARifaCharacter::Interaction()
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{
+		if (GameHUDWidget->Inventory.Num() < 5) 
+		{
+			return;
+		}
 		return;
 	}
 
