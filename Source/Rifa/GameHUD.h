@@ -15,6 +15,9 @@ class RIFA_API UGameHUD : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	UGameHUD(const FObjectInitializer& ObjectInitializer);
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<class ARifaCharacter> RifaCharacterClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	class ARifaCharacter* CharacterReference;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category ="Binding", meta = (AllowPsrivateAccess = true))
@@ -30,4 +33,6 @@ public:
 	TArray<FItemStruct> Inventory;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	int InventorySlotClicked;
+protected:
+	void NativeConstruct() override;
 };
