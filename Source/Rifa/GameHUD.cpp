@@ -24,7 +24,7 @@ void UGameHUD::NativeConstruct()
 {
 	if (IsValid(RifaCharacterClass))
 	{
-		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		if (CharacterReference == nullptr) 
 		{
 			UE_LOG(LogTemp, Log, TEXT("Casting Failed"));
