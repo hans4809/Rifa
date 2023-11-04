@@ -76,6 +76,8 @@ void ARifaCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	Respawn();
 }
 
 void ARifaCharacter::Die(AActor* trap)
@@ -92,6 +94,16 @@ void ARifaCharacter::Die(AActor* trap)
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
+}
+
+void ARifaCharacter::Respawn()
+{
+	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
+	{
+		URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+		Position = RIFASaveGame->SavePosition;
+		SetActorLocation(Position);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

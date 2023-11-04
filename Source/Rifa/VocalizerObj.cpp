@@ -78,7 +78,6 @@ void AVocalizerObj::SoundPlay()
 		volumeSize += 0.15f;
 		if (volumeSize >= 1)
 			volumeSize = 1;
-		UE_LOG(LogTemp, Log, TEXT("%f"), volumeSize);
 		UGameplayStatics::PlaySoundAtLocation(this, soundToPlay, GetActorLocation(), volumeSize);
 		SoundWave();
 	}

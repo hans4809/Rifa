@@ -90,6 +90,8 @@ protected:
 	void EndSwim();
 	UFUNCTION(BlueprintCallable)
 	void Interaction();
+	UFUNCTION(BlueprintCallable)
+	void Respawn();
 
 protected:
 	// APawn interface
