@@ -43,6 +43,9 @@ void ATemplate_Pickup::BeginPlay()
 			PickupTextReference->PickupActor = ItemInfo.Item;
 			PickupTextReference->PickupText = ItemInfo.PickupText;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (CharacterReference->PickupItem.IsBound()) {
+				CharacterReference->PickupItem.Clear();
+			}
 			CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
 		}
 	}
@@ -89,7 +92,7 @@ void ATemplate_Pickup::PickupItemEvent()
 		PickupTextReference->RemoveFromParent();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
-		//CharacterReference->GetGameHUDReference()->RefreshInventory_C();
+		CharacterReference->GetGameHUDReference()->RefreshInventory_C();
 	}
 }
 

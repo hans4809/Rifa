@@ -8,6 +8,7 @@
 
 void UGameHUD::NativeConstruct()
 {
+	DoOnce.Reset();
 	if (IsValid(RifaCharacterClass))
 	{
 		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
@@ -32,25 +33,37 @@ void UGameHUD::NativeConstruct()
 
 void UGameHUD::RefreshInventory_C()
 {
-	TArray<UInventorySlot*> tempArray;
-	tempArray.Add(Slot_0);
-	tempArray.Add(Slot_1);
-	tempArray.Add(Slot_2);
-	tempArray.Add(Slot_3);
-	tempArray.Add(Slot_4);
 	SetActivateInventory(true);
-	/*for (int i = 0; i < tempArray.Num(); i++) 
-	{
-		if (GetInventory().Num() < i) 
+	SlotArray.Init(nullptr, 5);
+	SlotArray[0] = Slot_0;
+	SlotArray[1] = Slot_1;
+	SlotArray[2] = Slot_2;
+	SlotArray[3] = Slot_3;
+	SlotArray[4] = Slot_4;
+	while (i < SlotArray.Num())
+	{ 
+		if (i < Inventory.Num())
 		{
-			tempArray[i]->PickupImage = Inventory[i].ItemImage;
-			tempArray[i]->ButtonWasClicked.AddDynamic(this, &UGameHUD::ButtonWasClicked_Evt);
+			SlotArray[i]->PickupImage = Inventory[i].ItemImage;
+			if (DoOnce.Execute()) 
+			{
+				while (j < SlotArray.Num())
+				{
+					if (SlotArray[j]->ButtonWasClicked.IsBound()) {
+						SlotArray[j]->ButtonWasClicked.Clear();
+					}
+
+					SlotArray[j]->ButtonWasClicked.AddDynamic(this, &UGameHUD::ButtonWasClicked_Evt);
+					j++;
+				}
+			}
 		}
 		else 
 		{
-			tempArray[i]->PickupImage = nullptr;
+			SlotArray[i]->PickupImage = nullptr;
 		}
-	}*/
+		i++;
+	}
 }
 
 void UGameHUD::ButtonWasClicked_Evt(int SlotClicked)

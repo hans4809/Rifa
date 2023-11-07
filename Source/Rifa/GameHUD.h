@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryStruct.h"
+#include "DoOnce.h"
 #include "GameHUD.generated.h"
 
 /**
@@ -46,6 +47,14 @@ protected:
 	class UInventorySlot* Slot_3;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UInventorySlot* Slot_4;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TArray<UInventorySlot*> SlotArray;
+	UPROPERTY(VisibleAnywhere)
+	FDoOnce DoOnce;
+	UPROPERTY(VisibleAnywhere)
+	int i = 0;
+	UPROPERTY()
+	int j = 0;
 public:
 	UFUNCTION(BlueprintCallable)
 	void RefreshInventory_C();

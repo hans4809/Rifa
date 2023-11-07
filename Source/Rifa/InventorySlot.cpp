@@ -8,6 +8,9 @@ void UInventorySlot::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 	ItemButton = Cast<UButton>(GetWidgetFromName(TEXT("ItemButton")));
+	if (ItemButton->OnClicked.IsBound()) {
+		ItemButton->OnClicked.Clear();
+	}
 	ItemButton->OnClicked.AddDynamic(this, &UInventorySlot::ButtonWasClicked_Event);
 }
 void UInventorySlot::NativeDestruct()
