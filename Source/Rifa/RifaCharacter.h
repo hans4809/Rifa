@@ -66,10 +66,15 @@ public:
 	AActor* InteractionTargetActor;
 	UFUNCTION()
 	void Die(AActor* trap);
+	UFUNCTION()
+	void Save();
+	UFUNCTION()
+	void Load();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector Position;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int> ItemList;
+	FString SoundTrack;
 
 protected:
 
@@ -92,6 +97,8 @@ protected:
 	void Interaction();
 	UFUNCTION(BlueprintCallable)
 	void Respawn();
+	UFUNCTION(BlueprintCallable)
+	void GameStart();
 
 protected:
 	// APawn interface

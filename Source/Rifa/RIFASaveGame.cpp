@@ -9,4 +9,5 @@ URIFASaveGame::URIFASaveGame()
 	ItemList = TArray<int>();
 	SaveSlotName = "";
 	SaveIndex = 0;
+	SoundTrack = "";
 }

@@ -4,6 +4,7 @@
 #include "SavePoint.h"
 #include "RIFASaveGame.h"
 #include "Components/BoxComponent.h"
+#include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -44,14 +45,12 @@ void ASavePoint::PostInitializeComponents()
 void ASavePoint::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("Save"));
-	SavePlayerData();
+	SavePlayerData(OtherActor);
 }
 
-void ASavePoint::SavePlayerData()
+void ASavePoint::SavePlayerData(AActor* OtherActor)
 {
-	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-	NewPlayerData->SavePosition = Position;
-	NewPlayerData->ItemList = ItemList;
-
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+	ARifaCharacter* player = Cast<ARifaCharacter>(OtherActor);
+	player->Position = Position;
+	player->Save();
 }
