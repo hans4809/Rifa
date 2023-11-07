@@ -21,6 +21,14 @@ class RIFA_API ATemplate_Pickup : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ATemplate_Pickup();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	UTexture2D* CustomImage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	FString CustomPickupText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	FString CustomActionText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	UStaticMesh* CustomStaticMesh;
 
 protected:
 	// Called when the game starts or when spawned

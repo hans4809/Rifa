@@ -30,9 +30,6 @@ protected:
 	ESlateVisibility ActionMenuVisible = ESlateVisibility::Hidden;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
 	FString ActionText;
-	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
-	TArray<FItemStruct> Inventory;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	int InventorySlotClicked;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
@@ -47,15 +44,14 @@ protected:
 	class UInventorySlot* Slot_3;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UInventorySlot* Slot_4;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	TArray<UInventorySlot*> SlotArray;
 	UPROPERTY(VisibleAnywhere)
 	FDoOnce DoOnce;
-	UPROPERTY(VisibleAnywhere)
-	int i = 0;
-	UPROPERTY()
-	int j = 0;
 public:
+	UPROPERTY(BlueprintReadOnly, Transient, Category = "Animation", meta = (BindWidgetAnim))
+	class UWidgetAnimation* MenuAnim;
+	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
+	TArray<FItemStruct> Inventory;
 	UFUNCTION(BlueprintCallable)
 	void RefreshInventory_C();
 	UFUNCTION(BlueprintCallable)
@@ -76,4 +72,6 @@ public:
 	FORCEINLINE void SetActionMenuVisible(ESlateVisibility _ActionMenuVisible) { ActionMenuVisible = _ActionMenuVisible; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE TArray<FItemStruct> GetInventory() { return Inventory; }
+	//UFUNCTION(BlueprintCallable)
+	//virtual UUMGSequencePlayer* PlayAnimation(UWidgetAnimation* InAnimation, float StartAtTime = 0.0f, int32 NumLoopsToPlay = 1, EUMGSequencePlayMode::Type PlayMode = EUMGSequencePlayMode::Forward, float PlaybackSpeed = 1.0f, bool bRestoreState = false);
 };

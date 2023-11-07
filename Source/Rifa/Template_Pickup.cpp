@@ -19,6 +19,7 @@ ATemplate_Pickup::ATemplate_Pickup()
 	RootComponent = Root;
 	Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
+
 	/*static ConstructorHelpers::FClassFinder<UPickupText> PickupTextAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 	if (PickupTextAsset.Succeeded())
 	{
@@ -31,15 +32,16 @@ ATemplate_Pickup::ATemplate_Pickup()
 void ATemplate_Pickup::BeginPlay()
 {
 	Super::BeginPlay();
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ATemplate_Pickup::OnCharacterOverlap);
-	Trigger->OnComponentEndOverlap.AddDynamic(this, &ATemplate_Pickup::EndCharacterOverlap);
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	ItemInfo.Item = Cast<AActor>(this);
+	ItemInfo.ItemImage = CustomImage;
+	ItemInfo.PickupText = CustomPickupText;
+	ItemInfo.AcitonText = CustomActionText;
+	Mesh->SetStaticMesh(CustomStaticMesh);
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
 		if (IsValid(PickupTextReference))
 		{
-			ItemInfo.Item = this;
 			PickupTextReference->PickupActor = ItemInfo.Item;
 			PickupTextReference->PickupText = ItemInfo.PickupText;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
@@ -48,7 +50,10 @@ void ATemplate_Pickup::BeginPlay()
 			}
 			CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
 		}
-	}
+	}	
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ATemplate_Pickup::OnCharacterOverlap);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &ATemplate_Pickup::EndCharacterOverlap);
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 }
 
 void ATemplate_Pickup::PostInitializeComponents()
@@ -88,7 +93,7 @@ void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
-		CharacterReference->GetGameHUDReference()->GetInventory().Add(ItemInfo);
+		CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
 		PickupTextReference->RemoveFromParent();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);

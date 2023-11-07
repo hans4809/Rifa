@@ -61,10 +61,6 @@ public:
 	FVector StartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector SwimStartLocation;
-	UPROPERTY()
-	FTimerHandle FlyTimer;
-	UPROPERTY()
-	FTimerHandle SwimTimer;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
@@ -82,10 +78,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
 protected:
-
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
-
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
@@ -117,7 +111,17 @@ protected:
 	virtual void BeginPlay();
 	virtual void EndPlay(EEndPlayReason::Type) override;
 
-
+private:
+	UPROPERTY()
+	FTimerHandle FlyTimer;
+	UPROPERTY()
+	FTimerHandle SwimTimer;
+	UPROPERTY()
+	FTimerHandle WidgetAnimTimer;
+	UFUNCTION()
+	void AnimTimerFun();
+	UPROPERTY()
+	bool InventoryOpen = false;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }

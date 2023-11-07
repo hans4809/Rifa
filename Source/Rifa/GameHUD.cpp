@@ -34,27 +34,27 @@ void UGameHUD::NativeConstruct()
 void UGameHUD::RefreshInventory_C()
 {
 	SetActivateInventory(true);
+	TArray<UInventorySlot*> SlotArray;
 	SlotArray.Init(nullptr, 5);
 	SlotArray[0] = Slot_0;
 	SlotArray[1] = Slot_1;
 	SlotArray[2] = Slot_2;
 	SlotArray[3] = Slot_3;
 	SlotArray[4] = Slot_4;
-	while (i < SlotArray.Num())
+	for(int i = 0; i < SlotArray.Num(); i++)
 	{ 
 		if (i < Inventory.Num())
 		{
 			SlotArray[i]->PickupImage = Inventory[i].ItemImage;
 			if (DoOnce.Execute()) 
 			{
-				while (j < SlotArray.Num())
+				for(int j = 0; j < SlotArray.Num(); j++)
 				{
 					if (SlotArray[j]->ButtonWasClicked.IsBound()) {
 						SlotArray[j]->ButtonWasClicked.Clear();
 					}
 
 					SlotArray[j]->ButtonWasClicked.AddDynamic(this, &UGameHUD::ButtonWasClicked_Evt);
-					j++;
 				}
 			}
 		}
@@ -62,7 +62,6 @@ void UGameHUD::RefreshInventory_C()
 		{
 			SlotArray[i]->PickupImage = nullptr;
 		}
-		i++;
 	}
 }
 
@@ -73,3 +72,12 @@ void UGameHUD::ButtonWasClicked_Evt(int SlotClicked)
 	ActionText = Inventory[SlotClicked].AcitonText;
 	ActionMenuVisible = ESlateVisibility::Visible;
 }
+
+//UUMGSequencePlayer* UGameHUD::PlayAnimation(UWidgetAnimation* InAnimation, float StartAtTime, int32 NumLoopsToPlay, EUMGSequencePlayMode::Type PlayMode, float PlaybackSpeed, bool bRestoreState)
+//{
+	//Super::PlayAnimation(InAnimation, StartAtTime, NumLoopsToPlay, PlayMode, PlaybackSpeed, bRestoreState);
+//}
+
+
+
+
