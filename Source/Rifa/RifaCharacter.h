@@ -7,7 +7,7 @@
 #include "InputActionValue.h"
 #include "RifaCharacter.generated.h"
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
 UCLASS(config=Game)
 class ARifaCharacter : public ACharacter
 {
@@ -40,28 +40,29 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* FlyAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SwimAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InventoryAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
 	APhysicsVolume* PhysicsVolume;
-
+	UPROPERTY()
+	bool First = true;
 public:
 	ARifaCharacter();
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly", meta = (AllowPrivateAccess = true))
+	//Event 생성
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
+	FDele_Dynamic PickupItem;
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly", meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyTime;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector StartLocation;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector SwimStartLocation;
-	UPROPERTY()
-	FTimerHandle FlyTimer;
-	UPROPERTY()
-	FTimerHandle SwimTimer;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
-
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
@@ -70,16 +71,29 @@ public:
 	FVector Position;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int> ItemList;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
+	float EnergyValue;
+	UFUNCTION(BlueprintCallable)
+	void EnableMouseCursor();
+	UFUNCTION(BlueprintCallable)
+	void DisableMouseCursor();
 protected:
-
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
-
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class UGameHUD* GameHUDWidget;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AHUD> RifaHUDClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
+	class ARifaHUD* RifaHUD;
 	UFUNCTION(BlueprintCallable)
 	void Fly();
+	UFUNCTION(BlueprintCallable)
+	void Inventory();
 	UFUNCTION(BlueprintCallable)
 	void Swim();
 	UFUNCTION(BlueprintCallable)
@@ -90,18 +104,32 @@ protected:
 	void EndSwim();
 	UFUNCTION(BlueprintCallable)
 	void Interaction();
-
-protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	// To add mapping context
 	virtual void BeginPlay();
+	virtual void EndPlay(EEndPlayReason::Type) override;
 
+private:
+	UPROPERTY()
+	FTimerHandle FlyTimer;
+	UPROPERTY()
+	FTimerHandle SwimTimer;
+	UPROPERTY()
+	FTimerHandle WidgetAnimTimer;
+	UFUNCTION()
+	void AnimTimerFun();
+	UPROPERTY()
+	bool InventoryOpen = false;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE UGameHUD* GetGameHUDReference() { return GameHUDWidget; }
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE ARifaHUD* GetRifaHUDReference() { return RifaHUD; }
 };
 

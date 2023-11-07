@@ -78,7 +78,7 @@ void ASwitch_MoveObj::PostInitializeComponents()
 }
 
 void ASwitch_MoveObj::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
+ {
 	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
 	if (RifaCharacter->InteractionTargetActor == this)
 		RifaCharacter->InteractionTargetActor = NULL;
