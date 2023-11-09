@@ -14,6 +14,10 @@
 #include "Trap.h"
 #include "Switch.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameHUD.h"
+#include "RifaHUD.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Animation/WidgetAnimation.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,6 +25,7 @@
 
 ARifaCharacter::ARifaCharacter()
 {
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -75,9 +80,26 @@ void ARifaCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+		if (IsValid(RifaHUDClass))
+		{
+			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
+		}
 	}
-
 	GameStart();
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if (IsValid(GameHUDWidget))
+		{
+			GameHUDWidget->AddToViewport();
+		}
+	}
+}
+
+void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
+{
+	Super::EndPlay(EndReason);
+	PickupItem.Clear();
 }
 
 void ARifaCharacter::Die(AActor* trap)
@@ -128,6 +150,24 @@ void ARifaCharacter::GameStart()
 	}
 }
 
+void ARifaCharacter::EnableMouseCursor()
+{
+	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
+	if (RifaHUD != nullptr) {
+		RifaHUD->ShowCrossHair = false;
+	}
+	Cast<APlayerController>(Controller)->bShowMouseCursor = true;
+}
+
+void ARifaCharacter::DisableMouseCursor()
+{
+	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
+	if (RifaHUD != nullptr) {
+		RifaHUD->ShowCrossHair = true;
+	}
+	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -137,7 +177,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		
 		//Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		//Moving
@@ -145,10 +185,11 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
-		//EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Fly);
-		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Swim);
-		PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
-		PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::Inventory);
+		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
+		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
+		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
 		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
@@ -159,6 +200,9 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
+	if (InventoryOpen) {
+		return;
+	}
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -181,7 +225,9 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
-
+	if (InventoryOpen) {
+		return;
+	}
 	if (Controller != nullptr)
 	{
 		// add yaw and pitch input to controller
@@ -191,6 +237,9 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 }
 void ARifaCharacter::Fly()
 {
+	if (InventoryOpen) {
+		return;
+	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
 		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyTime, false);
@@ -203,8 +252,40 @@ void ARifaCharacter::Fly()
 		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	}
 }
+void ARifaCharacter::Inventory()
+{
+	if (GameHUDWidget->GetActivateInventory()) 
+	{
+		if (First) {
+			GameHUDWidget->SetInventoryVisible(ESlateVisibility::Visible);
+			First = false;
+			EnableMouseCursor();
+			GameHUDWidget->PlayAnimation(GameHUDWidget->MenuAnim);
+			InventoryOpen = true;
+		}
+		else {
+			GameHUDWidget->PlayAnimationReverse(GameHUDWidget->MenuAnim);
+			if(WidgetAnimTimer.IsValid())
+			{
+				GetWorld()->GetTimerManager().ClearTimer(WidgetAnimTimer);
+			}
+			GetWorld()->GetTimerManager().SetTimer(WidgetAnimTimer, this, &ARifaCharacter::AnimTimerFun, GameHUDWidget->MenuAnim->GetEndTime(), false);
+		}
+	}
+}
+void ARifaCharacter::AnimTimerFun()
+{
+	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
+	DisableMouseCursor();
+	First = true;
+	InventoryOpen = false;
+}
+
 void ARifaCharacter::Swim()
 {
+	if (InventoryOpen) {
+		return;
+	}
 	IsSwimming = true;
 	StartLocation = GetActorLocation();
 	SetActorLocation(SwimStartLocation + GetActorUpVector() * FlyHeight);
@@ -233,9 +314,19 @@ void ARifaCharacter::EndSwim()
 
 void ARifaCharacter::Interaction()
 {
-	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
-	if (target == nullptr)
+	if (InventoryOpen) {
 		return;
+	}
+	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
+	if (target == nullptr) 
+	{
+		if (GameHUDWidget->Inventory.Num() < 5)
+		{
+			if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
+			return;
+		}
+		return;
+	}
 
 	target->Interaction();
 	target->DoWork();
