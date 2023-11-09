@@ -2,29 +2,32 @@
 
 
 #include "AdaptiveSoundtrackZone.h"
+#include "RifaCharacter.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
 AAdaptiveSoundtrackZone::AAdaptiveSoundtrackZone()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
+	RootComponent = Trigger;
 
+	SoundTrack = "";
 }
 
 // Called when the game starts or when spawned
 void AAdaptiveSoundtrackZone::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-// Called every frame
-void AAdaptiveSoundtrackZone::Tick(float DeltaTime)
+void AAdaptiveSoundtrackZone::PostInitializeComponents()
 {
-	Super::Tick(DeltaTime);
-
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AAdaptiveSoundtrackZone::OnCharacterOverlap);
 }
 
+
+
+void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Cast<ARifaCharacter>(OtherActor)->SoundTrack = SoundTrack;
+}
