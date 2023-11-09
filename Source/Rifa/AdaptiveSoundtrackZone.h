@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "SavePoint.generated.h"
+#include "AdaptiveSoundtrackZone.generated.h"
 
 UCLASS()
-class RIFA_API ASavePoint : public AActor
+class RIFA_API AAdaptiveSoundtrackZone : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASavePoint();
+	AAdaptiveSoundtrackZone();
 
 protected:
 	// Called when the game starts or when spawned
@@ -21,19 +21,14 @@ protected:
 
 	virtual void PostInitializeComponents() override;
 
-private:
 	UFUNCTION()
-	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void SavePlayerData(AActor* OtherActor);
+		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UBoxComponent* Trigger;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector Position;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SoundTrack")
+	FString SoundTrack;
 };

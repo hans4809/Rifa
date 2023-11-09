@@ -85,6 +85,7 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
+	GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -103,6 +104,25 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 
 void ARifaCharacter::Die(AActor* trap)
 {
+	SetActorLocation(Position);
+	UE_LOG(LogTemp, Log, TEXT("Die"));
+
+	ATrap* Trap = Cast<ATrap>(trap);
+	Trap->isDie = false;
+}
+
+void ARifaCharacter::Save()
+{
+	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
+	NewPlayerData->SavePosition = Position;
+	NewPlayerData->ItemList = ItemList;
+	NewPlayerData->SoundTrack = SoundTrack;
+
+	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+}
+
+void ARifaCharacter::Load()
+{
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
 	{
@@ -110,11 +130,24 @@ void ARifaCharacter::Die(AActor* trap)
 	}
 	Position = RIFASaveGame->SavePosition;
 	ItemList = RIFASaveGame->ItemList;
-	SetActorLocation(Position);
-	UE_LOG(LogTemp, Log, TEXT("Die"));
+	SoundTrack = RIFASaveGame->SoundTrack;
+}
 
-	ATrap* Trap = Cast<ATrap>(trap);
-	Trap->isDie = false;
+void ARifaCharacter::Respawn()
+{
+	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
+	{
+		SetActorLocation(Position);
+	}
+}
+
+void ARifaCharacter::GameStart()
+{
+	Load();
+	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
+	{
+		SetActorLocation(Position);
+	}
 }
 
 void ARifaCharacter::EnableMouseCursor()
