@@ -36,6 +36,8 @@ public:
 	FString PickupText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	FString AcitonText;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	bool BGM_On;
 };
 
 
