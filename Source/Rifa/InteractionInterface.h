@@ -22,8 +22,8 @@ class RIFA_API IInteractionInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void UseAction();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void DropAction(AActor* DropToItem);
+	UFUNCTION()
+	virtual void UseAction() = 0;
+	UFUNCTION()
+	virtual void DropAction(AActor* DropToItem) = 0;
 };

@@ -3,7 +3,9 @@
 
 #include "MyGameInstance.h"
 #include "RifaGameMode.h"
+#include "RifaDataTable.h"
 
 UMyGameInstance::UMyGameInstance()
 {
 }
+

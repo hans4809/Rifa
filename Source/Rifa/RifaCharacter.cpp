@@ -186,7 +186,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
-		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::Inventory);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
 		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
@@ -252,7 +252,7 @@ void ARifaCharacter::Fly()
 		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	}
 }
-void ARifaCharacter::Inventory()
+void ARifaCharacter::OpenAndCloseInventory()
 {
 	if (GameHUDWidget->GetActivateInventory()) 
 	{
@@ -269,11 +269,11 @@ void ARifaCharacter::Inventory()
 			{
 				GetWorld()->GetTimerManager().ClearTimer(WidgetAnimTimer);
 			}
-			GetWorld()->GetTimerManager().SetTimer(WidgetAnimTimer, this, &ARifaCharacter::AnimTimerFun, GameHUDWidget->MenuAnim->GetEndTime(), false);
+			GetWorld()->GetTimerManager().SetTimer(WidgetAnimTimer, this, &ARifaCharacter::AnimTimerFunc, GameHUDWidget->MenuAnim->GetEndTime(), false);
 		}
 	}
 }
-void ARifaCharacter::AnimTimerFun()
+void ARifaCharacter::AnimTimerFunc()
 {
 	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
 	DisableMouseCursor();

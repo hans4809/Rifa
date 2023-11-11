@@ -44,6 +44,30 @@ protected:
 	class UInventorySlot* Slot_3;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UInventorySlot* Slot_4;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_5;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_6;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_7;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_8;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_9;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_10;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_11;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_12;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_13;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_14;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UInventorySlot* Slot_15;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (Inventory))
+	TArray<UInventorySlot*> SlotArray;
 	UPROPERTY(VisibleAnywhere)
 	FDoOnce DoOnce;
 public:
