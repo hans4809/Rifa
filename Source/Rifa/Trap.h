@@ -22,9 +22,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	UPROPERTY(EditAnywhere, Category = "Mesh")
+	UPROPERTY(EditAnywhere, Category = "ETC")
 		UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, Category = "Test")
+	UPROPERTY()
 		bool isDie;
 
 private:

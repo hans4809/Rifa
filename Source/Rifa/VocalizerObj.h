@@ -53,50 +53,56 @@ protected:
 	void SoundOff();
 
 	UFUNCTION()
-	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
-	void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
+	void EndCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+	void OnCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void EndCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
-	USoundBase* soundToPlay;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ETC")
 	UStaticMeshComponent* staticMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ETC")
 	USphereComponent* triggerSphere;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ETC")
 	USphereComponent* vocalizerSphere;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ETC")
 	USphereComponent* vocalizerVisibleSphere;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
-	bool isPhysicCollision;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
-	FVector vocalizerColor;
 
 	UPROPERTY()
 	UWorld* world;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	float speed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "sound")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Variable")
 	float soundInterval;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "sound")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Variable")
 	float maxOpacity;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "sound")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Variable")
 	float minOpacity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
+	USoundBase* soundToPlay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
+	bool isPhysicCollision;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
+	bool isVocalizer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
+	FVector vocalizerColor;
 
 	UPROPERTY()
 	float volumeSize;

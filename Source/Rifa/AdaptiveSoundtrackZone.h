@@ -29,6 +29,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UBoxComponent* Trigger;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SoundTrack")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	FString SoundTrack;
 };

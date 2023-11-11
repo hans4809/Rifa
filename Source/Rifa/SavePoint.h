@@ -31,9 +31,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, Category = "Variable")
 	class UBoxComponent* Trigger;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, Category = "Variable")
+	USceneComponent* SavePosition;
+	UPROPERTY(EditAnywhere, Category = "ETC")
 	FVector Position;
+
 };
