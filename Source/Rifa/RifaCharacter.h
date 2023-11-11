@@ -127,6 +127,8 @@ private:
 	UPROPERTY()
 	FTimerHandle FlyTimer;
 	UPROPERTY()
+	class UMyGameInstance* RifaGameInstance;
+	UPROPERTY()
 	FTimerHandle SwimTimer;
 	UPROPERTY()
 	FTimerHandle WidgetAnimTimer;

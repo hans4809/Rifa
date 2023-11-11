@@ -29,13 +29,11 @@ struct FItemStruct
 	GENERATED_USTRUCT_BODY()
 public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	AActor* Item;
+	AActor* ItemActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	UTexture2D* ItemImage;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	FString ItemName;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	FString AcitonText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	bool BGM_On;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)

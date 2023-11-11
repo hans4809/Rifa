@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "InventoryStruct.h"
 #include "InventorySlot.generated.h"
 
 /**
@@ -25,6 +26,12 @@ public:
 	int InventorySlot;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ItemButton;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemData, meta = (AllowPrivateAccess = "true"))
+	FItemStruct ItemInfo;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SlotData, meta = (AllowPrivateAccess = "true"))
+	bool IsHave;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SlotData, meta = (AllowPrivateAccess = "true"))
+	bool BGM_On;
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeDestruct() override;

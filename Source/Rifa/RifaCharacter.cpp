@@ -18,6 +18,7 @@
 #include "RifaHUD.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Animation/WidgetAnimation.h"
+#include "MyGameInstance.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,6 +67,7 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 void ARifaCharacter::BeginPlay()
@@ -320,11 +322,7 @@ void ARifaCharacter::Interaction()
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{
-		if (GameHUDWidget->Inventory.Num() < 5)
-		{
-			if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
-			return;
-		}
+		if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
 		return;
 	}
 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "MyGameInstance.h"
 #include "PickupText.generated.h"
 
 /**
