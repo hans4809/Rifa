@@ -26,7 +26,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	UTexture2D* CustomImage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	FString CustomPickupText;
+	FString CustomItemName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")

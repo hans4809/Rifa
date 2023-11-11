@@ -37,6 +37,7 @@ void ATemplate_Pickup::BeginPlay()
 	ItemInfo.ItemImage = CustomImage;
 	ItemInfo.BGM_On = CustomBGM_On;
 	ItemInfo.IsHave = CustomIsHave;
+	ItemInfo.ItemName = CustomItemName;
 	//CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	Mesh->SetStaticMesh(CustomStaticMesh);
