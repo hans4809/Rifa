@@ -73,10 +73,10 @@ protected:
 public:
 	UPROPERTY(BlueprintReadOnly, Transient, Category = "Animation", meta = (BindWidgetAnim))
 	class UWidgetAnimation* MenuAnim;
-	UPROPERTY(BlueprintReadOnly)
-	class UMyGameInstance* RifaGameInstance;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	TArray<UInventorySlot*> SlotArray;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
+	class UMyGameInstance* RifaGameInstance;
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
 	void RefreshInventory_C();

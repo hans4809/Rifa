@@ -121,6 +121,7 @@ void UGameHUD::RefreshInventory_C()
 	SetActivateInventory(true);
 	for(int i = 0; i < SlotArray.Num(); i++)
 	{ 
+		SlotArray[i]->IsHave = RifaGameInstance->ItemMap[(Item)i];
 		if (SlotArray[i]->IsHave)
 		{
 			SlotArray[i]->PickupImage = HavingImage;
