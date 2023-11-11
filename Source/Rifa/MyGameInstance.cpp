@@ -10,6 +10,5 @@ UMyGameInstance::UMyGameInstance()
 	for (int i = 0; i < (int)Item::MaxCount; i++) {
 		ItemMap.Add((Item)i, false);
 	}
-
 }
 
