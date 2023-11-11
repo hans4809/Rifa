@@ -13,6 +13,13 @@ class ARifaGameMode : public AGameModeBase
 
 public:
 	ARifaGameMode();
+
+protected:
+	/*UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	class UGameHUD* GameHUDWidget;
+	virtual void BeginPlay();*/
 };
 
 
