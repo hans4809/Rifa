@@ -6,5 +6,4 @@
 
 UMyGameInstance::UMyGameInstance()
 {
-
 }
