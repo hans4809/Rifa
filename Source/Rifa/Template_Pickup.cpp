@@ -7,6 +7,7 @@
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameHUD.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ATemplate_Pickup::ATemplate_Pickup()
@@ -34,8 +35,12 @@ void ATemplate_Pickup::BeginPlay()
 	Super::BeginPlay();
 	ItemInfo.Item = Cast<AActor>(this);
 	ItemInfo.ItemImage = CustomImage;
-	ItemInfo.PickupText = CustomPickupText;
+	ItemInfo.ItemName = CustomPickupText;
 	ItemInfo.AcitonText = CustomActionText;
+	ItemInfo.BGM_On = CustomBGM_On;
+	ItemInfo.IsHave = CustomIsHave;
+	CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	Mesh->SetStaticMesh(CustomStaticMesh);
 	if (IsValid(PickupTextClass))
 	{
@@ -43,7 +48,7 @@ void ATemplate_Pickup::BeginPlay()
 		if (IsValid(PickupTextReference))
 		{
 			PickupTextReference->PickupActor = ItemInfo.Item;
-			PickupTextReference->PickupText = ItemInfo.PickupText;
+			PickupTextReference->PickupText = ItemInfo.ItemName;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (CharacterReference->PickupItem.IsBound()) {
 				CharacterReference->PickupItem.Clear();
@@ -71,7 +76,6 @@ void ATemplate_Pickup::Tick(float DeltaTime)
 
 void ATemplate_Pickup::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("CharacterOverlapBegin"));
 	if (Cast<ARifaCharacter>(OtherActor)) 
 	{
 		PickupTextReference->AddToViewport();
@@ -81,7 +85,6 @@ void ATemplate_Pickup::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, A
 
 void ATemplate_Pickup::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Log, TEXT("CharacterOverlapEnd"));
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
 		PickupTextReference->RemoveFromParent();
@@ -93,7 +96,6 @@ void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
-		CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
 		PickupTextReference->RemoveFromParent();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);

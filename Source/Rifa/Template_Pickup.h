@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "InventoryStruct.h"
+#include "InteractionInterface.h"
+#include "RifaDataTable.h"
 #include "Template_Pickup.generated.h"
 
 UCLASS()
@@ -29,6 +31,10 @@ public:
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	UStaticMesh* CustomStaticMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	bool CustomBGM_On;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	bool CustomIsHave;
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,6 +50,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = "true"))
 	FItemStruct ItemInfo;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
+	class UMyGameInstance* RifaGameInstance;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
+
 	TSubclassOf<UUserWidget> PickupTextClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
 	class UPickupText* PickupTextReference;
