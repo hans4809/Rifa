@@ -31,7 +31,5 @@ class RIFA_API UMyGameInstance : public UGameInstance
 	
 public:
 	UMyGameInstance();
-	FItemData* GetItemData(int32 index);
 private:
-	UDataTable* ARifaDataTable;
 };

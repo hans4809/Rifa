@@ -33,11 +33,13 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	UTexture2D* ItemImage;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	FString PickupText;
+	FString ItemName;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	FString AcitonText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	bool BGM_On;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	bool IsHave;
 };
 
 

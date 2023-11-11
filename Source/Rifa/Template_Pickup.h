@@ -31,6 +31,10 @@ public:
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	UStaticMesh* CustomStaticMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	bool CustomBGM_On;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
+	bool CustomIsHave;
 
 protected:
 	// Called when the game starts or when spawned

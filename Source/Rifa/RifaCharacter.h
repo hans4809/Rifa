@@ -93,7 +93,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void Fly();
 	UFUNCTION(BlueprintCallable)
-	void Inventory();
+	void OpenAndCloseInventory();
 	UFUNCTION(BlueprintCallable)
 	void Swim();
 	UFUNCTION(BlueprintCallable)
@@ -119,7 +119,7 @@ private:
 	UPROPERTY()
 	FTimerHandle WidgetAnimTimer;
 	UFUNCTION()
-	void AnimTimerFun();
+	void AnimTimerFunc();
 	UPROPERTY()
 	bool InventoryOpen = false;
 public:
