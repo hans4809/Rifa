@@ -13,6 +13,7 @@ AMoveObj::AMoveObj()
 	End = CreateDefaultSubobject<USceneComponent>(TEXT("End"));
 
 	RootComponent = Mesh;
+	End->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

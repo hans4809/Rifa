@@ -29,23 +29,23 @@ protected:
 	FTimerHandle fTimeHandler;
 
 public:	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="ETC")
 	UStaticMeshComponent* Mesh;
 
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Variable")
 	float FallTime;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Variable")
 	float RecoveryTime;
 
 	UPROPERTY()
 	bool isFall;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	FVector DefaultLocation;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY()
 	FRotator DefaultRotation;
 
 private:

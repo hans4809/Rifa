@@ -26,10 +26,13 @@ private:
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	UPROPERTY(EditAnywhere, Category = "Switch_MoveObj")
+	UPROPERTY(EditAnywhere, Category = "ETC")
 		UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, Category = "Switch_MoveObj")
+	UPROPERTY(EditAnywhere, Category = "ETC")
 		USceneComponent* End;
+	UPROPERTY(EditAnywhere, Category = "ETC")
+	class UBoxComponent* Trigger;
+
 	UPROPERTY()
 		FTimerHandle fTimeHandler;
 	UFUNCTION()
@@ -43,17 +46,14 @@ private:
 	UPROPERTY()
 		bool isStart;
 
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
+	UPROPERTY(EditAnywhere, Category = "Variable")
 		float moveTime;
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
+	UPROPERTY(EditAnywhere, Category = "Variable")
 		AActor* Target;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UBoxComponent* Trigger;
 
 	virtual void DoWork();
 };
