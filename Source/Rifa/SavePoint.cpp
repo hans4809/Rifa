@@ -14,8 +14,9 @@ ASavePoint::ASavePoint()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
+	SavePosition = CreateDefaultSubobject<USceneComponent>(TEXT("SavePosition"));
 
-	Trigger->SetupAttachment(RootComponent);
+	SavePosition->SetupAttachment(Trigger);
 
 	Trigger->SetCollisionProfileName(TEXT("SavePoint"));
 	Trigger->SetBoxExtent(FVector(30.f, 30.f, 30.f));
@@ -40,6 +41,7 @@ void ASavePoint::PostInitializeComponents()
 	Super::PostInitializeComponents();
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASavePoint::OnCharacterOverlap);
+	Position = SavePosition->GetComponentLocation();
 }
 
 void ASavePoint::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

@@ -51,14 +51,20 @@ void AVocalizerObj::BeginPlay()
 		isActive = true;
 	else
 		isActive = false;
+	if (GetDistanceTo(player) < vocalizerVisibleSphere->GetScaledSphereRadius())
+		isVocalizer = true;
+	else
+		isVocalizer = false;
 }
 
 void AVocalizerObj::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	triggerSphere->OnComponentBeginOverlap.AddDynamic(this, &AVocalizerObj::OnCharacterOverlap);
-	triggerSphere->OnComponentEndOverlap.AddDynamic(this, &AVocalizerObj::EndCharacterOverlap);
+	triggerSphere->OnComponentBeginOverlap.AddDynamic(this, &AVocalizerObj::OnCharacterOverlap_SoundZone);
+	triggerSphere->OnComponentEndOverlap.AddDynamic(this, &AVocalizerObj::EndCharacterOverlap_SoundZone);
+	vocalizerVisibleSphere->OnComponentBeginOverlap.AddDynamic(this, &AVocalizerObj::OnCharacterOverlap_VocalizerVisibleZone);
+	vocalizerVisibleSphere->OnComponentEndOverlap.AddDynamic(this, &AVocalizerObj::EndCharacterOverlap_VocalizerVisibleZone);
 }
 
 void AVocalizerObj::TimeCheck()
@@ -79,7 +85,8 @@ void AVocalizerObj::SoundPlay()
 		if (volumeSize >= 1)
 			volumeSize = 1;
 		UGameplayStatics::PlaySoundAtLocation(this, soundToPlay, GetActorLocation(), volumeSize);
-		SoundWave();
+		if(isVocalizer)
+			SoundWave();
 	}
 }
 
@@ -107,14 +114,24 @@ void AVocalizerObj::SoundOff()
 	volumeSize = 0;
 }
 
-void AVocalizerObj::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AVocalizerObj::OnCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	SoundOn();
 }
 
-void AVocalizerObj::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void AVocalizerObj::EndCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	SoundOff();
+}
+
+void AVocalizerObj::OnCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	isVocalizer = true;
+}
+
+void AVocalizerObj::EndCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	isVocalizer = false;
 }
 
 // Called every frame

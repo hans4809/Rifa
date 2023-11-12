@@ -11,4 +11,3 @@ UMyGameInstance::UMyGameInstance()
 		ItemMap.Add((Item)i, false);
 	}
 }
-

@@ -33,17 +33,16 @@ private:
 	UPROPERTY()
 		bool isFirst;
 
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
+	UPROPERTY(EditAnywhere, Category = "Variable")
 		float moveTime;
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
+	UPROPERTY(EditAnywhere, Category = "Variable")
 		float waitTime;
-
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
-		UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, Category = "MoveObj")
-		USceneComponent* End;
+	UPROPERTY(EditAnywhere, Category = "ETC")
+	USceneComponent* End;
+	UPROPERTY(EditAnywhere, Category = "ETC")
+	UStaticMeshComponent* Mesh;
 	UPROPERTY()
-		FTimerHandle fTimeHandler;
+	FTimerHandle fTimeHandler;
 
 private:
 	UFUNCTION()
