@@ -6,6 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "SkillEnergyItem.generated.h"
 
+UENUM()
+enum class EEnergyFeature : uint8
+{
+	Swim UMETA(DisplayName = "Swim"),
+	Fly UMETA(DisplayName = "Fly")
+};
 UCLASS()
 class RIFA_API ASkillEnergyItem : public AActor
 {
@@ -16,6 +22,8 @@ class RIFA_API ASkillEnergyItem : public AActor
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* Trigger;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UParticleSystemComponent* Particle;
 public:	
 	// Sets default values for this actor's properties
 	ASkillEnergyItem();
@@ -42,4 +50,6 @@ private:
 	class UPickupText* PickupTextReference;
 	UFUNCTION(BlueprintCallable)
 	void PickupEnergyEvent();
+	UPROPERTY(EditAnyWhere)
+	EEnergyFeature EnergyFeature;
 };

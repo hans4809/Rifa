@@ -6,6 +6,7 @@
 #include "RifaCharacter.h"
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ASkillEnergyItem::ASkillEnergyItem()
@@ -15,10 +16,11 @@ ASkillEnergyItem::ASkillEnergyItem()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
+	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PARTICLE"));
 	RootComponent = Root;
 	Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
-
+	Particle->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
@@ -33,12 +35,9 @@ void ASkillEnergyItem::BeginPlay()
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
 		if (IsValid(PickupTextReference))
 		{
-			//PickupTextReference->PickupActor = ItemInfo.ItemActor;
+			PickupTextReference->PickupActor = Cast<AActor>(this);
 			PickupTextReference->PickupText = TEXT("Press E");
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			if (CharacterReference->PickupItem.IsBound()) {
-				CharacterReference->PickupItem.Clear();
-			}
 			CharacterReference->PickupItem.AddDynamic(this, &ASkillEnergyItem::PickupEnergyEvent);
 		}
 	}
@@ -64,8 +63,8 @@ void ASkillEnergyItem::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, 
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->AddToViewport();
-		IsInRange = true;
+		PickupTextReference->RemoveFromParent();
+		IsInRange = false;
 	}
 }
 
@@ -74,8 +73,18 @@ void ASkillEnergyItem::PickupEnergyEvent()
 	if (GetActorEnableCollision() && IsInRange)
 	{
 		PickupTextReference->RemoveFromParent();
-		SetActorHiddenInGame(true);
+		//SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
+		Particle->DeactivateSystem();
+		switch (EnergyFeature)
+		{
+		case EEnergyFeature::Swim:
+			CharacterReference->SwimEnergyValue++;
+			break;
+		case EEnergyFeature::Fly:
+			CharacterReference->FlyEnergyValue++;
+			break;
+		}
 	}
 }
 
