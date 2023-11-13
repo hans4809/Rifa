@@ -71,6 +71,7 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	UTexture2D* HavingImage;
 public:
+	
 	UPROPERTY(BlueprintReadOnly, Transient, Category = "Animation", meta = (BindWidgetAnim))
 	class UWidgetAnimation* MenuAnim;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
@@ -96,6 +97,12 @@ public:
 	FORCEINLINE ESlateVisibility GetActionMenuVisible() { return ActionMenuVisible; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetActionMenuVisible(ESlateVisibility _ActionMenuVisible) { ActionMenuVisible = _ActionMenuVisible; }
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<UPanelWidget> SizeBoxClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class USizeBox* FlyEnergySizeBox;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class USizeBox* SwimEnergySizeBox;
 	//UFUNCTION(BlueprintCallable)
 	//virtual UUMGSequencePlayer* PlayAnimation(UWidgetAnimation* InAnimation, float StartAtTime = 0.0f, int32 NumLoopsToPlay = 1, EUMGSequencePlayMode::Type PlayMode = EUMGSequencePlayMode::Forward, float PlaybackSpeed = 1.0f, bool bRestoreState = false);
 };

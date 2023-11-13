@@ -7,6 +7,8 @@
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "GameHUD.h"
+#include "Components/SizeBox.h"
 
 // Sets default values
 ASkillEnergyItem::ASkillEnergyItem()
@@ -80,9 +82,14 @@ void ASkillEnergyItem::PickupEnergyEvent()
 		{
 		case EEnergyFeature::Swim:
 			CharacterReference->SwimEnergyValue++;
+
+			//CharacterReference->GetGameHUDReference()->SwimEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
+			CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyValue * 100.0f);
 			break;
 		case EEnergyFeature::Fly:
-			CharacterReference->FlyEnergyValue++;
+			CharacterReference->FlyEnergyValue++;			
+			CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyValue * 100.0f);
+			//CharacterReference->GetGameHUDReference()->FlyEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
 			break;
 		}
 	}
