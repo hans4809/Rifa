@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryStruct.h"
+#include "SceneWidget.h"
 #include "DoOnce.h"
 #include "GameHUD.generated.h"
 
@@ -12,7 +13,7 @@
  * 
  */
 UCLASS()
-class RIFA_API UGameHUD : public UUserWidget
+class RIFA_API UGameHUD : public USceneWidget
 {
 	GENERATED_BODY()
 public:
@@ -78,6 +79,8 @@ public:
 	TArray<UInventorySlot*> SlotArray;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	class UMyGameInstance* RifaGameInstance;
+	UFUNCTION(BlueprintCallable)
+	virtual void Init() override;
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
 	void RefreshInventory_C();

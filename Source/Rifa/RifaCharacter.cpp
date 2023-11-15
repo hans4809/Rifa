@@ -140,7 +140,7 @@ void ARifaCharacter::BeginPlay()
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 		if (IsValid(GameHUDWidget))
 		{
-			GameHUDWidget->AddToViewport();
+			GameHUDWidget->Init();
 		}
 	}
 }
