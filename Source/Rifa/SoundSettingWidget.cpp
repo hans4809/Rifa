@@ -7,8 +7,16 @@
 void USoundSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	/*ResetButton = Cast<UButton>(GetWidgetFromName(TEXT("ResetButton")));
-	LoadButton = Cast<UButton>(GetWidgetFromName(TEXT("LoadButton")));
-	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
-	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));*/
+	CollectionButton = Cast<UButton>(GetWidgetFromName(TEXT("CollectionButton")));
+	///CollectionButton->OnClicked
+}
+
+void USoundSettingWidget::Init()
+{
+	Super::Init();
+}
+
+void USoundSettingWidget::CloseWidget()
+{
+	Super::CloseWidget();
 }

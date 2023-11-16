@@ -3,6 +3,7 @@
 
 #include "MainSettingWidget.h"
 #include "Components/Button.h"
+#include "SoundSettingWidget.h"
 
 void UMainSettingWidget::NativeConstruct()
 {
@@ -12,6 +13,7 @@ void UMainSettingWidget::NativeConstruct()
 	ControlButton = Cast<UButton>(GetWidgetFromName(TEXT("ControlButton")));
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	ReturnButton->OnClicked.AddDynamic(this, &UMainSettingWidget::CloseWidget);
+	SoundButton->OnClicked.AddDynamic(this, &UMainSettingWidget::SoundButtonClicked);
 }
 
 void UMainSettingWidget::Init()
@@ -22,4 +24,13 @@ void UMainSettingWidget::Init()
 void UMainSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
+}
+
+void UMainSettingWidget::SoundButtonClicked()
+{
+	if (IsValid(SoundSettingWidgetClass))
+	{
+		SoundSettingWidgetAsset = Cast<USoundSettingWidget>(CreateWidget(GetWorld(), SoundSettingWidgetClass));
+	}
+	SoundSettingWidgetAsset->Init();
 }

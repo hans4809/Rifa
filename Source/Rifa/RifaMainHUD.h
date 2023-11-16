@@ -31,6 +31,8 @@ public:
 	TSubclassOf<class UPopUpWidget> MainSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	class UMainSettingWidget* MainSettingWidgetAsset;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	USoundWave* MainBGM;
 	UFUNCTION(BlueprintCallable)
 	void SettingButtonClicked();
 };

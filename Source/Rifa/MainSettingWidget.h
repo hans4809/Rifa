@@ -31,4 +31,10 @@ public:
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
+	UFUNCTION(BlueprintCallable)
+	void SoundButtonClicked();
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> SoundSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class USoundSettingWidget* SoundSettingWidgetAsset;
 };

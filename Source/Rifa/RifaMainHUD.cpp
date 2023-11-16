@@ -13,6 +13,7 @@ void URifaMainHUD::NativeConstruct()
 	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
 	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
+	PlaySound(MainBGM);
 }
 
 void URifaMainHUD::Init()

@@ -16,13 +16,11 @@ class RIFA_API USoundSettingWidget : public UPopUpWidget
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* SoundButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* GraphicButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ControlButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ReturnButton;
+	class UButton* CollectionButton;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	//class UButton* ControlButton;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	//class UButton* ReturnButton;
 
 public:
 	UFUNCTION(BlueprintCallable)
