@@ -4,6 +4,8 @@
 #include "RifaMainHUD.h"
 #include "Components/Button.h"
 #include "MainSettingWidget.h"
+#include "Sound/SoundBase.h"
+#include "Sound/SoundCue.h"
 
 void URifaMainHUD::NativeConstruct()
 {
