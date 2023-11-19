@@ -19,6 +19,7 @@ void AMainGameMode::BeginPlay()
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
 	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
+	BGM = GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound;
 	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->SFXSound = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
 	if (GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound != nullptr)
 	{
@@ -29,4 +30,5 @@ void AMainGameMode::BeginPlay()
 	{
 		UE_LOG(LogTemp, Log, TEXT("BGM is null"));
 	}
+	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound;
 }

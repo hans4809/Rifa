@@ -27,4 +27,10 @@ public:
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
+	UFUNCTION(BlueprintCallable)
+	void CrossFadeSound();	
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	UAudioComponent* BGMComponent;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	float AudioParam = 0.f;
 };
