@@ -33,8 +33,20 @@ public:
 	virtual void CloseWidget() override;
 	UFUNCTION(BlueprintCallable)
 	void SoundButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void GraphicButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void InputButtonClicked();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> SoundSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	class USoundSettingWidget* SoundSettingWidgetAsset;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> GraphicSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class UGraphicSettingWidget* GraphicSettingWidgetAsset;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> InputSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class UInputSettingWidget* InputSettingWidgetAsset;
 };

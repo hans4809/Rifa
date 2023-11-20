@@ -4,6 +4,8 @@
 #include "MainSettingWidget.h"
 #include "Components/Button.h"
 #include "SoundSettingWidget.h"
+#include "InputSettingWidget.h"
+#include "GraphicSettingWidget.h"
 
 void UMainSettingWidget::NativeConstruct()
 {
@@ -14,6 +16,8 @@ void UMainSettingWidget::NativeConstruct()
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	ReturnButton->OnClicked.AddDynamic(this, &UMainSettingWidget::CloseWidget);
 	SoundButton->OnClicked.AddDynamic(this, &UMainSettingWidget::SoundButtonClicked);
+	GraphicButton->OnClicked.AddDynamic(this, &UMainSettingWidget::GraphicButtonClicked);
+	ControlButton->OnClicked.AddDynamic(this, &UMainSettingWidget::InputButtonClicked);
 }
 
 void UMainSettingWidget::Init()
@@ -33,4 +37,22 @@ void UMainSettingWidget::SoundButtonClicked()
 		SoundSettingWidgetAsset = Cast<USoundSettingWidget>(CreateWidget(GetWorld(), SoundSettingWidgetClass));
 	}
 	SoundSettingWidgetAsset->Init();
+}
+
+void UMainSettingWidget::GraphicButtonClicked()
+{
+	if (IsValid(GraphicSettingWidgetClass))
+	{
+		GraphicSettingWidgetAsset = Cast<UGraphicSettingWidget>(CreateWidget(GetWorld(), GraphicSettingWidgetClass));
+	}
+	GraphicSettingWidgetAsset->Init();
+}
+
+void UMainSettingWidget::InputButtonClicked()
+{
+	if (IsValid(InputSettingWidgetClass))
+	{
+		InputSettingWidgetAsset = Cast<UInputSettingWidget>(CreateWidget(GetWorld(), InputSettingWidgetClass));
+	}
+	InputSettingWidgetAsset->Init();
 }

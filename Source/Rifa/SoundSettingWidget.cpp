@@ -12,7 +12,9 @@ void USoundSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	CollectionButton = Cast<UButton>(GetWidgetFromName(TEXT("CollectionButton")));
+	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	CollectionButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CrossFadeSound);
+	ReturnButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CloseWidget);
 	BGMComponent = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
 }
 
