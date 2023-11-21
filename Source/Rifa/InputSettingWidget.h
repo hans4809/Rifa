@@ -49,10 +49,17 @@ protected:
 	class UInputKeySelector* MoveKeySelector;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
 	class UInputKeySelector* JumpKeySelector;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool ListenforRemap;
 public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
+	UFUNCTION(BlueprintCallable)
+	void SwimKeyChangedClicked();
+	UFUNCTION(BlueprintCallable)
+	void SwimKeyChanged(const FInputChord SelectedKey);
+	UFUNCTION(BlueprintCallable)
+	void KeyChanged(const FInputChord SelectedKey, class UInputAction* Action, FKey CurrentKey);
 };

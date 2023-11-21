@@ -27,17 +27,22 @@ void UInputSettingWidget::NativeConstruct()
 	{
 		if (DefaultInputMappings[i].Action == JumpAction) 
 		{
-			JumpKeySelector->SetSelectedKey(DefaultInputMappings[i].Key);
+			JumpKeySelector->SetSelectedKey(FInputChord(DefaultInputMappings[i].Key));
+			CurrentJumpKey = DefaultInputMappings[i].Key;
 		}
 		else if (DefaultInputMappings[i].Action == FlyAction)
 		{
-			FlyKeySelector->SetSelectedKey(DefaultInputMappings[i].Key);
+			FlyKeySelector->SetSelectedKey(FInputChord(DefaultInputMappings[i].Key));
+			CurrentFlyKey = DefaultInputMappings[i].Key;
 		}
 		else if (DefaultInputMappings[i].Action == SwimAction)
 		{
-			SwimKeySelector->SetSelectedKey(DefaultInputMappings[i].Key);
+			SwimKeySelector->SetSelectedKey(FInputChord(DefaultInputMappings[i].Key));
+			CurrentSwimKey = DefaultInputMappings[i].Key;
 		}
 	}
+	SwimKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::SwimKeyChangedClicked);
+	SwimKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::SwimKeyChanged);
 }
 
 void UInputSettingWidget::Init()
@@ -49,3 +54,25 @@ void UInputSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
 }
+
+void UInputSettingWidget::SwimKeyChangedClicked()
+{
+	ListenforRemap = true;
+}
+
+void UInputSettingWidget::SwimKeyChanged(const FInputChord SelectedKey)
+{
+	KeyChanged(SelectedKey, SwimAction, CurrentSwimKey);
+}
+
+void UInputSettingWidget::KeyChanged(const FInputChord SelectedKey, UInputAction* Action, FKey CurrentKey)
+{
+	if (ListenforRemap) {
+		ListenforRemap = false;
+		DefaultMappingContext->UnmapKey(Action, CurrentKey);
+		DefaultMappingContext->MapKey(Action, SelectedKey.Key);
+		CurrentKey = SelectedKey.Key;
+	}
+}
+
+
