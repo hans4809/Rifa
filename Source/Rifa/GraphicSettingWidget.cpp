@@ -4,13 +4,12 @@
 #include "GraphicSettingWidget.h"
 #include "Components/Button.h"
 #include "RifaCharacter.h"
+#include "GameFramework/GameUserSettings.h"
 
-void UGraphicSettingWidget::NativeConstruct()
+void UGraphicSettingWidget::FirstConstruct()
 {
-	Super::NativeConstruct();
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	ReturnButton->OnClicked.AddDynamic(this, &UGraphicSettingWidget::CloseWidget);
-
 }
 
 void UGraphicSettingWidget::Init()

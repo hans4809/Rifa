@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "PopUpWidget.h"
-#include "InputMappingContext.h"
 #include "GraphicSettingWidget.generated.h"
 
 /**
@@ -15,12 +14,11 @@ class RIFA_API UGraphicSettingWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
 protected:
-	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ReturnButton;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputMappingContext* DefaultMappingContext;
 public:
+	UFUNCTION(BlueprintCallable)
+	void FirstConstruct();
 	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable)

@@ -16,6 +16,7 @@ class RIFA_API UInputSettingWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
 protected:
+	UFUNCTION(BlueprintCallable)
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ReturnButton;
