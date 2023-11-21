@@ -49,9 +49,9 @@ void ATemplate_Pickup::BeginPlay()
 			PickupTextReference->PickupActor = ItemInfo.ItemActor;
 			PickupTextReference->PickupText = ItemInfo.ItemName;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			if (CharacterReference->PickupItem.IsBound()) {
+			/*if (CharacterReference->PickupItem.IsBound()) {
 				CharacterReference->PickupItem.Clear();
-			}
+			}*/
 			CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
 		}
 	}	

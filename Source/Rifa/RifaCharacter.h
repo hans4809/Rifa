@@ -42,6 +42,8 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* SwimAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InventoryAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InterAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
@@ -53,17 +55,25 @@ public:
 	//Event 생성
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic PickupItem;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
+	int FlyEnergyValue;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
-	float FlyTime;
+	UFUNCTION(BlueprintCallable)
+	float GetFlyTime(int _FlyEnergyValue);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	int SwimEnergyValue;
+	UFUNCTION(BlueprintCallable)
+	float GetSwimTime(int _SwimEnergyValue);
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	float SwimHeight;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector StartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector SwimStartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
 	void Die(AActor* trap);
@@ -77,8 +87,6 @@ public:
 	TArray<int> ItemList;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString SoundTrack;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
-	float EnergyValue;
 	UFUNCTION(BlueprintCallable)
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)

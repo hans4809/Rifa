@@ -4,11 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "InventoryStruct.h"
 #include "MyGameInstance.generated.h"
 /**
  * 
  */
+UENUM()
+enum class UI_Name : uint8
+{
+	UPanelWidget UMETA(DisplayName = "UPanelWidget")
+};
 
 UENUM()
 enum class Item : uint8 // �Ǳ��̸�_���_�����
@@ -46,5 +50,6 @@ public:
 	FString SoundTrack;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap <Item, bool> ItemMap;
-private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int PopupSort = 5;
 };

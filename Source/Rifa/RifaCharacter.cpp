@@ -63,17 +63,65 @@ ARifaCharacter::ARifaCharacter()
 	RifaCharacterMovement = GetCharacterMovement();
 	PhysicsVolume = GetPhysicsVolume();
 	FlyHeight = 100.f;
-	FlyTime = 5.f;
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
+float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
+{
+	switch (_FlyEnergyValue)
+	{
+		case 1:
+			return 3.0f;
+			break;
+		case 2:
+			return 5.0f;
+			break;
+		case 3:
+			return 7.0f;
+			break;
+		case 4:
+			return 9.0f;
+			break;
+		case 5:
+			return 11.0f;
+			break;
+		default:
+			return 0.0f;
+	}
+}
+
+float ARifaCharacter::GetSwimTime(int _SwimEnergyValue)
+{
+	switch (_SwimEnergyValue)
+	{
+		case 1:
+			return 2.0f;
+			break;
+		case 2:
+			return 3.0f;
+			break;
+		case 3:
+			return 4.0f;
+			break;
+		case 4:
+			return 5.0f;
+			break;
+		case 5:
+			return 6.0f;
+			break;
+		default:
+			return 0.0f;
+	}
+}
+
 void ARifaCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -87,13 +135,13 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
-	GameStart();
+	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 		if (IsValid(GameHUDWidget))
 		{
-			GameHUDWidget->AddToViewport();
+			GameHUDWidget->Init();
 		}
 	}
 }
@@ -190,9 +238,11 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
 		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
+
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
-		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
+		//PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
 }
@@ -239,12 +289,12 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 }
 void ARifaCharacter::Fly()
 {
-	if (InventoryOpen) {
+	if (InventoryOpen || FlyEnergyValue == 0) {
 		return;
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
-		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyTime, false);
+		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, ARifaCharacter::GetFlyTime(FlyEnergyValue), false);
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
@@ -285,15 +335,15 @@ void ARifaCharacter::AnimTimerFunc()
 
 void ARifaCharacter::Swim()
 {
-	if (InventoryOpen) {
+	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
 	IsSwimming = true;
 	StartLocation = GetActorLocation();
-	SetActorLocation(SwimStartLocation + GetActorUpVector() * FlyHeight);
+	SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
 	RifaCharacterMovement->bCheatFlying = true;
 	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, FlyTime, false);
+	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
 }
 
 void ARifaCharacter::ReturnWalk()
