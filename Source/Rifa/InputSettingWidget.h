@@ -22,6 +22,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputMappingContext* DefaultMappingContext;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InterAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	FKey CurrentInterActionKey;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* JumpAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	FKey CurrentJumpKey;
@@ -57,9 +61,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 	UFUNCTION(BlueprintCallable)
-	void SwimKeyChangedClicked();
+	void KeyChangedClicked();
 	UFUNCTION(BlueprintCallable)
 	void SwimKeyChanged(const FInputChord SelectedKey);
+	UFUNCTION(BlueprintCallable)
+	void InterActionKeyChanged(const FInputChord SelectedKey);
+	UFUNCTION(BlueprintCallable)
+	void FlyKeyChanged(const FInputChord SelectedKey);
+	UFUNCTION(BlueprintCallable)
+	void JumpKeyChanged(const FInputChord SelectedKey);
 	UFUNCTION(BlueprintCallable)
 	void KeyChanged(const FInputChord SelectedKey, class UInputAction* Action, FKey CurrentKey);
 };

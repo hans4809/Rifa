@@ -6,6 +6,7 @@
 #include "MainSettingWidget.h"
 #include "Sound/SoundBase.h"
 #include "Sound/SoundCue.h"
+#include <Kismet/GameplayStatics.h>
 
 void URifaMainHUD::NativeConstruct()
 {
@@ -15,6 +16,7 @@ void URifaMainHUD::NativeConstruct()
 	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
 	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
+	LoadButton->OnClicked.AddDynamic(this, &URifaMainHUD::LoadButtonClicked);
 	PlaySound(MainBGM);
 }
 
@@ -30,4 +32,9 @@ void URifaMainHUD::SettingButtonClicked()
 		MainSettingWidgetAsset = Cast<UMainSettingWidget>(CreateWidget(GetWorld(), MainSettingWidgetClass));
 	}
 	MainSettingWidgetAsset->Init();
+}
+
+void URifaMainHUD::LoadButtonClicked()
+{
+	UGameplayStatics::OpenLevel(this, TEXT("ThirdPersonMap"));
 }

@@ -42,6 +42,8 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* SwimAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InventoryAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InterAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()

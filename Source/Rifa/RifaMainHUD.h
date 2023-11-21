@@ -35,4 +35,6 @@ public:
 	class USoundCue* MainBGM;
 	UFUNCTION(BlueprintCallable)
 	void SettingButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void LoadButtonClicked();
 };

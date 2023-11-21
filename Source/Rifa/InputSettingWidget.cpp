@@ -40,9 +40,21 @@ void UInputSettingWidget::NativeConstruct()
 			SwimKeySelector->SetSelectedKey(FInputChord(DefaultInputMappings[i].Key));
 			CurrentSwimKey = DefaultInputMappings[i].Key;
 		}
+		else if (DefaultInputMappings[i].Action == InterAction)
+		{
+			InteractionKeySelector->SetSelectedKey(FInputChord(DefaultInputMappings[i].Key));
+			CurrentInterActionKey = DefaultInputMappings[i].Key;
+		}
 	}
-	SwimKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::SwimKeyChangedClicked);
+	SwimKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
 	SwimKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::SwimKeyChanged);
+	InteractionKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
+	InteractionKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::InterActionKeyChanged);
+	FlyKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
+	FlyKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::FlyKeyChanged);
+	JumpKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
+	JumpKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::JumpKeyChanged);
+
 }
 
 void UInputSettingWidget::Init()
@@ -55,7 +67,7 @@ void UInputSettingWidget::CloseWidget()
 	Super::CloseWidget();
 }
 
-void UInputSettingWidget::SwimKeyChangedClicked()
+void UInputSettingWidget::KeyChangedClicked()
 {
 	ListenforRemap = true;
 }
@@ -63,6 +75,21 @@ void UInputSettingWidget::SwimKeyChangedClicked()
 void UInputSettingWidget::SwimKeyChanged(const FInputChord SelectedKey)
 {
 	KeyChanged(SelectedKey, SwimAction, CurrentSwimKey);
+}
+
+void UInputSettingWidget::InterActionKeyChanged(const FInputChord SelectedKey)
+{
+	KeyChanged(SelectedKey, InterAction, CurrentInterActionKey);
+}
+
+void UInputSettingWidget::FlyKeyChanged(const FInputChord SelectedKey)
+{
+	KeyChanged(SelectedKey, FlyAction, CurrentFlyKey);
+}
+
+void UInputSettingWidget::JumpKeyChanged(const FInputChord SelectedKey)
+{
+	KeyChanged(SelectedKey, JumpAction, CurrentJumpKey);
 }
 
 void UInputSettingWidget::KeyChanged(const FInputChord SelectedKey, UInputAction* Action, FKey CurrentKey)
