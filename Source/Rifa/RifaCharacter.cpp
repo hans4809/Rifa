@@ -19,6 +19,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Animation/WidgetAnimation.h"
 #include "MyGameInstance.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -237,11 +238,11 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
-		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
 		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
 
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
-		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
+		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::SwimCheck);
 		//PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
@@ -325,6 +326,46 @@ void ARifaCharacter::OpenAndCloseInventory()
 		}
 	}
 }
+
+bool ARifaCharacter::SwimCheck()
+{
+	FHitResult HitResult;
+	FCollisionQueryParams Params(NAME_None, false, this);
+	//FCollisionQueryParams Apara(NAME_None, false, this);
+	float CollisionRange = 1000.f;
+	float CollisionRadius = 50.f;
+	/*bool aResult = ActorLineTraceSingle(
+		OUT HitResult,
+		GetActorLocation(),
+		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		ECollisionChannel::ECC_EngineTraceChannel2,
+		Params
+	);*/
+	bool bResult = GetWorld()->LineTraceSingleByChannel(
+		OUT HitResult,
+		GetActorLocation(),
+		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		ECollisionChannel::ECC_EngineTraceChannel2,
+		Params
+	);
+	FColor DrawColor = FColor::Red;
+	DrawDebugLine(
+		GetWorld(),
+		GetActorLocation(),
+		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		DrawColor,
+		false,
+		2.f);
+	if (bResult && HitResult.GetActor()->IsValidLowLevel())
+	{	
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Location.ToString());
+		SwimStartLocation = HitResult.Location;
+		if (HitResult.GetActor()->GetName().Contains(TEXT("Water")))
+			return true;
+	}
+	return false;
+}
 void ARifaCharacter::AnimTimerFunc()
 {
 	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
@@ -338,12 +379,14 @@ void ARifaCharacter::Swim()
 	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
-	IsSwimming = true;
-	StartLocation = GetActorLocation();
-	SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
-	RifaCharacterMovement->bCheatFlying = true;
-	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	if (SwimCheck()) {
+		IsSwimming = true;
+		StartLocation = GetActorLocation();
+		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	}
 }
 
 void ARifaCharacter::ReturnWalk()

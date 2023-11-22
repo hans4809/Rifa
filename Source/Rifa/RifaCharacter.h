@@ -76,6 +76,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
+	bool SwimCheck();
+	UFUNCTION()
 	void Die(AActor* trap);
 	UFUNCTION()
 	void Save();
