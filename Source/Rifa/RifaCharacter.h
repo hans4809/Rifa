@@ -44,6 +44,8 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* InventoryAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InterAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* DashAction;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
@@ -76,7 +78,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
-	bool SwimCheck();
+	FHitResult SwimCheck();
 	UFUNCTION()
 	void Die(AActor* trap);
 	UFUNCTION()
@@ -124,7 +126,10 @@ protected:
 	void Respawn();
 	UFUNCTION(BlueprintCallable)
 	void GameStart();
-
+	UFUNCTION(BlueprintCallable)
+	void Dash();
+	UFUNCTION(BlueprintCallable)
+	void EndDash();
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

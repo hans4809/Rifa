@@ -20,6 +20,7 @@
 #include "Animation/WidgetAnimation.h"
 #include "MyGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "WaterFallComponent.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,7 @@ ARifaCharacter::ARifaCharacter()
 	RifaCharacterMovement = GetCharacterMovement();
 	PhysicsVolume = GetPhysicsVolume();
 	FlyHeight = 100.f;
+	SwimHeight = 100.f;
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
@@ -201,6 +203,16 @@ void ARifaCharacter::GameStart()
 	}
 }
 
+void ARifaCharacter::Dash()
+{
+	RifaCharacterMovement->MaxWalkSpeed = 1000.f;
+}
+
+void ARifaCharacter::EndDash()
+{
+	RifaCharacterMovement->MaxWalkSpeed = 500.f;
+}
+
 void ARifaCharacter::EnableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
@@ -240,7 +252,9 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
 		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
 		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
-
+		//Dash
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Dash);
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ARifaCharacter::EndDash);
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
 		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::SwimCheck);
 		//PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
@@ -327,25 +341,17 @@ void ARifaCharacter::OpenAndCloseInventory()
 	}
 }
 
-bool ARifaCharacter::SwimCheck()
+FHitResult ARifaCharacter::SwimCheck()
 {
 	FHitResult HitResult;
 	FCollisionQueryParams Params(NAME_None, false, this);
-	//FCollisionQueryParams Apara(NAME_None, false, this);
-	float CollisionRange = 1000.f;
-	float CollisionRadius = 50.f;
-	/*bool aResult = ActorLineTraceSingle(
-		OUT HitResult,
-		GetActorLocation(),
-		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_EngineTraceChannel2,
-		Params
-	);*/
+	float CollisionRange = 1500.f;
+
 	bool bResult = GetWorld()->LineTraceSingleByChannel(
 		OUT HitResult,
 		GetActorLocation(),
 		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_EngineTraceChannel2,
+		ECollisionChannel::ECC_Visibility,
 		Params
 	);
 	FColor DrawColor = FColor::Red;
@@ -357,14 +363,12 @@ bool ARifaCharacter::SwimCheck()
 		false,
 		2.f);
 	if (bResult && HitResult.GetActor()->IsValidLowLevel())
-	{	
+	{
 		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
-		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Location.ToString());
+		UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
 		SwimStartLocation = HitResult.Location;
-		if (HitResult.GetActor()->GetName().Contains(TEXT("Water")))
-			return true;
 	}
-	return false;
+	return HitResult;
 }
 void ARifaCharacter::AnimTimerFunc()
 {
@@ -379,9 +383,13 @@ void ARifaCharacter::Swim()
 	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
-	if (SwimCheck()) {
+	FHitResult HitResult = SwimCheck();
+	if (HitResult.GetActor()->IsValidLowLevel()) {
 		IsSwimming = true;
 		StartLocation = GetActorLocation();
+		if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
+			SetActorRotation(FRotator(90.f,0.f,0.f));
+		}
 		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
@@ -392,6 +400,7 @@ void ARifaCharacter::Swim()
 void ARifaCharacter::ReturnWalk()
 {
 	IsSwimming = false;
+	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Falling);
@@ -401,6 +410,7 @@ void ARifaCharacter::ReturnWalk()
 void ARifaCharacter::EndSwim()
 {
 	SetActorLocation(StartLocation);
+	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	IsSwimming = false;
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
