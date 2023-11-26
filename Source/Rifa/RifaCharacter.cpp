@@ -70,7 +70,6 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
-	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
@@ -126,6 +125,7 @@ void ARifaCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -139,7 +139,6 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
-	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -148,13 +147,14 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
+
+	GameStart();
 }
 
 void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 {
 	Super::EndPlay(EndReason);
 	PickupItem.Clear();
-	RifaGameInstance->Load();
 }
 
 //void ARifaCharacter::OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

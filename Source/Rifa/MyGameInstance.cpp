@@ -9,9 +9,12 @@
 
 UMyGameInstance::UMyGameInstance()
 {
+	ItemMap = TMap<Item, bool>();
 	for (int i = 0; i < (int)Item::MaxCount; i++) {
 		ItemMap.Add((Item)i, false);
 	}
+	Position = FVector(0, 0, 0);
+	SoundTrack = "";
 }
 
 void UMyGameInstance::Save()
@@ -29,8 +32,10 @@ void UMyGameInstance::Load()
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
 	{
+
 		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
 	}
+
 	Position = RIFASaveGame->SavePosition;
 	ItemMap = RIFASaveGame->ItemMap;
 	SoundTrack = RIFASaveGame->SoundTrack;

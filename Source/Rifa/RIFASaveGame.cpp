@@ -6,8 +6,11 @@
 
 URIFASaveGame::URIFASaveGame()
 {
-	SavePosition = FVector();
+	SavePosition = FVector(0, 0, 0);
 	ItemMap = TMap<Item, bool>();
+	for (int i = 0; i < (int)Item::MaxCount; i++) {
+		ItemMap.Add((Item)i, false);
+	}
 	SaveSlotName = "";
 	SaveIndex = 0;
 	SoundTrack = "";
