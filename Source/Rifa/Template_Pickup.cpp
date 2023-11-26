@@ -33,13 +33,12 @@ ATemplate_Pickup::ATemplate_Pickup()
 void ATemplate_Pickup::BeginPlay()
 {
 	Super::BeginPlay();
-	ItemInfo.Item = Cast<AActor>(this);
+	ItemInfo.ItemActor = Cast<AActor>(this);
 	ItemInfo.ItemImage = CustomImage;
-	ItemInfo.ItemName = CustomPickupText;
-	ItemInfo.AcitonText = CustomActionText;
 	ItemInfo.BGM_On = CustomBGM_On;
 	ItemInfo.IsHave = CustomIsHave;
-	CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
+	ItemInfo.ItemName = CustomItemName;
+	//CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	Mesh->SetStaticMesh(CustomStaticMesh);
 	if (IsValid(PickupTextClass))
@@ -47,12 +46,12 @@ void ATemplate_Pickup::BeginPlay()
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
 		if (IsValid(PickupTextReference))
 		{
-			PickupTextReference->PickupActor = ItemInfo.Item;
+			PickupTextReference->PickupActor = ItemInfo.ItemActor;
 			PickupTextReference->PickupText = ItemInfo.ItemName;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			if (CharacterReference->PickupItem.IsBound()) {
+			/*if (CharacterReference->PickupItem.IsBound()) {
 				CharacterReference->PickupItem.Clear();
-			}
+			}*/
 			CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
 		}
 	}	
@@ -96,6 +95,7 @@ void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
+		RifaGameInstance->ItemMap[(Item)ItemIndex] = true;
 		PickupTextReference->RemoveFromParent();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);

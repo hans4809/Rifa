@@ -18,6 +18,10 @@
 #include "RifaHUD.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Animation/WidgetAnimation.h"
+#include "MyGameInstance.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "WaterFallComponent.h"
+
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,16 +66,66 @@ ARifaCharacter::ARifaCharacter()
 	RifaCharacterMovement = GetCharacterMovement();
 	PhysicsVolume = GetPhysicsVolume();
 	FlyHeight = 100.f;
-	FlyTime = 5.f;
+	SwimHeight = 100.f;
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+}
+
+float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
+{
+	switch (_FlyEnergyValue)
+	{
+		case 1:
+			return 3.0f;
+			break;
+		case 2:
+			return 5.0f;
+			break;
+		case 3:
+			return 7.0f;
+			break;
+		case 4:
+			return 9.0f;
+			break;
+		case 5:
+			return 11.0f;
+			break;
+		default:
+			return 0.0f;
+	}
+}
+
+float ARifaCharacter::GetSwimTime(int _SwimEnergyValue)
+{
+	switch (_SwimEnergyValue)
+	{
+		case 1:
+			return 2.0f;
+			break;
+		case 2:
+			return 3.0f;
+			break;
+		case 3:
+			return 4.0f;
+			break;
+		case 4:
+			return 5.0f;
+			break;
+		case 5:
+			return 6.0f;
+			break;
+		default:
+			return 0.0f;
+	}
 }
 
 void ARifaCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -85,13 +139,13 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
-	GameStart();
+	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 		if (IsValid(GameHUDWidget))
 		{
-			GameHUDWidget->AddToViewport();
+			GameHUDWidget->Init();
 		}
 	}
 }
@@ -101,6 +155,36 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 	Super::EndPlay(EndReason);
 	PickupItem.Clear();
 }
+
+//void ARifaCharacter::OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (Cast<IInteractionInterface>(OtherActor)) 
+//	{
+//		InteractionInRange.AddUnique(Cast<IInteractionInterface>(OtherActor));
+//	}
+//	else 
+//	{
+//		for (UActorComponent* var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
+//		{
+//			InteractionInRange.AddUnique(Cast<IInteractionInterface>(var));
+//		}
+//	}
+//}
+//
+//void ARifaCharacter::EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	if (Cast<IInteractionInterface>(OtherActor))
+//	{
+//		InteractionInRange.Remove(Cast<IInteractionInterface>(OtherActor));
+//	}
+//	else
+//	{
+//		for (UActorComponent * var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
+//		{
+//			InteractionInRange.Remove(Cast<IInteractionInterface>(var));
+//		}
+//	}
+//}
 
 void ARifaCharacter::Die(AActor* trap)
 {
@@ -150,6 +234,16 @@ void ARifaCharacter::GameStart()
 	}
 }
 
+void ARifaCharacter::Dash()
+{
+	RifaCharacterMovement->MaxWalkSpeed = 1000.f;
+}
+
+void ARifaCharacter::EndDash()
+{
+	RifaCharacterMovement->MaxWalkSpeed = 500.f;
+}
+
 void ARifaCharacter::EnableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
@@ -166,6 +260,21 @@ void ARifaCharacter::DisableMouseCursor()
 		RifaHUD->ShowCrossHair = true;
 	}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
+}
+
+void ARifaCharacter::UseAction()
+{
+	return;
+}
+
+void ARifaCharacter::DropAction(AActor* DropToItem)
+{
+	return;
+}
+
+void ARifaCharacter::OnInterAction(ARifaCharacter* InterActionCharacter)
+{
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -187,10 +296,14 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
-		//EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
+		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
+		//Dash
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Dash);
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ARifaCharacter::EndDash);
 		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
-		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Swim);
-		PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
+		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::SwimCheck);
+		//PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
 }
@@ -237,12 +350,12 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 }
 void ARifaCharacter::Fly()
 {
-	if (InventoryOpen) {
+	if (InventoryOpen || FlyEnergyValue == 0) {
 		return;
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
-		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyTime, false);
+		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, ARifaCharacter::GetFlyTime(FlyEnergyValue), false);
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
@@ -273,6 +386,36 @@ void ARifaCharacter::OpenAndCloseInventory()
 		}
 	}
 }
+
+FHitResult ARifaCharacter::SwimCheck()
+{
+	FHitResult HitResult;
+	FCollisionQueryParams Params(NAME_None, false, this);
+	float CollisionRange = 1500.f;
+
+	bool bResult = GetWorld()->LineTraceSingleByChannel(
+		OUT HitResult,
+		GetActorLocation(),
+		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		ECollisionChannel::ECC_Visibility,
+		Params
+	);
+	FColor DrawColor = FColor::Red;
+	DrawDebugLine(
+		GetWorld(),
+		GetActorLocation(),
+		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		DrawColor,
+		false,
+		2.f);
+	if (bResult && HitResult.GetActor()->IsValidLowLevel())
+	{
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
+		SwimStartLocation = HitResult.Location;
+	}
+	return HitResult;
+}
 void ARifaCharacter::AnimTimerFunc()
 {
 	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
@@ -283,20 +426,27 @@ void ARifaCharacter::AnimTimerFunc()
 
 void ARifaCharacter::Swim()
 {
-	if (InventoryOpen) {
+	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
-	IsSwimming = true;
-	StartLocation = GetActorLocation();
-	SetActorLocation(SwimStartLocation + GetActorUpVector() * FlyHeight);
-	RifaCharacterMovement->bCheatFlying = true;
-	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, FlyTime, false);
+	FHitResult HitResult = SwimCheck();
+	if (HitResult.GetActor()->IsValidLowLevel()) {
+		IsSwimming = true;
+		StartLocation = GetActorLocation();
+		if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
+			SetActorRotation(FRotator(90.f,0.f,0.f));
+		}
+		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	}
 }
 
 void ARifaCharacter::ReturnWalk()
 {
 	IsSwimming = false;
+	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Falling);
@@ -306,6 +456,7 @@ void ARifaCharacter::ReturnWalk()
 void ARifaCharacter::EndSwim()
 {
 	SetActorLocation(StartLocation);
+	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	IsSwimming = false;
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
@@ -320,10 +471,11 @@ void ARifaCharacter::Interaction()
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{
-		if (GameHUDWidget->Inventory.Num() < 5)
+		if (PickupItem.IsBound() == true) 
 		{
-			if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
-			return;
+			PickupItem.Broadcast(); 
+			if (NPCTalk.IsBound() == true)
+				NPCTalk.Broadcast();
 		}
 		return;
 	}

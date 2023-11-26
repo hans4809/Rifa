@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "InventoryStruct.h"
+#include "SceneWidget.h"
 #include "DoOnce.h"
 #include "GameHUD.generated.h"
 
@@ -12,7 +13,7 @@
  * 
  */
 UCLASS()
-class RIFA_API UGameHUD : public UUserWidget
+class RIFA_API UGameHUD : public USceneWidget
 {
 	GENERATED_BODY()
 public:
@@ -66,16 +67,21 @@ protected:
 	class UInventorySlot* Slot_14;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UInventorySlot* Slot_15;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (Inventory))
-	TArray<UInventorySlot*> SlotArray;
 	UPROPERTY(VisibleAnywhere)
 	FDoOnce DoOnce;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
+	UTexture2D* HavingImage;
 public:
+	
 	UPROPERTY(BlueprintReadOnly, Transient, Category = "Animation", meta = (BindWidgetAnim))
 	class UWidgetAnimation* MenuAnim;
-	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
-	TArray<FItemStruct> Inventory;
+	TArray<UInventorySlot*> SlotArray;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
+	class UMyGameInstance* RifaGameInstance;
+	UFUNCTION(BlueprintCallable)
+	virtual void Init() override;
+	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
 	void RefreshInventory_C();
 	UFUNCTION(BlueprintCallable)
@@ -94,8 +100,12 @@ public:
 	FORCEINLINE ESlateVisibility GetActionMenuVisible() { return ActionMenuVisible; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetActionMenuVisible(ESlateVisibility _ActionMenuVisible) { ActionMenuVisible = _ActionMenuVisible; }
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE TArray<FItemStruct> GetInventory() { return Inventory; }
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TSubclassOf<UPanelWidget> SizeBoxClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class USizeBox* FlyEnergySizeBox;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class USizeBox* SwimEnergySizeBox;
 	//UFUNCTION(BlueprintCallable)
 	//virtual UUMGSequencePlayer* PlayAnimation(UWidgetAnimation* InAnimation, float StartAtTime = 0.0f, int32 NumLoopsToPlay = 1, EUMGSequencePlayMode::Type PlayMode = EUMGSequencePlayMode::Forward, float PlaybackSpeed = 1.0f, bool bRestoreState = false);
 };

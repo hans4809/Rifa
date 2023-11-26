@@ -8,9 +8,14 @@
 /**
  * 
  */
+UENUM()
+enum class UI_Name : uint8
+{
+	UPanelWidget UMETA(DisplayName = "UPanelWidget")
+};
 
 UENUM()
-enum class Item : uint8 // ¾Ç±âÀÌ¸§_¸î¹ø_³ô³·ÀÌ
+enum class Item : uint8 // ï¿½Ç±ï¿½ï¿½Ì¸ï¿½_ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	Piano_1_Medium,
 	WindInstrument_1_Medium,
@@ -28,6 +33,7 @@ enum class Item : uint8 // ¾Ç±âÀÌ¸§_¸î¹ø_³ô³·ÀÌ
 	Bell_2_High,
 	PercussionInstrument_3_High,
 	StringInstrument_4_High,
+	MaxCount
 };
 
 UCLASS()
@@ -44,5 +50,6 @@ public:
 	FString SoundTrack;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap <Item, bool> ItemMap;
-private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int PopupSort = 5;
 };

@@ -3,6 +3,8 @@
 
 #include "InventorySlot.h"
 #include "Components/Button.h"
+#include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 void UInventorySlot::NativeOnInitialized()
 {
@@ -11,6 +13,7 @@ void UInventorySlot::NativeOnInitialized()
 	if (ItemButton->OnClicked.IsBound()) {
 		ItemButton->OnClicked.Clear();
 	}
+
 	ItemButton->OnClicked.AddDynamic(this, &UInventorySlot::ButtonWasClicked_Event);
 }
 void UInventorySlot::NativeDestruct()
