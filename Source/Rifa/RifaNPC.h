@@ -12,6 +12,8 @@ class RIFA_API ARifaNPC : public ACharacter
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Collision, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* Trigger;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Dialog", meta = (AllowPrivateAccess = "true"))
+	class UDialogComponent* DialogComponent;
 public:
 	// Sets default values for this character's properties
 	ARifaNPC();

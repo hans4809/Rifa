@@ -7,6 +7,7 @@
 #include "PickupText.h"
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "DialogComponent.h"
 
 // Sets default values
 ARifaNPC::ARifaNPC()
@@ -16,6 +17,7 @@ ARifaNPC::ARifaNPC()
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("Trigger"));
 	Trigger->SetupAttachment(RootComponent);
 	Trigger->SetSphereRadius(150.f);
+	DialogComponent = CreateDefaultSubobject<UDialogComponent>(TEXT("DialogComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -25,6 +27,8 @@ void ARifaNPC::BeginPlay()
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+		PickupTextReference->PickupText = FString(TEXT("Press E"));
+		PickupTextReference->PickupActor = this;
 		if (IsValid(PickupTextReference))
 		{
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
@@ -57,7 +61,7 @@ void ARifaNPC::Dialog()
 {
 	if (IsInRange) 
 	{
-
+		DialogComponent->OnInterAction(CharacterReference);
 	}
 }
 

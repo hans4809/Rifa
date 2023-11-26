@@ -21,6 +21,7 @@ UDialogComponent::UDialogComponent()
 	{
 		DialogBlackBoard = BBObject.Object;
 	}
+
 	// ...
 }
 
@@ -31,7 +32,11 @@ void UDialogComponent::BeginPlay()
 	Super::BeginPlay();
 	DialogAIController = Cast<ANPCAIController>(GetWorld()->SpawnActor(ANPCAIController::StaticClass()));
 	// ...
-	
+	if (IsValid(DialogWidgetClass))
+	{
+		DialogWidgetAsset = Cast<UDialogWidget>(CreateWidget(GetWorld(), DialogWidgetClass));
+	}
+	DialogWidgetAsset->OnExit.AddDynamic(this, &UDialogComponent::OnExit);
 }
 
 
@@ -55,12 +60,9 @@ void UDialogComponent::DropAction(AActor* DropToItem)
 
 void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 {
-	if (IsValid(DialogWidgetClass))
-	{
-		DialogWidgetAsset = Cast<UDialogWidget>(CreateWidget(GetWorld(), DialogWidgetClass));
-	}
+
 	DialogWidgetAsset->Init();
-	DialogWidgetAsset->OnExit.AddDynamic(this, &UDialogComponent::OnExit);
+
 	DialogAIController->RunBehaviorTree(DialogTree);
 	DialogAIController->UseBlackboard(DialogBlackBoard, BlackboardComponent);
 	BlackboardComponent->SetValueAsObject(FName(TEXT("DialogWidget")), DialogWidgetAsset);
