@@ -51,4 +51,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		AActor* light;
+		
+	UPROPERTY(EditAnywhere)
+		FRotator lightDefault;
 };

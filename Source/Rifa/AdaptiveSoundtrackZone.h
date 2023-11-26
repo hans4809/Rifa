@@ -31,4 +31,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	FString SoundTrack;
+
+	UPROPERTY(EditAnyWhere)
+	class UMyGameInstance* RifaGameInstance;
 };

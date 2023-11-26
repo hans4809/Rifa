@@ -154,6 +154,7 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 {
 	Super::EndPlay(EndReason);
 	PickupItem.Clear();
+	RifaGameInstance->Load();
 }
 
 //void ARifaCharacter::OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -188,49 +189,27 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 
 void ARifaCharacter::Die(AActor* trap)
 {
-	SetActorLocation(Position);
+	SetActorLocation(RifaGameInstance->Position);
 	UE_LOG(LogTemp, Log, TEXT("Die"));
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
 }
 
-void ARifaCharacter::Save()
-{
-	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-	NewPlayerData->SavePosition = Position;
-	NewPlayerData->ItemList = ItemList;
-	NewPlayerData->SoundTrack = SoundTrack;
-
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
-}
-
-void ARifaCharacter::Load()
-{
-	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
-	if (nullptr == RIFASaveGame)
-	{
-		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-	}
-	Position = RIFASaveGame->SavePosition;
-	ItemList = RIFASaveGame->ItemList;
-	SoundTrack = RIFASaveGame->SoundTrack;
-}
-
 void ARifaCharacter::Respawn()
 {
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		SetActorLocation(RifaGameInstance->Position);
 	}
 }
 
 void ARifaCharacter::GameStart()
 {
-	Load();
+	RifaGameInstance->Load();
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		SetActorLocation(RifaGameInstance->Position);
 	}
 }
 

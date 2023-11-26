@@ -84,16 +84,6 @@ public:
 	FHitResult SwimCheck();
 	UFUNCTION()
 	void Die(AActor* trap);
-	UFUNCTION()
-	void Save();
-	UFUNCTION()
-	void Load();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector Position;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int> ItemList;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString SoundTrack;
 	UFUNCTION(BlueprintCallable)
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)

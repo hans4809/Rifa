@@ -5,6 +5,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "GameHUD.h"
 
+
 ARifaGameMode::ARifaGameMode()
 {
 	// set default pawn class to our Blueprinted character

@@ -96,6 +96,7 @@ void ATemplate_Pickup::PickupItemEvent()
 	if (GetActorEnableCollision() && IsInRange) 
 	{
 		RifaGameInstance->ItemMap[(Item)ItemIndex] = true;
+		RifaGameInstance->Save();
 		PickupTextReference->RemoveFromParent();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);

@@ -37,5 +37,6 @@ public:
 	USceneComponent* SavePosition;
 	UPROPERTY(EditAnywhere, Category = "ETC")
 	FVector Position;
-
+	UPROPERTY(EditAnyWhere)
+	class UMyGameInstance* RifaGameInstance;
 };

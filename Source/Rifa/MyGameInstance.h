@@ -52,4 +52,10 @@ public:
 	TMap <Item, bool> ItemMap;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
+
+	UFUNCTION()
+	void Save();
+
+	UFUNCTION()
+	void Load();
 };

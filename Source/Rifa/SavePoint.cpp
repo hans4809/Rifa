@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ASavePoint::ASavePoint()
@@ -26,7 +27,7 @@ ASavePoint::ASavePoint()
 void ASavePoint::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 // Called every frame
@@ -52,7 +53,6 @@ void ASavePoint::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 
 void ASavePoint::SavePlayerData(AActor* OtherActor)
 {
-	ARifaCharacter* player = Cast<ARifaCharacter>(OtherActor);
-	player->Position = Position;
-	player->Save();
+	RifaGameInstance->Position = Position;
+	RifaGameInstance->Save();
 }

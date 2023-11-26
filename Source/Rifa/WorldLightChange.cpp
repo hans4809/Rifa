@@ -42,15 +42,21 @@ void AWorldLightChange::Tick(float DeltaTime)
 	{
 		float a = FVector::Dist(player->GetActorLocation(), end->GetComponentLocation()) / MaxDistance;
 		if (Distance > a)
+		{
 			Distance = a;
-		light->SetActorRotation(light->GetActorRotation() + FRotator(0.0f, FMath::Lerp(StartDegree, EndDegree, a), 0.0f));
+			light->SetActorRotation(lightDefault + FRotator(FMath::Lerp(EndDegree, StartDegree, Distance), 0.0f, 0.0f));
+			UE_LOG(LogTemp, Log, TEXT("%f"), FMath::Lerp(StartDegree, EndDegree, Distance));
+		}
 	}
 }
 
 void AWorldLightChange::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Log, TEXT("ChangeStart"));
 	player = GetWorld()->GetFirstPlayerController()->GetPawn();
 	MaxDistance = FVector::Dist(Trigger->GetComponentLocation(), end->GetComponentLocation());
+	Distance = 1;
+	lightDefault = light->GetActorRotation();
 	IsChangeStart = true;
 }
 
