@@ -5,11 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "InteractionInterface.h"
 #include "RifaCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
 UCLASS(config=Game)
-class ARifaCharacter : public ACharacter
+class ARifaCharacter : public ACharacter, public IInteractionInterface
 {
 	GENERATED_BODY()
 
@@ -57,6 +58,8 @@ public:
 	//Event 생성
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic PickupItem;
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
+	FDele_Dynamic NPCTalk;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
 	int FlyEnergyValue;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
@@ -95,6 +98,15 @@ public:
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
+#pragma region InterfaceFunction
+	// InteractionInterface 상속 때문에 override 선언
+	UFUNCTION()
+	virtual void UseAction() override;
+	UFUNCTION()
+	virtual void DropAction(AActor* DropToItem) override;
+	UFUNCTION()
+	virtual void OnInterAction(ARifaCharacter* InterActionCharacter) override;
+#pragma endregion
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -137,7 +149,9 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 	virtual void EndPlay(EEndPlayReason::Type) override;
-
+	//void OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	//UFUNCTION(BlueprintCallable)
+	//void EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 private:
 	UPROPERTY()
 	FTimerHandle FlyTimer;
@@ -151,6 +165,8 @@ private:
 	void AnimTimerFunc();
 	UPROPERTY()
 	bool InventoryOpen = false;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = true))
+	TArray<IInteractionInterface*> InteractionInRange;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }

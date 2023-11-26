@@ -23,6 +23,7 @@
 #include "WaterFallComponent.h"
 
 
+
 //////////////////////////////////////////////////////////////////////////
 // ARifaCharacter
 
@@ -155,6 +156,36 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 	PickupItem.Clear();
 }
 
+//void ARifaCharacter::OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (Cast<IInteractionInterface>(OtherActor)) 
+//	{
+//		InteractionInRange.AddUnique(Cast<IInteractionInterface>(OtherActor));
+//	}
+//	else 
+//	{
+//		for (UActorComponent* var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
+//		{
+//			InteractionInRange.AddUnique(Cast<IInteractionInterface>(var));
+//		}
+//	}
+//}
+//
+//void ARifaCharacter::EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	if (Cast<IInteractionInterface>(OtherActor))
+//	{
+//		InteractionInRange.Remove(Cast<IInteractionInterface>(OtherActor));
+//	}
+//	else
+//	{
+//		for (UActorComponent * var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
+//		{
+//			InteractionInRange.Remove(Cast<IInteractionInterface>(var));
+//		}
+//	}
+//}
+
 void ARifaCharacter::Die(AActor* trap)
 {
 	SetActorLocation(Position);
@@ -229,6 +260,21 @@ void ARifaCharacter::DisableMouseCursor()
 		RifaHUD->ShowCrossHair = true;
 	}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
+}
+
+void ARifaCharacter::UseAction()
+{
+	return;
+}
+
+void ARifaCharacter::DropAction(AActor* DropToItem)
+{
+	return;
+}
+
+void ARifaCharacter::OnInterAction(ARifaCharacter* InterActionCharacter)
+{
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -425,7 +471,12 @@ void ARifaCharacter::Interaction()
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{
-		if (PickupItem.IsBound() == true) { PickupItem.Broadcast(); }
+		if (PickupItem.IsBound() == true) 
+		{
+			PickupItem.Broadcast(); 
+			if (NPCTalk.IsBound() == true)
+				NPCTalk.Broadcast();
+		}
 		return;
 	}
 
