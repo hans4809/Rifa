@@ -21,6 +21,7 @@
 #include "MyGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaterFallComponent.h"
+#include "RifaCharacterParts.h"
 
 
 
@@ -70,7 +71,6 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
-	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
@@ -126,7 +126,13 @@ void ARifaCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
-
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	FName HairSocket(TEXT("hair_socket"));
+	auto CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
+	if (CurrentHair) 
+	{
+		CurrentHair->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, HairSocket);
+	}
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{

@@ -13,18 +13,24 @@ ARifaCharacterParts::ARifaCharacterParts()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
-	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
+	//Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
 	RootComponent = Root;
-	Trigger->SetupAttachment(Root);
+	//Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SW(TEXT("/Script/Engine.StaticMesh'/Game/RifaCharacters/Test/idletest_hair01.idletest_hair01'"));
+	if (SW.Succeeded())
+	{
+		Mesh->SetStaticMesh(SW.Object);
+	}
+	Mesh->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 // Called when the game starts or when spawned
 void ARifaCharacterParts::BeginPlay()
 {
 	Super::BeginPlay();
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
+	/*Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterParts::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	if (IsValid(PickupTextClass))
@@ -37,7 +43,7 @@ void ARifaCharacterParts::BeginPlay()
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterParts::PickupCharacterParts);
 		}
-	}
+	}*/
 }
 
 void ARifaCharacterParts::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -62,8 +68,9 @@ void ARifaCharacterParts::PickupCharacterParts()
 {
 	if (GetActorEnableCollision() && IsInRange)
 	{
-		FName HairSocket(TEXT("Hair_Socket"));
+		FName HairSocket(TEXT("hair_socket"));
 		PickupTextReference->RemoveFromParent();
+		Mesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, HairSocket);
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 	}

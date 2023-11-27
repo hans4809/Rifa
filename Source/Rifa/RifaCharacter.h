@@ -51,6 +51,8 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
 	APhysicsVolume* PhysicsVolume;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	UStaticMeshComponent* Hair;
 	UPROPERTY()
 	bool First = true;
 public:

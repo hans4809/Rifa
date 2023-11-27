@@ -19,6 +19,7 @@ class RIFA_API ARifaCharacterParts : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ARifaCharacterParts();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	bool IsInRange;
