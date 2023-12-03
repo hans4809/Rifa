@@ -22,6 +22,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaterFallComponent.h"
 #include "RifaCharacterParts.h"
+#include "Engine/SkeletalMeshSocket.h"
 
 
 
@@ -62,10 +63,11 @@ ARifaCharacter::ARifaCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	CurrentHairMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hair"));
+	//CurrentHairMesh->SetupAttachment(GetMesh(), TEXT("hair_socket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	RifaCharacterMovement = GetCharacterMovement();
-	PhysicsVolume = GetPhysicsVolume();
 	FlyHeight = 100.f;
 	SwimHeight = 100.f;
 	JumpMaxCount = 2;
@@ -127,11 +129,11 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	FName HairSocket(TEXT("hair_socket"));
-	auto CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
-	if (CurrentHair) 
+	CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
+	if (CurrentHair)
 	{
-		CurrentHair->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, HairSocket);
+		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
 	}
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -266,6 +268,14 @@ void ARifaCharacter::DisableMouseCursor()
 		RifaHUD->ShowCrossHair = true;
 	}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
+}
+
+void ARifaCharacter::ChangeHairPart()
+{
+	if (CurrentHair)
+	{
+		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+	}
 }
 
 void ARifaCharacter::UseAction()
