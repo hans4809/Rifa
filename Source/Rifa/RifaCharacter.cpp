@@ -21,6 +21,8 @@
 #include "MyGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaterFallComponent.h"
+#include "RifaCharacterParts.h"
+#include "Engine/SkeletalMeshSocket.h"
 
 
 
@@ -61,10 +63,11 @@ ARifaCharacter::ARifaCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	CurrentHairMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hair"));
+	//CurrentHairMesh->SetupAttachment(GetMesh(), TEXT("hair_socket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	RifaCharacterMovement = GetCharacterMovement();
-	PhysicsVolume = GetPhysicsVolume();
 	FlyHeight = 100.f;
 	SwimHeight = 100.f;
 	JumpMaxCount = 2;
@@ -126,7 +129,12 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-
+	CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
+	if (CurrentHair)
+	{
+		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
+	}
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -139,6 +147,7 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
+	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -147,8 +156,6 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
-
-	GameStart();
 }
 
 void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
@@ -189,27 +196,49 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 
 void ARifaCharacter::Die(AActor* trap)
 {
-	SetActorLocation(RifaGameInstance->Position);
+	SetActorLocation(Position);
 	UE_LOG(LogTemp, Log, TEXT("Die"));
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
 }
 
+void ARifaCharacter::Save()
+{
+	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
+	NewPlayerData->SavePosition = Position;
+	NewPlayerData->ItemList = ItemList;
+	NewPlayerData->SoundTrack = SoundTrack;
+
+	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+}
+
+void ARifaCharacter::Load()
+{
+	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+	if (nullptr == RIFASaveGame)
+	{
+		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
+	}
+	Position = RIFASaveGame->SavePosition;
+	ItemList = RIFASaveGame->ItemList;
+	SoundTrack = RIFASaveGame->SoundTrack;
+}
+
 void ARifaCharacter::Respawn()
 {
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(RifaGameInstance->Position);
+		SetActorLocation(Position);
 	}
 }
 
 void ARifaCharacter::GameStart()
 {
-	RifaGameInstance->Load();
+	Load();
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(RifaGameInstance->Position);
+		SetActorLocation(Position);
 	}
 }
 
@@ -239,6 +268,14 @@ void ARifaCharacter::DisableMouseCursor()
 		RifaHUD->ShowCrossHair = true;
 	}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
+}
+
+void ARifaCharacter::ChangeHairPart()
+{
+	if (CurrentHair)
+	{
+		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+	}
 }
 
 void ARifaCharacter::UseAction()
