@@ -196,49 +196,49 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 
 void ARifaCharacter::Die(AActor* trap)
 {
-	SetActorLocation(Position);
+	//SetActorLocation(Position);
 	UE_LOG(LogTemp, Log, TEXT("Die"));
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
 }
 
-void ARifaCharacter::Save()
-{
-	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-	NewPlayerData->SavePosition = Position;
-	NewPlayerData->ItemList = ItemList;
-	NewPlayerData->SoundTrack = SoundTrack;
+//void ARifaCharacter::Save()
+//{
+//	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
+//	NewPlayerData->SavePosition = Position;
+//	NewPlayerData->ItemList = ItemList;
+//	NewPlayerData->SoundTrack = SoundTrack;
+//
+//	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+//}
 
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
-}
-
-void ARifaCharacter::Load()
-{
-	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
-	if (nullptr == RIFASaveGame)
-	{
-		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-	}
-	Position = RIFASaveGame->SavePosition;
-	ItemList = RIFASaveGame->ItemList;
-	SoundTrack = RIFASaveGame->SoundTrack;
-}
+//void ARifaCharacter::Load()
+//{
+//	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+//	if (nullptr == RIFASaveGame)
+//	{
+//		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
+//	}
+//	Position = RIFASaveGame->SavePosition;
+//	ItemList = RIFASaveGame->ItemList;
+//	SoundTrack = RIFASaveGame->SoundTrack;
+//}
 
 void ARifaCharacter::Respawn()
 {
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		//SetActorLocation(Position);
 	}
 }
 
 void ARifaCharacter::GameStart()
 {
-	Load();
+	//Load();
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		//SetActorLocation(Position);
 	}
 }
 
@@ -344,8 +344,15 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
+		// add movement
+		if (RifaCharacterMovement->IsFlying() && !IsSwimming) 
+		{
+			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
+		}
+		else 
+		{
+			AddMovementInput(ForwardDirection, MovementVector.Y);
+		}
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
 }

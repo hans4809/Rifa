@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "MyGameInstance.h"
 #include "RIFASaveGame.generated.h"
 
 UCLASS()
