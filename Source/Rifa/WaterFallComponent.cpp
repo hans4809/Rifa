@@ -2,6 +2,8 @@
 
 
 #include "WaterFallComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 // Sets default values for this component's properties
 UWaterFallComponent::UWaterFallComponent()

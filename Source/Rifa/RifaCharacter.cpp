@@ -313,7 +313,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
 		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
-		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
+		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Completed, this, &ARifaCharacter::Interaction);
 		//Dash
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Dash);
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ARifaCharacter::EndDash);
@@ -433,8 +433,8 @@ FHitResult ARifaCharacter::SwimCheck()
 		2.f);
 	if (bResult && HitResult.GetActor()->IsValidLowLevel())
 	{
-		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
-		UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
+		//UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
+		//UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
 		SwimStartLocation = HitResult.Location;
 	}
 	return HitResult;
@@ -456,9 +456,9 @@ void ARifaCharacter::Swim()
 	if (HitResult.GetActor()->IsValidLowLevel()) {
 		IsSwimming = true;
 		StartLocation = GetActorLocation();
-		if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
+		/*if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
 			SetActorRotation(FRotator(90.f,0.f,0.f));
-		}
+		}*/
 		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
