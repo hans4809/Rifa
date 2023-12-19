@@ -63,7 +63,7 @@ ARifaCharacter::ARifaCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	CurrentHairMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hair"));
+	CurrentHairMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Hair"));
 	//CurrentHairMesh->SetupAttachment(GetMesh(), TEXT("hair_socket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -129,12 +129,12 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
+	/*CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
 	if (CurrentHair)
 	{
-		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
-		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
-	}
+		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+	}*/
+	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -274,7 +274,8 @@ void ARifaCharacter::ChangeHairPart()
 {
 	if (CurrentHair)
 	{
-		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+		CurrentHairMesh->SetOverlayMaterial(CurrentHair->Mesh->GetMaterial(0));
 	}
 }
 
