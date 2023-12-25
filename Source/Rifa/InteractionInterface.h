@@ -26,4 +26,6 @@ public:
 	virtual void UseAction() = 0;
 	UFUNCTION()
 	virtual void DropAction(AActor* DropToItem) = 0;
+	UFUNCTION()
+	virtual void OnInterAction(ARifaCharacter* InterActionCharacter) = 0;
 };

@@ -2,11 +2,15 @@
 
 
 #include "RIFASaveGame.h"
+#include "MyGameInstance.h"
 
 URIFASaveGame::URIFASaveGame()
 {
-	SavePosition = FVector();
-	ItemList = TArray<int>();
+	SavePosition = FVector(0, 0, 0);
+	ItemMap = TMap<Item, bool>();
+	for (int i = 0; i < (int)Item::MaxCount; i++) {
+		ItemMap.Add((Item)i, false);
+	}
 	SaveSlotName = "";
 	SaveIndex = 0;
 	SoundTrack = "";

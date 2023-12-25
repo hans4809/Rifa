@@ -4,6 +4,8 @@
 #include "AdaptiveSoundtrackZone.h"
 #include "RifaCharacter.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 AAdaptiveSoundtrackZone::AAdaptiveSoundtrackZone()
@@ -18,6 +20,7 @@ AAdaptiveSoundtrackZone::AAdaptiveSoundtrackZone()
 void AAdaptiveSoundtrackZone::BeginPlay()
 {
 	Super::BeginPlay();
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 void AAdaptiveSoundtrackZone::PostInitializeComponents()
@@ -29,5 +32,5 @@ void AAdaptiveSoundtrackZone::PostInitializeComponents()
 
 void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Cast<ARifaCharacter>(OtherActor)->SoundTrack = SoundTrack;
+	RifaGameInstance->SoundTrack = SoundTrack;
 }

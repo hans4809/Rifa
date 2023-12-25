@@ -5,11 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "InteractionInterface.h"
 #include "RifaCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
 UCLASS(config=Game)
-class ARifaCharacter : public ACharacter
+class ARifaCharacter : public ACharacter, public IInteractionInterface
 {
 	GENERATED_BODY()
 
@@ -42,10 +43,14 @@ class ARifaCharacter : public ACharacter
 	class UInputAction* SwimAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InventoryAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InterAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* DashAction;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hair", meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* CurrentHairMesh;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
-	UPROPERTY()
-	APhysicsVolume* PhysicsVolume;
 	UPROPERTY()
 	bool First = true;
 public:
@@ -53,36 +58,49 @@ public:
 	//Event 생성
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic PickupItem;
+	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
+	FDele_Dynamic NPCTalk;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
+	int FlyEnergyValue;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
-	float FlyTime;
+	UFUNCTION(BlueprintCallable)
+	float GetFlyTime(int _FlyEnergyValue);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	int SwimEnergyValue;
+	UFUNCTION(BlueprintCallable)
+	float GetSwimTime(int _SwimEnergyValue);
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	float SwimHeight;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector StartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector SwimStartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
-	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
+	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
+	FHitResult SwimCheck();
+	UFUNCTION()
 	void Die(AActor* trap);
-	UFUNCTION()
-	void Save();
-	UFUNCTION()
-	void Load();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector Position;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<int> ItemList;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString SoundTrack;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
-	float EnergyValue;
 	UFUNCTION(BlueprintCallable)
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	class ARifaCharacterParts* CurrentHair;
+	UFUNCTION(BlueprintCallable)
+	void ChangeHairPart();
+#pragma region InterfaceFunction
+	// InteractionInterface 상속 때문에 override 선언
+	UFUNCTION()
+	virtual void UseAction() override;
+	UFUNCTION()
+	virtual void DropAction(AActor* DropToItem) override;
+	UFUNCTION()
+	virtual void OnInterAction(ARifaCharacter* InterActionCharacter) override;
+#pragma endregion
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -114,7 +132,10 @@ protected:
 	void Respawn();
 	UFUNCTION(BlueprintCallable)
 	void GameStart();
-
+	UFUNCTION(BlueprintCallable)
+	void Dash();
+	UFUNCTION(BlueprintCallable)
+	void EndDash();
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -122,7 +143,9 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 	virtual void EndPlay(EEndPlayReason::Type) override;
-
+	//void OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	//UFUNCTION(BlueprintCallable)
+	//void EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 private:
 	UPROPERTY()
 	FTimerHandle FlyTimer;
@@ -136,6 +159,8 @@ private:
 	void AnimTimerFunc();
 	UPROPERTY()
 	bool InventoryOpen = false;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = true))
+	TArray<IInteractionInterface*> InteractionInRange;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
