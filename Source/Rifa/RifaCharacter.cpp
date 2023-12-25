@@ -420,22 +420,24 @@ FHitResult ARifaCharacter::SwimCheck()
 	bool bResult = GetWorld()->LineTraceSingleByChannel(
 		OUT HitResult,
 		GetActorLocation(),
-		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_Visibility,
+		GetActorLocation() + GetActorForwardVector() * CollisionRange,
+		ECollisionChannel::ECC_GameTraceChannel1,
 		Params
 	);
-	FColor DrawColor = FColor::Red;
+	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	DrawDebugLine(
 		GetWorld(),
 		GetActorLocation(),
-		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		GetActorLocation() + GetActorForwardVector() * CollisionRange,
 		DrawColor,
 		false,
 		2.f);
-	if (bResult && HitResult.GetActor()->IsValidLowLevel())
+	if (bResult)
 	{
-		//UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
-		//UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
+		for (auto obj : HitResult.GetActor()->GetComponents()) {
+			UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *obj->GetName());
+		}
 		SwimStartLocation = HitResult.Location;
 	}
 	return HitResult;
@@ -454,7 +456,8 @@ void ARifaCharacter::Swim()
 		return;
 	}
 	FHitResult HitResult = SwimCheck();
-	if (HitResult.GetActor()->IsValidLowLevel()) {
+	if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
+	{
 		IsSwimming = true;
 		StartLocation = GetActorLocation();
 		/*if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
