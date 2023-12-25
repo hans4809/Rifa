@@ -333,6 +333,12 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	if (InventoryOpen) {
 		return;
 	}
+	if (IsWaterFall)
+	{
+		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
+		AddMovementInput(GetActorRightVector(), MovementVector.X);
+		return;
+	}
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -341,20 +347,21 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement
-		if (RifaCharacterMovement->IsFlying() && !IsSwimming) 
+		if (RifaCharacterMovement->IsFlying() && !IsSwimming)
 		{
 			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
+			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		else 
+		else
 		{
 			AddMovementInput(ForwardDirection, MovementVector.Y);
+			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		AddMovementInput(RightDirection, MovementVector.X);
 	}
 }
 
@@ -460,10 +467,16 @@ void ARifaCharacter::Swim()
 	{
 		IsSwimming = true;
 		StartLocation = GetActorLocation();
-		/*if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
-			SetActorRotation(FRotator(90.f,0.f,0.f));
-		}*/
-		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
+		{
+			IsWaterFall = true;
+			AddActorWorldRotation(FRotator(0, 0, -90));
+			//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
+		}
+		else 
+		{
+			SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		}
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
@@ -473,6 +486,7 @@ void ARifaCharacter::Swim()
 void ARifaCharacter::ReturnWalk()
 {
 	IsSwimming = false;
+	IsWaterFall = false;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
@@ -482,9 +496,10 @@ void ARifaCharacter::ReturnWalk()
 
 void ARifaCharacter::EndSwim()
 {
+	IsSwimming = false;
+	IsWaterFall = false;
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
-	IsSwimming = false;
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);

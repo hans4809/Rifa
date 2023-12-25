@@ -78,6 +78,8 @@ public:
 	FVector SwimStartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool IsWaterFall;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()
