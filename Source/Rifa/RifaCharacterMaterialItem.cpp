@@ -53,7 +53,7 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 	{
 		auto TempMaterial = CharacterReference->GetMesh()->GetMaterial(0);
 		CharacterReference->GetMesh()->SetMaterial(0, Mesh->GetMaterial(0));
-		Mesh->SetOverlayMaterial(TempMaterial);
+		Mesh->SetMaterial(0, TempMaterial);
 	}
 }
 
