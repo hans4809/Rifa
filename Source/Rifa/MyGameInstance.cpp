@@ -32,15 +32,11 @@ void UMyGameInstance::Load()
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
 	{
+
 		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-		Position = FVector(0, 0, 0);
-		ItemMap = TMap<Item, bool>();
-		SoundTrack = "";
 	}
-	else
-	{
-		Position = RIFASaveGame->SavePosition;
-		ItemMap = RIFASaveGame->ItemMap;
-		SoundTrack = RIFASaveGame->SoundTrack;
-	}
+
+	Position = RIFASaveGame->SavePosition;
+	ItemMap = RIFASaveGame->ItemMap;
+	SoundTrack = RIFASaveGame->SoundTrack;
 }

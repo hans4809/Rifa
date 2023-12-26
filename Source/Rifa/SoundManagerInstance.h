@@ -17,19 +17,7 @@ private:
 	USoundManagerInstance();
 public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class UAudioComponent* BGMSound1;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class UAudioComponent* BGMSound2;
+	class UAudioComponent* BGMSound;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class UAudioComponent* SFXSound;
-
-	UFUNCTION()
-		void PlayBGM(USoundBase* soundToPlay, TArray <bool> checkArray);
-	UFUNCTION()
-	void PlaySFX(USoundBase* soundToPlay);
-private:
-	UPROPERTY()
-		bool isPlayBGM;
-	UPROPERTY()
-	bool crruentPlayBGMAudioIndex;
 };

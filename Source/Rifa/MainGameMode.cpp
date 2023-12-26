@@ -18,17 +18,17 @@ void AMainGameMode::BeginPlay()
 	MainHUDWidgetAsset->Init();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
-	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound1 = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
-	BGM = GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound1;
+	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
+	BGM = GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound;
 	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->SFXSound = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
-	if (GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound1 != nullptr)
+	if (GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound != nullptr)
 	{
-		GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound1->Play();
+		GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound->Play();
 		UE_LOG(LogTemp, Log, TEXT("BGM Played"));
 	}
 	else 
 	{
 		UE_LOG(LogTemp, Log, TEXT("BGM is null"));
 	}
-	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound1;
+	GetGameInstance()->GetSubsystem<USoundManagerInstance>()->BGMSound;
 }
