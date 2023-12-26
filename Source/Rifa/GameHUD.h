@@ -76,7 +76,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Transient, Category = "Animation", meta = (BindWidgetAnim))
 	class UWidgetAnimation* MenuAnim;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
-	TArray<UInventorySlot*> SlotArray;
+	TArray<class UInventorySlot*> SlotArray;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	class UMyGameInstance* RifaGameInstance;
 	UFUNCTION(BlueprintCallable)

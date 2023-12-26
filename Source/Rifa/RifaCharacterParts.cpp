@@ -12,12 +12,11 @@ ARifaCharacterParts::ARifaCharacterParts()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MESH"));
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
-	RootComponent = Root;
-	Trigger->SetupAttachment(Root);
-	Mesh->SetupAttachment(Root);
+	RootComponent = Trigger;
+	Mesh->SetupAttachment(RootComponent);
+	Mesh->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
 // Called when the game starts or when spawned
@@ -40,6 +39,24 @@ void ARifaCharacterParts::BeginPlay()
 	}
 }
 
+// Called every frame
+void ARifaCharacterParts::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void ARifaCharacterParts::PickupCharacterParts()
+{
+	if (GetActorEnableCollision() && IsInRange)
+	{
+		FName HairSocket(TEXT("hair_socket"));
+		CharacterReference->CurrentHair = this;
+		CharacterReference->ChangeHairPart();
+	}
+
+}
+
 void ARifaCharacterParts::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<ARifaCharacter>(OtherActor))
@@ -56,22 +73,5 @@ void ARifaCharacterParts::EndCharacterOverlap(UPrimitiveComponent* OverlappedCom
 		PickupTextReference->RemoveFromParent();
 		IsInRange = false;
 	}
-}
-
-void ARifaCharacterParts::PickupCharacterParts()
-{
-	if (GetActorEnableCollision() && IsInRange)
-	{
-		FName HairSocket(TEXT("Hair_Socket"));
-		PickupTextReference->RemoveFromParent();
-		SetActorHiddenInGame(true);
-		SetActorEnableCollision(false);
-	}
-}
-// Called every frame
-void ARifaCharacterParts::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
