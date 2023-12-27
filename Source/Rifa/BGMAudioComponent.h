@@ -3,15 +3,44 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/AudioComponent.h"
+#include "Components/ActorComponent.h"
+#include "MyGameInstance.h"
 #include "BGMAudioComponent.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class RIFA_API UBGMAudioComponent : public UAudioComponent
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class RIFA_API UBGMAudioComponent : public UActorComponent
 {
 	GENERATED_BODY()
+public:
+	UBGMAudioComponent();
 	
+protected:
+
+public:
+	UPROPERTY(EditAnywhere)
+	UAudioComponent* BgmAudioPrevious;
+	UPROPERTY(EditAnywhere)
+	UAudioComponent* BgmAudioNew;
+	UPROPERTY()
+	float CrossfadeDuration;
+	UPROPERTY(EditAnyWhere)
+	class UMyGameInstance* RifaGameInstance;
+	UPROPERTY()
+	TArray<Item> CheckArray;
+	UPROPERTY()
+	USoundBase* SoundToPlay;
+	UPROPERTY(EditAnywhere)
+	TArray<USoundBase*> Sounds;
+
+	UFUNCTION()
+	void CrossfadeSound();
+	UFUNCTION()
+	void OnNewSoundFinished();
+	UFUNCTION()
+	void PlayBgm();
+	UFUNCTION()
+	void BgmSetting();
 };

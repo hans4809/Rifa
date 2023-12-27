@@ -22,6 +22,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "WaterFallComponent.h"
 #include "RifaCharacterParts.h"
+#include "BGMAudioComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
 
 
@@ -67,6 +68,9 @@ ARifaCharacter::ARifaCharacter()
 	//CurrentHairMesh->SetupAttachment(GetMesh(), TEXT("hair_socket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	Bgm = CreateDefaultSubobject<UBGMAudioComponent>(TEXT("BGM"));
+
 	RifaCharacterMovement = GetCharacterMovement();
 	FlyHeight = 100.f;
 	SwimHeight = 100.f;

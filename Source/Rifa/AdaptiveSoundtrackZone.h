@@ -29,9 +29,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UBoxComponent* Trigger;
 
+	UPROPERTY(EditAnywhere, Category = "Variable")
+		TArray<bool> test;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	FString SoundTrack;
 
 	UPROPERTY(EditAnyWhere)
 	class UMyGameInstance* RifaGameInstance;
+
+	UPROPERTY(EditAnyWhere, Category = "Variable")
+	UAudioComponent* BGM1;
+	UPROPERTY(EditAnyWhere, Category = "Variable")
+	USoundBase* SoundToPlay;
 };
