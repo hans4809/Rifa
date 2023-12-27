@@ -14,10 +14,6 @@ class RIFA_API USoundManagerInstance : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 private:
-	USoundManagerInstance();
+
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class UAudioComponent* BGMSound;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class UAudioComponent* SFXSound;
 };
