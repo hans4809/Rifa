@@ -6,6 +6,9 @@
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
+#include "Kismet/GameplayStatics.h"
+#include "RifaCharacter.h"
+#include "Animation/SkeletalMeshActor.h"
 
 
 
@@ -23,7 +26,7 @@ ALevelSequencePlayActor::ALevelSequencePlayActor()
 void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	CharacterMesh->SetActorHiddenInGame(true);
+	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
 	FMovieSceneSequencePlaybackSettings Settings;
 	Settings.bAutoPlay = false;
 	Settings.bPauseAtEnd = true;
@@ -33,6 +36,14 @@ void ALevelSequencePlayActor::BeginPlay()
 	}
 }
 
+void ALevelSequencePlayActor::EndLevelSequence()
+{
+	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
+	auto CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	CharacterReference->SetActorHiddenInGame(false);
+}
+
 // Called every frame
 void ALevelSequencePlayActor::Tick(float DeltaTime)
 {
@@ -40,14 +51,19 @@ void ALevelSequencePlayActor::Tick(float DeltaTime)
 
 }
 
-void ALevelSequencePlayActor::NotifyActorBeginOverlap(AActor* otherActor)
+void ALevelSequencePlayActor::NotifyActorBeginOverlap(AActor* OtherActor)
 {
-	Super::NotifyActorBeginOverlap(otherActor);
+	Super::NotifyActorBeginOverlap(OtherActor);
 
-	if (LevelSequencePlayer) 
+	if (LevelSequencePlayer&& Cast<class ARifaCharacter>(OtherActor)) 
 	{
-		CharacterMesh->SetActorHiddenInGame(false);
+		Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(false);
 		LevelSequencePlayer->Play();
+		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetEndTime().AsSeconds(), false);
+		auto CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+		SetActorEnableCollision(false);
+		CharacterReference->SetActorHiddenInGame(true);
 	}
 }
 

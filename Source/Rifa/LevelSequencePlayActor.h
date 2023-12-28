@@ -15,7 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	ALevelSequencePlayActor();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class AActor* CharacterMesh;
+	class ASkeletalMeshActor* CharacterMesh;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -27,8 +27,12 @@ protected:
 	class ULevelSequence* LevelSequnce;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class ULevelSequencePlayer* LevelSequencePlayer;
+	UPROPERTY()
+	FTimerHandle LevelSequenceTimer;
+	UFUNCTION(BlueprintCallable)
+	void EndLevelSequence();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	virtual void NotifyActorBeginOverlap(AActor* otherActor) override;
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 };
