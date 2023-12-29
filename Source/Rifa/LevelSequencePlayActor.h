@@ -24,15 +24,18 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class ALevelSequenceActor* LevelSequenceActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class ULevelSequence* LevelSequnce;
+	class ULevelSequence* LevelSequence;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class ULevelSequencePlayer* LevelSequencePlayer;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class ARifaCharacter* CharacterReference;
 	UPROPERTY()
 	FTimerHandle LevelSequenceTimer;
 	UFUNCTION(BlueprintCallable)
 	void EndLevelSequence();
+	UFUNCTION(BlueprintCallable)
+	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 };
