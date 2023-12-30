@@ -63,7 +63,7 @@ ARifaCharacter::ARifaCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	CurrentHairMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hair"));
+	CurrentHairMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Hair"));
 	//CurrentHairMesh->SetupAttachment(GetMesh(), TEXT("hair_socket"));
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -129,12 +129,12 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
+	/*CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
 	if (CurrentHair)
 	{
-		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
-		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
-	}
+		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+	}*/
+	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -196,49 +196,49 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 
 void ARifaCharacter::Die(AActor* trap)
 {
-	SetActorLocation(Position);
+	//SetActorLocation(Position);
 	UE_LOG(LogTemp, Log, TEXT("Die"));
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
 }
 
-void ARifaCharacter::Save()
-{
-	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-	NewPlayerData->SavePosition = Position;
-	NewPlayerData->ItemList = ItemList;
-	NewPlayerData->SoundTrack = SoundTrack;
+//void ARifaCharacter::Save()
+//{
+//	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
+//	NewPlayerData->SavePosition = Position;
+//	NewPlayerData->ItemList = ItemList;
+//	NewPlayerData->SoundTrack = SoundTrack;
+//
+//	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+//}
 
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
-}
-
-void ARifaCharacter::Load()
-{
-	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
-	if (nullptr == RIFASaveGame)
-	{
-		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-	}
-	Position = RIFASaveGame->SavePosition;
-	ItemList = RIFASaveGame->ItemList;
-	SoundTrack = RIFASaveGame->SoundTrack;
-}
+//void ARifaCharacter::Load()
+//{
+//	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+//	if (nullptr == RIFASaveGame)
+//	{
+//		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
+//	}
+//	Position = RIFASaveGame->SavePosition;
+//	ItemList = RIFASaveGame->ItemList;
+//	SoundTrack = RIFASaveGame->SoundTrack;
+//}
 
 void ARifaCharacter::Respawn()
 {
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		//SetActorLocation(Position);
 	}
 }
 
 void ARifaCharacter::GameStart()
 {
-	Load();
+	//Load();
 	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
 	{
-		SetActorLocation(Position);
+		//SetActorLocation(Position);
 	}
 }
 
@@ -274,9 +274,16 @@ void ARifaCharacter::ChangeHairPart()
 {
 	if (CurrentHair)
 	{
-		CurrentHairMesh->SetStaticMesh(CurrentHair->Mesh->GetStaticMesh());
+		auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
+		auto tempMaterial = CurrentHairMesh->GetOverlayMaterial();
+		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+		CurrentHairMesh->SetOverlayMaterial(CurrentHair->Mesh->GetMaterial(0));
+		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
+		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
 	}
 }
+
+
 
 void ARifaCharacter::UseAction()
 {
@@ -313,7 +320,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
 		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
-		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Started, this, &ARifaCharacter::Interaction);
+		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Completed, this, &ARifaCharacter::Interaction);
 		//Dash
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Dash);
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ARifaCharacter::EndDash);
@@ -332,21 +339,37 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	if (InventoryOpen) {
 		return;
 	}
+	if (IsWaterFall)
+	{
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
+		AddMovementInput(GetActorRightVector(), MovementVector.X);
+		return;
+	}
 	if (Controller != nullptr)
 	{
+		GetCharacterMovement()->bOrientRotationToMovement = true;
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
+		// add movement
+		if (RifaCharacterMovement->IsFlying() && !IsSwimming)
+		{
+			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
+			AddMovementInput(RightDirection, MovementVector.X);
+		}
+		else
+		{
+			AddMovementInput(ForwardDirection, MovementVector.Y);
+			AddMovementInput(RightDirection, MovementVector.X);
+		}
 	}
 }
 
@@ -412,22 +435,24 @@ FHitResult ARifaCharacter::SwimCheck()
 	bool bResult = GetWorld()->LineTraceSingleByChannel(
 		OUT HitResult,
 		GetActorLocation(),
-		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_Visibility,
+		GetActorLocation() + GetActorForwardVector() * CollisionRange,
+		ECollisionChannel::ECC_GameTraceChannel1,
 		Params
 	);
-	FColor DrawColor = FColor::Red;
+	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	DrawDebugLine(
 		GetWorld(),
 		GetActorLocation(),
-		GetActorLocation() + FollowCamera->GetForwardVector() * CollisionRange,
+		GetActorLocation() + GetActorForwardVector() * CollisionRange,
 		DrawColor,
 		false,
 		2.f);
-	if (bResult && HitResult.GetActor()->IsValidLowLevel())
+	if (bResult)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
-		UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName());
+		for (auto obj : HitResult.GetActor()->GetComponents()) {
+			UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *obj->GetName());
+		}
 		SwimStartLocation = HitResult.Location;
 	}
 	return HitResult;
@@ -446,13 +471,20 @@ void ARifaCharacter::Swim()
 		return;
 	}
 	FHitResult HitResult = SwimCheck();
-	if (HitResult.GetActor()->IsValidLowLevel()) {
+	if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
+	{
 		IsSwimming = true;
 		StartLocation = GetActorLocation();
-		if (HitResult.GetActor()->GetComponentByClass(UWaterFallComponent::StaticClass())->GetName().Contains(TEXT("Fall"))) {
-			SetActorRotation(FRotator(90.f,0.f,0.f));
+		if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
+		{
+			IsWaterFall = true;
+			AddActorWorldRotation(FRotator(0, 0, -90));
+			//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
 		}
-		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		else 
+		{
+			SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+		}
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
@@ -462,6 +494,7 @@ void ARifaCharacter::Swim()
 void ARifaCharacter::ReturnWalk()
 {
 	IsSwimming = false;
+	IsWaterFall = false;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
@@ -471,9 +504,10 @@ void ARifaCharacter::ReturnWalk()
 
 void ARifaCharacter::EndSwim()
 {
+	IsSwimming = false;
+	IsWaterFall = false;
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
-	IsSwimming = false;
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);

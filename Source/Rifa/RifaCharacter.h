@@ -48,7 +48,7 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* DashAction;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hair", meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* CurrentHairMesh;
+	class USkeletalMeshComponent* CurrentHairMesh;
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
@@ -78,6 +78,8 @@ public:
 	FVector SwimStartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool IsSwimming;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool IsWaterFall;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UFUNCTION()

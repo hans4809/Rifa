@@ -6,8 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "WaterFallComponent.generated.h"
 
+class UNiagaraSystem;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class RIFA_API UWaterFallComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -20,6 +21,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category = "WaterFall")
+	UNiagaraSystem* WaterFall;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

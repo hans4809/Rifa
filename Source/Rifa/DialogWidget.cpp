@@ -16,6 +16,7 @@ void UDialogWidget::NativeConstruct()
 	SpeakSizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("SpeakSizeBox")));
 	SpeakText = Cast<UTextBlock>(GetWidgetFromName(TEXT("SpeakText")));
 	ReplyList = Cast<UListView>(GetWidgetFromName(TEXT("ReplyList")));
+	SetKeyboardFocus();
 }
 
 void UDialogWidget::Init()

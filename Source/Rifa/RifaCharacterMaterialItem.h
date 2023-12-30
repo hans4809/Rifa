@@ -3,26 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RifaCharacterParts.h"
-#include "RifaCharacterParts_override.generated.h"
+#include "GameFramework/Actor.h"
+#include "RifaCharacterMaterialItem.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class RIFA_API ARifaCharacterParts_override : public ARifaCharacterParts
+class RIFA_API ARifaCharacterMaterialItem : public AActor
 {
 	GENERATED_BODY()
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USphereComponent* Trigger;
+	
+public:	
+	// Sets default values for this actor's properties
+	ARifaCharacterMaterialItem();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-public:
-	// Sets default values for this actor's properties
-	ARifaCharacterParts_override();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger", meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* Trigger;
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	UStaticMeshComponent* Mesh;
 	UFUNCTION(BlueprintCallable)
-	void PickupCharacterParts();
+	void PickupCharacterMaterial();
 	UFUNCTION(BlueprintCallable)
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION(BlueprintCallable)
