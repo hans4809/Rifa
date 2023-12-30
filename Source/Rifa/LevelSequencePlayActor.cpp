@@ -53,18 +53,15 @@ void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 		LevelSequencePlayer->SetPlaybackPosition(Param);
 		LevelSequencePlayer->Play();
 		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
-		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-		CharacterReference->SetActorEnableCollision(false);
 		CharacterReference->SetActorHiddenInGame(true);
-		CharacterReference->SetActorLocation(FVector(1350, -725, 200));
+		CharacterReference->SetActorLocation(EndOfLevelSequencePlayerLocation);
 	}
 }
 
 void ALevelSequencePlayActor::EndLevelSequence()
 {
 	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
-	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 	CharacterReference->SetActorHiddenInGame(false);
 }

@@ -29,6 +29,8 @@ protected:
 	class ULevelSequencePlayer* LevelSequencePlayer;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class ARifaCharacter* CharacterReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FVector EndOfLevelSequencePlayerLocation;
 	UPROPERTY()
 	FTimerHandle LevelSequenceTimer;
 	UFUNCTION(BlueprintCallable)
