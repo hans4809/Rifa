@@ -341,12 +341,14 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	}
 	if (IsWaterFall)
 	{
+		GetCharacterMovement()->bOrientRotationToMovement = false;
 		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
 		AddMovementInput(GetActorRightVector(), MovementVector.X);
 		return;
 	}
 	if (Controller != nullptr)
 	{
+		GetCharacterMovement()->bOrientRotationToMovement = true;
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
