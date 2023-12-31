@@ -24,7 +24,7 @@ public:
 	UAudioComponent* BgmAudioPrevious;
 	UPROPERTY(EditAnywhere)
 	UAudioComponent* BgmAudioNew;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float CrossfadeDuration;
 	UPROPERTY(EditAnyWhere)
 	class UMyGameInstance* RifaGameInstance;

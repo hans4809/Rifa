@@ -10,6 +10,7 @@ UBGMAudioComponent::UBGMAudioComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
 
+
     Sounds = TArray<USoundBase*>();
     static ConstructorHelpers::FObjectFinder<USoundBase> ObjectFinder1(TEXT("/Script/Engine.SoundCue'/Game/Sounds/BGM_01.BGM_01'"));
     if (ObjectFinder1.Succeeded())
@@ -60,12 +61,16 @@ void UBGMAudioComponent::CrossfadeSound()
 
     // 새로운 사운드의 볼륨을 서서히 늘리는 애니메이션 설정
     BgmAudioNew->FadeIn(CrossfadeDuration, 1.0f);
-    BgmAudioNew->Play();
+    if (BgmAudioPrevious)
+    {
+        BgmAudioPrevious->DestroyComponent();
+    }
     BgmAudioPrevious = BgmAudioNew;
 }
 
 void UBGMAudioComponent::PlayBgm()
 {
+    CrossfadeDuration = 3.f;
     if(RifaGameInstance == nullptr)
         RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
     BgmSetting();
