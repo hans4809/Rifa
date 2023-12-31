@@ -45,45 +45,27 @@ void UBGMAudioComponent::CrossfadeSound()
     }
 
     // 새로운 사운드를 재생할 오디오 컴포넌트 생성
-    BgmAudioNew = UGameplayStatics::SpawnSoundAttached(SoundToPlay, GetOwner()->GetRootComponent());
-    BgmAudioNew->SetVolumeMultiplier(0.0f);
+    BgmAudioNew = UGameplayStatics::SpawnSoundAttached(SoundToPlay, GetWorld()->GetFirstPlayerController()->GetRootComponent());
 
     int cnt = 1;
     for (int i = 0; i < CheckArray.Num(); i++)
     {
         if (true)//RifaGameInstance->ItemMap[CheckArray[i]])
         {
-            BgmAudioNew->SetBoolParameter("Num1", true);
-            UE_LOG(LogTemp, Log, TEXT("Num%d"), cnt);
+            Str = FString::Printf(TEXT("Num%d"), cnt);
+            BgmAudioNew->SetBoolParameter(*Str, true);
             cnt++;
         }
     }
 
     // 새로운 사운드의 볼륨을 서서히 늘리는 애니메이션 설정
     BgmAudioNew->FadeIn(CrossfadeDuration, 1.0f);
-
-    BgmAudioNew->OnAudioFinished.AddDynamic(this, &UBGMAudioComponent::OnNewSoundFinished);
-}
-
-void UBGMAudioComponent::OnNewSoundFinished()
-{
-    UE_LOG(LogTemp, Log, TEXT("Hi5"));
-    if (BgmAudioNew)
-    {
-        if (BgmAudioPrevious)
-        {
-            BgmAudioPrevious->Stop();
-            BgmAudioPrevious->DestroyComponent();
-        }
-        BgmAudioPrevious = BgmAudioNew;
-    }
-
-    // 이전 사운드와 이전 오디오 컴포넌트 업데이트
+    BgmAudioNew->Play();
+    BgmAudioPrevious = BgmAudioNew;
 }
 
 void UBGMAudioComponent::PlayBgm()
 {
-    UE_LOG(LogTemp, Log, TEXT("Hi"));
     if(RifaGameInstance == nullptr)
         RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
     BgmSetting();
@@ -92,12 +74,10 @@ void UBGMAudioComponent::PlayBgm()
 
 void UBGMAudioComponent::BgmSetting()
 {
-    UE_LOG(LogTemp, Log, TEXT("Hi2"));
     FString soundTrack = RifaGameInstance->SoundTrack;
 
     if (soundTrack == "Bgm1")
     {
-        UE_LOG(LogTemp, Log, TEXT("Hi12"));
         SoundToPlay = Sounds[0];
         CheckArray = TArray<Item>{Item::Piano_1_Medium, 
             Item::WindInstrument_1_Medium , 

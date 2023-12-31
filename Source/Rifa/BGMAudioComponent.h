@@ -34,11 +34,11 @@ public:
 	USoundBase* SoundToPlay;
 	UPROPERTY(EditAnywhere)
 	TArray<USoundBase*> Sounds;
+	UPROPERTY()
+		FString Str;
 
 	UFUNCTION()
 	void CrossfadeSound();
-	UFUNCTION()
-	void OnNewSoundFinished();
 	UFUNCTION()
 	void PlayBgm();
 	UFUNCTION()
