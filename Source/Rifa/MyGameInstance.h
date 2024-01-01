@@ -15,7 +15,7 @@ enum class UI_Name : uint8
 };
 
 UENUM()
-enum class Item : uint8 // �Ǳ��̸�_���_�����
+enum class Item : uint8
 {
 	Piano_1_Medium,
 	WindInstrument_1_Medium,

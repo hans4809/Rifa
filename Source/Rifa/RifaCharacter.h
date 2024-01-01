@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "InteractionInterface.h"
+#include "BGMAudioComponent.h"
 #include "RifaCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
@@ -82,6 +83,8 @@ public:
 	bool IsWaterFall;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
+	UPROPERTY(EditAnywhere)
+	UBGMAudioComponent* Bgm;
 	UFUNCTION()
 	FHitResult SwimCheck();
 	UFUNCTION()
