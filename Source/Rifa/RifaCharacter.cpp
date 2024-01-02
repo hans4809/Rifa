@@ -32,6 +32,7 @@
 
 ARifaCharacter::ARifaCharacter()
 {
+	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -158,6 +159,35 @@ void ARifaCharacter::BeginPlay()
 		if (IsValid(GameHUDWidget))
 		{
 			GameHUDWidget->Init();
+		}
+	}
+}
+
+void ARifaCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (IsSwimming) 
+	{
+		FHitResult HitResult;
+		FCollisionQueryParams Params(NAME_None, false, this);
+		float CollisionRange = 500.f;
+		bool bResult = GetWorld()->LineTraceSingleByChannel(
+			OUT HitResult,
+			GetActorLocation(),
+			GetActorLocation() - GetActorUpVector() * CollisionRange,
+			ECollisionChannel::ECC_GameTraceChannel1,
+			Params
+		);
+		FColor DrawColor = bResult ? FColor::Green : FColor::Red;
+		DrawDebugLine(
+			GetWorld(),
+			GetActorLocation(),
+			GetActorLocation() - GetActorUpVector() * CollisionRange,
+			DrawColor,
+			false,
+			2.f);
+		if (bResult == false) {
+			ReturnWalk();
 		}
 	}
 }
@@ -474,21 +504,42 @@ void ARifaCharacter::Swim()
 	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
-	FHitResult HitResult = SwimCheck();
-	if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
+	//FHitResult HitResult = SwimCheck();
+	//if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
+	//{
+	//	IsSwimming = true;
+	//	StartLocation = GetActorLocation();
+	//	if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
+	//	{
+	//		IsWaterFall = true;
+	//		AddActorWorldRotation(FRotator(0, 0, -90));
+	//		//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
+	//	}
+	//	else 
+	//	{
+	//		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
+	//	}
+	//	RifaCharacterMovement->bCheatFlying = true;
+	//	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+	//	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	//}
+	if (bCanRideUpWaterFall)
 	{
 		IsSwimming = true;
+		IsWaterFall = true;
 		StartLocation = GetActorLocation();
-		if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
-		{
-			IsWaterFall = true;
-			AddActorWorldRotation(FRotator(0, 0, -90));
-			//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
-		}
-		else 
-		{
-			SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
-		}
+		AddActorWorldRotation(FRotator(0, 0, -90));
+		RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	}
+	else if (bCanRideDownWaterFall) 
+	{
+		IsSwimming = true;
+		IsWaterFall = true;
+		StartLocation = GetActorLocation();
+		SetActorLocation(GetActorLocation() + GetActorForwardVector() * 300);
+		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
@@ -502,7 +553,7 @@ void ARifaCharacter::ReturnWalk()
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
-	RifaCharacterMovement->SetMovementMode(MOVE_Falling);
+	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }
 
