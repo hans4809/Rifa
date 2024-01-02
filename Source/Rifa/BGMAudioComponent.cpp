@@ -79,7 +79,15 @@ void UBGMAudioComponent::PlayBgm()
 
 void UBGMAudioComponent::BgmSetting()
 {
-    FString soundTrack = RifaGameInstance->SoundTrack;
+    FString soundTrack;
+    if (RifaGameInstance->SoundTrack.IsEmpty())
+    {
+        soundTrack = "Bgm1";
+        RifaGameInstance->SoundTrack = "Bgm1";
+    }
+    else
+        soundTrack = RifaGameInstance->SoundTrack;
+        
 
     if (soundTrack == "Bgm1")
     {

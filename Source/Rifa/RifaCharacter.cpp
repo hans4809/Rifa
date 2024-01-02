@@ -160,6 +160,7 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
+	Bgm->PlayBgm();
 }
 
 void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)

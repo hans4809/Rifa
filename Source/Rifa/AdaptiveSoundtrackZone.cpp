@@ -34,7 +34,10 @@ void AAdaptiveSoundtrackZone::PostInitializeComponents()
 
 void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (RifaGameInstance->SoundTrack == SoundTrack)
+		return;
 	RifaGameInstance->SoundTrack = SoundTrack;
 	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
-	RifaCharacter->Bgm->PlayBgm();
+	if(IsBgmPlay)
+		RifaCharacter->Bgm->PlayBgm();
 }
