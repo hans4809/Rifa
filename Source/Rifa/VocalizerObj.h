@@ -98,7 +98,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	bool isPhysicCollision;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ETC")
 	bool isVocalizer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
