@@ -70,7 +70,7 @@ void UBGMAudioComponent::CrossfadeSound()
 
 void UBGMAudioComponent::PlayBgm()
 {
-    CrossfadeDuration = 3.f;
+    CrossfadeDuration = 1.f;
     if(RifaGameInstance == nullptr)
         RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
     BgmSetting();
