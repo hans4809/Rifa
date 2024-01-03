@@ -4,6 +4,8 @@
 #include "VocalizerObj.h"
 #include "Kismet/GameplayStatics.h"
 #include "Vocalizer.h"
+#include "Containers/Queue.h"
+#include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 
 // Sets default values
@@ -69,10 +71,15 @@ void AVocalizerObj::PostInitializeComponents()
 
 void AVocalizerObj::TimeCheck()
 {
-	if (timeDeltaTime >= soundInterval)
+	if (timeDeltaTime_Sound >= soundInterval)
 	{
 		SoundPlay();
-		timeDeltaTime = 0;
+		timeDeltaTime_Sound = 0;
+	}
+	if (timeDeltaTime_Vocalizer >= vocalizerInterval)
+	{
+		SoundWave();
+		timeDeltaTime_Vocalizer = 0;
 	}
 }
 
@@ -80,13 +87,9 @@ void AVocalizerObj::SoundPlay()
 {
 	if (soundToPlay && isActive)
 	{
-		volumeSize = (1 - (GetDistanceTo(player) / sphereRadius));
-		volumeSize += 0.15f;
-		if (volumeSize >= 1)
-			volumeSize = 1;
-		UGameplayStatics::PlaySoundAtLocation(this, soundToPlay, GetActorLocation(), volumeSize);
-		if(isVocalizer)
-			SoundWave();
+		UAudioComponent* audio = UGameplayStatics::SpawnSoundAtLocation(this, soundToPlay, GetActorLocation());
+		audio->OnAudioFinished.AddDynamic(this, &AVocalizerObj::SoundEnd);
+		audioComponent.Enqueue(audio);
 	}
 }
 
@@ -111,27 +114,46 @@ void AVocalizerObj::SoundOn()
 void AVocalizerObj::SoundOff()
 {
 	isActive = false;
-	volumeSize = 0;
+
+	UAudioComponent* audio;
+	while (audioComponent.Dequeue(audio))
+	{
+		if (audio)
+		{
+			audio->Stop();
+			audio->DestroyComponent();
+		}
+	}
+}
+
+void AVocalizerObj::SoundEnd()
+{
+	if(isActive)
+		audioComponent.Pop();
 }
 
 void AVocalizerObj::OnCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	SoundOn();
+	SoundPlay();
 }
 
 void AVocalizerObj::EndCharacterOverlap_SoundZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	SoundOff();
+	timeDeltaTime_Sound = 0;
 }
 
 void AVocalizerObj::OnCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	isVocalizer = true;
+	SoundWave();
 }
 
 void AVocalizerObj::EndCharacterOverlap_VocalizerVisibleZone(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	isVocalizer = false;
+	timeDeltaTime_Vocalizer = 0;
 }
 
 // Called every frame
@@ -139,6 +161,9 @@ void AVocalizerObj::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	timeDeltaTime += DeltaTime;
+	if(isActive)
+		timeDeltaTime_Sound += DeltaTime;
+	if(isVocalizer)
+		timeDeltaTime_Vocalizer += DeltaTime;
 	TimeCheck();
 }
