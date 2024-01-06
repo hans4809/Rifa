@@ -47,6 +47,7 @@ void ATemplate_Pickup::BeginPlay()
 		if (IsValid(PickupTextReference))
 		{
 			PickupTextReference->PickupActor = ItemInfo.ItemActor;
+			PickupTextReference->ViewPortPosition = ItemInfo.ItemActor->GetActorLocation() + FVector(0, 0, 50);
 			PickupTextReference->PickupText = ItemInfo.ItemName;
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			/*if (CharacterReference->PickupItem.IsBound()) {
