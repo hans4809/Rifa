@@ -38,6 +38,7 @@ void ASkillEnergyItem::BeginPlay()
 		if (IsValid(PickupTextReference))
 		{
 			PickupTextReference->PickupActor = Cast<AActor>(this);
+			PickupTextReference->ViewPortPosition = Cast<AActor>(this)->GetActorLocation() + FVector(0, 0, 50);
 			PickupTextReference->PickupText = TEXT("Press E");
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			CharacterReference->PickupItem.AddDynamic(this, &ASkillEnergyItem::PickupEnergyEvent);

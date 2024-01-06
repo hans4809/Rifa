@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "PopUpWidget.h"
 #include "MyGameInstance.h"
 #include "PickupText.generated.h"
 
@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class RIFA_API UPickupText : public UUserWidget
+class RIFA_API UPickupText : public UPopUpWidget
 {
 	GENERATED_BODY()
 public:
@@ -19,4 +19,10 @@ public:
 	FString PickupText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Actor", meta = (AllowPrivateAccess = true))
 	AActor* PickupActor;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Location", meta = (AllowPrivateAccess = true))
+	FVector ViewPortPosition;
+	virtual void Init() override;
+	virtual void CloseWidget() override;
+private:
+	void Tick(FGeometry MyGeometry, float InDeltaTime);
 };
