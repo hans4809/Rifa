@@ -421,6 +421,7 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
+
 void ARifaCharacter::Fly()
 {
 	if (InventoryOpen || FlyEnergyValue == 0) {
@@ -438,6 +439,7 @@ void ARifaCharacter::Fly()
 		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	}
 }
+
 void ARifaCharacter::OpenAndCloseInventory()
 {
 	if (GameHUDWidget->GetActivateInventory()) 
@@ -491,6 +493,7 @@ FHitResult ARifaCharacter::SwimCheck()
 	}
 	return HitResult;
 }
+
 void ARifaCharacter::AnimTimerFunc()
 {
 	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
@@ -523,7 +526,16 @@ void ARifaCharacter::Swim()
 	//	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 	//	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
 	//}
-	if (bCanRideUpWaterFall)
+	if (bCanSwim) 
+	{
+		IsSwimming = true;
+		StartLocation = GetActorLocation();
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
+		RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+	}
+	else if (bCanRideUpWaterFall)
 	{
 		IsSwimming = true;
 		IsWaterFall = true;

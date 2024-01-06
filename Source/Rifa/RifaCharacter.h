@@ -85,6 +85,8 @@ public:
 	bool bCanRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideDownWaterFall;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool bCanSwim;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
