@@ -62,15 +62,23 @@ public:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic NPCTalk;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
-	int FlyEnergyValue;
+	int FlyEnergyNum;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
+	float FlyEnergyPercent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
+	FTimerHandle FlyTimer;
 	UFUNCTION(BlueprintCallable)
-	float GetFlyTime(int _FlyEnergyValue);
+	float GetFlyTime();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	int SwimEnergyValue;
+	int SwimEnergyNum;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	float SwimEnergyPercent;
 	UFUNCTION(BlueprintCallable)
-	float GetSwimTime(int _SwimEnergyValue);
+	float GetSwimTime();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	FTimerHandle SwimTimer;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	float SwimHeight;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
@@ -105,6 +113,7 @@ public:
 	class ARifaCharacterParts* CurrentHair;
 	UFUNCTION(BlueprintCallable)
 	void ChangeHairPart();
+
 #pragma region InterfaceFunction
 	// InteractionInterface 상속 때문에 override 선언
 	UFUNCTION()
@@ -161,12 +170,9 @@ protected:
 	//UFUNCTION(BlueprintCallable)
 	//void EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 private:
-	UPROPERTY()
-	FTimerHandle FlyTimer;
+
 	UPROPERTY()
 	class UMyGameInstance* RifaGameInstance;
-	UPROPERTY()
-	FTimerHandle SwimTimer;
 	UPROPERTY()
 	FTimerHandle WidgetAnimTimer;
 	UFUNCTION()
