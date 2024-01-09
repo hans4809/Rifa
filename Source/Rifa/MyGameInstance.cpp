@@ -44,3 +44,7 @@ void UMyGameInstance::Load()
 		SoundTrack = RIFASaveGame->SoundTrack;
 	}
 }
+
+void UMyGameInstance::Init()
+{
+}

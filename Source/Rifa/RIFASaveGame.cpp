@@ -13,4 +13,38 @@ URIFASaveGame::URIFASaveGame()
 	SaveSlotName = "";
 	SaveIndex = 0;
 	SoundTrack = "";
+	HairPartsMap = TMap<EHairPartsItem, USkeletalMesh*>();
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH1(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH1.Succeeded()) {
+		HairPartsMap.Add(EHairPartsItem::First, MESH1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH2.Succeeded()) {
+		HairPartsMap.Add(EHairPartsItem::Second, MESH2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH3(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH3.Succeeded()) {
+		HairPartsMap.Add(EHairPartsItem::Third, MESH3.Object);
+	}
+
+
+	CharacterMaterialMap = TMap<ECharacterMaterialItem, UMaterialInterface*>();
+	
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
+	if (Material1.Succeeded()) {
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, Material1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
+	if (Material2.Succeeded()) {
+		CharacterMaterialMap.Add(ECharacterMaterialItem::White, Material2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
+	if (Material3.Succeeded()) {
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, Material3.Object);
+	}
 }

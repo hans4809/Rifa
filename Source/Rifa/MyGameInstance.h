@@ -58,4 +58,5 @@ public:
 
 	UFUNCTION()
 	void Load();
+	virtual void Init() override;
 };
