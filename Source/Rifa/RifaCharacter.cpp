@@ -81,9 +81,9 @@ ARifaCharacter::ARifaCharacter()
 	WaterForcingVector = FVector(0, 0, 0);
 }
 
-float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
+float ARifaCharacter::GetFlyTime()
 {
-	switch (_FlyEnergyValue)
+	switch (FlyEnergyNum)
 	{
 		case 1:
 			return 3.0f;
@@ -105,9 +105,9 @@ float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
 	}
 }
 
-float ARifaCharacter::GetSwimTime(int _SwimEnergyValue)
+float ARifaCharacter::GetSwimTime()
 {
-	switch (_SwimEnergyValue)
+	switch (SwimEnergyNum)
 	{
 		case 1:
 			return 2.0f;
@@ -162,12 +162,45 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
-	Bgm->PlayBgm();
+	Bgm->PlayBgm();	
 }
 
 void ARifaCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (FlyEnergyNum != 0) 
+	{
+		if (GetWorld()->GetTimerManager().IsTimerActive(FlyTimer))
+		{
+			FlyEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(FlyTimer) / GetFlyTime();
+		}
+		else 
+		{
+			if (FlyEnergyPercent < 1)
+			{
+				FlyEnergyPercent += DeltaTime * 0.1;
+			}
+		}
+
+	}
+
+	if (SwimEnergyNum != 0) 
+	{
+		if (GetWorld()->GetTimerManager().IsTimerActive(SwimTimer))
+		{
+			SwimEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(SwimTimer) / GetSwimTime();
+		}
+		else 
+		{
+			if (SwimEnergyPercent < 1)
+			{
+				SwimEnergyPercent += DeltaTime * 0.1;
+			}
+		}
+
+	}
+
 	if (IsSwimming) 
 	{
 		FHitResult HitResult;
@@ -451,12 +484,12 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 
 void ARifaCharacter::Fly()
 {
-	if (InventoryOpen || FlyEnergyValue == 0) {
+	if (InventoryOpen || FlyEnergyNum == 0) {
 		return;
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
-		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, ARifaCharacter::GetFlyTime(FlyEnergyValue), false);
+		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyEnergyPercent * ARifaCharacter::GetFlyTime(), false);
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
@@ -529,7 +562,7 @@ void ARifaCharacter::AnimTimerFunc()
 
 void ARifaCharacter::Swim()
 {
-	if (InventoryOpen || SwimEnergyValue == 0) {
+	if (InventoryOpen || SwimEnergyNum == 0) {
 		return;
 	}
 	//FHitResult HitResult = SwimCheck();
@@ -558,7 +591,7 @@ void ARifaCharacter::Swim()
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
 	}
 	else if (bCanRideUpWaterFall)
 	{
@@ -568,7 +601,7 @@ void ARifaCharacter::Swim()
 		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
 	}
 	else if (bCanRideDownWaterFall) 
 	{
@@ -579,7 +612,7 @@ void ARifaCharacter::Swim()
 		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
 	}
 }
 
@@ -605,6 +638,7 @@ void ARifaCharacter::EndSwim()
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
+	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }
 
 void ARifaCharacter::Interaction()
