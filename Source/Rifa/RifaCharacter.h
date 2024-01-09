@@ -85,6 +85,10 @@ public:
 	bool bCanRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideDownWaterFall;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool bCanSwim;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	FVector WaterForcingVector;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
@@ -97,7 +101,7 @@ public:
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	class ARifaCharacterParts* CurrentHair;
 	UFUNCTION(BlueprintCallable)
 	void ChangeHairPart();

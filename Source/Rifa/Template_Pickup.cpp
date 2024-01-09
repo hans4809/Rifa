@@ -13,7 +13,7 @@
 ATemplate_Pickup::ATemplate_Pickup()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
