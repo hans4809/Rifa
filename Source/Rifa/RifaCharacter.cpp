@@ -352,9 +352,9 @@ void ARifaCharacter::ChangeHairPart()
 	if (CurrentHair)
 	{
 		auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
-		auto tempMaterial = CurrentHairMesh->GetOverlayMaterial();
+		auto tempMaterial = CurrentHairMesh->GetMaterial(0);
 		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
-		CurrentHairMesh->SetOverlayMaterial(CurrentHair->Mesh->GetMaterial(0));
+		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
 		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
 		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
 	}
