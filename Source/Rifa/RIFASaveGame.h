@@ -5,27 +5,6 @@
 #include "MyGameInstance.h"
 #include "RIFASaveGame.generated.h"
 
-UENUM()
-enum class EHairPartsItem : uint8 
-{
-	First,
-	Second,
-	Third,
-	MaxCount
-};
-
-UENUM()
-enum class ECharacterMaterialItem : uint8
-{
-	Default UMETA(DisplayName = "Default"),
-	White UMETA(DisplayName = "White"),
-	Blue UMETA(DisplayName = "Blue"),
-	Green UMETA(DisplayName = "Green"),
-	Red UMETA(DisplayName = "Red"),
-	Yellow UMETA(DisplayName = "Yellow"),
-	MaxCount
-}; 
-
 UCLASS()
 class RIFA_API URIFASaveGame : public USaveGame
 {
@@ -38,7 +17,7 @@ public:
 	FVector SavePosition;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> ItemMap;
+	TMap <Item, bool> SoundItemMap;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
@@ -52,4 +31,14 @@ public:
 	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMap;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> FlyItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> SwimItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> LevelSequencePlayerArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TObjectPtr<UMaterialInterface> CurrentCharacterMaterial;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TObjectPtr<USkeletalMesh> CurrentHairPart;
 };

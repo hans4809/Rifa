@@ -32,6 +32,7 @@ void ASkillEnergyItem::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASkillEnergyItem::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ASkillEnergyItem::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -43,6 +44,21 @@ void ASkillEnergyItem::BeginPlay()
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			CharacterReference->PickupItem.AddDynamic(this, &ASkillEnergyItem::PickupEnergyEvent);
 		}
+	}
+	switch (EnergyFeature)
+	{
+	case EEnergyFeature::Swim:
+		if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex]) 
+		{
+			Particle->DestroyComponent();
+		}
+		break;
+	case EEnergyFeature::Fly:
+		if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
+		{
+			Particle->DestroyComponent();
+		}
+		break;
 	}
 }
 
@@ -83,12 +99,14 @@ void ASkillEnergyItem::PickupEnergyEvent()
 		{
 		case EEnergyFeature::Swim:
 			CharacterReference->SwimEnergyNum++;
+			RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
 			CharacterReference->SwimEnergyPercent = 1;
 			//CharacterReference->GetGameHUDReference()->SwimEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
 			CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
 			break;
 		case EEnergyFeature::Fly:
 			CharacterReference->FlyEnergyNum++;
+			RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
 			CharacterReference->FlyEnergyPercent = 1;
 			CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
 			//CharacterReference->GetGameHUDReference()->FlyEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));

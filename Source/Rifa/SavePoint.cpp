@@ -53,6 +53,6 @@ void ASavePoint::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 
 void ASavePoint::SavePlayerData(AActor* OtherActor)
 {
-	RifaGameInstance->Position = Position;
+	RifaGameInstance->SavePosition = Position;
 	RifaGameInstance->Save();
 }

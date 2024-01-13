@@ -79,6 +79,8 @@ ARifaCharacter::ARifaCharacter()
 	IsSwimming = false;
 	IsFlying = false;
 	WaterForcingVector = FVector(0, 0, 0);
+	FlyEnergyNum = 0;
+	SwimEnergyNum = 0;
 }
 
 float ARifaCharacter::GetFlyTime()
@@ -136,7 +138,7 @@ void ARifaCharacter::BeginPlay()
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
-	CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->Materials[0].MaterialInterface);
+	CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -157,6 +159,14 @@ void ARifaCharacter::BeginPlay()
 		{
 			GameHUDWidget->Init();
 		}
+	}
+	for (bool bFly : RifaGameInstance->FlyItemArr) 
+	{
+		if (bFly) { FlyEnergyNum++; }
+	}
+	for (bool bSwim : RifaGameInstance->SwimItemArr)
+	{
+		if (bSwim) { SwimEnergyNum++; }
 	}
 	Bgm->PlayBgm();	
 }
@@ -348,11 +358,13 @@ void ARifaCharacter::ChangeHairPart()
 	if (CurrentHair)
 	{
 		auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
-		auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->Materials;
+		auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface;
 		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+		RifaGameInstance->CurrentHairPart = CurrentHairMesh->GetSkeletalMeshAsset();
 		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
 		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
-		CurrentHair->Mesh->SetMaterial(0, tempMaterial[0].MaterialInterface);
+		RifaGameInstance->HairPartsMap[CurrentHair->ThisHairPart] = CurrentHair->Mesh->GetSkeletalMeshAsset();
+		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
 	}
 }
 

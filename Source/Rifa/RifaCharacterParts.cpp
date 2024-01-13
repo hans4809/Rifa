@@ -6,6 +6,7 @@
 #include "RifaCharacter.h"
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ARifaCharacterParts::ARifaCharacterParts()
@@ -26,7 +27,7 @@ void ARifaCharacterParts::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterParts::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
-	Mesh->SetMaterial(0, Mesh->GetSkeletalMeshAsset()->Materials[0].MaterialInterface);
+	Mesh->SetMaterial(0, Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->HairPartsMap[ThisHairPart]->GetMaterials()[0].MaterialInterface);
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -62,7 +63,7 @@ void ARifaCharacterParts::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->AddToViewport();
+		PickupTextReference->Init();
 		IsInRange = true;
 	}
 }
@@ -71,7 +72,7 @@ void ARifaCharacterParts::EndCharacterOverlap(UPrimitiveComponent* OverlappedCom
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->RemoveFromParent();
+		PickupTextReference->CloseWidget();
 		IsInRange = false;
 	}
 }
