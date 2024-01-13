@@ -2,7 +2,6 @@
 
 
 #include "RIFASaveGame.h"
-#include "MyGameInstance.h"
 
 URIFASaveGame::URIFASaveGame()
 {
