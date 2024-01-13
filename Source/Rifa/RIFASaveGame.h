@@ -14,17 +14,17 @@ public:
 	URIFASaveGame();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	FVector SavePosition;
+		FVector SavePosition;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> ItemMap;
+		TMap <Item, bool> ItemMap;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	FString SaveSlotName;
+		FString SaveSlotName;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	int32 SaveIndex;
+		int32 SaveIndex;
 };

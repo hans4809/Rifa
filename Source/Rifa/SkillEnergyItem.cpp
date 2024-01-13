@@ -82,15 +82,14 @@ void ASkillEnergyItem::PickupEnergyEvent()
 		switch (EnergyFeature)
 		{
 		case EEnergyFeature::Swim:
-			CharacterReference->SwimEnergyNum++;
-			CharacterReference->SwimEnergyPercent = 1;
+			CharacterReference->SwimEnergyValue++;
+
 			//CharacterReference->GetGameHUDReference()->SwimEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
-			CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
+			CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyValue * 100.0f);
 			break;
 		case EEnergyFeature::Fly:
-			CharacterReference->FlyEnergyNum++;
-			CharacterReference->FlyEnergyPercent = 1;
-			CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
+			CharacterReference->FlyEnergyValue++;			
+			CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyValue * 100.0f);
 			//CharacterReference->GetGameHUDReference()->FlyEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
 			break;
 		}

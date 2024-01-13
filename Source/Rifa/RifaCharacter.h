@@ -62,23 +62,15 @@ public:
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic NPCTalk;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
-	int FlyEnergyNum;
+	int FlyEnergyValue;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
-	float FlyEnergyPercent;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
-	FTimerHandle FlyTimer;
 	UFUNCTION(BlueprintCallable)
-	float GetFlyTime();
+	float GetFlyTime(int _FlyEnergyValue);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	int SwimEnergyNum;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	float SwimEnergyPercent;
+	int SwimEnergyValue;
 	UFUNCTION(BlueprintCallable)
-	float GetSwimTime();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	FTimerHandle SwimTimer;
+	float GetSwimTime(int _SwimEnergyValue);
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	float SwimHeight;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
@@ -93,10 +85,6 @@ public:
 	bool bCanRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideDownWaterFall;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	bool bCanSwim;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	FVector WaterForcingVector;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
@@ -109,11 +97,10 @@ public:
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 	class ARifaCharacterParts* CurrentHair;
 	UFUNCTION(BlueprintCallable)
 	void ChangeHairPart();
-
 #pragma region InterfaceFunction
 	// InteractionInterface 상속 때문에 override 선언
 	UFUNCTION()
@@ -170,9 +157,12 @@ protected:
 	//UFUNCTION(BlueprintCallable)
 	//void EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 private:
-
+	UPROPERTY()
+	FTimerHandle FlyTimer;
 	UPROPERTY()
 	class UMyGameInstance* RifaGameInstance;
+	UPROPERTY()
+	FTimerHandle SwimTimer;
 	UPROPERTY()
 	FTimerHandle WidgetAnimTimer;
 	UFUNCTION()

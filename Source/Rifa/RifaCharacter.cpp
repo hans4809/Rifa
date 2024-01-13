@@ -78,12 +78,11 @@ ARifaCharacter::ARifaCharacter()
 	JumpMaxCount = 2;
 	IsSwimming = false;
 	IsFlying = false;
-	WaterForcingVector = FVector(0, 0, 0);
 }
 
-float ARifaCharacter::GetFlyTime()
+float ARifaCharacter::GetFlyTime(int _FlyEnergyValue)
 {
-	switch (FlyEnergyNum)
+	switch (_FlyEnergyValue)
 	{
 		case 1:
 			return 3.0f;
@@ -105,9 +104,9 @@ float ARifaCharacter::GetFlyTime()
 	}
 }
 
-float ARifaCharacter::GetSwimTime()
+float ARifaCharacter::GetSwimTime(int _SwimEnergyValue)
 {
-	switch (SwimEnergyNum)
+	switch (_SwimEnergyValue)
 	{
 		case 1:
 			return 2.0f;
@@ -162,45 +161,12 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
-	Bgm->PlayBgm();	
+	Bgm->PlayBgm();
 }
 
 void ARifaCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (FlyEnergyNum != 0) 
-	{
-		if (GetWorld()->GetTimerManager().IsTimerActive(FlyTimer))
-		{
-			FlyEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(FlyTimer) / GetFlyTime();
-		}
-		else 
-		{
-			if (FlyEnergyPercent < 1)
-			{
-				FlyEnergyPercent += DeltaTime * 0.1;
-			}
-		}
-
-	}
-
-	if (SwimEnergyNum != 0) 
-	{
-		if (GetWorld()->GetTimerManager().IsTimerActive(SwimTimer))
-		{
-			SwimEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(SwimTimer) / GetSwimTime();
-		}
-		else 
-		{
-			if (SwimEnergyPercent < 1)
-			{
-				SwimEnergyPercent += DeltaTime * 0.1;
-			}
-		}
-
-	}
-
 	if (IsSwimming) 
 	{
 		FHitResult HitResult;
@@ -221,14 +187,6 @@ void ARifaCharacter::Tick(float DeltaTime)
 			DrawColor,
 			false,
 			2.f);
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		// get forward vector
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		// get right vector 
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		RifaCharacterMovement->AddInputVector(FVector(WaterForcingVector.X / 2, WaterForcingVector.Y / 2, 0));
 		if (bResult == false) {
 			ReturnWalk();
 		}
@@ -413,7 +371,6 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	
 	if (InventoryOpen) {
 		return;
 	}
@@ -433,7 +390,7 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		//UE_LOG(LogTemp, Log, TEXT("ForwardDierction : %s\n FowardVector : %s"), *ForwardDirection.ToString(), *GetActorForwardVector().ToString());
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -443,25 +400,9 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
 			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		else if (IsSwimming && !IsWaterFall) 
-		{
-			const float Dot = FVector::DotProduct(GetActorForwardVector(), WaterForcingVector);
-			const float ACosAngle = FMath::Acos(Dot);
-			const float Angle = FMath::RadiansToDegrees(ACosAngle);
-			AddMovementInput(ForwardDirection, MovementVector.Y);
-			AddMovementInput(RightDirection, MovementVector.X);
-			if (Angle <= 90) 
-			{
-				RifaCharacterMovement->MaxFlySpeed = 1000;
-			}
-			else 
-			{
-				RifaCharacterMovement->MaxFlySpeed = 600;
-			}
-		}
 		else
 		{
-			AddMovementInput(ForwardDirection, MovementVector.Y );
+			AddMovementInput(ForwardDirection, MovementVector.Y);
 			AddMovementInput(RightDirection, MovementVector.X);
 		}
 	}
@@ -481,15 +422,14 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
-
 void ARifaCharacter::Fly()
 {
-	if (InventoryOpen || FlyEnergyNum == 0) {
+	if (InventoryOpen || FlyEnergyValue == 0) {
 		return;
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
-		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyEnergyPercent * ARifaCharacter::GetFlyTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, ARifaCharacter::GetFlyTime(FlyEnergyValue), false);
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
@@ -499,7 +439,6 @@ void ARifaCharacter::Fly()
 		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	}
 }
-
 void ARifaCharacter::OpenAndCloseInventory()
 {
 	if (GameHUDWidget->GetActivateInventory()) 
@@ -545,13 +484,14 @@ FHitResult ARifaCharacter::SwimCheck()
 		2.f);
 	if (bResult)
 	{
+		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.GetActor()->GetName());
 		for (auto obj : HitResult.GetActor()->GetComponents()) {
+			UE_LOG(LogTemp, Log, TEXT("Hit Component : %s"), *obj->GetName());
 		}
 		SwimStartLocation = HitResult.Location;
 	}
 	return HitResult;
 }
-
 void ARifaCharacter::AnimTimerFunc()
 {
 	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
@@ -562,7 +502,7 @@ void ARifaCharacter::AnimTimerFunc()
 
 void ARifaCharacter::Swim()
 {
-	if (InventoryOpen || SwimEnergyNum == 0) {
+	if (InventoryOpen || SwimEnergyValue == 0) {
 		return;
 	}
 	//FHitResult HitResult = SwimCheck();
@@ -584,16 +524,7 @@ void ARifaCharacter::Swim()
 	//	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 	//	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
 	//}
-	if (bCanSwim) 
-	{
-		IsSwimming = true;
-		StartLocation = GetActorLocation();
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
-		RifaCharacterMovement->bCheatFlying = true;
-		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
-	}
-	else if (bCanRideUpWaterFall)
+	if (bCanRideUpWaterFall)
 	{
 		IsSwimming = true;
 		IsWaterFall = true;
@@ -601,7 +532,7 @@ void ARifaCharacter::Swim()
 		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
 	}
 	else if (bCanRideDownWaterFall) 
 	{
@@ -612,7 +543,7 @@ void ARifaCharacter::Swim()
 		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
 	}
 }
 
@@ -620,7 +551,6 @@ void ARifaCharacter::ReturnWalk()
 {
 	IsSwimming = false;
 	IsWaterFall = false;
-	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
@@ -632,13 +562,11 @@ void ARifaCharacter::EndSwim()
 {
 	IsSwimming = false;
 	IsWaterFall = false;
-	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
-	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }
 
 void ARifaCharacter::Interaction()
