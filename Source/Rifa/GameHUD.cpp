@@ -124,6 +124,8 @@ void UGameHUD::NativeConstruct()
 void UGameHUD::Init()
 {
 	Super::Init();
+	FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100);
+	SwimEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100);
 }
 
 void UGameHUD::RefreshInventory_C()

@@ -151,6 +151,22 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
+	for (bool bFly : RifaGameInstance->FlyItemArr)
+	{
+		if (bFly) 
+		{ 
+			FlyEnergyNum++;
+			FlyEnergyPercent = 1;
+		}
+	}
+	for (bool bSwim : RifaGameInstance->SwimItemArr)
+	{
+		if (bSwim) 
+		{ 
+			SwimEnergyNum++; 
+			SwimEnergyPercent = 1;
+		}
+	}
 	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
@@ -160,14 +176,7 @@ void ARifaCharacter::BeginPlay()
 			GameHUDWidget->Init();
 		}
 	}
-	for (bool bFly : RifaGameInstance->FlyItemArr) 
-	{
-		if (bFly) { FlyEnergyNum++; }
-	}
-	for (bool bSwim : RifaGameInstance->SwimItemArr)
-	{
-		if (bSwim) { SwimEnergyNum++; }
-	}
+
 	Bgm->PlayBgm();	
 }
 

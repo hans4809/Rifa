@@ -6,7 +6,7 @@
 void USceneWidget::Init()
 {
 	Super::Init();
-	AddToViewport(0);
+	AddToViewport(1);
 }
 
 void USceneWidget::CloseWidget()

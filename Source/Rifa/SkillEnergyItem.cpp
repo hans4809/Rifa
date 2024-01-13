@@ -50,13 +50,15 @@ void ASkillEnergyItem::BeginPlay()
 	case EEnergyFeature::Swim:
 		if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex]) 
 		{
-			Particle->DestroyComponent();
+			SetActorEnableCollision(false);
+			Particle->DeactivateSystem();
 		}
 		break;
 	case EEnergyFeature::Fly:
 		if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
 		{
-			Particle->DestroyComponent();
+			SetActorEnableCollision(false);
+			Particle->DeactivateSystem();
 		}
 		break;
 	}
@@ -92,7 +94,6 @@ void ASkillEnergyItem::PickupEnergyEvent()
 	if (GetActorEnableCollision() && IsInRange)
 	{
 		PickupTextReference->RemoveFromParent();
-		//SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 		Particle->DeactivateSystem();
 		switch (EnergyFeature)
