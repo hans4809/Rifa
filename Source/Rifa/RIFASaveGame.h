@@ -49,7 +49,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	int32 SaveIndex;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap<EHairPartsItem, USkeletalMesh*> HairPartsMap;
+	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMap;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap<ECharacterMaterialItem, UMaterialInterface*> CharacterMaterialMap;
+	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
 };

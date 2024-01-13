@@ -26,6 +26,7 @@ void ARifaCharacterParts::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterParts::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	Mesh->SetMaterial(0, Mesh->GetSkeletalMeshAsset()->Materials[0].MaterialInterface);
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));

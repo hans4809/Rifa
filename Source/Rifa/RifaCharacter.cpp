@@ -135,12 +135,8 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	/*CurrentHair = GetWorld()->SpawnActor<ARifaCharacterParts>(FVector::ZeroVector, FRotator::ZeroRotator);
-	if (CurrentHair)
-	{
-		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
-	}*/
 	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
+	CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->Materials[0].MaterialInterface);
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -352,11 +348,11 @@ void ARifaCharacter::ChangeHairPart()
 	if (CurrentHair)
 	{
 		auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
-		auto tempMaterial = CurrentHairMesh->GetMaterial(0);
+		auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->Materials;
 		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
 		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
 		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
-		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
+		CurrentHair->Mesh->SetMaterial(0, tempMaterial[0].MaterialInterface);
 	}
 }
 

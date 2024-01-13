@@ -13,14 +13,15 @@ URIFASaveGame::URIFASaveGame()
 	SaveSlotName = "";
 	SaveIndex = 0;
 	SoundTrack = "";
-	HairPartsMap = TMap<EHairPartsItem, USkeletalMesh*>();
+	HairPartsMap = TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>>();
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH1(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
-	if (MESH1.Succeeded()) {
+	if (MESH1.Succeeded())
+	{
 		HairPartsMap.Add(EHairPartsItem::First, MESH1.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	/*static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
 	if (MESH2.Succeeded()) {
 		HairPartsMap.Add(EHairPartsItem::Second, MESH2.Object);
 	}
@@ -28,10 +29,10 @@ URIFASaveGame::URIFASaveGame()
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH3(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
 	if (MESH3.Succeeded()) {
 		HairPartsMap.Add(EHairPartsItem::Third, MESH3.Object);
-	}
+	}*/
 
 
-	CharacterMaterialMap = TMap<ECharacterMaterialItem, UMaterialInterface*>();
+	CharacterMaterialMap = TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>>();
 	
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
 	if (Material1.Succeeded()) {
