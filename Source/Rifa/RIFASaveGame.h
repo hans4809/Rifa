@@ -17,7 +17,7 @@ public:
 	FVector SavePosition;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> ItemMap;
+	TMap <Item, bool> SoundItemMap;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
@@ -27,4 +27,18 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	int32 SaveIndex;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<EHairPartsItem> CurrentHairPartsArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<ECharacterMaterialItem> CurrentMaterialItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> FlyItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> SwimItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> LevelSequencePlayerArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	ECharacterMaterialItem ECurrentCharacterMaterial;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	EHairPartsItem ECurrentCharacterHairPart;
 };

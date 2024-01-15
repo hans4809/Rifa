@@ -9,22 +9,93 @@
 
 UMyGameInstance::UMyGameInstance()
 {
-	ItemMap = TMap<Item, bool>();
-	for (int i = 0; i < (int)Item::MaxCount; i++) {
-		ItemMap.Add((Item)i, false);
+	//SoundItemMap = TMap<Item, bool>();
+	//for (int i = 0; i < (int)Item::MaxCount; i++) {
+	//	SoundItemMap.Add((Item)i, false);
+	//}
+	//Position = FVector(0, 0, 0);
+	//SoundTrack = "";
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH0(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH0.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::Default, MESH0.Object);
 	}
-	Position = FVector(0, 0, 0);
-	SoundTrack = "";
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH1(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH1.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::First, MESH1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair02.idletest_hair02'"));
+	if (MESH2.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::Second, MESH2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial1(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_DefaultHair.MI_DefaultHair'"));
+	if (CharacterMaterial1.Succeeded() && HairMaterial1.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, CharacterMaterial1.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Default, HairMaterial1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial2(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_WhiteHair.MI_WhiteHair'"));
+	if (CharacterMaterial2.Succeeded() && HairMaterial2.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::White, CharacterMaterial2.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::White, HairMaterial2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial3(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_BlueHair.MI_BlueHair'"));
+	if (CharacterMaterial3.Succeeded() && HairMaterial3.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, CharacterMaterial3.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Blue, HairMaterial3.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial4(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Red.Red'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial4(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_RedHair.MI_RedHair'"));
+	if (CharacterMaterial4.Succeeded() && HairMaterial4.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Red, CharacterMaterial4.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Red, HairMaterial4.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial5(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Green.Green'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial5(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_GreenHair.MI_GreenHair'"));
+	if (CharacterMaterial5.Succeeded() && HairMaterial5.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Green, CharacterMaterial5.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Green, HairMaterial5.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial6(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Yellow.Yellow'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial6(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_YellowHair.MI_YellowHair'"));
+	if (CharacterMaterial6.Succeeded() && HairMaterial6.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
+	}
 }
 
-void UMyGameInstance::Save()
+bool UMyGameInstance::Save()
 {
 	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-	NewPlayerData->SavePosition = Position;
-	NewPlayerData->ItemMap = ItemMap;
+	NewPlayerData->SavePosition = SavePosition;
+	NewPlayerData->SoundItemMap = SoundItemMap;
 	NewPlayerData->SoundTrack = SoundTrack;
-
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+	NewPlayerData->FlyItemArr = FlyItemArr;
+	NewPlayerData->SwimItemArr = SwimItemArr;
+	NewPlayerData->LevelSequencePlayerArr = LevelSequencePlayerArr;
+	NewPlayerData->CurrentHairPartsArr = CurrentHairPartsArr;
+	NewPlayerData->CurrentMaterialItemArr = CurrentMaterialItemArr;
+	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
+	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
+	return UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
 void UMyGameInstance::Load()
@@ -33,14 +104,27 @@ void UMyGameInstance::Load()
 	if (nullptr == RIFASaveGame)
 	{
 		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-		Position = FVector(0, 0, 0);
-		ItemMap = TMap<Item, bool>();
-		SoundTrack = "";
 	}
-	else
-	{
-		Position = RIFASaveGame->SavePosition;
-		ItemMap = RIFASaveGame->ItemMap;
-		SoundTrack = RIFASaveGame->SoundTrack;
-	}
+	SavePosition = RIFASaveGame->SavePosition;
+	SoundItemMap = RIFASaveGame->SoundItemMap;
+	SoundTrack = RIFASaveGame->SoundTrack;
+	FlyItemArr = RIFASaveGame->FlyItemArr;
+	SwimItemArr = RIFASaveGame->SwimItemArr;
+	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
+	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
+	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
+	ECurrentCharacterMaterial = RIFASaveGame->ECurrentCharacterMaterial;
+	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
+}
+
+void UMyGameInstance::Init()
+{
+	Super::Init();
+	Load();
+}
+
+void UMyGameInstance::Shutdown()
+{
+	if (!Save()) { Save(); }
+	Super::Shutdown();
 }

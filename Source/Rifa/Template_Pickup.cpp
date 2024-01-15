@@ -78,7 +78,7 @@ void ATemplate_Pickup::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, A
 {
 	if (Cast<ARifaCharacter>(OtherActor)) 
 	{
-		PickupTextReference->AddToViewport();
+		PickupTextReference->Init();
 		IsInRange = true;
 	}
 }
@@ -87,7 +87,7 @@ void ATemplate_Pickup::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, 
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->RemoveFromParent();
+		PickupTextReference->CloseWidget();
 		IsInRange = false;
 	}
 }
@@ -96,9 +96,9 @@ void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
-		RifaGameInstance->ItemMap[(Item)ItemIndex] = true;
-		RifaGameInstance->Save();
-		PickupTextReference->RemoveFromParent();
+		RifaGameInstance->SoundItemMap[(Item)ItemIndex] = true;
+		//RifaGameInstance->Save();
+		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 		CharacterReference->GetGameHUDReference()->RefreshInventory_C();

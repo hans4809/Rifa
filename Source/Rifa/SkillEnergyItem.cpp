@@ -32,6 +32,29 @@ void ASkillEnergyItem::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASkillEnergyItem::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ASkillEnergyItem::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) 
+	{
+		switch (EnergyFeature)
+		{
+		case EEnergyFeature::Swim:
+			if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex])
+			{
+				SetActorEnableCollision(false);
+				Particle->DeactivateSystem();
+			}
+			break;
+		case EEnergyFeature::Fly:
+			if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
+			{
+				SetActorEnableCollision(false);
+				Particle->DeactivateSystem();
+			}
+			break;
+		}
+	}
+
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -44,6 +67,7 @@ void ASkillEnergyItem::BeginPlay()
 			CharacterReference->PickupItem.AddDynamic(this, &ASkillEnergyItem::PickupEnergyEvent);
 		}
 	}
+
 }
 
 // Called every frame
@@ -76,22 +100,27 @@ void ASkillEnergyItem::PickupEnergyEvent()
 	if (GetActorEnableCollision() && IsInRange)
 	{
 		PickupTextReference->RemoveFromParent();
-		//SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
 		Particle->DeactivateSystem();
 		switch (EnergyFeature)
 		{
 		case EEnergyFeature::Swim:
-			CharacterReference->SwimEnergyNum++;
-			CharacterReference->SwimEnergyPercent = 1;
-			//CharacterReference->GetGameHUDReference()->SwimEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
-			CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
+			if (CharacterReference->SwimEnergyNum < 5) 
+			{
+				CharacterReference->SwimEnergyNum++;
+				RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
+				CharacterReference->SwimEnergyPercent = 1;
+				CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
+			}
 			break;
 		case EEnergyFeature::Fly:
-			CharacterReference->FlyEnergyNum++;
-			CharacterReference->FlyEnergyPercent = 1;
-			CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
-			//CharacterReference->GetGameHUDReference()->FlyEnergyBox->SetRenderScale(FVector2D(CharacterReference->SwimEnergyValue * 1000.0f, 300.0f));
+			if (CharacterReference->FlyEnergyNum < 5) 
+			{
+				CharacterReference->FlyEnergyNum++;
+				RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
+				CharacterReference->FlyEnergyPercent = 1;
+				CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
+			}
 			break;
 		}
 	}
