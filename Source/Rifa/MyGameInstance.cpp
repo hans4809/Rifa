@@ -80,6 +80,14 @@ UMyGameInstance::UMyGameInstance()
 		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
 		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
 	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial7(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Black.Black'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial7(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_BlackHiar.MI_BlackHiar'"));
+	if (CharacterMaterial7.Succeeded() && HairMaterial7.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
+	}
 }
 
 bool UMyGameInstance::Save()

@@ -51,6 +51,7 @@ enum class ECharacterMaterialItem : uint8
 	Green UMETA(DisplayName = "Green"),
 	Red UMETA(DisplayName = "Red"),
 	Yellow UMETA(DisplayName = "Yellow"),
+	Black UMETA(DisplayName = "Black"),
 	MaxCount
 };
 
