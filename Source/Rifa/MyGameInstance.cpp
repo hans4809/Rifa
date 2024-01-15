@@ -15,9 +15,44 @@ UMyGameInstance::UMyGameInstance()
 	//}
 	//Position = FVector(0, 0, 0);
 	//SoundTrack = "";
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH0(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH0.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::Default, MESH0.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH1(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
+	if (MESH1.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::First, MESH1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair02.idletest_hair02'"));
+	if (MESH2.Succeeded())
+	{
+		HairPartsMeshMap.Add(EHairPartsItem::Second, MESH2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
+	if (Material1.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, Material1.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
+	if (Material2.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::White, Material2.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
+	if (Material3.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, Material3.Object);
+	}
 }
 
-void UMyGameInstance::Save()
+bool UMyGameInstance::Save()
 {
 	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
 	NewPlayerData->SavePosition = SavePosition;
@@ -25,9 +60,12 @@ void UMyGameInstance::Save()
 	NewPlayerData->SoundTrack = SoundTrack;
 	NewPlayerData->FlyItemArr = FlyItemArr;
 	NewPlayerData->SwimItemArr = SwimItemArr;
-	NewPlayerData->HairPartsMap = HairPartsMap;
-	NewPlayerData->CharacterMaterialMap = CharacterMaterialMap;
-	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+	NewPlayerData->LevelSequencePlayerArr = LevelSequencePlayerArr;
+	NewPlayerData->CurrentHairPartsArr = CurrentHairPartsArr;
+	NewPlayerData->CurrentMaterialItemArr = CurrentMaterialItemArr;
+	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
+	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
+	return UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
 void UMyGameInstance::Load()
@@ -42,10 +80,11 @@ void UMyGameInstance::Load()
 	SoundTrack = RIFASaveGame->SoundTrack;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
 	SwimItemArr = RIFASaveGame->SwimItemArr;
-	HairPartsMap = RIFASaveGame->HairPartsMap;
-	CharacterMaterialMap = RIFASaveGame->CharacterMaterialMap;
-	CurrentCharacterMaterial = RIFASaveGame->CurrentCharacterMaterial;
-	CurrentHairPart = RIFASaveGame->CurrentHairPart;
+	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
+	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
+	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
+	ECurrentCharacterMaterial = RIFASaveGame->ECurrentCharacterMaterial;
+	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
 }
 
 void UMyGameInstance::Init()
@@ -56,6 +95,6 @@ void UMyGameInstance::Init()
 
 void UMyGameInstance::Shutdown()
 {
-	Save();
+	if (!Save()) { Save(); }
 	Super::Shutdown();
 }

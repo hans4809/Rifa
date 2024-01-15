@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "InteractionInterface.h"
-#include "BGMAudioComponent.h"
+#include "MyGameInstance.h"
 #include "RifaCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
@@ -48,14 +48,15 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 	class UInputAction* InterAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* DashAction;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hair", meta = (AllowPrivateAccess = "true"))
-	class USkeletalMeshComponent* CurrentHairMesh;
+
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 	UPROPERTY()
 	bool First = true;
 public:
 	ARifaCharacter();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hair", meta = (AllowPrivateAccess = "true"))
+	class USkeletalMeshComponent* CurrentHairMesh;
 	//Event 생성
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic PickupItem;
@@ -100,7 +101,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	AActor* InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
-	UBGMAudioComponent* Bgm;
+	class UBGMAudioComponent* Bgm;
 	UFUNCTION()
 	FHitResult SwimCheck();
 	UFUNCTION()
@@ -109,10 +110,14 @@ public:
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	class ARifaCharacterParts* CurrentHair;*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	class ARifaCharacterParts* CurrentHair;
-	UFUNCTION(BlueprintCallable)
-	void ChangeHairPart();
+	ECharacterMaterialItem ECurrentCharacterMaterial;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	EHairPartsItem ECurrentCharacterHairPart;
+	/*UFUNCTION(BlueprintCallable)
+	void ChangeHairPart();*/
 
 #pragma region InterfaceFunction
 	// InteractionInterface 상속 때문에 override 선언

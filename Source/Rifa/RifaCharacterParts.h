@@ -23,9 +23,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
-	EHairPartsItem ThisHairPart;
+	int32 HairPartArrIdx;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	EHairPartsItem ECurrentHairPart;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* Mesh;
+	ECharacterMaterialItem ECurrentMaterial;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UMyGameInstance> RifaGameInstance;
 	UFUNCTION(BlueprintCallable)
 	void PickupCharacterParts();
 	UFUNCTION(BlueprintCallable)

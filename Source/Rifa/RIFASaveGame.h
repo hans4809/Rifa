@@ -28,9 +28,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	int32 SaveIndex;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMap;
+	TArray<EHairPartsItem> CurrentHairPartsArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
+	TArray<ECharacterMaterialItem> CurrentMaterialItemArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TArray<bool> FlyItemArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
@@ -38,7 +38,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TArray<bool> LevelSequencePlayerArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TObjectPtr<UMaterialInterface> CurrentCharacterMaterial;
+	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TObjectPtr<USkeletalMesh> CurrentHairPart;
+	EHairPartsItem ECurrentCharacterHairPart;
 };

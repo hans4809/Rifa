@@ -6,6 +6,7 @@
 #include "RifaCharacter.h"
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 // Sets default values
 ARifaCharacterMaterialItem::ARifaCharacterMaterialItem()
@@ -27,8 +28,14 @@ void ARifaCharacterMaterialItem::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterMaterialItem::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterMaterialItem::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ThisMaterial]);
+	if (IsValid(RifaGameInstance)) 
+	{
+		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
+		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
+	}
+
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -36,8 +43,12 @@ void ARifaCharacterMaterialItem::BeginPlay()
 		{
 			PickupTextReference->PickupActor = Cast<AActor>(this);
 			PickupTextReference->PickupText = TEXT("Press E");
+
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterMaterialItem::PickupCharacterMaterial);
+			if (IsValid(CharacterReference)) 
+			{
+				CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterMaterialItem::PickupCharacterMaterial);
+			}
 		}
 	}
 }
@@ -53,11 +64,16 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 {
 	if (GetActorEnableCollision() && IsInRange)
 	{
-		auto TempMaterial = CharacterReference->GetMesh()->GetMaterial(0);
-		CharacterReference->GetMesh()->SetMaterial(0, Mesh->GetMaterial(0));
-		Mesh->SetMaterial(0, TempMaterial);
-		RifaGameInstance->CurrentCharacterMaterial = CharacterReference->GetMesh()->GetMaterial(0);
-		RifaGameInstance->CharacterMaterialMap[ThisMaterial] = Mesh->GetMaterial(0);
+		ECharacterMaterialItem ETempMaterial = ECurrentMaterial;
+
+		ECurrentMaterial = CharacterReference->ECurrentCharacterMaterial;
+		RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx] = ECurrentMaterial;
+
+		CharacterReference->ECurrentCharacterMaterial = ETempMaterial;
+		RifaGameInstance->ECurrentCharacterMaterial = CharacterReference->ECurrentCharacterMaterial;
+
+		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
+		CharacterReference->GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 	}
 }
 

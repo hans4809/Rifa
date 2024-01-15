@@ -34,6 +34,7 @@ enum class Item : uint8
 UENUM()
 enum class EHairPartsItem : uint8
 {
+	Default UMETA(DisplayName = "Default"),
 	First UMETA(DisplayName = "First"),
 	Second UMETA(DisplayName = "Second"),
 	Third UMETA(DisplayName = "Third"),
@@ -70,8 +71,12 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<EHairPartsItem> CurrentHairPartsArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<ECharacterMaterialItem> CurrentMaterialItemArr;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMap;
+	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMeshMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
@@ -81,14 +86,14 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TArray<bool> LevelSequencePlayerArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TObjectPtr<UMaterialInterface> CurrentCharacterMaterial;
+	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TObjectPtr<USkeletalMesh> CurrentHairPart;
+	EHairPartsItem ECurrentCharacterHairPart;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
 
 	UFUNCTION()
-	void Save();
+	bool Save();
 
 	UFUNCTION()
 	void Load();

@@ -87,6 +87,9 @@ float ARifaCharacter::GetFlyTime()
 {
 	switch (FlyEnergyNum)
 	{
+		case 0:
+			return 0.0f;
+			break;
 		case 1:
 			return 3.0f;
 			break;
@@ -99,11 +102,9 @@ float ARifaCharacter::GetFlyTime()
 		case 4:
 			return 9.0f;
 			break;
-		case 5:
+		default:
 			return 11.0f;
 			break;
-		default:
-			return 0.0f;
 	}
 }
 
@@ -111,6 +112,9 @@ float ARifaCharacter::GetSwimTime()
 {
 	switch (SwimEnergyNum)
 	{
+		case 0:
+			return 0.0f;
+			break;
 		case 1:
 			return 2.0f;
 			break;
@@ -123,11 +127,10 @@ float ARifaCharacter::GetSwimTime()
 		case 4:
 			return 5.0f;
 			break;
-		case 5:
+		default:
 			return 6.0f;
 			break;
-		default:
-			return 0.0f;
+
 	}
 }
 
@@ -136,9 +139,15 @@ void ARifaCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
-	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
-	CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) 
+	{
+		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentCharacterHairPart]);
+		CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+	}
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -151,22 +160,24 @@ void ARifaCharacter::BeginPlay()
 			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 	}
+
 	for (bool bFly : RifaGameInstance->FlyItemArr)
 	{
 		if (bFly) 
 		{ 
 			FlyEnergyNum++;
-			FlyEnergyPercent = 1;
 		}
 	}
+	FlyEnergyPercent = 1;
 	for (bool bSwim : RifaGameInstance->SwimItemArr)
 	{
 		if (bSwim) 
 		{ 
 			SwimEnergyNum++; 
-			SwimEnergyPercent = 1;
 		}
 	}
+	SwimEnergyPercent = 1;
+
 	//GameStart();
 	if (IsValid(GameHUDWidgetClass))
 	{
@@ -362,20 +373,21 @@ void ARifaCharacter::DisableMouseCursor()
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
 }
 
-void ARifaCharacter::ChangeHairPart()
-{
-	if (CurrentHair)
-	{
-		auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
-		auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface;
-		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
-		RifaGameInstance->CurrentHairPart = CurrentHairMesh->GetSkeletalMeshAsset();
-		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
-		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
-		RifaGameInstance->HairPartsMap[CurrentHair->ThisHairPart] = CurrentHair->Mesh->GetSkeletalMeshAsset();
-		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
-	}
-}
+//void ARifaCharacter::ChangeHairPart()
+//{
+//	if (CurrentHair)
+//	{
+//		//auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
+//		//auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface;
+//		auto tempHairPart = CurrentHairPart;
+//		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
+//		RifaGameInstance->CurrentCharacterHairPart = CurrentHairPart;
+//		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
+//		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
+//		RifaGameInstance->CurrentHairPart[CurrentHair->ThisHairPart] = CurrentHair->Mesh->GetSkeletalMeshAsset();
+//		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
+//	}
+//}
 
 
 

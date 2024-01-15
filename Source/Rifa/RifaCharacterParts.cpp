@@ -27,7 +27,15 @@ void ARifaCharacterParts::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterParts::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
-	Mesh->SetMaterial(0, Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->HairPartsMap[ThisHairPart]->GetMaterials()[0].MaterialInterface);
+
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) 
+	{
+		ECurrentHairPart = RifaGameInstance->CurrentHairPartsArr[HairPartArrIdx];
+		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
+		Mesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
+	}
+
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -35,8 +43,12 @@ void ARifaCharacterParts::BeginPlay()
 		{
 			PickupTextReference->PickupActor = Cast<AActor>(this);
 			PickupTextReference->PickupText = TEXT("Press E");
+
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterParts::PickupCharacterParts);
+			if (IsValid(CharacterReference)) 
+			{
+				CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterParts::PickupCharacterParts);
+			}
 		}
 	}
 }
@@ -52,9 +64,19 @@ void ARifaCharacterParts::PickupCharacterParts()
 {
 	if (GetActorEnableCollision() && IsInRange)
 	{
-		FName HairSocket(TEXT("hair_socket"));
-		CharacterReference->CurrentHair = this;
-		CharacterReference->ChangeHairPart();
+		EHairPartsItem EtempHairPart = ECurrentHairPart;
+
+		ECurrentHairPart = CharacterReference->ECurrentCharacterHairPart;
+		RifaGameInstance->CurrentHairPartsArr[HairPartArrIdx] = ECurrentHairPart;
+
+		CharacterReference->ECurrentCharacterHairPart = EtempHairPart;
+		RifaGameInstance->ECurrentCharacterHairPart = CharacterReference->ECurrentCharacterHairPart;
+
+		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
+		Mesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
+
+		CharacterReference->CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]);
+		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
 	}
 
 }
