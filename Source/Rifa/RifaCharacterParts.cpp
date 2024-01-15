@@ -73,10 +73,10 @@ void ARifaCharacterParts::PickupCharacterParts()
 		RifaGameInstance->ECurrentCharacterHairPart = CharacterReference->ECurrentCharacterHairPart;
 
 		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
-		Mesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
+		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECharacterMaterialItem::Default]);
 
 		CharacterReference->CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]);
-		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
+		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 	}
 
 }

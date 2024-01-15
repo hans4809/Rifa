@@ -150,7 +150,7 @@ void ARifaCharacter::BeginPlay()
 		GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentCharacterMaterial]);
 
 		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentCharacterHairPart]);
-		CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentCharacterMaterial]);
 	}
 
 	//Add Input Mapping Context

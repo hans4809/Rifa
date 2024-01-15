@@ -78,6 +78,8 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMeshMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TArray<bool> FlyItemArr;

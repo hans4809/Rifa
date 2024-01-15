@@ -33,22 +33,52 @@ UMyGameInstance::UMyGameInstance()
 		HairPartsMeshMap.Add(EHairPartsItem::Second, MESH2.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
-	if (Material1.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial1(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_DefaultHair.MI_DefaultHair'"));
+	if (CharacterMaterial1.Succeeded() && HairMaterial1.Succeeded())
 	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, Material1.Object);
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, CharacterMaterial1.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Default, HairMaterial1.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
-	if (Material2.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial2(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_WhiteHair.MI_WhiteHair'"));
+	if (CharacterMaterial2.Succeeded() && HairMaterial2.Succeeded())
 	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::White, Material2.Object);
+		CharacterMaterialMap.Add(ECharacterMaterialItem::White, CharacterMaterial2.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::White, HairMaterial2.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
-	if (Material3.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial3(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_BlueHair.MI_BlueHair'"));
+	if (CharacterMaterial3.Succeeded() && HairMaterial3.Succeeded())
 	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, Material3.Object);
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, CharacterMaterial3.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Blue, HairMaterial3.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial4(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Red.Red'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial4(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_RedHair.MI_RedHair'"));
+	if (CharacterMaterial4.Succeeded() && HairMaterial4.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Red, CharacterMaterial4.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Red, HairMaterial4.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial5(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Green.Green'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial5(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_GreenHair.MI_GreenHair'"));
+	if (CharacterMaterial5.Succeeded() && HairMaterial5.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Green, CharacterMaterial5.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Green, HairMaterial5.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial6(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Yellow.Yellow'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial6(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_YellowHair.MI_YellowHair'"));
+	if (CharacterMaterial6.Succeeded() && HairMaterial6.Succeeded())
+	{
+		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
+		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
 	}
 }
 
