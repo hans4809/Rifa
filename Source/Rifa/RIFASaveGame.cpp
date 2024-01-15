@@ -29,5 +29,5 @@ URIFASaveGame::URIFASaveGame()
 		CurrentMaterialItemArr.Add((ECharacterMaterialItem)l);
 	}
 	ECurrentCharacterMaterial = ECharacterMaterialItem::Default;
-	ECurrentCharacterHairPart = EHairPartsItem::First;
+	ECurrentCharacterHairPart = EHairPartsItem::Default;
 }

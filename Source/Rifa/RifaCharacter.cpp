@@ -144,6 +144,11 @@ void ARifaCharacter::BeginPlay()
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (IsValid(RifaGameInstance)) 
 	{
+		ECurrentCharacterMaterial = RifaGameInstance->ECurrentCharacterMaterial;
+		ECurrentCharacterHairPart = RifaGameInstance->ECurrentCharacterHairPart;
+
+		GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentCharacterMaterial]);
+
 		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentCharacterHairPart]);
 		CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
 	}
