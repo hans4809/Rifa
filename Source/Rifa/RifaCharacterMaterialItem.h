@@ -31,6 +31,8 @@ public:
 	ECharacterMaterialItem ECurrentMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UMyGameInstance> RifaGameInstance;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	TObjectPtr<class ARifaGameMode> RifaGameMode;
 	UFUNCTION(BlueprintCallable)
 	void PickupCharacterMaterial();
 	UFUNCTION(BlueprintCallable)

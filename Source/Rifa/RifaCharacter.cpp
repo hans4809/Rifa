@@ -685,7 +685,7 @@ void ARifaCharacter::Interaction()
 	{
 		if (PickupItem.IsBound() == true) 
 		{
-			PickupItem.Broadcast(); 
+			PickupItem.Broadcast();
 			if (NPCTalk.IsBound() == true)
 				NPCTalk.Broadcast();
 		}

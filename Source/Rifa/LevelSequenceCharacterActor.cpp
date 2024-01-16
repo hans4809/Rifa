@@ -23,6 +23,13 @@ ALevelSequenceCharacterActor::ALevelSequenceCharacterActor()
 	CurrentHairMesh->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
+void ALevelSequenceCharacterActor::CharacterApperanceChanged()
+{
+	CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+	CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
+	CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+}
+
 // Called when the game starts or when spawned
 void ALevelSequenceCharacterActor::BeginPlay()
 {
@@ -31,12 +38,14 @@ void ALevelSequenceCharacterActor::BeginPlay()
 	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
 	if (IsValid(RifaGameInstance))
 	{
+		CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
+		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+
 		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		if (IsValid(CharacterReference)) 
 		{
-			CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
-			CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
-			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+			
 		}
 	}
 }

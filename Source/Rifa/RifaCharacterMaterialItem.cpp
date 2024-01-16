@@ -7,6 +7,8 @@
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
+#include "RifaGameMode.h"
+#include "LevelSequenceCharacterActor.h"
 
 // Sets default values
 ARifaCharacterMaterialItem::ARifaCharacterMaterialItem()
@@ -35,6 +37,8 @@ void ARifaCharacterMaterialItem::BeginPlay()
 		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
 		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
 	}
+
+	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	if (IsValid(PickupTextClass))
 	{
@@ -75,6 +79,18 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
 		CharacterReference->GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+
+		if (IsValid(RifaGameMode))
+		{
+			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr)
+			{
+				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
+				if (IsValid(LevelSequenceCharacterReference))
+				{
+					LevelSequenceCharacterReference->CharacterApperanceChanged();
+				}
+			}
+		}
 	}
 }
 

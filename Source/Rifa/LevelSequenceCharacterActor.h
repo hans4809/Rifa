@@ -22,6 +22,8 @@ public:
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class ARifaCharacter> CharacterReference;
+	UFUNCTION(BlueprintCallable)
+	void CharacterApperanceChanged();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

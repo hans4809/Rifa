@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "RifaCharacter.h"
 #include "Animation/SkeletalMeshActor.h"
+#include "LevelSequenceCharacterActor.h"
 
 
 
