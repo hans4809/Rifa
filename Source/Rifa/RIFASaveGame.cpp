@@ -15,7 +15,7 @@ URIFASaveGame::URIFASaveGame()
 
 	FlyItemArr.Init(false, 5);
 	SwimItemArr.Init(false, 5);
-	LevelSequencePlayerArr.Init(false, 7);
+	LevelSequencePlayerArr.Init(true, 10);
 
 	SaveSlotName = "";
 	SaveIndex = 0;
