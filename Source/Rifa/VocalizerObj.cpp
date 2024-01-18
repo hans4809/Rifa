@@ -97,15 +97,16 @@ void AVocalizerObj::SoundPlay()
 
 void AVocalizerObj::SoundWave()
 {
-	//sphereScale = FMath::Lerp(0, 1, timeDeltaTime / soundDuration);
-	//vocalizer->SetWorldScale3D(FVector(sphereScale, sphereRadius, sphereScale));
-	AVocalizer* _vocalizer = world->SpawnActor<AVocalizer>(AVocalizer::StaticClass(), GetActorLocation(), FRotator(0));
-	_vocalizer->minOpacity = this->minOpacity;
-	_vocalizer->maxOpacity = this->maxOpacity;
-	_vocalizer->vocalizerColor = this->vocalizerColor;
-	_vocalizer->maxSize = vocalizerSphere->GetScaledSphereRadius();
-	_vocalizer->speed = this->speed;
-	_vocalizer->MoveStart();
+	if (soundToPlay && isActive)
+	{
+		AVocalizer* _vocalizer = world->SpawnActor<AVocalizer>(AVocalizer::StaticClass(), GetActorLocation(), FRotator(0));
+		_vocalizer->minOpacity = this->minOpacity;
+		_vocalizer->maxOpacity = this->maxOpacity;
+		_vocalizer->vocalizerColor = this->vocalizerColor;
+		_vocalizer->maxSize = vocalizerSphere->GetScaledSphereRadius();
+		_vocalizer->speed = this->speed;
+		_vocalizer->MoveStart();
+	}
 }
 
 void AVocalizerObj::SoundOn()
