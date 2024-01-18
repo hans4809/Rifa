@@ -3,19 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/LevelScriptActor.h"
+#include "BaseLevelScriptActor.h"
 #include "IslandLevelScriptActor.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RIFA_API AIslandLevelScriptActor : public ALevelScriptActor
+class RIFA_API AIslandLevelScriptActor : public ABaseLevelScriptActor
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
-	TArray<TObjectPtr<AActor>> LevelSequenceCharacterArr;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
@@ -28,7 +27,7 @@ public:
 	TObjectPtr<class ALevelSequenceActor> SecondLevelSequenceActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
 	FTimerHandle SequenceTimer;
-private:
+protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()
 	void OnFinishedFirstLevelSequence();

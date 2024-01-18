@@ -2,17 +2,17 @@
 
 
 #include "IslandLevelScriptActor.h"
-#include "LevelSequenceCharacterActor.h"
-#include <Kismet/GameplayStatics.h>
 #include "MyGameInstance.h"
 #include "RifaCharacter.h"
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
+#include <Kismet/GameplayStatics.h>
+#include "LevelSequenceCharacterActor.h"
 
 void AIslandLevelScriptActor::BeginPlay()
 {
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ALevelSequenceCharacterActor::StaticClass(), LevelSequenceCharacterArr);
+	Super::BeginPlay();
 	RifaGameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (RifaGameInstanceReference->LevelSequencePlayerArr[0]) 
