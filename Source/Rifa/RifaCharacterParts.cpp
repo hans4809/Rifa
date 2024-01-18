@@ -86,14 +86,14 @@ void ARifaCharacterParts::PickupCharacterParts()
 
 		if (IsValid(RifaGameMode)) 
 		{
-			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
+			/*for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
 				if (IsValid(LevelSequenceCharacterReference))
 				{
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
-			}
+			}*/
 		}
 	}
 
