@@ -6,6 +6,9 @@
 #include "RifaCharacter.h"
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
+#include "RifaGameMode.h"
+#include "LevelSequenceCharacterActor.h"
 
 // Sets default values
 ARifaCharacterParts::ARifaCharacterParts()
@@ -26,6 +29,17 @@ void ARifaCharacterParts::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterParts::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterParts::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) 
+	{
+		ECurrentHairPart = RifaGameInstance->CurrentHairPartsArr[HairPartArrIdx];
+		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
+		Mesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
+	}
+
+	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -33,10 +47,16 @@ void ARifaCharacterParts::BeginPlay()
 		{
 			PickupTextReference->PickupActor = Cast<AActor>(this);
 			PickupTextReference->PickupText = TEXT("Press E");
+
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterParts::PickupCharacterParts);
+			if (IsValid(CharacterReference)) 
+			{
+				CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterParts::PickupCharacterParts);
+			}
 		}
 	}
+
+
 }
 
 // Called every frame
@@ -50,9 +70,31 @@ void ARifaCharacterParts::PickupCharacterParts()
 {
 	if (GetActorEnableCollision() && IsInRange)
 	{
-		FName HairSocket(TEXT("hair_socket"));
-		CharacterReference->CurrentHair = this;
-		CharacterReference->ChangeHairPart();
+		EHairPartsItem EtempHairPart = ECurrentHairPart;
+
+		ECurrentHairPart = CharacterReference->ECurrentCharacterHairPart;
+		RifaGameInstance->CurrentHairPartsArr[HairPartArrIdx] = ECurrentHairPart;
+
+		CharacterReference->ECurrentCharacterHairPart = EtempHairPart;
+		RifaGameInstance->ECurrentCharacterHairPart = CharacterReference->ECurrentCharacterHairPart;
+
+		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
+		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECharacterMaterialItem::Default]);
+
+		CharacterReference->CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]);
+		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+
+		if (IsValid(RifaGameMode)) 
+		{
+			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
+			{
+				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
+				if (IsValid(LevelSequenceCharacterReference))
+				{
+					LevelSequenceCharacterReference->CharacterApperanceChanged();
+				}
+			}
+		}
 	}
 
 }
@@ -61,7 +103,7 @@ void ARifaCharacterParts::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->AddToViewport();
+		PickupTextReference->Init();
 		IsInRange = true;
 	}
 }
@@ -70,7 +112,7 @@ void ARifaCharacterParts::EndCharacterOverlap(UPrimitiveComponent* OverlappedCom
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->RemoveFromParent();
+		PickupTextReference->CloseWidget();
 		IsInRange = false;
 	}
 }

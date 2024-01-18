@@ -43,7 +43,7 @@ void UDialogWidget::Reply_C(TArray<FText> Replies)
 	ReplyList->ClearListItems();
 	for (int i = 0; i < Replies.Num(); i++)
 	{
-		UDialogReplyObject* ReplyObj = Cast<UDialogReplyObject>(StaticConstructObject_Internal(UDialogReplyObject::StaticClass(), this));
+		UDialogReplyObject* ReplyObj = NewObject<UDialogReplyObject>();
 		ReplyObj->Reply = Replies[i];
 		ReplyList->AddItem(ReplyObj);
 		ReplyObj->OnClicked.AddDynamic(this, &UDialogWidget::OnClicked_Event);

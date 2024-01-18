@@ -15,7 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	ALevelSequencePlayActor();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	class ASkeletalMeshActor* CharacterMesh;
+	TObjectPtr<class ALevelSequenceCharacterActor> CharacterMesh;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

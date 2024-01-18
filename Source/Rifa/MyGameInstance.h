@@ -8,11 +8,6 @@
 /**
  * 
  */
-UENUM()
-enum class UI_Name : uint8
-{
-	UPanelWidget UMETA(DisplayName = "UPanelWidget")
-};
 
 UENUM()
 enum class Item : uint8
@@ -36,6 +31,30 @@ enum class Item : uint8
 	MaxCount
 };
 
+UENUM()
+enum class EHairPartsItem : uint8
+{
+	Default UMETA(DisplayName = "Default"),
+	First UMETA(DisplayName = "First"),
+	Second UMETA(DisplayName = "Second"),
+	Third UMETA(DisplayName = "Third"),
+	MaxCount
+};
+
+
+UENUM()
+enum class ECharacterMaterialItem : uint8
+{
+	Default UMETA(DisplayName = "Default"),
+	White UMETA(DisplayName = "White"),
+	Blue UMETA(DisplayName = "Blue"),
+	Green UMETA(DisplayName = "Green"),
+	Red UMETA(DisplayName = "Red"),
+	Yellow UMETA(DisplayName = "Yellow"),
+	Black UMETA(DisplayName = "Black"),
+	MaxCount
+};
+
 UCLASS()
 class RIFA_API UMyGameInstance : public UGameInstance
 {
@@ -44,18 +63,43 @@ class RIFA_API UMyGameInstance : public UGameInstance
 public:
 	UMyGameInstance();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector Position;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	FVector SavePosition;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap <Item, bool> SoundItemMap;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap <Item, bool> ItemMap;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<EHairPartsItem> CurrentHairPartsArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TArray<ECharacterMaterialItem> CurrentMaterialItemArr;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMeshMap;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> FlyItemArr;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> SwimItemArr;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TArray<bool> LevelSequencePlayerArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	ECharacterMaterialItem ECurrentCharacterMaterial;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	EHairPartsItem ECurrentCharacterHairPart;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
 
 	UFUNCTION()
-	void Save();
+	bool Save();
 
 	UFUNCTION()
 	void Load();
+	virtual void Init() override;
+	virtual void Shutdown() override;
 };

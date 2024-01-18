@@ -6,6 +6,9 @@
 #include "RifaCharacter.h"
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
+#include "RifaGameMode.h"
+#include "LevelSequenceCharacterActor.h"
 
 // Sets default values
 ARifaCharacterMaterialItem::ARifaCharacterMaterialItem()
@@ -27,6 +30,16 @@ void ARifaCharacterMaterialItem::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacterMaterialItem::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaCharacterMaterialItem::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) 
+	{
+		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
+		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
+	}
+
+	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
 	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
@@ -34,8 +47,12 @@ void ARifaCharacterMaterialItem::BeginPlay()
 		{
 			PickupTextReference->PickupActor = Cast<AActor>(this);
 			PickupTextReference->PickupText = TEXT("Press E");
+
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterMaterialItem::PickupCharacterMaterial);
+			if (IsValid(CharacterReference)) 
+			{
+				CharacterReference->PickupItem.AddDynamic(this, &ARifaCharacterMaterialItem::PickupCharacterMaterial);
+			}
 		}
 	}
 }
@@ -51,9 +68,29 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 {
 	if (GetActorEnableCollision() && IsInRange)
 	{
-		auto TempMaterial = CharacterReference->GetMesh()->GetMaterial(0);
-		CharacterReference->GetMesh()->SetMaterial(0, Mesh->GetMaterial(0));
-		Mesh->SetMaterial(0, TempMaterial);
+		ECharacterMaterialItem ETempMaterial = ECurrentMaterial;
+
+		ECurrentMaterial = CharacterReference->ECurrentCharacterMaterial;
+		RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx] = ECurrentMaterial;
+
+		CharacterReference->ECurrentCharacterMaterial = ETempMaterial;
+		RifaGameInstance->ECurrentCharacterMaterial = CharacterReference->ECurrentCharacterMaterial;
+
+		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
+		CharacterReference->GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+
+		if (IsValid(RifaGameMode))
+		{
+			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr)
+			{
+				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
+				if (IsValid(LevelSequenceCharacterReference))
+				{
+					LevelSequenceCharacterReference->CharacterApperanceChanged();
+				}
+			}
+		}
 	}
 }
 
