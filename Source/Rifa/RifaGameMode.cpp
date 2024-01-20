@@ -25,4 +25,10 @@ ARifaGameMode::ARifaGameMode()
 void ARifaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+}
+
+
+void ARifaGameMode::PlayerDie()
+{
 }
