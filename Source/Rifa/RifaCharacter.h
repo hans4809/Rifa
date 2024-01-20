@@ -43,7 +43,7 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* SwimAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* InventoryAction;
+	class UInputAction* PauseAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InterAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -117,7 +117,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	EHairPartsItem ECurrentCharacterHairPart;
 	/*UFUNCTION(BlueprintCallable)
-	void ChangeHairPart();*/
+	void ChangeHairPart();*/	
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
 
 #pragma region InterfaceFunction
 	// InteractionInterface 상속 때문에 override 선언
@@ -133,14 +137,6 @@ protected:
 	void Move(const FInputActionValue& Value);
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UUserWidget> GameHUDWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	class UGameHUD* GameHUDWidget;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<AHUD> RifaHUDClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
-	class ARifaHUD* RifaHUD;
 	UFUNCTION(BlueprintCallable)
 	void Fly();
 	UFUNCTION(BlueprintCallable)
@@ -163,6 +159,8 @@ protected:
 	void Dash();
 	UFUNCTION(BlueprintCallable)
 	void EndDash();
+	UFUNCTION(BlueprintCallable)
+	void Pause();
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -191,9 +189,9 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	UFUNCTION(BlueprintCallable)
+	/*UFUNCTION(BlueprintCallable)
 	FORCEINLINE UGameHUD* GetGameHUDReference() { return GameHUDWidget; }
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE ARifaHUD* GetRifaHUDReference() { return RifaHUD; }
+	FORCEINLINE ARifaHUD* GetRifaHUDReference() { return RifaHUD; }*/
 };
 

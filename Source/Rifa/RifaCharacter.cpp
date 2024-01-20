@@ -14,8 +14,6 @@
 #include "Trap.h"
 #include "Switch.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameHUD.h"
-#include "RifaHUD.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Animation/WidgetAnimation.h"
 #include "MyGameInstance.h"
@@ -24,6 +22,7 @@
 #include "RifaCharacterParts.h"
 #include "BGMAudioComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
+#include "GameSettingWidget.h"
 
 
 
@@ -160,10 +159,6 @@ void ARifaCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
-		if (IsValid(RifaHUDClass))
-		{
-			RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
-		}
 	}
 
 	for (bool bFly : RifaGameInstance->FlyItemArr)
@@ -184,14 +179,6 @@ void ARifaCharacter::BeginPlay()
 	SwimEnergyPercent = 1;
 
 	//GameStart();
-	if (IsValid(GameHUDWidgetClass))
-	{
-		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-		if (IsValid(GameHUDWidget))
-		{
-			GameHUDWidget->Init();
-		}
-	}
 
 	Bgm->PlayBgm();	
 }
@@ -360,21 +347,31 @@ void ARifaCharacter::EndDash()
 	RifaCharacterMovement->MaxWalkSpeed = 500.f;
 }
 
+void ARifaCharacter::Pause()
+{
+	if (IsValid(GameSettingWidgetClass))
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
+		GameSettingWidgetAsset->Init();
+	}
+}
+
 void ARifaCharacter::EnableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
-	if (RifaHUD != nullptr) {
-		RifaHUD->ShowCrossHair = false;
-	}
+	//if (RifaHUD != nullptr) {
+	//	RifaHUD->ShowCrossHair = false;
+	//}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = true;
 }
 
 void ARifaCharacter::DisableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
-	if (RifaHUD != nullptr) {
-		RifaHUD->ShowCrossHair = true;
-	}
+	//if (RifaHUD != nullptr) {
+	//	RifaHUD->ShowCrossHair = true;
+	//}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
 }
 
@@ -429,7 +426,7 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Look);
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Started, this, &ARifaCharacter::Fly);
-		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ARifaCharacter::OpenAndCloseInventory);
+		EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Pause);
 		EnhancedInputComponent->BindAction(SwimAction, ETriggerEvent::Started, this, &ARifaCharacter::Swim);
 		EnhancedInputComponent->BindAction(InterAction, ETriggerEvent::Completed, this, &ARifaCharacter::Interaction);
 		//Dash
@@ -536,7 +533,7 @@ void ARifaCharacter::Fly()
 
 void ARifaCharacter::OpenAndCloseInventory()
 {
-	if (GameHUDWidget->GetActivateInventory()) 
+	/*if (GameHUDWidget->GetActivateInventory()) 
 	{
 		if (First) {
 			GameHUDWidget->SetInventoryVisible(ESlateVisibility::Visible);
@@ -553,7 +550,7 @@ void ARifaCharacter::OpenAndCloseInventory()
 			}
 			GetWorld()->GetTimerManager().SetTimer(WidgetAnimTimer, this, &ARifaCharacter::AnimTimerFunc, GameHUDWidget->MenuAnim->GetEndTime(), false);
 		}
-	}
+	}*/
 }
 
 FHitResult ARifaCharacter::SwimCheck()
@@ -588,10 +585,10 @@ FHitResult ARifaCharacter::SwimCheck()
 
 void ARifaCharacter::AnimTimerFunc()
 {
-	GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
+	/*GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
 	DisableMouseCursor();
 	First = true;
-	InventoryOpen = false;
+	InventoryOpen = false;*/
 }
 
 void ARifaCharacter::Swim()

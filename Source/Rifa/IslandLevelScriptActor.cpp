@@ -9,6 +9,8 @@
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include <Kismet/GameplayStatics.h>
 #include "LevelSequenceCharacterActor.h"
+#include "GameHUD.h"
+#include "RifaHUD.h"
 
 void AIslandLevelScriptActor::BeginPlay()
 {
@@ -24,14 +26,27 @@ void AIslandLevelScriptActor::BeginPlay()
 			FirstLevelSequenceActor->SequencePlayer->Play();
 			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(),false);
 		}
-		else 
+	}
+	else
+	{
+		if (IsValid(FirstLevelSequenceCharacterActor))
 		{
-			if (IsValid(FirstLevelSequenceCharacterActor))
+			FirstLevelSequenceCharacterActor->Destroy();
+		}
+		if (IsValid(RifaHUDClass))
+		{
+			//RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
+		}
+		if (IsValid(GameHUDWidgetClass))
+		{
+			GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+			if (IsValid(GameHUDWidget))
 			{
-				FirstLevelSequenceCharacterActor->Destroy();
+				GameHUDWidget->Init();
 			}
 		}
 	}
+
 }
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()

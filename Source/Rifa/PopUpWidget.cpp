@@ -13,6 +13,7 @@ void UPopUpWidget::Init()
 
 void UPopUpWidget::CloseWidget()
 {
+	Super::CloseWidget();
 	Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->PopupSort--;
 	RemoveFromParent();
 }

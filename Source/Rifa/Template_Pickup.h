@@ -35,7 +35,8 @@ public:
 	bool CustomBGM_On;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	bool CustomIsHave;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
+	TObjectPtr<class UGameHUD> GameHUDReference;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

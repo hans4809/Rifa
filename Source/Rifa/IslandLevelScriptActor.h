@@ -27,6 +27,14 @@ public:
 	TObjectPtr<class ALevelSequenceActor> SecondLevelSequenceActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
 	FTimerHandle SequenceTimer;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class UGameHUD* GameHUDWidget;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AHUD> RifaHUDClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "HUD", meta = (AllowPrivateAccess = "true"))
+	class ARifaHUD* RifaHUD;
 protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()

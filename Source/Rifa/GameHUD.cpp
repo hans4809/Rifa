@@ -7,6 +7,7 @@
 #include "InventorySlot.h"
 #include "MyGameInstance.h"
 #include "Components/SizeBox.h"
+#include "GameSettingWidget.h"
 
 void UGameHUD::NativeConstruct()
 {
@@ -119,6 +120,7 @@ void UGameHUD::NativeConstruct()
 		FlyEnergySizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("FlyEnergySizeBox")));
 		SwimEnergySizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("SwimEnergySizeBox")));
 	}
+	SetKeyboardFocus();
 }
 
 void UGameHUD::Init()
