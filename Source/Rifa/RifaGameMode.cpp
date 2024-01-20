@@ -5,7 +5,6 @@
 #include "UObject/ConstructorHelpers.h"
 #include "GameHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "LevelSequenceCharacterActor.h"
 
 
 ARifaGameMode::ARifaGameMode()
@@ -26,5 +25,4 @@ ARifaGameMode::ARifaGameMode()
 void ARifaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ALevelSequenceCharacterActor::StaticClass(), LevelSequenceCharacterArr);
 }

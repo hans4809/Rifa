@@ -36,5 +36,5 @@ void URifaMainHUD::SettingButtonClicked()
 
 void URifaMainHUD::LoadButtonClicked()
 {
-	UGameplayStatics::OpenLevel(this, TEXT("ThirdPersonMap"));
+	UGameplayStatics::OpenLevel(this, TEXT("Island"));
 }

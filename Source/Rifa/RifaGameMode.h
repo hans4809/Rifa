@@ -13,8 +13,7 @@ class ARifaGameMode : public AGameModeBase
 
 public:
 	ARifaGameMode();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	TArray<TObjectPtr<AActor>> LevelSequenceCharacterArr;
+	
 protected:
 	/*UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
