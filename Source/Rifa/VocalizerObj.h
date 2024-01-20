@@ -23,8 +23,6 @@ protected:
 
 	virtual void PostInitializeComponents() override;
 
-	UPROPERTY()
-	float sphereRadius;
 
 	UPROPERTY()
 	float soundDuration;

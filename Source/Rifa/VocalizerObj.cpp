@@ -46,12 +46,11 @@ void AVocalizerObj::BeginPlay()
 	else
 		staticMesh->SetCollisionProfileName(TEXT("SoundZone"));
 
-	sphereRadius = triggerSphere->GetScaledSphereRadius();
 	soundDuration = soundToPlay->GetDuration();
 
 	world = GetWorld();
 	player = world->GetFirstPlayerController()->GetPawn();
-	if (GetDistanceTo(player) < sphereRadius)
+	if (GetDistanceTo(player) < triggerSphere->GetScaledSphereRadius())
 		isActive = true;
 	else
 		isActive = false;
@@ -97,7 +96,7 @@ void AVocalizerObj::SoundPlay()
 
 void AVocalizerObj::SoundWave()
 {
-	if (soundToPlay && isActive)
+	if (soundToPlay && isVocalizer)
 	{
 		AVocalizer* _vocalizer = world->SpawnActor<AVocalizer>(AVocalizer::StaticClass(), GetActorLocation(), FRotator(0));
 		_vocalizer->minOpacity = this->minOpacity;
