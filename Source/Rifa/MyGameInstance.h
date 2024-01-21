@@ -96,7 +96,7 @@ public:
 	int PopupSort = 5;
 
 	UFUNCTION()
-	bool Save();
+	void Save();
 
 	UFUNCTION()
 	void Load();

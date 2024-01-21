@@ -90,7 +90,7 @@ UMyGameInstance::UMyGameInstance()
 	}
 }
 
-bool UMyGameInstance::Save()
+void UMyGameInstance::Save()
 {
 	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
 	NewPlayerData->SavePosition = SavePosition;
@@ -103,7 +103,7 @@ bool UMyGameInstance::Save()
 	NewPlayerData->CurrentMaterialItemArr = CurrentMaterialItemArr;
 	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
 	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
-	return UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
 void UMyGameInstance::Load()
@@ -133,6 +133,6 @@ void UMyGameInstance::Init()
 
 void UMyGameInstance::Shutdown()
 {
-	if (!Save()) { Save(); }
+	Save();
 	Super::Shutdown();
 }
