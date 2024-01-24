@@ -92,12 +92,12 @@ void ATemplate_Pickup::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, 
 		IsInRange = false;
 	}
 }
-
+	
 void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
-		RifaGameInstance->SoundItemMap[(Item)ItemIndex] = true;
+		RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex] = true;
 		//RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);

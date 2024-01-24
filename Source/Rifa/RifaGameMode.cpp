@@ -5,6 +5,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "GameHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "MyGameInstance.h"
 
 
 ARifaGameMode::ARifaGameMode()
@@ -26,9 +27,24 @@ void ARifaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	GameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 
-void ARifaGameMode::PlayerDie()
+void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 {
+	Player->bIsDied = true;
+}
+
+void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
+{
+	Player->bIsDied = false;
+	if (!(GameInstanceReference->SavePosition == FVector(0, 0, 0))) 
+	{
+		Player->SetActorLocation(GameInstanceReference->SavePosition);
+	}
+	else 
+	{
+		Player->SetActorLocation(FindPlayerStart(Player->GetController())->GetActorLocation());
+	}
 }

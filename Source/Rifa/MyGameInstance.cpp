@@ -90,11 +90,12 @@ UMyGameInstance::UMyGameInstance()
 	}
 }
 
-bool UMyGameInstance::Save()
+void UMyGameInstance::Save()
 {
 	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
 	NewPlayerData->SavePosition = SavePosition;
-	NewPlayerData->SoundItemMap = SoundItemMap;
+	NewPlayerData->SoundItemHavingMap = SoundItemHavingMap;
+	NewPlayerData->SoundItemOnOffMap = SoundItemOnOffMap;
 	NewPlayerData->SoundTrack = SoundTrack;
 	NewPlayerData->FlyItemArr = FlyItemArr;
 	NewPlayerData->SwimItemArr = SwimItemArr;
@@ -103,7 +104,7 @@ bool UMyGameInstance::Save()
 	NewPlayerData->CurrentMaterialItemArr = CurrentMaterialItemArr;
 	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
 	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
-	return UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
+	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
 void UMyGameInstance::Load()
@@ -114,7 +115,8 @@ void UMyGameInstance::Load()
 		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
 	}
 	SavePosition = RIFASaveGame->SavePosition;
-	SoundItemMap = RIFASaveGame->SoundItemMap;
+	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
+	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
 	SoundTrack = RIFASaveGame->SoundTrack;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
 	SwimItemArr = RIFASaveGame->SwimItemArr;
@@ -129,10 +131,11 @@ void UMyGameInstance::Init()
 {
 	Super::Init();
 	Load();
+	Save();
 }
 
 void UMyGameInstance::Shutdown()
 {
-	if (!Save()) { Save(); }
+	Save();
 	Super::Shutdown();
 }
