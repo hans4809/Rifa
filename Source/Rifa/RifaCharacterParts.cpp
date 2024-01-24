@@ -114,8 +114,11 @@ void ARifaCharacterParts::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->Init();
-		IsInRange = true;
+		if (IsValid(PickupTextReference)) 
+		{
+			PickupTextReference->Init();
+			IsInRange = true;
+		}
 	}
 }
 
@@ -123,8 +126,11 @@ void ARifaCharacterParts::EndCharacterOverlap(UPrimitiveComponent* OverlappedCom
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->CloseWidget();
-		IsInRange = false;
+		if (IsValid(PickupTextReference)) 
+		{
+			PickupTextReference->CloseWidget();
+			IsInRange = false;
+		}
 	}
 }
 

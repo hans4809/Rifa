@@ -23,7 +23,10 @@ protected:
 	//class UButton* ControlButton;
 	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	//class UButton* ReturnButton;
-
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> CollectionWidgetClass;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCollectionWidget> CollectionWidgetAsset;
 public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
@@ -35,4 +38,6 @@ public:
 	UAudioComponent* BGMComponent;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
 	float AudioParam = 0.f;
+	UFUNCTION(BlueprintCallable)
+	void CollectionButtonClicked();
 };

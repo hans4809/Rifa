@@ -193,5 +193,11 @@ public:
 	FORCEINLINE UGameHUD* GetGameHUDReference() { return GameHUDWidget; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE ARifaHUD* GetRifaHUDReference() { return RifaHUD; }*/
+	UFUNCTION()
+	virtual void Landed(const FHitResult& Hit) override;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
+	TObjectPtr<class ARifaGameMode> GameModeReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "State")
+	bool bIsDied;
 };
 

@@ -10,7 +10,8 @@ URIFASaveGame::URIFASaveGame()
 	//SoundItemMap = TMap<Item, bool>();
 	for (int i = 0; i < (int)Item::MaxCount; i++) 
 	{
-		SoundItemMap.Add((Item)i, false);
+		SoundItemHavingMap.Add((Item)i, true);
+		SoundItemOnOffMap.Add((Item)i, true);
 	}
 
 	FlyItemArr.Init(false, 5);

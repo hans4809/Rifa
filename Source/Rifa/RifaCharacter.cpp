@@ -23,6 +23,7 @@
 #include "BGMAudioComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "GameSettingWidget.h"
+#include "RifaGameMode.h"
 
 
 
@@ -31,6 +32,7 @@
 
 ARifaCharacter::ARifaCharacter()
 {
+	bIsDied = false;
 	PrimaryActorTick.bCanEverTick = true;
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 	// Set size for collision capsule
@@ -139,6 +141,7 @@ void ARifaCharacter::BeginPlay()
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
 	CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
+	GameModeReference = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (IsValid(RifaGameInstance)) 
@@ -351,7 +354,7 @@ void ARifaCharacter::Pause()
 {
 	if (IsValid(GameSettingWidgetClass))
 	{
-		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		//UGameplayStatics::SetGamePaused(GetWorld(), true);
 		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
 		GameSettingWidgetAsset->Init();
 	}
@@ -589,6 +592,23 @@ void ARifaCharacter::AnimTimerFunc()
 	DisableMouseCursor();
 	First = true;
 	InventoryOpen = false;*/
+}
+
+void ARifaCharacter::Landed(const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Log, TEXT("Falling Velocity : %f"), RifaCharacterMovement->Velocity.Z);
+	if (RifaCharacterMovement->Velocity.Z <= -1000)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
+		if (!GameModeReference.IsNull()) 
+		{
+			GameModeReference->PlayerDie(this);
+		}
+	}
+	else 
+	{
+		return;
+	}
 }
 
 void ARifaCharacter::Swim()

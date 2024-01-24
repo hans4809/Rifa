@@ -14,15 +14,19 @@ class ARifaGameMode : public AGameModeBase
 public:
 	ARifaGameMode();
 	UFUNCTION(BlueprintCallable)
-	void PlayerDie();
+	void PlayerDie(class ARifaCharacter* Player);
+	UFUNCTION(BlueprintCallable)
+	void PlayerRespawn(class ARifaCharacter* Player);
 protected:
 	/*UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class UGameHUD* GameHUDWidget;*/
 	virtual void BeginPlay();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Catergory = "Reference")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class ARifaCharacter> CharacterReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
+	TObjectPtr<class UMyGameInstance> GameInstanceReference;
 };
 
 
