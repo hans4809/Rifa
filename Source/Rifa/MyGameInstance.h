@@ -67,7 +67,9 @@ public:
 	FVector SavePosition;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> SoundItemMap;
+	TMap <Item, bool> SoundItemHavingMap;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	TMap <Item, bool> SoundItemOnOffMap;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;

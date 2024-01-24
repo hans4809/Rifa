@@ -43,4 +43,6 @@ public:
 	void PlayBgm();
 	UFUNCTION()
 	void BgmSetting();
+	UFUNCTION()
+	void BgmRefresh();
 };

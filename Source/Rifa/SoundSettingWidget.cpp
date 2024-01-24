@@ -6,13 +6,14 @@
 #include <Kismet/GameplayStatics.h>
 #include "BGMSoundActor.h"
 #include "Components/AudioComponent.h"
+#include "CollectionWidget.h"
 
 void USoundSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	CollectionButton = Cast<UButton>(GetWidgetFromName(TEXT("CollectionButton")));
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
-	CollectionButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CrossFadeSound);
+	CollectionButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CollectionButtonClicked);
 	ReturnButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CloseWidget);
 	BGMComponent = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
 }
@@ -33,4 +34,13 @@ void USoundSettingWidget::CrossFadeSound()
 	if (BGMComponent == nullptr)
 		return;
 	BGMComponent->SetFloatParameter(TEXT("BGM_6"), AudioParam);
+}
+
+void USoundSettingWidget::CollectionButtonClicked()
+{
+	if (IsValid(CollectionWidgetClass)) 
+	{
+		CollectionWidgetAsset = Cast<UCollectionWidget>(CreateWidget(GetWorld(), CollectionWidgetClass));
+		CollectionWidgetAsset->Init();
+	}
 }

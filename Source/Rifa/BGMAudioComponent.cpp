@@ -38,28 +38,18 @@ UBGMAudioComponent::UBGMAudioComponent()
 void UBGMAudioComponent::CrossfadeSound()
 {
     UE_LOG(LogTemp, Log, TEXT("Hi3"));
-    // ÀÌÀü »ç¿îµå¸¦ Àç»ý ÁßÀÎ ¿Àµð¿À ÄÄÆ÷³ÍÆ®°¡ À¯È¿ÇÑ °æ¿ì¿¡¸¸ ½ÇÇà
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     if (BgmAudioPrevious)
     {
-        // ÀÌÀü »ç¿îµåÀÇ º¼·ýÀ» ¼­¼­È÷ ÁÙÀÌ´Â ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         BgmAudioPrevious->FadeOut(CrossfadeDuration, 0.0f);
     }
 
-    // »õ·Î¿î »ç¿îµå¸¦ Àç»ýÇÒ ¿Àµð¿À ÄÄÆ÷³ÍÆ® »ý¼º
+    // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     BgmAudioNew = UGameplayStatics::SpawnSoundAttached(SoundToPlay, GetWorld()->GetFirstPlayerController()->GetRootComponent());
 
-    int cnt = 1;
-    for (int i = 0; i < CheckArray.Num(); i++)
-    {
-        if (true)//RifaGameInstance->ItemMap[CheckArray[i]])
-        {
-            Str = FString::Printf(TEXT("Num%d"), cnt);
-            BgmAudioNew->SetBoolParameter(*Str, true);
-            cnt++;
-        }
-    }
-
-    // »õ·Î¿î »ç¿îµåÀÇ º¼·ýÀ» ¼­¼­È÷ ´Ã¸®´Â ¾Ö´Ï¸ÞÀÌ¼Ç ¼³Á¤
+    BgmRefresh();
+    // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     BgmAudioNew->FadeIn(CrossfadeDuration, 1.0f);
     if (BgmAudioPrevious)
     {
@@ -161,5 +151,19 @@ void UBGMAudioComponent::BgmSetting()
             Item::StringInstrument_2_Medium ,
             Item::Piano_2_High
         };
+    }
+}
+
+void UBGMAudioComponent::BgmRefresh()
+{
+    int cnt = 1;
+    for (int i = 0; i < CheckArray.Num(); i++)
+    {
+        if (RifaGameInstance->SoundItemHavingMap[CheckArray[i]])//RifaGameInstance->ItemMap[CheckArray[i]])
+        {
+            Str = FString::Printf(TEXT("Num%d"), cnt);
+            BgmAudioNew->SetBoolParameter(*Str, RifaGameInstance->SoundItemOnOffMap[CheckArray[i]]);
+            cnt++;
+        }
     }
 }
