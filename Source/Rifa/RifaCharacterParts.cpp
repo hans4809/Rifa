@@ -9,6 +9,8 @@
 #include "MyGameInstance.h"
 #include "RifaGameMode.h"
 #include "LevelSequenceCharacterActor.h"
+#include "BaseLevelScriptActor.h"
+
 
 // Sets default values
 ARifaCharacterParts::ARifaCharacterParts()
@@ -39,8 +41,9 @@ void ARifaCharacterParts::BeginPlay()
 	}
 
 	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	CurrentLevelScriptActorReference = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 
-	if (IsValid(PickupTextClass))
+	if (/*IsValid(PickupTextClass)*/IsValid(CurrentLevelScriptActorReference))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
 		if (IsValid(PickupTextReference))
@@ -86,7 +89,15 @@ void ARifaCharacterParts::PickupCharacterParts()
 
 		if (IsValid(RifaGameMode)) 
 		{
-			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
+			/*for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
+			{
+				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
+				if (IsValid(LevelSequenceCharacterReference))
+				{
+					LevelSequenceCharacterReference->CharacterApperanceChanged();
+				}
+			}*/
+			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
 				if (IsValid(LevelSequenceCharacterReference))

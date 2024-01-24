@@ -23,16 +23,19 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
-	int32 CharacterMaterialArrIdx;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
-	ECharacterMaterialItem ECurrentMaterial;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	int32 CharacterMaterialArrIdx;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* Mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	ECharacterMaterialItem ECurrentMaterial;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reference")
+	TObjectPtr<UMyGameInstance> RifaGameInstance;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class ARifaGameMode> RifaGameMode;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reference")
+	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActorReference;
+	
 	UFUNCTION(BlueprintCallable)
 	void PickupCharacterMaterial();
 	UFUNCTION(BlueprintCallable)

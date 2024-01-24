@@ -13,15 +13,16 @@ class ARifaGameMode : public AGameModeBase
 
 public:
 	ARifaGameMode();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	TArray<TObjectPtr<AActor>> LevelSequenceCharacterArr;
+	UFUNCTION(BlueprintCallable)
+	void PlayerDie();
 protected:
 	/*UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	class UGameHUD* GameHUDWidget;*/
 	virtual void BeginPlay();
-
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Catergory = "Reference")
+	TObjectPtr<class ARifaCharacter> CharacterReference;
 };
 
 

@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameHUD.h"
 #include "MyGameInstance.h"
+#include "IslandLevelScriptActor.h"
 
 // Sets default values
 ATemplate_Pickup::ATemplate_Pickup()
@@ -20,7 +21,7 @@ ATemplate_Pickup::ATemplate_Pickup()
 	RootComponent = Root;
 	Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
-
+	//GameHUDReference = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor())->GameHUDWidget;
 	/*static ConstructorHelpers::FClassFinder<UPickupText> PickupTextAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 	if (PickupTextAsset.Succeeded())
 	{
@@ -101,7 +102,7 @@ void ATemplate_Pickup::PickupItemEvent()
 		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
-		CharacterReference->GetGameHUDReference()->RefreshInventory_C();
+		//CharacterReference->GetGameHUDReference()->RefreshInventory_C();
 	}
 }
 

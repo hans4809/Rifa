@@ -4,27 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "PopUpWidget.h"
-#include "MainSettingWidget.generated.h"
+#include "GameSettingWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RIFA_API UMainSettingWidget : public UPopUpWidget
+class RIFA_API UGameSettingWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
-private:
-protected:
-	void NativeConstruct() override;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* SoundButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* GraphicButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ControlButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ReturnButton;
-
 public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
@@ -36,16 +24,34 @@ public:
 	void GraphicButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void InputButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void MainButtonClicked();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> SoundSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	class USoundSettingWidget* SoundSettingWidgetAsset;
+	TObjectPtr<class USoundSettingWidget> SoundSettingWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> GraphicSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	class UGraphicSettingWidget* GraphicSettingWidgetAsset;
+	TObjectPtr<class UGraphicSettingWidget> GraphicSettingWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> InputSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	class UInputSettingWidget* InputSettingWidgetAsset;
+	TObjectPtr<class UInputSettingWidget> InputSettingWidgetAsset;
+private:
+
+protected:
+	void NativeConstruct() override;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> SoundButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> GraphicButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> ControlButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> ReturnButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> SaveButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
+	TObjectPtr<class UButton> MainButton;
 };
