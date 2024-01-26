@@ -169,17 +169,20 @@ void ARifaCharacter::BeginPlay()
 		if (bFly) 
 		{ 
 			FlyEnergyNum++;
+			MaxFlyEnergyPercent += 0.2;
 		}
 	}
-	FlyEnergyPercent = 1;
+	FlyEnergyPercent = MaxFlyEnergyPercent;
+
 	for (bool bSwim : RifaGameInstance->SwimItemArr)
 	{
 		if (bSwim) 
 		{ 
 			SwimEnergyNum++; 
+			MaxSwimEnergyPercent += 0.2;
 		}
 	}
-	SwimEnergyPercent = 1;
+	SwimEnergyPercent = MaxFlyEnergyPercent;
 
 	//GameStart();
 
@@ -198,7 +201,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 		}
 		else 
 		{
-			if (FlyEnergyPercent < 1)
+			if (FlyEnergyPercent < MaxFlyEnergyPercent)
 			{
 				FlyEnergyPercent += DeltaTime * 0.1;
 			}
@@ -214,7 +217,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 		}
 		else 
 		{
-			if (SwimEnergyPercent < 1)
+			if (SwimEnergyPercent < MaxSwimEnergyPercent)
 			{
 				SwimEnergyPercent += DeltaTime * 0.1;
 			}

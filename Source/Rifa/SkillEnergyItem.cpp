@@ -108,18 +108,18 @@ void ASkillEnergyItem::PickupEnergyEvent()
 			if (CharacterReference->SwimEnergyNum < 5) 
 			{
 				CharacterReference->SwimEnergyNum++;
+				CharacterReference->MaxSwimEnergyPercent += 0.2f;
 				RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
-				CharacterReference->SwimEnergyPercent = 1;
-				//CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
+				CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
 			}
 			break;
 		case EEnergyFeature::Fly:
 			if (CharacterReference->FlyEnergyNum < 5) 
 			{
 				CharacterReference->FlyEnergyNum++;
+				CharacterReference->MaxFlyEnergyPercent += 0.2f;
 				RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
-				CharacterReference->FlyEnergyPercent = 1;
-				//CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
+				CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
 			}
 			break;
 		}

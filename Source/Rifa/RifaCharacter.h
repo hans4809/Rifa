@@ -69,6 +69,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
 	float FlyEnergyPercent;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
+	float MaxFlyEnergyPercent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
 	FTimerHandle FlyTimer;
 	UFUNCTION(BlueprintCallable)
 	float GetFlyTime();
@@ -76,6 +78,8 @@ public:
 	int SwimEnergyNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	float SwimEnergyPercent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	float MaxSwimEnergyPercent;
 	UFUNCTION(BlueprintCallable)
 	float GetSwimTime();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
