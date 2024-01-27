@@ -163,6 +163,12 @@ void UBGMAudioComponent::BgmRefresh()
         {
             Str = FString::Printf(TEXT("Num%d"), cnt);
             BgmAudioNew->SetBoolParameter(*Str, RifaGameInstance->SoundItemOnOffMap[CheckArray[i]]);
+            float a = 1.f;
+            if (RifaGameInstance->SoundItemOnOffMap[CheckArray[i]])
+                a = 1.f;
+            else
+                a = 0.f;
+            BgmAudioNew->SetFloatParameter(*Str, a);
             cnt++;
         }
     }
