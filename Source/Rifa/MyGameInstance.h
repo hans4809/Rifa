@@ -97,6 +97,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float BGMVolume = 1.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float SFXVolume = 1.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float EnviromentalVolume = 1.f;
+public:
 	UFUNCTION()
 	void Save();
 
