@@ -6,6 +6,7 @@
 #include "RifaDataTable.h"
 #include "RIFASaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/Texture2D.h""
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -87,6 +88,37 @@ UMyGameInstance::UMyGameInstance()
 	{
 		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
 		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture1(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-WASD.Tutorial-WASD'"));
+	if (Texture1.Succeeded()) 
+	{
+		TutorialImageMap.Add(ETutorialType::Movement, Texture1.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture2(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-space.Tutorial-space'"));
+	if (Texture2.Succeeded())
+	{
+		TutorialImageMap.Add(ETutorialType::Jump, Texture2.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture3(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-shift.Tutorial-shift'"));
+	if (Texture3.Succeeded())
+	{
+		TutorialImageMap.Add(ETutorialType::Dash, Texture3.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture4(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-mouserightclick.Tutorial-mouserightclick'"));
+	if (Texture4.Succeeded())
+	{
+		TutorialImageMap.Add(ETutorialType::Fly, Texture4.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture5(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-mouserightclick.Tutorial-mouserightclick'"));
+	if (Texture5.Succeeded())
+	{
+		TutorialImageMap.Add(ETutorialType::Swim, Texture5.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture5(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-mouserightclick.Tutorial-mouserightclick'"));
+	if (Texture5.Succeeded())
+	{
+		TutorialImageMap.Add(ETutorialType::Swim, Texture5.Object);
 	}
 }
 

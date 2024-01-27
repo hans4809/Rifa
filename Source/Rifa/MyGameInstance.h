@@ -55,6 +55,18 @@ enum class ECharacterMaterialItem : uint8
 	MaxCount
 };
 
+UENUM()
+enum class ETutorialType : uint8
+{
+	Movement,
+	Jump,
+	Dash,
+	Fly,
+	Swim,
+	Pickup,
+	MaxCount
+};
+
 UCLASS()
 class RIFA_API UMyGameInstance : public UGameInstance
 {
@@ -90,10 +102,12 @@ public:
 	TArray<bool> SwimItemArr;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TArray<bool> LevelSequencePlayerArr;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	ECharacterMaterialItem ECurrentCharacterMaterial;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	EHairPartsItem ECurrentCharacterHairPart;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TMap<ETutorialType, class UTexture2D*> TutorialImageMap;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
 
