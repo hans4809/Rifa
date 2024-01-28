@@ -6,7 +6,7 @@
 #include "RifaDataTable.h"
 #include "RIFASaveGame.h"
 #include "Kismet/GameplayStatics.h"
-#include "Engine/Texture2D.h""
+#include "Engine/Texture2D.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -115,10 +115,10 @@ UMyGameInstance::UMyGameInstance()
 	{
 		TutorialImageMap.Add(ETutorialType::Swim, Texture5.Object);
 	}
-	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture5(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-mouserightclick.Tutorial-mouserightclick'"));
-	if (Texture5.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UTexture2D> Texture6(TEXT("/Script/Engine.Texture2D'/Game/UIPNG/Tutorial-mouserightclick.Tutorial-mouserightclick'"));
+	if (Texture6.Succeeded())
 	{
-		TutorialImageMap.Add(ETutorialType::Swim, Texture5.Object);
+		TutorialImageMap.Add(ETutorialType::Swim, Texture6.Object);
 	}
 }
 

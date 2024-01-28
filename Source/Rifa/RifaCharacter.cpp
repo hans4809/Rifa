@@ -603,7 +603,7 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 	if (RifaCharacterMovement->Velocity.Z <= -1000)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
-		if (!GameModeReference.IsNull()) 
+		if (!GameModeReference) 
 		{
 			GameModeReference->PlayerDie(this);
 		}

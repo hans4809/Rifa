@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PopUpWidget.h"
+#include "MyGameInstance.h"
 #include "TutorialWidget.generated.h"
 
 /**
@@ -15,7 +16,7 @@ class RIFA_API UTutorialWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
 public:
-	ETutorialType TutorialType;
+	ETutorialType ThisTutorialType = ETutorialType::Movement;
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))

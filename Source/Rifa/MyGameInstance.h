@@ -58,12 +58,12 @@ enum class ECharacterMaterialItem : uint8
 UENUM()
 enum class ETutorialType : uint8
 {
-	Movement,
-	Jump,
-	Dash,
-	Fly,
-	Swim,
-	Pickup,
+	Movement UMETA(DisplayName = "Movement"),
+	Jump UMETA(DisplayName = "Jump"),
+	Dash UMETA(DisplayName = "Dash"),
+	Fly UMETA(DisplayName = "Fly"),
+	Swim UMETA(DisplayName = "Swim"),
+	Pickup UMETA(DisplayName = "Pickup"),
 	MaxCount
 };
 
