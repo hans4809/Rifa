@@ -31,4 +31,8 @@ URIFASaveGame::URIFASaveGame()
 	}
 	ECurrentCharacterMaterial = ECharacterMaterialItem::Default;
 	ECurrentCharacterHairPart = EHairPartsItem::Default;
+	for (int m = 0; m < (int)ETutorialType::MaxCount; m++) 
+	{
+		IsTutorialFinishedMap.Add((ETutorialType)m, false);
+	}
 }
