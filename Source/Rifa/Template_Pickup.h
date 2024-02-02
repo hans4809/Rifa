@@ -31,10 +31,6 @@ public:
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	UStaticMesh* CustomStaticMesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	bool CustomBGM_On;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	bool CustomIsHave;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TObjectPtr<class UGameHUD> GameHUDReference;
 protected:
@@ -49,7 +45,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	bool IsInRange;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
-	int ItemIndex;
+	int32 ItemIndex;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = "true"))
 	FItemStruct ItemInfo;
 	UPROPERTY(EditAnyWhere)

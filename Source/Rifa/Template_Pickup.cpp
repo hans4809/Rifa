@@ -21,6 +21,7 @@ ATemplate_Pickup::ATemplate_Pickup()
 	RootComponent = Root;
 	Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	//GameHUDReference = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor())->GameHUDWidget;
 	/*static ConstructorHelpers::FClassFinder<UPickupText> PickupTextAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 	if (PickupTextAsset.Succeeded())
@@ -34,32 +35,36 @@ ATemplate_Pickup::ATemplate_Pickup()
 void ATemplate_Pickup::BeginPlay()
 {
 	Super::BeginPlay();
-	ItemInfo.ItemActor = Cast<AActor>(this);
-	ItemInfo.ItemImage = CustomImage;
-	ItemInfo.BGM_On = CustomBGM_On;
-	ItemInfo.IsHave = CustomIsHave;
-	ItemInfo.ItemName = CustomItemName;
-	//CharacterReference->GetGameHUDReference()->Inventory.Add(ItemInfo);
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	Mesh->SetStaticMesh(CustomStaticMesh);
-	if (IsValid(PickupTextClass))
+	if (RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex]) 
 	{
-		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
-		if (IsValid(PickupTextReference))
+		Destroy();
+		return;
+	}
+	else 
+	{
+		ItemInfo.ItemActor = Cast<AActor>(this);
+		ItemInfo.ItemImage = CustomImage;
+		ItemInfo.ItemName = CustomItemName;
+		Mesh->SetStaticMesh(CustomStaticMesh);
+		if (IsValid(PickupTextClass))
 		{
-			PickupTextReference->PickupActor = ItemInfo.ItemActor;
-			PickupTextReference->ViewPortPosition = ItemInfo.ItemActor->GetActorLocation() + FVector(0, 0, 50);
-			PickupTextReference->PickupText = ItemInfo.ItemName;
-			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			/*if (CharacterReference->PickupItem.IsBound()) {
-				CharacterReference->PickupItem.Clear();
-			}*/
-			CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
+			PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+			if (IsValid(PickupTextReference))
+			{
+				PickupTextReference->PickupActor = ItemInfo.ItemActor;
+				PickupTextReference->ViewPortPosition = ItemInfo.ItemActor->GetActorLocation() + FVector(0, 0, 50);
+				PickupTextReference->PickupText = ItemInfo.ItemName;
+				CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+				/*if (CharacterReference->PickupItem.IsBound()) {
+					CharacterReference->PickupItem.Clear();
+				}*/
+				CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
+			}
 		}
-	}	
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ATemplate_Pickup::OnCharacterOverlap);
-	Trigger->OnComponentEndOverlap.AddDynamic(this, &ATemplate_Pickup::EndCharacterOverlap);
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+		Trigger->OnComponentBeginOverlap.AddDynamic(this, &ATemplate_Pickup::OnCharacterOverlap);
+		Trigger->OnComponentEndOverlap.AddDynamic(this, &ATemplate_Pickup::EndCharacterOverlap);
+	}
 }
 
 void ATemplate_Pickup::PostInitializeComponents()
@@ -102,7 +107,6 @@ void ATemplate_Pickup::PickupItemEvent()
 		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
-		//CharacterReference->GetGameHUDReference()->RefreshInventory_C();
 	}
 }
 
