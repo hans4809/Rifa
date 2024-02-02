@@ -57,7 +57,7 @@ void UTutorialWidget::ChangeImage()
 		if (IsValid(TutorialTexture))
 		{
 			TutorialImage->SetBrushFromTexture(TutorialTexture);
-			TutorialImage->SetBrushSize(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
+			TutorialImage->SetDesiredSizeOverride(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
 		}
 		GetWorld()->GetTimerManager().SetTimer(TutorialTimer, this, &UTutorialWidget::ChangeImage, 5.0f, false);
 		break;
@@ -68,7 +68,7 @@ void UTutorialWidget::ChangeImage()
 		if (IsValid(TutorialTexture))
 		{
 			TutorialImage->SetBrushFromTexture(TutorialTexture);
-			TutorialImage->SetBrushSize(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
+			TutorialImage->SetDesiredSizeOverride(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
 		}
 		GetWorld()->GetTimerManager().SetTimer(TutorialTimer, this, &UTutorialWidget::ChangeImage, 5.0f, false);
 		break;

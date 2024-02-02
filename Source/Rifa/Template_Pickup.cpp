@@ -9,6 +9,7 @@
 #include "GameHUD.h"
 #include "MyGameInstance.h"
 #include "IslandLevelScriptActor.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ATemplate_Pickup::ATemplate_Pickup()
@@ -18,9 +19,13 @@ ATemplate_Pickup::ATemplate_Pickup()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
+	Particle = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PARTICLE"));
+
 	RootComponent = Root;
 	Trigger->SetupAttachment(Root);
 	Mesh->SetupAttachment(Root);
+	Particle->SetupAttachment(Root);
+	Particle->SetAsset(LoadObject<UNiagaraSystem>(nullptr, TEXT("/Script/Niagara.NiagaraSystem'/Game/VFX/VFX_item.VFX_item'")));
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	//GameHUDReference = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor())->GameHUDWidget;
 	/*static ConstructorHelpers::FClassFinder<UPickupText> PickupTextAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
@@ -105,8 +110,7 @@ void ATemplate_Pickup::PickupItemEvent()
 		RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex] = true;
 		//RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
-		SetActorHiddenInGame(true);
-		SetActorEnableCollision(false);
+		Destroy();
 	}
 }
 

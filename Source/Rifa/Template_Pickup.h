@@ -20,6 +20,8 @@ class RIFA_API ATemplate_Pickup : public AActor
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* Trigger;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UNiagaraComponent> Particle;
 public:	
 	// Sets default values for this actor's properties
 	ATemplate_Pickup();
