@@ -7,6 +7,7 @@
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
+#include "RifaCharacter.h"
 
 // Sets default values
 ASavePoint::ASavePoint()
@@ -48,10 +49,11 @@ void ASavePoint::PostInitializeComponents()
 void ASavePoint::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("Save"));
-	SavePlayerData(OtherActor);
+	if(ARifaCharacter* Player = Cast<ARifaCharacter>(OtherActor))
+		SavePlayerData(Cast<ARifaCharacter>(Player));
 }
 
-void ASavePoint::SavePlayerData(AActor* OtherActor)
+void ASavePoint::SavePlayerData(ARifaCharacter* Player)
 {
 	RifaGameInstance->SavePosition = Position;
 	RifaGameInstance->Save();

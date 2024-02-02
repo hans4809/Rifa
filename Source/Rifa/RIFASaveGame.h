@@ -44,4 +44,6 @@ public:
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	EHairPartsItem ECurrentCharacterHairPart;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TMap<ETutorialType, bool> IsTutorialFinishedMap;
 };

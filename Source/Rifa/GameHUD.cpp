@@ -22,17 +22,11 @@ void UGameHUD::NativeConstruct()
 	{
 		UE_LOG(LogTemp, Log, TEXT("Casting Successed"));
 	}
-	if (IsValid(SizeBoxClass)) {
-		FlyEnergySizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("FlyEnergySizeBox")));
-		SwimEnergySizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("SwimEnergySizeBox")));
-	}
 }
 
 void UGameHUD::Init()
 {
 	Super::Init();
-	FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100);
-	SwimEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100);
 }
 
 

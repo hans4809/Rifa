@@ -6,6 +6,7 @@
 #include "RifaDataTable.h"
 #include "RIFASaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/Texture2D.h"
 
 UMyGameInstance::UMyGameInstance()
 {
@@ -104,6 +105,7 @@ void UMyGameInstance::Save()
 	NewPlayerData->CurrentMaterialItemArr = CurrentMaterialItemArr;
 	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
 	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
+	NewPlayerData->IsTutorialFinishedMap = IsTutorialFinishedMap;
 	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
@@ -125,13 +127,13 @@ void UMyGameInstance::Load()
 	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
 	ECurrentCharacterMaterial = RIFASaveGame->ECurrentCharacterMaterial;
 	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
+	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 }
 
 void UMyGameInstance::Init()
 {
 	Super::Init();
 	Load();
-	Save();
 }
 
 void UMyGameInstance::Shutdown()

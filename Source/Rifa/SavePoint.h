@@ -25,7 +25,7 @@ private:
 	UFUNCTION()
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
-	void SavePlayerData(AActor* OtherActor);
+	void SavePlayerData(class ARifaCharacter* Player);
 
 public:	
 	// Called every frame
