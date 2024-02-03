@@ -77,7 +77,7 @@ ARifaCharacter::ARifaCharacter()
 	FlyHeight = 100.f;
 	SwimHeight = 100.f;
 	JumpMaxCount = 2;
-	IsSwimming = false;
+	bIsSwimming = false;
 	IsFlying = false;
 	WaterForcingVector = FVector(0, 0, 0);
 	FlyEnergyNum = 0;
@@ -150,9 +150,17 @@ void ARifaCharacter::BeginPlay()
 		ECurrentCharacterHairPart = RifaGameInstance->ECurrentCharacterHairPart;
 
 		GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentCharacterMaterial]);
-
 		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentCharacterHairPart]);
-		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentCharacterMaterial]);
+
+		if (ECurrentCharacterHairPart == EHairPartsItem::Default) 
+		{
+			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentCharacterMaterial]);
+			CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
+		}
+		else 
+		{
+			CurrentHairMesh->SetMaterial(0, CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+		}
 	}
 
 	//Add Input Mapping Context
@@ -225,7 +233,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 
 	}
 
-	if (IsSwimming) 
+	if (bIsSwimming) 
 	{
 		FHitResult HitResult;
 		FCollisionQueryParams Params(NAME_None, false, this);
@@ -454,7 +462,7 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	if (InventoryOpen) {
 		return;
 	}
-	if (IsWaterFall)
+	if (bIsWaterFall)
 	{
 		GetCharacterMovement()->bOrientRotationToMovement = false;
 		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
@@ -475,12 +483,12 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement
-		if (RifaCharacterMovement->IsFlying() && !IsSwimming)
+		if (RifaCharacterMovement->IsFlying() && !bIsSwimming)
 		{
 			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
 			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		else if (IsSwimming && !IsWaterFall) 
+		else if (bIsSwimming && !bIsWaterFall) 
 		{
 			const float Dot = FVector::DotProduct(GetActorForwardVector(), WaterForcingVector);
 			const float ACosAngle = FMath::Acos(Dot);
@@ -622,11 +630,11 @@ void ARifaCharacter::Swim()
 	//FHitResult HitResult = SwimCheck();
 	//if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
 	//{
-	//	IsSwimming = true;
+	//	bIsSwimming = true;
 	//	StartLocation = GetActorLocation();
 	//	if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
 	//	{
-	//		IsWaterFall = true;
+	//		bIsWaterFall = true;
 	//		AddActorWorldRotation(FRotator(0, 0, -90));
 	//		//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
 	//	}
@@ -640,7 +648,7 @@ void ARifaCharacter::Swim()
 	//}
 	if (bCanSwim) 
 	{
-		IsSwimming = true;
+		bIsSwimming = true;
 		StartLocation = GetActorLocation();
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
 		RifaCharacterMovement->bCheatFlying = true;
@@ -649,8 +657,8 @@ void ARifaCharacter::Swim()
 	}
 	else if (bCanRideUpWaterFall)
 	{
-		IsSwimming = true;
-		IsWaterFall = true;
+		bIsSwimming = true;
+		bIsWaterFall = true;
 		StartLocation = GetActorLocation();
 		AddActorWorldRotation(FRotator(0, 0, -90));
 		RifaCharacterMovement->bCheatFlying = true;
@@ -659,8 +667,8 @@ void ARifaCharacter::Swim()
 	}
 	else if (bCanRideDownWaterFall) 
 	{
-		IsSwimming = true;
-		IsWaterFall = true;
+		bIsSwimming = true;
+		bIsWaterFall = true;
 		StartLocation = GetActorLocation();
 		SetActorLocation(GetActorLocation() + GetActorForwardVector() * 300);
 		AddActorWorldRotation(FRotator(0, 0, -90));
@@ -672,8 +680,8 @@ void ARifaCharacter::Swim()
 
 void ARifaCharacter::ReturnWalk()
 {
-	IsSwimming = false;
-	IsWaterFall = false;
+	bIsSwimming = false;
+	bIsWaterFall = false;
 	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
@@ -684,8 +692,8 @@ void ARifaCharacter::ReturnWalk()
 
 void ARifaCharacter::EndSwim()
 {
-	IsSwimming = false;
-	IsWaterFall = false;
+	bIsSwimming = false;
+	bIsWaterFall = false;
 	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));

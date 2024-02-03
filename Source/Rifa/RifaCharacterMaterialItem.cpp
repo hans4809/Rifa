@@ -80,7 +80,16 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 
 		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
 		CharacterReference->GetMesh()->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
-		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+
+		if (CharacterReference->ECurrentCharacterHairPart == EHairPartsItem::Default) 
+		{
+			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+			CharacterReference->CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
+		}
+		else
+		{
+			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
+		}
 
 		if (/*IsValid(RifaGameMode)*/IsValid(CurrentLevelScriptActorReference))
 		{

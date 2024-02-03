@@ -91,9 +91,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector SwimStartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
-	bool IsSwimming;
+	bool bIsSwimming;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	bool IsWaterFall;
+	bool bIsWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")

@@ -5,6 +5,7 @@
 #include "MyGameInstance.h"
 #include <Kismet/GameplayStatics.h>
 #include "RifaCharacter.h"
+#include "Engine/SkeletalMesh.h"
 
 // Sets default values
 ALevelSequenceCharacterActor::ALevelSequenceCharacterActor()
@@ -27,7 +28,17 @@ void ALevelSequenceCharacterActor::CharacterApperanceChanged()
 {
 	CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
 	CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
-	CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+
+	if (RifaGameInstance->ECurrentCharacterHairPart == EHairPartsItem::Default)
+	{
+		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]); 
+		CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
+	}
+	else
+	{
+		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -40,12 +51,14 @@ void ALevelSequenceCharacterActor::BeginPlay()
 	{
 		CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
 		CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
-		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
-
-		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		if (IsValid(CharacterReference)) 
+		if (RifaGameInstance->ECurrentCharacterHairPart == EHairPartsItem::Default)
 		{
-			
+			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
+			CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
+		}
+		else
+		{
+			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
 		}
 	}
 }
