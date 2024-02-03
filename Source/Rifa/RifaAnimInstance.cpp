@@ -23,7 +23,7 @@ void URifaAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		GroundSpeed = Velocity.Size();
 		ShouldMove = (RifaCharacterMovementComponent->GetCurrentAcceleration() != FVector::ZeroVector) && (GroundSpeed > 3.0f);
 		IsFalling = RifaCharacterMovementComponent->IsFalling();
-		IsSwim = RifaCharacter->IsSwimming;
+		IsSwim = RifaCharacter->bIsSwimming;
 		IsFlying = RifaCharacterMovementComponent->IsFlying();
 		bIsDie = RifaCharacter->bIsDied;
 	}

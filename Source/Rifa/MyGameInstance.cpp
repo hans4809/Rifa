@@ -19,7 +19,7 @@ UMyGameInstance::UMyGameInstance()
 		{
 			FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue(i).ToString();
 			FString HairPartSkeletonPath = FString::Printf(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/HairParts/SkeletalMesh/SK_HairPart_%s.SK_HairPart_%s'"), *EnumMetaData, *EnumMetaData);
-			static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH(*HairPartSkeletonPath);
+			ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH(*HairPartSkeletonPath);
 			if (MESH.Succeeded())
 			{
 				HairPartsMeshMap.Add((EHairPartsItem)i, MESH.Object);
@@ -34,10 +34,10 @@ UMyGameInstance::UMyGameInstance()
 			FString EnumMetaData = CharacterMaterialEnum->GetDisplayNameTextByValue(j).ToString();
 
 			FString CharacterMaterialPath = FString::Printf(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/%s.%s'"), *EnumMetaData, *EnumMetaData);
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial(*CharacterMaterialPath);
+			ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial(*CharacterMaterialPath);
 
 			FString HairMaterialPath = FString::Printf(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_%sHair.MI_%sHair'"), *EnumMetaData, *EnumMetaData);
-			static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial(*HairMaterialPath);
+			ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial(*HairMaterialPath);
 
 			if (CharacterMaterial.Succeeded() && HairMaterial.Succeeded())
 			{

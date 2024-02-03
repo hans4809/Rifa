@@ -56,7 +56,7 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 public:
 	ARifaCharacter();
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Hair", meta = (AllowPrivateAccess = "true"))
-	class USkeletalMeshComponent* CurrentHairMesh;
+	TObjectPtr<USkeletalMeshComponent> CurrentHairMesh;
 	//Event 생성
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic PickupItem;

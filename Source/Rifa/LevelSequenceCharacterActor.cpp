@@ -32,13 +32,18 @@ void ALevelSequenceCharacterActor::CharacterApperanceChanged()
 	if (RifaGameInstance->ECurrentCharacterHairPart == EHairPartsItem::Default)
 	{
 		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]); 
-		CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
+		CurrentHairMesh->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
 	}
 	else
 	{
 		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
+		CurrentHairMesh->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 	}
 
+	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
+	FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
+	FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
+	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
 }
 
 // Called when the game starts or when spawned
@@ -47,6 +52,7 @@ void ALevelSequenceCharacterActor::BeginPlay()
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
+	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (IsValid(RifaGameInstance))
 	{
 		CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
@@ -54,13 +60,18 @@ void ALevelSequenceCharacterActor::BeginPlay()
 		if (RifaGameInstance->ECurrentCharacterHairPart == EHairPartsItem::Default)
 		{
 			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
-			CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
 		}
 		else
 		{
 			CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
 		}
 	}
+
+	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
+	FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
+	FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
+	CurrentHairMesh->DetachFromParent();
+	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
 }
 
 // Called every frame

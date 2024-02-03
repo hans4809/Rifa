@@ -84,23 +84,18 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 		if (CharacterReference->ECurrentCharacterHairPart == EHairPartsItem::Default) 
 		{
 			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
-			CharacterReference->CurrentHairMesh->SetRelativeLocationAndRotation(FVector(2.3f, -2.8f, 15.7f), FRotator(-60.f, 20.f, 0.f));
-		}
-		else
-		{
-			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
 		}
 
-		if (/*IsValid(RifaGameMode)*/IsValid(CurrentLevelScriptActorReference))
+		/*if (IsValid(CurrentLevelScriptActorReference))
 		{
-			/*for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr)
+			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr)
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
 				if (IsValid(LevelSequenceCharacterReference))
 				{
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
-			}*/
+			}
 			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
@@ -109,7 +104,7 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
 			}
-		}
+		}*/
 	}
 }
 
