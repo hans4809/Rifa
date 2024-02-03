@@ -161,8 +161,14 @@ void ARifaCharacter::BeginPlay()
 		}
 		const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
 		FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)ECurrentCharacterHairPart).ToString();
-		FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
-		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
+		if (EnumMetaData.Contains(TEXT("Default")))
+		{
+			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
+		}
+		else 
+		{
+			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
+		}
 	}
 
 	//Add Input Mapping Context
