@@ -17,13 +17,11 @@ class RIFA_API ASkillEnergyItem : public AActor
 {
 	GENERATED_BODY()
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* Root;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* Trigger;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UParticleSystemComponent* Particle;
+	TObjectPtr<class UNiagaraComponent> Particle;
 public:	
 	// Sets default values for this actor's properties
 	ASkillEnergyItem();

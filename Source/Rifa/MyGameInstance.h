@@ -55,11 +55,23 @@ enum class ECharacterMaterialItem : uint8
 	MaxCount
 };
 
+UENUM(BlueprintType)
+enum class ETutorialType : uint8
+{
+	Movement UMETA(DisplayName = "Movement"),
+	Jump UMETA(DisplayName = "Jump"),
+	Dash UMETA(DisplayName = "Dash"),
+	Fly UMETA(DisplayName = "Fly"),
+	Swim UMETA(DisplayName = "Swim"),
+	Pickup UMETA(DisplayName = "Pickup"),
+	MaxCount
+};
+
 UCLASS()
 class RIFA_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
+//SaveGame Data Section
 public:
 	UMyGameInstance();
 
@@ -78,25 +90,37 @@ public:
 	TArray<EHairPartsItem> CurrentHairPartsArr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TArray<ECharacterMaterialItem> CurrentMaterialItemArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	ECharacterMaterialItem ECurrentCharacterMaterial;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	EHairPartsItem ECurrentCharacterHairPart;
+//InGame Data Section
+public:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")
+	TArray<bool> FlyItemArr;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")
+	TArray<bool> SwimItemArr;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")
+	TArray<bool> LevelSequencePlayerArr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "InGameData")
+	TMap<ETutorialType, bool> IsTutorialFinishedMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMeshMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;
+	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TArray<bool> FlyItemArr;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TArray<bool> SwimItemArr;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TArray<bool> LevelSequencePlayerArr;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	ECharacterMaterialItem ECurrentCharacterMaterial;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	EHairPartsItem ECurrentCharacterHairPart;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float BGMVolume = 1.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float SFXVolume = 1.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float EnviromentalVolume = 1.f;
+public:
 	UFUNCTION()
 	void Save();
 

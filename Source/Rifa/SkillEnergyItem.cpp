@@ -9,20 +9,24 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "GameHUD.h"
 #include "Components/SizeBox.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ASkillEnergyItem::ASkillEnergyItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
-	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PARTICLE"));
-	RootComponent = Root;
-	Trigger->SetupAttachment(Root);
-	Mesh->SetupAttachment(Root);
-	Particle->SetupAttachment(Root);
+	Particle = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PARTICLE"));
+	RootComponent = Trigger;
+	Mesh->SetupAttachment(RootComponent);
+	Particle->SetupAttachment(RootComponent);
+
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	Trigger->SetSphereRadius(200.f);
+	Particle->SetRelativeRotation(FRotator(90.f, 0, 0));
+	PickupTextClass = LoadClass<UPickupText>(NULL, TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 }
 
 // Called when the game starts or when spawned
@@ -31,7 +35,6 @@ void ASkillEnergyItem::BeginPlay()
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ASkillEnergyItem::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ASkillEnergyItem::EndCharacterOverlap);
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (IsValid(RifaGameInstance)) 
@@ -42,14 +45,14 @@ void ASkillEnergyItem::BeginPlay()
 			if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex])
 			{
 				SetActorEnableCollision(false);
-				Particle->DeactivateSystem();
+				Particle->SetActive(false);
 			}
 			break;
 		case EEnergyFeature::Fly:
 			if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
 			{
 				SetActorEnableCollision(false);
-				Particle->DeactivateSystem();
+				Particle->SetActive(false);
 			}
 			break;
 		}
@@ -101,25 +104,25 @@ void ASkillEnergyItem::PickupEnergyEvent()
 	{
 		PickupTextReference->RemoveFromParent();
 		SetActorEnableCollision(false);
-		Particle->DeactivateSystem();
+		Particle->SetActive(false);
 		switch (EnergyFeature)
 		{
 		case EEnergyFeature::Swim:
 			if (CharacterReference->SwimEnergyNum < 5) 
 			{
 				CharacterReference->SwimEnergyNum++;
+				CharacterReference->MaxSwimEnergyPercent += 0.2f;
 				RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
-				CharacterReference->SwimEnergyPercent = 1;
-				//CharacterReference->GetGameHUDReference()->SwimEnergySizeBox->SetWidthOverride(CharacterReference->SwimEnergyNum * 100.0f);
+				CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
 			}
 			break;
 		case EEnergyFeature::Fly:
 			if (CharacterReference->FlyEnergyNum < 5) 
 			{
 				CharacterReference->FlyEnergyNum++;
+				CharacterReference->MaxFlyEnergyPercent += 0.2f;
 				RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
-				CharacterReference->FlyEnergyPercent = 1;
-				//CharacterReference->GetGameHUDReference()->FlyEnergySizeBox->SetWidthOverride(CharacterReference->FlyEnergyNum * 100.0f);
+				CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
 			}
 			break;
 		}

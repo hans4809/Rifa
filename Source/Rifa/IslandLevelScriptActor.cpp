@@ -10,7 +10,17 @@
 #include <Kismet/GameplayStatics.h>
 #include "LevelSequenceCharacterActor.h"
 #include "GameHUD.h"
-#include "RifaHUD.h"
+#include "TutorialWidget.h"
+
+AIslandLevelScriptActor::AIslandLevelScriptActor()
+{
+	PrimaryActorTick.bCanEverTick = false;
+}
+
+void AIslandLevelScriptActor::TickOn()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
 
 void AIslandLevelScriptActor::BeginPlay()
 {
@@ -32,10 +42,6 @@ void AIslandLevelScriptActor::BeginPlay()
 		if (IsValid(FirstLevelSequenceCharacterActor))
 		{
 			FirstLevelSequenceCharacterActor->Destroy();
-		}
-		if (IsValid(RifaHUDClass))
-		{
-			//RifaHUD = Cast<ARifaHUD>(Cast<APlayerController>(Controller)->GetHUD());
 		}
 		if (IsValid(GameHUDWidgetClass))
 		{
@@ -65,4 +71,29 @@ void AIslandLevelScriptActor::OnFinishedSecondLevelSequence()
 	{
 		FirstLevelSequenceCharacterActor->Destroy();
 	}
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if (IsValid(GameHUDWidget))
+		{
+			GameHUDWidget->Init();
+		}
+	}
+	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement]) 
+	{
+		if (IsValid(TutorialWidgetClass))
+		{
+			TutorialWidgetAsset = Cast<UTutorialWidget>(CreateWidget(GetWorld(), TutorialWidgetClass));
+			if (IsValid(TutorialWidgetAsset))
+			{
+				TutorialWidgetAsset->ThisTutorialType = ETutorialType::Movement;
+				TutorialWidgetAsset->Init();
+			}
+		}
+	}
+}
+
+void AIslandLevelScriptActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 }

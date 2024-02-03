@@ -13,20 +13,42 @@ UCLASS()
 class RIFA_API USoundSettingWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
+
+// Widget Binding Section
 protected:
 	void NativeConstruct() override;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* CollectionButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ReturnButton;
-	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	//class UButton* ControlButton;
-	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	//class UButton* ReturnButton;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UButton> CollectionButton;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UButton> ReturnButton;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class USlider> BGMSlider;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class USlider> EnviromentalSlider;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class USlider> SFXSlider;
+// Reference Section
+protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> CollectionWidgetClass;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCollectionWidget> CollectionWidgetAsset;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
+// SoundClass Section
+protected:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundClass> BGMClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundMix> BGMClassMix;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundClass> EnviromentalClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundMix> EnviromentalClassMix;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundClass> SFXClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USoundMix> SFXClassMix;
 public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
@@ -40,4 +62,10 @@ public:
 	float AudioParam = 0.f;
 	UFUNCTION(BlueprintCallable)
 	void CollectionButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void BGMSliderValueChanged(float Value);
+	UFUNCTION(BlueprintCallable)
+	void EnviromentalSliderValueChanged(float Value);
+	UFUNCTION(BlueprintCallable)
+	void SFXSliderValueChanged(float Value);
 };
