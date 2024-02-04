@@ -14,13 +14,19 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-	RootComponent = Root;
 	BottomTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BottmTrigger"));
-	BottomTrigger->SetupAttachment(RootComponent);
 	TopTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TopTrigger"));
-	TopTrigger->SetupAttachment(RootComponent);
 	WaterFall = CreateDefaultSubobject<UNiagaraComponent>(TEXT("WaterFall"));
+	TopStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopStartPoint"));
+	BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
+
+
+	RootComponent = Root;
+	BottomTrigger->SetupAttachment(RootComponent);
+	TopTrigger->SetupAttachment(RootComponent);
 	WaterFall->SetupAttachment(RootComponent);
+	TopStartPoint->SetupAttachment(WaterFall);
+	BottomStartPoint->SetupAttachment(WaterFall);
 }
 
 // Called when the game starts or when spawned
@@ -86,6 +92,7 @@ void AWaterFallActorByTriggerBox::OnCharacterTopOverlap(UPrimitiveComponent* Ove
 	{
 		TopPickupTextReference->Init();
 		CharacterReference->bCanRideDownWaterFall = true;
+		CharacterReference->SwimStartLocation = TopStartPoint->GetComponentLocation();
 	}
 }
 
@@ -95,6 +102,7 @@ void AWaterFallActorByTriggerBox::EndCharacterTopOverlap(UPrimitiveComponent* Ov
 	{
 		TopPickupTextReference->CloseWidget();
 		CharacterReference->bCanRideDownWaterFall = false;
+		CharacterReference->SwimStartLocation = FVector::Zero();
 	}
 }
 

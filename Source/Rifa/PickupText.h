@@ -21,8 +21,11 @@ public:
 	AActor* PickupActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Location", meta = (AllowPrivateAccess = true))
 	FVector ViewPortPosition;
+	/*UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UImage> PressKeyImage;*/
 	virtual void Init() override;
 	virtual void CloseWidget() override;
 private:
 	void Tick(FGeometry MyGeometry, float InDeltaTime);
+	virtual void NativeConstruct() override;
 };

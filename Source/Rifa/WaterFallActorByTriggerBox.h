@@ -15,13 +15,17 @@ public:
 	// Sets default values for this actor's properties
 	AWaterFallActorByTriggerBox();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	class USceneComponent* Root;
+	TObjectPtr<USceneComponent> Root;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* BottomTrigger;
+	TObjectPtr<class UBoxComponent> BottomTrigger;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* TopTrigger;
+	TObjectPtr<class UBoxComponent> TopTrigger;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	class UNiagaraComponent* WaterFall;
+	TObjectPtr<class UNiagaraComponent> WaterFall;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> TopStartPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> BottomStartPoint;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
