@@ -7,88 +7,46 @@
 #include "RIFASaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Texture2D.h"
+#include "Engine/SkeletalMesh.h"
 
 UMyGameInstance::UMyGameInstance()
 {
-	//SoundItemMap = TMap<Item, bool>();
-	//for (int i = 0; i < (int)Item::MaxCount; i++) {
-	//	SoundItemMap.Add((Item)i, false);
-	//}
-	//Position = FVector(0, 0, 0);
-	//SoundTrack = "";
-
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH0(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
-	if (MESH0.Succeeded())
+	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
+	const UEnum* CharacterMaterialEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ECharacterMaterialItem"));
+	for (int i = 0; i < (int)EHairPartsItem::MaxCount; i++) 
 	{
-		HairPartsMeshMap.Add(EHairPartsItem::Default, MESH0.Object);
-	}
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH1(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair01.idletest_hair01'"));
-	if (MESH1.Succeeded())
-	{
-		HairPartsMeshMap.Add(EHairPartsItem::First, MESH1.Object);
+		if (HairPartEnum) 
+		{
+			FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue(i).ToString();
+			FString HairPartSkeletonPath = FString::Printf(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/HairParts/SkeletalMesh/SK_HairPart_%s.SK_HairPart_%s'"), *EnumMetaData, *EnumMetaData);
+			ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH(*HairPartSkeletonPath);
+			if (MESH.Succeeded())
+			{
+				HairPartsMeshMap.Add((EHairPartsItem)i, MESH.Object);
+			}
+		}
 	}
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MESH2(TEXT("/Script/Engine.SkeletalMesh'/Game/RifaCharacters/idletest_hair02.idletest_hair02'"));
-	if (MESH2.Succeeded())
+	for (int j = 0; j < (int)ECharacterMaterialItem::MaxCount; j++) 
 	{
-		HairPartsMeshMap.Add(EHairPartsItem::Second, MESH2.Object);
+		if (CharacterMaterialEnum) 
+		{
+			FString EnumMetaData = CharacterMaterialEnum->GetDisplayNameTextByValue(j).ToString();
+
+			FString CharacterMaterialPath = FString::Printf(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/%s.%s'"), *EnumMetaData, *EnumMetaData);
+			ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial(*CharacterMaterialPath);
+
+			FString HairMaterialPath = FString::Printf(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_%sHair.MI_%sHair'"), *EnumMetaData, *EnumMetaData);
+			ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial(*HairMaterialPath);
+
+			if (CharacterMaterial.Succeeded() && HairMaterial.Succeeded())
+			{
+				CharacterMaterialMap.Add((ECharacterMaterialItem)j, CharacterMaterial.Object);
+				HairMaterialMap.Add((ECharacterMaterialItem)j, HairMaterial.Object);
+			}
+		}
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial1(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Default.Default'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial1(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_DefaultHair.MI_DefaultHair'"));
-	if (CharacterMaterial1.Succeeded() && HairMaterial1.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Default, CharacterMaterial1.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Default, HairMaterial1.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial2(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/White.White'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial2(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_WhiteHair.MI_WhiteHair'"));
-	if (CharacterMaterial2.Succeeded() && HairMaterial2.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::White, CharacterMaterial2.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::White, HairMaterial2.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial3(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Blue.Blue'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial3(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_BlueHair.MI_BlueHair'"));
-	if (CharacterMaterial3.Succeeded() && HairMaterial3.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Blue, CharacterMaterial3.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Blue, HairMaterial3.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial4(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Red.Red'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial4(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_RedHair.MI_RedHair'"));
-	if (CharacterMaterial4.Succeeded() && HairMaterial4.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Red, CharacterMaterial4.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Red, HairMaterial4.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial5(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Green.Green'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial5(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_GreenHair.MI_GreenHair'"));
-	if (CharacterMaterial5.Succeeded() && HairMaterial5.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Green, CharacterMaterial5.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Green, HairMaterial5.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial6(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Yellow.Yellow'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial6(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_YellowHair.MI_YellowHair'"));
-	if (CharacterMaterial6.Succeeded() && HairMaterial6.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial6.Object);
-	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CharacterMaterial7(TEXT("/Script/Engine.Material'/Game/RifaCharacters/Texture/Black.Black'"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> HairMaterial7(TEXT("/Script/Engine.MaterialInstanceConstant'/Game/RifaCharacters/Texture/MI_BlackHiar.MI_BlackHiar'"));
-	if (CharacterMaterial7.Succeeded() && HairMaterial7.Succeeded())
-	{
-		CharacterMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
-		HairMaterialMap.Add(ECharacterMaterialItem::Yellow, CharacterMaterial7.Object);
-	}
 }
 
 void UMyGameInstance::Save()

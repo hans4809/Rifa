@@ -43,7 +43,7 @@ void ARifaCharacterParts::BeginPlay()
 	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	CurrentLevelScriptActorReference = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 
-	if (/*IsValid(PickupTextClass)*/IsValid(CurrentLevelScriptActorReference))
+	if (IsValid(PickupTextClass))
 	{
 		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
 		if (IsValid(PickupTextReference))
@@ -82,21 +82,41 @@ void ARifaCharacterParts::PickupCharacterParts()
 		RifaGameInstance->ECurrentCharacterHairPart = CharacterReference->ECurrentCharacterHairPart;
 
 		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
-		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECharacterMaterialItem::Default]);
-
 		CharacterReference->CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[CharacterReference->ECurrentCharacterHairPart]);
-		CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 
-		if (IsValid(RifaGameMode)) 
+		if (ECurrentHairPart == EHairPartsItem::Default) 
 		{
-			/*for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
+			Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECharacterMaterialItem::Default]);
+			CharacterReference->CurrentHairMesh->SetMaterial(0, CharacterReference->CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+		}
+		else 
+		{
+			Mesh->SetMaterial(0, Mesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+			if (CharacterReference->ECurrentCharacterHairPart == EHairPartsItem::Default) 
+			{
+				CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
+			}
+			else 
+			{
+				CharacterReference->CurrentHairMesh->SetMaterial(0, CharacterReference->CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface);
+			}
+		}
+		const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
+		FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
+		FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
+		CharacterReference->CurrentHairMesh->DetachFromParent();
+		CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
+
+		/*if (IsValid(RifaGameMode))
+		{
+			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
 				if (IsValid(LevelSequenceCharacterReference))
 				{
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
-			}*/
+			}
 			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
@@ -105,7 +125,7 @@ void ARifaCharacterParts::PickupCharacterParts()
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
 			}
-		}
+		}*/
 	}
 
 }

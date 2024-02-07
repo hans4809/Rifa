@@ -35,9 +35,11 @@ UENUM()
 enum class EHairPartsItem : uint8
 {
 	Default UMETA(DisplayName = "Default"),
-	First UMETA(DisplayName = "First"),
-	Second UMETA(DisplayName = "Second"),
-	Third UMETA(DisplayName = "Third"),
+	Flower UMETA(DisplayName = "Flower"),
+	Leaf UMETA(DisplayName = "Leaf"),
+	MushRoom UMETA(DisplayName = "MushRoom"),
+	Stick UMETA(DisplayName = "Stick"),
+	Stone UMETA(DisplayName = "Stone"),
 	MaxCount
 };
 
