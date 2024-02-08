@@ -10,6 +10,7 @@
 #include "GameHUD.h"
 #include "Components/SizeBox.h"
 #include "NiagaraComponent.h"
+#include "TutorialWidget.h"
 
 // Sets default values
 ASkillEnergyItem::ASkillEnergyItem()
@@ -123,6 +124,18 @@ void ASkillEnergyItem::PickupEnergyEvent()
 				CharacterReference->MaxFlyEnergyPercent += 0.2f;
 				RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
 				CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
+				if (!RifaGameInstance->IsTutorialFinishedMap[ETutorialType::Fly]) 
+				{
+					if (IsValid(TutorialWidgetClass)) 
+					{
+						TutorialWidgetAsset = Cast<UTutorialWidget>(CreateWidget(GetWorld(), TutorialWidgetClass));
+						if (IsValid(TutorialWidgetAsset))
+						{
+							TutorialWidgetAsset->ThisTutorialType = ETutorialType::Fly;
+							TutorialWidgetAsset->Init();
+						}
+					}
+				}
 			}
 			break;
 		}

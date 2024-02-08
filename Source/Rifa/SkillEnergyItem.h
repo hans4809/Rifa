@@ -17,9 +17,9 @@ class RIFA_API ASkillEnergyItem : public AActor
 {
 	GENERATED_BODY()
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* Mesh;
+	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USphereComponent* Trigger;
+	TObjectPtr<class USphereComponent> Trigger;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UNiagaraComponent> Particle;
 public:	
@@ -41,7 +41,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data, meta = (AllowPrivateAccess = "true"))
 	int ThisSkillItemIndex;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
-	class ARifaCharacter* CharacterReference;
+	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UFUNCTION(BlueprintCallable)
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION(BlueprintCallable)
@@ -49,9 +49,13 @@ private:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> PickupTextClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
-	class UPickupText* PickupTextReference;
+	TObjectPtr<class UPickupText> PickupTextReference;
 	UFUNCTION(BlueprintCallable)
 	void PickupEnergyEvent();
 	UPROPERTY(EditAnyWhere)
 	EEnergyFeature EnergyFeature;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> TutorialWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
 };
