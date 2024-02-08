@@ -33,6 +33,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
+	TObjectPtr<class ALevelSequenceActor> LevelSequencActor;
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	bool IsInRange;
@@ -58,4 +60,6 @@ private:
 	TSubclassOf<UUserWidget> TutorialWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
+	UFUNCTION()
+	void OnEndLevelSequence();
 };
