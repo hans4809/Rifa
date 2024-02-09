@@ -4,6 +4,13 @@
 #include "PickupText.h"
 #include "Kismet/GameplayStatics.h"
 
+
+void UPickupText::NativeConstruct()
+{
+	Super::NativeConstruct();
+	//PressKeyImage = Cast<UImage>(GetWidgetFromName(TEXT("PressKeyImage")));
+}
+
 void UPickupText::Init()
 {
 	Super::Init();
@@ -20,3 +27,4 @@ void UPickupText::Tick(FGeometry MyGeometry, float InDeltaTime)
 	//auto PlayerCotroller = Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	//PlayerCotroller->ProjectWorldLocationToScreen(ViewPortPosition);
 }
+

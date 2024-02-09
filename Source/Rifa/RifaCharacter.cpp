@@ -91,6 +91,31 @@ float ARifaCharacter::GetFlyTime()
 			return 0.0f;
 			break;
 		case 1:
+			return 2.0f;
+			break;
+		case 2:
+			return 3.0f;
+			break;
+		case 3:
+			return 4.0f;
+			break;
+		case 4:
+			return 5.0f;
+			break;
+		default:
+			return 60.0f;
+			break;
+	}
+}
+
+float ARifaCharacter::GetSwimTime()
+{
+	switch (SwimEnergyNum)
+	{
+		case 0:
+			return 0.0f;
+			break;
+		case 1:
 			return 3.0f;
 			break;
 		case 2:
@@ -104,31 +129,6 @@ float ARifaCharacter::GetFlyTime()
 			break;
 		default:
 			return 11.0f;
-			break;
-	}
-}
-
-float ARifaCharacter::GetSwimTime()
-{
-	switch (SwimEnergyNum)
-	{
-		case 0:
-			return 0.0f;
-			break;
-		case 1:
-			return 2.0f;
-			break;
-		case 2:
-			return 3.0f;
-			break;
-		case 3:
-			return 4.0f;
-			break;
-		case 4:
-			return 5.0f;
-			break;
-		default:
-			return 6.0f;
 			break;
 
 	}
@@ -161,8 +161,14 @@ void ARifaCharacter::BeginPlay()
 		}
 		const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
 		FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)ECurrentCharacterHairPart).ToString();
-		FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
-		CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
+		if (EnumMetaData.Contains(TEXT("Default")))
+		{
+			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
+		}
+		else 
+		{
+			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
+		}
 	}
 
 	//Add Input Mapping Context
@@ -192,7 +198,7 @@ void ARifaCharacter::BeginPlay()
 			MaxSwimEnergyPercent += 0.2;
 		}
 	}
-	SwimEnergyPercent = MaxFlyEnergyPercent;
+	SwimEnergyPercent = MaxSwimEnergyPercent;
 
 	//GameStart();
 
@@ -536,7 +542,7 @@ void ARifaCharacter::Fly()
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
-		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, FlyEnergyPercent * ARifaCharacter::GetFlyTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, (FlyEnergyPercent / MaxFlyEnergyPercent) * ARifaCharacter::GetFlyTime(), false);
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
@@ -653,9 +659,9 @@ void ARifaCharacter::Swim()
 		bIsSwimming = true;
 		StartLocation = GetActorLocation();
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
-		RifaCharacterMovement->bCheatFlying = true;
+		//RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
 	else if (bCanRideUpWaterFall)
 	{
@@ -663,20 +669,24 @@ void ARifaCharacter::Swim()
 		bIsWaterFall = true;
 		StartLocation = GetActorLocation();
 		AddActorWorldRotation(FRotator(0, 0, -90));
-		RifaCharacterMovement->bCheatFlying = true;
+		//RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
 	else if (bCanRideDownWaterFall) 
 	{
+		if (SwimStartLocation == FVector(0, 0, 0))
+		{
+			return;
+		}
 		bIsSwimming = true;
 		bIsWaterFall = true;
 		StartLocation = GetActorLocation();
-		SetActorLocation(GetActorLocation() + GetActorForwardVector() * 300);
+		SetActorLocation(SwimStartLocation);
 		AddActorWorldRotation(FRotator(0, 0, -90));
-		RifaCharacterMovement->bCheatFlying = true;
+		//RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, SwimEnergyPercent * ARifaCharacter::GetSwimTime(), false);
+		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
 }
 
@@ -687,7 +697,7 @@ void ARifaCharacter::ReturnWalk()
 	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
-	RifaCharacterMovement->bCheatFlying = false;
+	//RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }
@@ -700,7 +710,7 @@ void ARifaCharacter::EndSwim()
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
-	RifaCharacterMovement->bCheatFlying = false;
+	//RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }

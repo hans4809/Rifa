@@ -27,7 +27,7 @@ void AIslandLevelScriptActor::BeginPlay()
 	Super::BeginPlay();
 	RifaGameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (RifaGameInstanceReference->LevelSequencePlayerArr[0]) 
+	if (!RifaGameInstanceReference->LevelSequencePlayerArr[0]) 
 	{
 		/*CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 		CharacterReference->SetActorHiddenInGame(true);*/
@@ -66,7 +66,7 @@ void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 
 void AIslandLevelScriptActor::OnFinishedSecondLevelSequence()
 {
-	RifaGameInstanceReference->LevelSequencePlayerArr[0] = false;
+	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
 	if (IsValid(FirstLevelSequenceCharacterActor))
 	{
 		FirstLevelSequenceCharacterActor->Destroy();

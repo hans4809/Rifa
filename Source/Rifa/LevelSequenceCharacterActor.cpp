@@ -42,8 +42,14 @@ void ALevelSequenceCharacterActor::CharacterApperanceChanged()
 
 	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
 	FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
-	FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
-	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
+	if (EnumMetaData.Contains(TEXT("Default")))
+	{
+		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
+	}
+	else
+	{
+		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
+	}
 }
 
 // Called when the game starts or when spawned
@@ -69,9 +75,14 @@ void ALevelSequenceCharacterActor::BeginPlay()
 
 	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
 	FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
-	FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
-	CurrentHairMesh->DetachFromParent();
-	CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
+	if (EnumMetaData.Contains(TEXT("Default")))
+	{
+		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
+	}
+	else
+	{
+		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
+	}
 }
 
 // Called every frame

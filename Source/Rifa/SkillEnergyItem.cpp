@@ -10,6 +10,10 @@
 #include "GameHUD.h"
 #include "Components/SizeBox.h"
 #include "NiagaraComponent.h"
+#include "TutorialWidget.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
 
 // Sets default values
 ASkillEnergyItem::ASkillEnergyItem()
@@ -105,6 +109,18 @@ void ASkillEnergyItem::PickupEnergyEvent()
 		PickupTextReference->RemoveFromParent();
 		SetActorEnableCollision(false);
 		Particle->SetActive(false);
+		if (!RifaGameInstance->LevelSequencePlayerArr[4])
+		{
+			if (LevelSequencActor) {
+				FMovieSceneSequencePlaybackParams Param;
+				FTimerHandle LevelSequenceTimer;
+				LevelSequencActor->SequencePlayer->SetPlaybackPosition(Param);
+				LevelSequencActor->SequencePlayer->Play();
+				GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASkillEnergyItem::OnEndLevelSequence, LevelSequencActor->SequencePlayer->GetDuration().AsSeconds(), false);
+				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+				CharacterReference->SetActorHiddenInGame(true);
+			}
+		}
 		switch (EnergyFeature)
 		{
 		case EEnergyFeature::Swim:
@@ -127,5 +143,11 @@ void ASkillEnergyItem::PickupEnergyEvent()
 			break;
 		}
 	}
+}
+
+void ASkillEnergyItem::OnEndLevelSequence()
+{
+	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	CharacterReference->SetActorHiddenInGame(false);
 }
 

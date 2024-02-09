@@ -103,20 +103,18 @@ void ARifaCharacterParts::PickupCharacterParts()
 		}
 		const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
 		FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
-		FString SocketName = FString::Printf(TEXT("hair_socket_%s"), *EnumMetaData);
-		CharacterReference->CurrentHairMesh->DetachFromParent();
-		CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, *SocketName);
-
-		/*if (IsValid(RifaGameMode))
+		if (EnumMetaData.Contains(TEXT("Default")))
 		{
-			for (const auto LevelSequenceCharacter : RifaGameMode->LevelSequenceCharacterArr) 
-			{
-				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
-				if (IsValid(LevelSequenceCharacterReference))
-				{
-					LevelSequenceCharacterReference->CharacterApperanceChanged();
-				}
-			}
+			CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
+		}
+		else
+		{
+			CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
+		}
+
+		if (IsValid(CurrentLevelScriptActorReference))
+		{
+
 			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
 			{
 				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
@@ -125,7 +123,7 @@ void ARifaCharacterParts::PickupCharacterParts()
 					LevelSequenceCharacterReference->CharacterApperanceChanged();
 				}
 			}
-		}*/
+		}
 	}
 
 }
