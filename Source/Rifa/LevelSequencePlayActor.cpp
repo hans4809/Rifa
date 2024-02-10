@@ -26,7 +26,11 @@ ALevelSequencePlayActor::ALevelSequencePlayActor()
 void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
+	if (IsValid(CharacterMesh)) 
+	{
+		Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
+	}
+
 	FMovieSceneSequencePlaybackSettings Settings;
 	if (LevelSequenceActor)
 	{
@@ -49,7 +53,10 @@ void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 {
 	if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
 	{
-		Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(false);
+		if (IsValid(CharacterMesh)) 
+		{
+			Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(false);
+		}
 		FMovieSceneSequencePlaybackParams Param;
 		LevelSequencePlayer->SetPlaybackPosition(Param);
 		LevelSequencePlayer->Play();
@@ -62,7 +69,10 @@ void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 
 void ALevelSequencePlayActor::EndLevelSequence()
 {
-	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
+	if (IsValid(CharacterMesh)) 
+	{
+		Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
+	}
 	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 	CharacterReference->SetActorHiddenInGame(false);
 }
