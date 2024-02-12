@@ -36,6 +36,8 @@ public:
 	TArray<USoundBase*> Sounds;
 	UPROPERTY()
 		FString Str;
+	UPROPERTY(EditAnywhere, Category="Variable")
+		bool IsBgmRestart;
 
 	UFUNCTION()
 	void CrossfadeSound();

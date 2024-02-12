@@ -33,6 +33,8 @@ UBGMAudioComponent::UBGMAudioComponent()
     static ConstructorHelpers::FObjectFinder<USoundBase> ObjectFinder7(TEXT("/Script/Engine.SoundCue'/Game/Sounds/BGM_07.BGM_07'"));
     if (ObjectFinder7.Succeeded())
         Sounds.Add(ObjectFinder7.Object);
+
+    IsBgmRestart = true;
 }
 
 void UBGMAudioComponent::CrossfadeSound()
@@ -64,7 +66,8 @@ void UBGMAudioComponent::PlayBgm()
     if(RifaGameInstance == nullptr)
         RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
     BgmSetting();
-    CrossfadeSound();
+    if(IsBgmRestart)
+        CrossfadeSound();
 }
 
 void UBGMAudioComponent::BgmSetting()
