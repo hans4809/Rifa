@@ -542,7 +542,8 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 
 void ARifaCharacter::Fly()
 {
-	if (InventoryOpen || FlyEnergyNum == 0) {
+	if (FlyEnergyNum == 0 || !RifaGameInstance->bCanFly) 
+	{
 		return;
 	}
 	if (!(RifaCharacterMovement->IsFlying()))
@@ -637,7 +638,8 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 
 void ARifaCharacter::Swim()
 {
-	if (InventoryOpen || SwimEnergyNum == 0) {
+	if (SwimEnergyNum == 0 || !RifaGameInstance->bCanSwim)
+	{
 		return;
 	}
 	//FHitResult HitResult = SwimCheck();

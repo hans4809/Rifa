@@ -14,7 +14,7 @@ class RIFA_API AInteractableActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AInteractableActor();
-
+//Components Section
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,14 +22,14 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USphereComponent> Trigger;
+// PickupText Section
+protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> PickupTextClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UPickupText> PickupTextReference;
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-private:
+// Extra Section
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	bool bIsInRange;
 	UPROPERTY(EditAnyWhere)
@@ -40,4 +40,8 @@ private:
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION(BlueprintCallable)
 	void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+private:
 };

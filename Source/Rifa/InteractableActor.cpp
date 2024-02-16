@@ -6,6 +6,7 @@
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
+#include "PickupText.h"
 
 // Sets default values
 AInteractableActor::AInteractableActor()
@@ -15,9 +16,12 @@ AInteractableActor::AInteractableActor()
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
 
-	RootComponent = Mesh;
-	Trigger->SetupAttachment(RootComponent);
+	RootComponent = Trigger;
+	Mesh->SetupAttachment(RootComponent);
+
+	Trigger->SetSphereRadius(200.f);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
 	static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 	if (UW.Succeeded()) 
 	{
@@ -30,6 +34,13 @@ void AInteractableActor::BeginPlay()
 {
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (IsValid(PickupTextClass)) 
+	{
+		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+	}
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnCharacterOverlap);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &AInteractableActor::EndCharacterOverlap);
 }
 
 // Called every frame
@@ -41,9 +52,19 @@ void AInteractableActor::Tick(float DeltaTime)
 
 void AInteractableActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (Cast<ARifaCharacter>(OtherActor))
+	{
+		PickupTextReference->Init();
+		bIsInRange = true;
+	}
 }
 
 void AInteractableActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	if (Cast<ARifaCharacter>(OtherActor))
+	{
+		PickupTextReference->CloseWidget();
+		bIsInRange = false;
+	}
 }
 
