@@ -14,8 +14,8 @@ class RIFA_API ALevelSequencePlayActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALevelSequencePlayActor();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	TObjectPtr<class ALevelSequenceCharacterActor> CharacterMesh;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	//TObjectPtr<class ALevelSequenceCharacterActor> CharacterMesh;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
