@@ -14,8 +14,19 @@ class RIFA_API ABaseLevelScriptActor : public ALevelScriptActor
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
-	TArray<TObjectPtr<AActor>> LevelSequenceCharacterArr;
+	ABaseLevelScriptActor();
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget")
+	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 protected:
 	virtual void BeginPlay() override;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> TutorialWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class ARifaCharacter> CharacterReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UMyGameInstance> RifaGameInstanceReference;
 };

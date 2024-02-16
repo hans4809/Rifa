@@ -111,19 +111,6 @@ void ARifaCharacterParts::PickupCharacterParts()
 		{
 			CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
-
-		if (IsValid(CurrentLevelScriptActorReference))
-		{
-
-			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
-			{
-				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
-				if (IsValid(LevelSequenceCharacterReference))
-				{
-					LevelSequenceCharacterReference->CharacterApperanceChanged();
-				}
-			}
-		}
 	}
 
 }

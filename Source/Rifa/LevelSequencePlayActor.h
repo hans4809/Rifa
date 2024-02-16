@@ -41,6 +41,8 @@ protected:
 	FVector EndOfLevelSequencePlayerLocation;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ARifaCharacter> CharacterReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class ARifaGameMode> GameModeReference;
 	UPROPERTY()
 	FTimerHandle LevelSequenceTimer; 
 	UFUNCTION(BlueprintCallable)
@@ -53,6 +55,8 @@ protected:
 	void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

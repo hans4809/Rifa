@@ -85,18 +85,6 @@ void ARifaCharacterMaterialItem::PickupCharacterMaterial()
 		{
 			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 		}
-
-		if (IsValid(CurrentLevelScriptActorReference))
-		{
-			for (const auto LevelSequenceCharacter : CurrentLevelScriptActorReference->LevelSequenceCharacterArr)
-			{
-				ALevelSequenceCharacterActor* LevelSequenceCharacterReference = Cast<ALevelSequenceCharacterActor>(LevelSequenceCharacter);
-				if (IsValid(LevelSequenceCharacterReference))
-				{
-					LevelSequenceCharacterReference->CharacterApperanceChanged();
-				}
-			}
-		}
 	}
 }
 

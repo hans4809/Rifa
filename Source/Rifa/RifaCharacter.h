@@ -103,7 +103,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	FVector WaterForcingVector;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
-	AActor* InteractionTargetActor;
+	TObjectPtr<AActor> InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
 	class UBGMAudioComponent* Bgm;
 	UFUNCTION()
@@ -124,12 +124,12 @@ public:
 	void ChangeHairPart();*/
 // Widget Part
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class USceneWidget> GameHUDWidgetClass;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	//TSubclassOf<class USceneWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	//TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
 
@@ -185,7 +185,7 @@ protected:
 private:
 
 	UPROPERTY()
-	class UMyGameInstance* RifaGameInstance;
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY()
 	FTimerHandle WidgetAnimTimer;
 	UFUNCTION()

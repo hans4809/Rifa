@@ -82,6 +82,12 @@ ARifaCharacter::ARifaCharacter()
 	WaterForcingVector = FVector(0, 0, 0);
 	FlyEnergyNum = 0;
 	SwimEnergyNum = 0;
+
+	//static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_GameHUD.WG_GameHUD_C'"));
+	//if (UW.Succeeded()) 
+	//{
+	//	GameHUDWidgetClass = UW.Class;
+	//}
 }
 
 float ARifaCharacter::GetFlyTime()
@@ -171,11 +177,11 @@ void ARifaCharacter::BeginPlay()
 			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
 	}
-	if (IsValid(GameHUDWidgetClass))
-	{
-		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-		GameHUDWidgetAsset->Init();
-	}
+	//if (IsValid(GameHUDWidgetClass))
+	//{
+	//	GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+	//	GameHUDWidgetAsset->Init();
+	//}
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{

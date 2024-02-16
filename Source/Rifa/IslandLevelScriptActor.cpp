@@ -8,47 +8,35 @@
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include <Kismet/GameplayStatics.h>
-#include "LevelSequenceCharacterActor.h"
 #include "GameHUD.h"
 #include "TutorialWidget.h"
 
 AIslandLevelScriptActor::AIslandLevelScriptActor()
 {
-	PrimaryActorTick.bCanEverTick = false;
-}
 
-void AIslandLevelScriptActor::TickOn()
-{
-	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AIslandLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
-	RifaGameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 	if (!RifaGameInstanceReference->LevelSequencePlayerArr[0]) 
 	{
-		/*CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-		CharacterReference->SetActorHiddenInGame(true);*/
 		if (IsValid(FirstLevelSequenceActor)) 
 		{
+			FTimerHandle SequenceTimer;
 			FirstLevelSequenceActor->SequencePlayer->Play();
 			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(),false);
 		}
 	}
 	else
 	{
-		if (IsValid(FirstLevelSequenceCharacterActor))
-		{
-			FirstLevelSequenceCharacterActor->Destroy();
-		}
 		if (IsValid(GameHUDWidgetClass))
 		{
-			GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-			if (IsValid(GameHUDWidget))
+			GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+			if (IsValid(GameHUDWidgetAsset))
 			{
-				GameHUDWidget->Init();
+				GameHUDWidgetAsset->Init();
 			}
 		}
 	}
@@ -57,29 +45,16 @@ void AIslandLevelScriptActor::BeginPlay()
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
-	if (IsValid(SecondLevelSequenceActor)) 
-	{
-		SecondLevelSequenceActor->SequencePlayer->Play();
-		GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedSecondLevelSequence, SecondLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
-	}
-}
-
-void AIslandLevelScriptActor::OnFinishedSecondLevelSequence()
-{
 	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
-	if (IsValid(FirstLevelSequenceCharacterActor))
-	{
-		FirstLevelSequenceCharacterActor->Destroy();
-	}
 	if (IsValid(GameHUDWidgetClass))
 	{
-		GameHUDWidget = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-		if (IsValid(GameHUDWidget))
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if (IsValid(GameHUDWidgetAsset))
 		{
-			GameHUDWidget->Init();
+			GameHUDWidgetAsset->Init();
 		}
 	}
-	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement]) 
+	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement])
 	{
 		if (IsValid(TutorialWidgetClass))
 		{

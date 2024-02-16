@@ -9,9 +9,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "RifaCharacter.h"
 #include "Animation/SkeletalMeshActor.h"
-#include "LevelSequenceCharacterActor.h"
 #include "MyGameInstance.h"
 #include "GameHUD.h"
+#include "RifaGameMode.h"
+#include "IslandLevelScriptActor.h"
 
 
 
@@ -36,9 +37,13 @@ void ALevelSequencePlayActor::BeginPlay()
 		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
 	}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &ALevelSequencePlayActor::EndCharacterOverlap);
+	
 	Trigger->SetCollisionProfileName("Trigger");
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	GameModeReference = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 	if (IsValid(RifaGameInstance)) {
 		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
 		{
@@ -94,7 +99,10 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 	{
 		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer)) 
 		{
-			CharacterReference->GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Hidden);
+			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			{
+				CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+			}
 			CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 
 			FMovieSceneSequencePlaybackParams Param;
@@ -110,7 +118,10 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 void ALevelSequencePlayActor::EndLevelSequence()
 {
 	if (IsValid(CharacterReference)) {
-		CharacterReference->GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Visible);
+		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		{
+			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 		Destroy();
 	}

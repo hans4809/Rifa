@@ -6,6 +6,9 @@
 #include "GameHUD.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyGameInstance.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
 
 
 ARifaGameMode::ARifaGameMode()
@@ -16,11 +19,11 @@ ARifaGameMode::ARifaGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
-	/*static ConstructorHelpers::FClassFinder<UGameHUD> GameHUDWidgetAsset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_GameHUD.WG_GameHUD_C'"));
-	if (GameHUDWidgetAsset.Succeeded()) 
+	static ConstructorHelpers::FClassFinder<UUserWidget> GameHUDWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_GameHUD.WG_GameHUD_C'"));
+	if (GameHUDWidget.Succeeded()) 
 	{
-		GameHUDWidgetClass = GameHUDWidgetAsset.Class;
-	}*/
+		GameHUDWidgetClass = GameHUDWidget.Class;
+	}
 }
 
 void ARifaGameMode::BeginPlay()
@@ -28,6 +31,47 @@ void ARifaGameMode::BeginPlay()
 	Super::BeginPlay();
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	GameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(GameInstanceReference))
+	{
+		if (!GameInstanceReference->LevelSequencePlayerArr[0]) 
+		{
+			if (IsValid(FirstLevelSequence)) 
+			{
+				if (IsValid(CharacterReference)) 
+				{
+					CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+					FTimerHandle LevelSequenceTimer;
+					FirstLevelSequence->SequencePlayer->Play();
+					GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ARifaGameMode::EndLevelSequence, FirstLevelSequence->SequencePlayer->GetDuration().AsSeconds(), false);
+
+					GameInstanceReference->LevelSequencePlayerArr[0] = true;
+				}
+				else 
+				{
+					if (IsValid(GameHUDWidgetClass))
+					{
+						GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+					}
+				}
+			}
+		}
+		else 
+		{
+			if (IsValid(GameHUDWidgetClass)) 
+			{
+				GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+			}
+		}
+	}
+}
+
+void ARifaGameMode::EndLevelSequence()
+{
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	}
 }
 
 
