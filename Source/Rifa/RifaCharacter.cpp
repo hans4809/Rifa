@@ -218,7 +218,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 	{
 		if (GetWorld()->GetTimerManager().IsTimerActive(FlyTimer))
 		{
-			FlyEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(FlyTimer) / GetFlyTime();
+			FlyEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(FlyTimer) / GetFlyTime() * MaxFlyEnergyPercent;
 		}
 		else 
 		{
@@ -234,7 +234,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 	{
 		if (GetWorld()->GetTimerManager().IsTimerActive(SwimTimer))
 		{
-			SwimEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(SwimTimer) / GetSwimTime();
+			SwimEnergyPercent = GetWorld()->GetTimerManager().GetTimerRemaining(SwimTimer) / GetSwimTime() * MaxSwimEnergyPercent;
 		}
 		else 
 		{

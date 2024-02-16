@@ -64,6 +64,8 @@ void UMyGameInstance::Save()
 	NewPlayerData->ECurrentCharacterHairPart = ECurrentCharacterHairPart;
 	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
 	NewPlayerData->IsTutorialFinishedMap = IsTutorialFinishedMap;
+	NewPlayerData->bCanFly = bCanFly;
+	NewPlayerData->bCanSwim = bCanSwim;
 	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
@@ -86,6 +88,8 @@ void UMyGameInstance::Load()
 	ECurrentCharacterMaterial = RIFASaveGame->ECurrentCharacterMaterial;
 	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
+	bCanFly = RIFASaveGame->bCanFly;
+	bCanSwim = RIFASaveGame->bCanSwim;
 }
 
 void UMyGameInstance::Init()
