@@ -121,9 +121,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	EHairPartsItem ECurrentCharacterHairPart;
 	/*UFUNCTION(BlueprintCallable)
-	void ChangeHairPart();*/	
+	void ChangeHairPart();*/
+// Widget Part
+public:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class USceneWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
 

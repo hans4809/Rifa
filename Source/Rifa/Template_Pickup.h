@@ -15,24 +15,24 @@ class RIFA_API ATemplate_Pickup : public AActor
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* Root;
+	TObjectPtr<USceneComponent> Root;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* Mesh;
+	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USphereComponent* Trigger;
+	TObjectPtr<class USphereComponent> Trigger;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UNiagaraComponent> Particle;
 public:	
 	// Sets default values for this actor's properties
 	ATemplate_Pickup();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	UTexture2D* CustomImage;
+	TObjectPtr<UTexture2D> CustomImage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	FString CustomItemName;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	UStaticMesh* CustomStaticMesh;
+	TObjectPtr<UStaticMesh> CustomStaticMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TObjectPtr<class UGameHUD> GameHUDReference;
 protected:
@@ -51,13 +51,13 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = "true"))
 	FItemStruct ItemInfo;
 	UPROPERTY(EditAnyWhere)
-	class UMyGameInstance* RifaGameInstance;
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> PickupTextClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
-	class UPickupText* PickupTextReference;
+	TObjectPtr<class UPickupText> PickupTextReference;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
-	class ARifaCharacter* CharacterReference;
+	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UFUNCTION(BlueprintCallable)
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION(BlueprintCallable)

@@ -14,6 +14,9 @@ URIFASaveGame::URIFASaveGame()
 		SoundItemOnOffMap.Add((Item)i, true);
 	}
 
+	bCanFly = false;
+	bCanSwim = false;
+
 	FlyItemArr.Init(false, 5);
 	SwimItemArr.Init(false, 5);
 	LevelSequencePlayerArr.Init(false, 10);

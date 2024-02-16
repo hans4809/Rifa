@@ -5,7 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "LevelSequencePlayActor.generated.h"
-
+UENUM()
+enum class ELevelSequenceType : uint8
+{
+	Trigger UMETA(DisplayName = "Trigger"),
+	InterAction UMETA(DisplayName = "InterAction"),
+	MaxCount
+};
 UCLASS()
 class RIFA_API ALevelSequencePlayActor : public AActor
 {
@@ -14,29 +20,39 @@ class RIFA_API ALevelSequencePlayActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALevelSequencePlayActor();
-	//UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	//TObjectPtr<class ALevelSequenceCharacterActor> CharacterMesh;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	bool bCanPlayLevelSequence;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+	int32 ThisLevelSequenceIndex;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* Trigger;
+	TObjectPtr<class UBoxComponent> Trigger;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class ALevelSequenceActor* LevelSequenceActor;
+	TObjectPtr<class ALevelSequenceActor> LevelSequenceActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class ULevelSequence* LevelSequence;
+	TObjectPtr<class ULevelSequence> LevelSequence;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class ULevelSequencePlayer* LevelSequencePlayer;
+	TObjectPtr<class ULevelSequencePlayer> LevelSequencePlayer;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class ARifaCharacter* CharacterReference;
+	ELevelSequenceType ThisLevelSequenceType;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FVector EndOfLevelSequencePlayerLocation;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UPROPERTY()
-	FTimerHandle LevelSequenceTimer;
+	FTimerHandle LevelSequenceTimer; 
+	UFUNCTION(BlueprintCallable)
+	void PlayLevelSequence();
 	UFUNCTION(BlueprintCallable)
 	void EndLevelSequence();
 	UFUNCTION(BlueprintCallable)
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION(BlueprintCallable)
+	void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

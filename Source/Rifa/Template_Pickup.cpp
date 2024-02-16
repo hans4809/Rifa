@@ -64,7 +64,10 @@ void ATemplate_Pickup::BeginPlay()
 				/*if (CharacterReference->PickupItem.IsBound()) {
 					CharacterReference->PickupItem.Clear();
 				}*/
-				CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
+				if (IsValid(CharacterReference)) 
+				{
+					CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
+				}
 			}
 		}
 		Trigger->OnComponentBeginOverlap.AddDynamic(this, &ATemplate_Pickup::OnCharacterOverlap);
@@ -108,7 +111,7 @@ void ATemplate_Pickup::PickupItemEvent()
 	if (GetActorEnableCollision() && IsInRange) 
 	{
 		RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex] = true;
-		//RifaGameInstance->Save();
+		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		Destroy();
 	}

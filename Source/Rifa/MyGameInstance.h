@@ -112,6 +112,10 @@ public:
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bCanFly;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bCanSwim;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;

@@ -24,6 +24,7 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "GameSettingWidget.h"
 #include "RifaGameMode.h"
+#include "GameHUD.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -170,7 +171,11 @@ void ARifaCharacter::BeginPlay()
 			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
 	}
-
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		GameHUDWidgetAsset->Init();
+	}
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{

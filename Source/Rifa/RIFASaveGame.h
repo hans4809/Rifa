@@ -45,5 +45,9 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	EHairPartsItem ECurrentCharacterHairPart;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
-	TMap<ETutorialType, bool> IsTutorialFinishedMap;
+	TMap<ETutorialType, bool> IsTutorialFinishedMap;	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bCanFly;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bCanSwim;
 };

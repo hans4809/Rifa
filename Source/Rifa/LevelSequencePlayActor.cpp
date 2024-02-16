@@ -10,6 +10,8 @@
 #include "RifaCharacter.h"
 #include "Animation/SkeletalMeshActor.h"
 #include "LevelSequenceCharacterActor.h"
+#include "MyGameInstance.h"
+#include "GameHUD.h"
 
 
 
@@ -26,10 +28,6 @@ ALevelSequencePlayActor::ALevelSequencePlayActor()
 void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if (IsValid(CharacterMesh)) 
-	{
-		Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
-	}
 
 	FMovieSceneSequencePlaybackSettings Settings;
 	if (LevelSequenceActor)
@@ -40,6 +38,13 @@ void ALevelSequencePlayActor::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
 	Trigger->SetCollisionProfileName("Trigger");
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (IsValid(RifaGameInstance)) {
+		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
+		{
+			Destroy();
+		}
+	}
 }
 
 // Called every frame
@@ -51,28 +56,68 @@ void ALevelSequencePlayActor::Tick(float DeltaTime)
 
 void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (IsValid(RifaGameInstance)) 
+	{
+		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
+		{
+			return;
+		}
+	}
+	if (ThisLevelSequenceType == ELevelSequenceType::Trigger) 
+	{
+		if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
+		{
+			bCanPlayLevelSequence = true;
+			PlayLevelSequence();
+		}
+	}
+	else 
+	{
+		if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision()) 
+		{
+			bCanPlayLevelSequence = true;
+		}
+	}
+}
+
+void ALevelSequencePlayActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 	if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
 	{
-		//if (IsValid(CharacterMesh)) 
-		//{
-		//	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(false);
-		//}
-		FMovieSceneSequencePlaybackParams Param;
-		LevelSequencePlayer->SetPlaybackPosition(Param);
-		LevelSequencePlayer->Play();
-		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
-		CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-		CharacterReference->SetActorHiddenInGame(true);
-		CharacterReference->SetActorLocation(EndOfLevelSequencePlayerLocation);
+		bCanPlayLevelSequence = false;
+	}
+}
+
+void ALevelSequencePlayActor::PlayLevelSequence()
+{
+	if (bCanPlayLevelSequence && !RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
+	{
+		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer)) 
+		{
+			CharacterReference->GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Hidden);
+			CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+
+			FMovieSceneSequencePlaybackParams Param;
+			LevelSequencePlayer->SetPlaybackPosition(Param);
+			LevelSequencePlayer->Play();
+			GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
+			
+			RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
+		}
 	}
 }
 
 void ALevelSequencePlayActor::EndLevelSequence()
 {
+	if (IsValid(CharacterReference)) {
+		CharacterReference->GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Visible);
+		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+		Destroy();
+	}
 	//if (IsValid(CharacterMesh)) 
 	//{
 	//	Cast<AActor>(CharacterMesh)->SetActorHiddenInGame(true);
 	//}
-	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	CharacterReference->SetActorHiddenInGame(false);
+	/*CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	CharacterReference->SetActorHiddenInGame(false);*/
 }
