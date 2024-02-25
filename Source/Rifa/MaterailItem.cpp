@@ -15,7 +15,7 @@ void AMaterailItem::BeginPlay()
 	if (IsValid(RifaGameInstance))
 	{
 		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
-		Mesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[ECurrentMaterial]);
+		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentMaterial]);
 	}
 	if (IsValid(PickupTextReference))
 	{
