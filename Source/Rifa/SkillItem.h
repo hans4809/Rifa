@@ -39,7 +39,7 @@ private:
 	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LevelSequence", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ALevelSequenceActor> LevelSequenceActor;
-	UPROPERTY()
+	UFUNCTION()
 	void EndLevelSequence();
 protected:
 	// Called when the game starts or when spawned
