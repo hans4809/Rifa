@@ -38,7 +38,9 @@ private:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LevelSequence", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class ALevelSequenceActor> LevelSequencActor;
+	TObjectPtr<class ALevelSequenceActor> LevelSequenceActor;
+	UPROPERTY()
+	void EndLevelSequence();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

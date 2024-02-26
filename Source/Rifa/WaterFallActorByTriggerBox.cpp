@@ -74,6 +74,8 @@ void AWaterFallActorByTriggerBox::OnCharacterBottomOverlap(UPrimitiveComponent* 
 	{
 		BottomPickupTextReference->Init();
 		CharacterReference->bCanRideUpWaterFall = true;
+		CharacterReference->SwimStartLocation = BottomStartPoint->GetComponentLocation();
+		CharacterReference->WaterFallRotation = GetActorRotation();
 	}
 }
 
@@ -83,6 +85,7 @@ void AWaterFallActorByTriggerBox::EndCharacterBottomOverlap(UPrimitiveComponent*
 	{
 		BottomPickupTextReference->CloseWidget();
 		CharacterReference->bCanRideUpWaterFall = false;
+		CharacterReference->SwimStartLocation = FVector::Zero();
 	}
 }
 
@@ -93,6 +96,7 @@ void AWaterFallActorByTriggerBox::OnCharacterTopOverlap(UPrimitiveComponent* Ove
 		TopPickupTextReference->Init();
 		CharacterReference->bCanRideDownWaterFall = true;
 		CharacterReference->SwimStartLocation = TopStartPoint->GetComponentLocation();
+		CharacterReference->WaterFallRotation = GetActorRotation();
 	}
 }
 
