@@ -8,7 +8,11 @@
 #include "PickupText.h"
 #include <Kismet/GameplayStatics.h>
 #include "RifaCharacter.h"
-
+#include "IslandLevelScriptActor.h"
+#include "GameHUD.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
 
 ASkillItem::ASkillItem()
 {
@@ -81,6 +85,25 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				else
 				{
+					if (RifaGameInstance->LevelSequencePlayerArr[8]) 
+					{
+						if (!(LevelSequenceActor.IsNull())) 
+						{
+							auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+							if (IsValid(CurrentLevelScriptActor))
+							{
+								FTimerHandle LevelSequenceTimer;
+								FMovieSceneSequencePlaybackParams Param;
+								CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+								CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+								auto LevelSequncePlayer = LevelSequenceActor->SequencePlayer.Get();
+								LevelSequncePlayer->SetPlaybackPosition(Param);
+								LevelSequncePlayer->Play();
+								GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASkillItem::EndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
+							}
+
+						}
+					}
 					if (CharacterReference->SwimEnergyNum < 5)
 					{
 						CharacterReference->SwimEnergyNum++;
@@ -92,5 +115,18 @@ void ASkillItem::PickupEnergyEvent()
 				break;
 		}
 		Particle->SetActive(false);
+	}
+}
+
+void ASkillItem::EndLevelSequence()
+{
+	if (IsValid(CharacterReference)) {
+		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		{
+			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+		}
+		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+		Destroy();
 	}
 }
