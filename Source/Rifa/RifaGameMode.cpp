@@ -78,11 +78,13 @@ void ARifaGameMode::EndLevelSequence()
 void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 {
 	Player->bIsDied = true;
+	Player->DisableInput(Cast<APlayerController>(Player->Controller));
 }
 
 void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
 {
 	Player->bIsDied = false;
+	Player->EnableInput(Cast<APlayerController>(Player->Controller));
 	if (!(GameInstanceReference->SavePosition == FVector(0, 0, 0))) 
 	{
 		Player->SetActorLocation(GameInstanceReference->SavePosition);
