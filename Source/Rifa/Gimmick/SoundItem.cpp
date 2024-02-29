@@ -7,6 +7,9 @@
 #include "Widget/PickupText.h"
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
 
 ASoundItem::ASoundItem()
 {
@@ -48,11 +51,25 @@ void ASoundItem::BeginPlay()
 			}
 		}
 	}
-} 
+}
+
+
 void ASoundItem::PickupSoundItemEvent()
 {
 	if (bIsInRange && !RifaGameInstance->SoundItemHavingMap[(Item)ThisSoundItemIndex])
 	{
+		if (!RifaGameInstance->LevelSequencePlayerArr[2])
+		{
+			if (LevelSequencActor) {
+				FMovieSceneSequencePlaybackParams Param;
+				FTimerHandle LevelSequenceTimer;
+				LevelSequencActor->SequencePlayer->SetPlaybackPosition(Param);
+				LevelSequencActor->SequencePlayer->Play();
+				GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASoundItem::OnEndLevelSequence, LevelSequencActor->SequencePlayer->GetDuration().AsSeconds(), false);
+				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+				CharacterReference->SetActorHiddenInGame(true);
+			}
+		}
 		RifaGameInstance->SoundItemHavingMap[(Item)ThisSoundItemIndex] = true;
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
@@ -60,4 +77,8 @@ void ASoundItem::PickupSoundItemEvent()
 	}
 }
 
-
+void ASoundItem::OnEndLevelSequence()
+{
+	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	CharacterReference->SetActorHiddenInGame(false);
+}

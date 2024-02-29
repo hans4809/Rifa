@@ -25,6 +25,8 @@
 #include "Widget/GameSettingWidget.h"
 #include "RifaGameMode.h"
 #include "Widget/GameHUD.h"
+#include "Components/SphereComponent.h"
+#include <Gimmick/WaterActor.h>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -34,6 +36,12 @@ ARifaCharacter::ARifaCharacter()
 {
 	bIsDied = false;
 	PrimaryActorTick.bCanEverTick = true;
+
+	HeadTrigger = CreateDefaultSubobject<USphereComponent>(TEXT("HeadTrigger"));
+	HeadTrigger->SetupAttachment(GetMesh(), TEXT("head_socket"));
+	HeadTrigger->SetSphereRadius(23.f);
+	HeadTrigger->SetCollisionProfileName(TEXT("Trigger"));
+
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -177,6 +185,8 @@ void ARifaCharacter::BeginPlay()
 			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
 	}
+
+	HeadTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacter::OnHeadOverlapped);
 	//if (IsValid(GameHUDWidgetClass))
 	//{
 	//	GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -631,7 +641,7 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 	if (RifaCharacterMovement->Velocity.Z <= -1000)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
-		if (!GameModeReference) 
+		if (GameModeReference) 
 		{
 			GameModeReference->PlayerDie(this);
 		}
@@ -639,6 +649,17 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 	else 
 	{
 		return;
+	}
+}
+
+void ARifaCharacter::OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<AWaterActor>(OtherActor)) 
+	{
+		if (GameModeReference)
+		{
+			GameModeReference->PlayerDie(this);
+		}
 	}
 }
 

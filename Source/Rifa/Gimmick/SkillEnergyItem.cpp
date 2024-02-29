@@ -109,7 +109,7 @@ void ASkillEnergyItem::PickupEnergyEvent()
 		PickupTextReference->RemoveFromParent();
 		SetActorEnableCollision(false);
 		Particle->SetActive(false);
-		if (!RifaGameInstance->LevelSequencePlayerArr[4])
+		if (!RifaGameInstance->LevelSequencePlayerArr[1])
 		{
 			if (LevelSequencActor) {
 				FMovieSceneSequencePlaybackParams Param;

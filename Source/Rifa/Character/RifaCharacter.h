@@ -51,7 +51,9 @@ class ARifaCharacter : public ACharacter, public IInteractionInterface
 
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
-	UPROPERTY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Trigget, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USphereComponent> HeadTrigger;
 	bool First = true;
 public:
 	ARifaCharacter();
@@ -211,5 +213,7 @@ public:
 	TObjectPtr<class ARifaGameMode> GameModeReference;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "State")
 	bool bIsDied;
+	UFUNCTION(BlueprintCallable)
+	void OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
 

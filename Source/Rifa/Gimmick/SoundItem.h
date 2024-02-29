@@ -24,6 +24,8 @@ public:
 	FString CustomActionText;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	TObjectPtr<UStaticMesh> CustomStaticMesh;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
+	TObjectPtr<class ALevelSequenceActor> LevelSequencActor;
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UNiagaraComponent> Particle;
@@ -36,4 +38,6 @@ protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item, meta = (AllowPrivateAccess = "true"))
 	FItemStruct ItemInfo;
+	UFUNCTION()
+	void OnEndLevelSequence();
 };
