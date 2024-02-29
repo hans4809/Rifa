@@ -1,11 +1,11 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "RifaGameMode.h"
-#include "RifaCharacter.h"
+#include "Character/RifaCharacter.h"
 #include "UObject/ConstructorHelpers.h"
-#include "GameHUD.h"
+#include "Widget/GameHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "MyGameInstance.h"
+#include "Data/MyGameInstance.h"
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"

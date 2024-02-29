@@ -2,9 +2,9 @@
 
 
 #include "MainGameMode.h"
-#include "RifaMainHUD.h"
+#include "Widget/RifaMainHUD.h"
 #include <Kismet/GameplayStatics.h>
-#include "BGMSoundActor.h"
+#include "Sound/BGMSoundActor.h"
 #include "Components/AudioComponent.h"
 
 void AMainGameMode::BeginPlay()
