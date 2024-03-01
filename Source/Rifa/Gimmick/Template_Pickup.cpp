@@ -41,7 +41,7 @@ void ATemplate_Pickup::BeginPlay()
 {
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex]) 
+	if (RifaGameInstance->SoundItemHavingMap[(EItem)ItemIndex]) 
 	{
 		Destroy();
 		return;
@@ -110,7 +110,7 @@ void ATemplate_Pickup::PickupItemEvent()
 {
 	if (GetActorEnableCollision() && IsInRange) 
 	{
-		RifaGameInstance->SoundItemHavingMap[(Item)ItemIndex] = true;
+		RifaGameInstance->SoundItemHavingMap[(EItem)ItemIndex] = true;
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		Destroy();

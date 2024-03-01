@@ -21,18 +21,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ButtonWasClicked_Event();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	UTexture2D* PickupImage;
+	TObjectPtr<UTexture2D> HavingImage;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	TObjectPtr<UTexture2D> DefaultImage;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	int InventorySlot;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	class UButton* ItemButton;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemData, meta = (AllowPrivateAccess = "true"))
-	FItemStruct ItemInfo;
+	TObjectPtr<class UButton> ItemButton;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SlotData, meta = (AllowPrivateAccess = "true"))
 	bool IsHave;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SlotData, meta = (AllowPrivateAccess = "true"))
 	bool BGM_On;
 protected:
-	virtual void NativeOnInitialized() override;
+	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 };

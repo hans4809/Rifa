@@ -29,7 +29,7 @@ public:
 	UPROPERTY(EditAnyWhere)
 	class UMyGameInstance* RifaGameInstance;
 	UPROPERTY()
-	TArray<Item> CheckArray;
+	TArray<EItem> CheckArray;
 	UPROPERTY()
 	USoundBase* SoundToPlay;
 	UPROPERTY(EditAnywhere)

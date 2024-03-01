@@ -82,74 +82,74 @@ void UBGMAudioComponent::BgmSetting()
     if (soundTrack == "Bgm1")
     {
         SoundToPlay = Sounds[0];
-        CheckArray = TArray<Item>{Item::Piano_1_Medium, 
-            Item::WindInstrument_1_Medium , 
-            Item::Bell_1_High , 
-            Item::Piano_1_High
+        CheckArray = TArray<EItem>{EItem::Piano_1_Medium, 
+            EItem::WindInstrument_1_Medium , 
+            EItem::Bell_1_High , 
+            EItem::Piano_1_High
         };
     }
     else if (soundTrack == "Bgm2")
     {
         SoundToPlay = Sounds[1];
-        CheckArray = TArray<Item>{ Item::StringInstrument_1_Medium,
-            Item::Piano_2_Low ,
-            Item::WindInstrument_2_Medium ,
-            Item::PercussionInstrument_1_Low,
-            Item::StringInstrument_2_Medium,
-            Item::Piano_2_High,
-            Item::StringInstrument_3_High,
-            Item::Bell_2_High
+        CheckArray = TArray<EItem>{ EItem::StringInstrument_1_Medium,
+            EItem::Piano_2_Low ,
+            EItem::WindInstrument_2_Medium ,
+            EItem::PercussionInstrument_1_Low,
+            EItem::StringInstrument_2_Medium,
+            EItem::Piano_2_High,
+            EItem::StringInstrument_3_High,
+            EItem::Bell_2_High
         };
     }
     else if (soundTrack == "Bgm3")
     {
         SoundToPlay = Sounds[2];
-        CheckArray = TArray<Item>{ Item::Piano_1_Medium,
-            Item::WindInstrument_1_Medium ,
-            Item::Bell_1_High ,
-            Item::Voice_1_Women
+        CheckArray = TArray<EItem>{ EItem::Piano_1_Medium,
+            EItem::WindInstrument_1_Medium ,
+            EItem::Bell_1_High ,
+            EItem::Voice_1_Women
         };
     }
     else if (soundTrack == "Bgm4")
     {
         SoundToPlay = Sounds[3];
-        CheckArray = TArray<Item>{ Item::WindInstrument_2_Medium,
-            Item::Voice_2_Men ,
-            Item::Piano_2_High ,
-            Item::StringInstrument_3_High ,
-            Item::Bell_2_High ,
-            Item::StringInstrument_4_High
+        CheckArray = TArray<EItem>{ EItem::WindInstrument_2_Medium,
+            EItem::Voice_2_Men ,
+            EItem::Piano_2_High ,
+            EItem::StringInstrument_3_High ,
+            EItem::Bell_2_High ,
+            EItem::StringInstrument_4_High
         };
     }
     else if (soundTrack == "Bgm5")
     {
         SoundToPlay = Sounds[4];
-        CheckArray = TArray<Item>{ Item::Piano_1_Medium,
-            Item::WindInstrument_1_Medium ,
-            Item::Piano_1_High
+        CheckArray = TArray<EItem>{ EItem::Piano_1_Medium,
+            EItem::WindInstrument_1_Medium ,
+            EItem::Piano_1_High
         };
     }
     else if (soundTrack == "Bgm6")
     {
         SoundToPlay = Sounds[5];
-        CheckArray = TArray<Item>{ Item::Voice_1_Women,
-            Item::WindInstrument_2_Medium ,
-            Item::Voice_2_Men ,
-            Item::PercussionInstrument_1_Low ,
-            Item::StringInstrument_2_Medium ,
-            Item::Bell_2_High ,
-            Item::PercussionInstrument_3_High
+        CheckArray = TArray<EItem>{ EItem::Voice_1_Women,
+            EItem::WindInstrument_2_Medium ,
+            EItem::Voice_2_Men ,
+            EItem::PercussionInstrument_1_Low ,
+            EItem::StringInstrument_2_Medium ,
+            EItem::Bell_2_High ,
+            EItem::PercussionInstrument_3_High
         };
     }
     else if (soundTrack == "Bgm7")
     {
         SoundToPlay = Sounds[6];
-        CheckArray = TArray<Item>{ Item::WindInstrument_1_Medium,
-            Item::Bell_1_High ,
-            Item::StringInstrument_1_Medium ,
-            Item::WindInstrument_2_Medium ,
-            Item::StringInstrument_2_Medium ,
-            Item::Piano_2_High
+        CheckArray = TArray<EItem>{ EItem::WindInstrument_1_Medium,
+            EItem::Bell_1_High ,
+            EItem::StringInstrument_1_Medium ,
+            EItem::WindInstrument_2_Medium ,
+            EItem::StringInstrument_2_Medium ,
+            EItem::Piano_2_High
         };
     }
 }
@@ -159,7 +159,7 @@ void UBGMAudioComponent::BgmRefresh()
     int cnt = 1;
     for (int i = 0; i < CheckArray.Num(); i++)
     {
-        if (RifaGameInstance->SoundItemHavingMap[CheckArray[i]])//RifaGameInstance->ItemMap[CheckArray[i]])
+        if (RifaGameInstance->SoundItemHavingMap[CheckArray[i]])//RifaGameInstance->EItemMap[CheckArray[i]])
         {
             Str = FString::Printf(TEXT("Num%d"), cnt);
             float a = 1.f;

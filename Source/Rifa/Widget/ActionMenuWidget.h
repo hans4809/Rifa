@@ -16,11 +16,13 @@ class RIFA_API UActionMenuWidget : public UUserWidget
 public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	int InventorySlot;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	bool IsOn;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<class UButton> OnButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<class UButton> OffButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	/*TObjectPtr<class UButton> OffButton;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))*/
 	TObjectPtr<class UButton> CancelButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;

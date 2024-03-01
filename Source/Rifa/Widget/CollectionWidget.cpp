@@ -18,7 +18,7 @@ void UCollectionWidget::NativeConstruct()
 		{
 			FString SlotName = FString::Printf(TEXT("Slot_%d"), i);
 			SlotArray.Add(Cast<UInventorySlot>(GetWidgetFromName(FName(SlotName))));
-			SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(Item)i];
+			SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(EItem)i];
 		}
 	}
 	if (IsValid(ActionMenuClass))
@@ -48,11 +48,11 @@ void UCollectionWidget::RefreshInventory_C()
 {
 	for (int i = 0; i < SlotArray.Num(); i++)
 	{
-		//SlotArray[i]->IsHave = RifaGameInstance->SoundItemMap[(Item)i];
-		SlotArray[i]->IsHave = true;
+		SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(EItem)i];
+		//SlotArray[i]->IsHave = true;
 		if (SlotArray[i]->IsHave)
 		{
-			SlotArray[i]->PickupImage = HavingImage;
+			SlotArray[i]->HavingImage = HavingImage;
 			if (DoOnce.Execute())
 			{
 				for (int j = 0; j < SlotArray.Num(); j++)
@@ -69,7 +69,14 @@ void UCollectionWidget::RefreshInventory_C()
 
 void UCollectionWidget::ButtonWasClicked_Evt(int SlotClicked)
 {
-	InventorySlotClicked = SlotClicked;
-	//ActionText = TEXT("BGM ON");
-	ActionMenuArray[InventorySlotClicked]->SetVisibility(ESlateVisibility::Visible);
+	if (!RifaGameInstance->SoundItemHavingMap[(EItem)SlotClicked])
+	{
+		return;
+	}
+	else 
+	{
+		InventorySlotClicked = SlotClicked;
+		ActionMenuArray[InventorySlotClicked]->SetVisibility(ESlateVisibility::Visible);
+	}
+
 }

@@ -9,8 +9,8 @@
  * 
  */
 
-UENUM()
-enum class Item : uint8
+UENUM(BlueprintType)
+enum class EItem : uint8
 {
 	Piano_1_Medium,
 	WindInstrument_1_Medium,
@@ -81,9 +81,9 @@ public:
 	FVector SavePosition;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> SoundItemHavingMap;
+	TMap <EItem, bool> SoundItemHavingMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
-	TMap <Item, bool> SoundItemOnOffMap;
+	TMap <EItem, bool> SoundItemOnOffMap;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;

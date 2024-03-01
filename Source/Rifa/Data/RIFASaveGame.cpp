@@ -8,10 +8,10 @@ URIFASaveGame::URIFASaveGame()
 	SavePosition = FVector(0, 0, 0);
 
 	//SoundItemMap = TMap<Item, bool>();
-	for (int i = 0; i < (int)Item::MaxCount; i++) 
+	for (int i = 0; i < (int)EItem::MaxCount; i++) 
 	{
-		SoundItemHavingMap.Add((Item)i, true);
-		SoundItemOnOffMap.Add((Item)i, true);
+		SoundItemHavingMap.Add((EItem)i, false);
+		SoundItemOnOffMap.Add((EItem)i, false);
 	}
 
 	bCanFly = false;

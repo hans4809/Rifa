@@ -6,13 +6,18 @@
 #include "Kismet/GameplayStatics.h"
 #include "Data/MyGameInstance.h"
 
-void UInventorySlot::NativeOnInitialized()
+void UInventorySlot::NativeConstruct()
 {
-	Super::NativeOnInitialized();
+	Super::NativeConstruct();
 	ItemButton = Cast<UButton>(GetWidgetFromName(TEXT("ItemButton")));
-	if (ItemButton->OnClicked.IsBound()) {
-		ItemButton->OnClicked.Clear();
+	if(IsValid(ItemButton)) 
+	{
+		if (ItemButton->OnClicked.IsBound()) 
+		{
+			ItemButton->OnClicked.Clear();
+		}
 	}
+	
 
 	ItemButton->OnClicked.AddDynamic(this, &UInventorySlot::ButtonWasClicked_Event);
 }

@@ -26,7 +26,7 @@ ASoundItem::ASoundItem()
 void ASoundItem::BeginPlay()
 {
 	Super::BeginPlay();
-	if (RifaGameInstance->SoundItemHavingMap[(Item)ThisSoundItemIndex])
+	if (RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex])
 	{
 		Destroy();
 		return;
@@ -56,7 +56,7 @@ void ASoundItem::BeginPlay()
 
 void ASoundItem::PickupSoundItemEvent()
 {
-	if (bIsInRange && !RifaGameInstance->SoundItemHavingMap[(Item)ThisSoundItemIndex])
+	if (bIsInRange && !RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex])
 	{
 		if (!RifaGameInstance->LevelSequencePlayerArr[2])
 		{
@@ -70,7 +70,7 @@ void ASoundItem::PickupSoundItemEvent()
 				CharacterReference->SetActorHiddenInGame(true);
 			}
 		}
-		RifaGameInstance->SoundItemHavingMap[(Item)ThisSoundItemIndex] = true;
+		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		Destroy();
