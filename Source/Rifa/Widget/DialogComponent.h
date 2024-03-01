@@ -4,12 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Gimmick/InteractionInterface.h"
 #include "DialogComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class RIFA_API UDialogComponent : public UActorComponent, public IInteractionInterface
+class RIFA_API UDialogComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -36,13 +35,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 #pragma region InterfaceFunction
-	// InteractionInterface 상속 때문에 override 선언
 	UFUNCTION()
-	virtual void UseAction() override;
-	UFUNCTION()
-	virtual void DropAction(AActor* DropToItem) override;
-	UFUNCTION()
-	virtual void OnInterAction(ARifaCharacter* InterActionCharacter) override;
+	void OnInterAction(ARifaCharacter* InterActionCharacter);
 #pragma endregion
 	UFUNCTION()
 	void OnExit();

@@ -7,7 +7,6 @@
 #include "Widget/PickupText.h"
 #include "Kismet/GameplayStatics.h"
 #include "Data/MyGameInstance.h"
-#include "RifaGameMode.h"
 #include "LevelSequence/LevelSequenceCharacterActor.h"
 #include "LevelScript/BaseLevelScriptActor.h"
 
@@ -39,8 +38,6 @@ void ARifaCharacterParts::BeginPlay()
 		Mesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
 		Mesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
 	}
-
-	RifaGameMode = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	CurrentLevelScriptActorReference = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 
 	if (IsValid(PickupTextClass))

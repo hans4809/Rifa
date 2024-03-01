@@ -5,13 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
-#include "Gimmick/InteractionInterface.h"
 #include "Data/MyGameInstance.h"
 #include "RifaCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDele_Dynamic);
 UCLASS(config=Game)
-class ARifaCharacter : public ACharacter, public IInteractionInterface
+class ARifaCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -111,41 +110,21 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UBGMAudioComponent* Bgm;
 	UFUNCTION()
-	FHitResult SwimCheck();
-	UFUNCTION()
 	void Die(AActor* trap);
 	UFUNCTION(BlueprintCallable)
 	void EnableMouseCursor();
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	class ARifaCharacterParts* CurrentHair;*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	EHairPartsItem ECurrentCharacterHairPart;
-	/*UFUNCTION(BlueprintCallable)
-	void ChangeHairPart();*/
 // Widget Part
 public:
-	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	//TSubclassOf<class USceneWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
-	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	//TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
-
-#pragma region InterfaceFunction
-	// InteractionInterface 상속 때문에 override 선언
-	UFUNCTION()
-	virtual void UseAction() override;
-	UFUNCTION()
-	virtual void DropAction(AActor* DropToItem) override;
-	UFUNCTION()
-	virtual void OnInterAction(ARifaCharacter* InterActionCharacter) override;
-#pragma endregion
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -153,8 +132,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 	UFUNCTION(BlueprintCallable)
 	void Fly();
-	UFUNCTION(BlueprintCallable)
-	void OpenAndCloseInventory();
+
 	UFUNCTION(BlueprintCallable)
 	void Swim();
 	UFUNCTION(BlueprintCallable)
@@ -165,10 +143,6 @@ protected:
 	void EndSwim();
 	UFUNCTION(BlueprintCallable)
 	void Interaction();
-	UFUNCTION(BlueprintCallable)
-	void Respawn();
-	UFUNCTION(BlueprintCallable)
-	void GameStart();
 	UFUNCTION(BlueprintCallable)
 	void Dash();
 	UFUNCTION(BlueprintCallable)
@@ -183,30 +157,15 @@ protected:
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
 	virtual void EndPlay(EEndPlayReason::Type) override;
-	//void OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	//UFUNCTION(BlueprintCallable)
-	//void EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 private:
 
 	UPROPERTY()
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
-	UPROPERTY()
-	FTimerHandle WidgetAnimTimer;
-	UFUNCTION()
-	void AnimTimerFunc();
-	UPROPERTY()
-	bool InventoryOpen = false;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = true))
-	TArray<IInteractionInterface*> InteractionInRange;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	/*UFUNCTION(BlueprintCallable)
-	FORCEINLINE UGameHUD* GetGameHUDReference() { return GameHUDWidget; }
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE ARifaHUD* GetRifaHUDReference() { return RifaHUD; }*/
 	UFUNCTION()
 	virtual void Landed(const FHitResult& Hit) override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")

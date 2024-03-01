@@ -10,7 +10,6 @@
 #include "Character/RifaCharacter.h"
 #include "Data/MyGameInstance.h"
 #include "Widget/GameHUD.h"
-#include "RifaGameMode.h"
 #include "LevelScript/BaseLevelScriptActor.h"
 
 // Sets default values

@@ -48,16 +48,6 @@ void UDialogComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UDialogComponent::UseAction()
-{
-	return;
-}
-
-void UDialogComponent::DropAction(AActor* DropToItem)
-{
-	return;
-}
-
 void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 {
 

@@ -18,12 +18,11 @@
 #include "Animation/WidgetAnimation.h"
 #include "Data/MyGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "Gimmick/WaterFallComponent.h"
 #include "Gimmick/RifaCharacterParts.h"
 #include "Sound/BGMAudioComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Widget/GameSettingWidget.h"
-#include "RifaGameMode.h"
+#include "Game/RifaGameMode.h"
 #include "Widget/GameHUD.h"
 #include "Components/SphereComponent.h"
 #include <Gimmick/WaterActor.h>
@@ -90,12 +89,6 @@ ARifaCharacter::ARifaCharacter()
 	WaterForcingVector = FVector(0, 0, 0);
 	FlyEnergyNum = 0;
 	SwimEnergyNum = 0;
-
-	//static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_GameHUD.WG_GameHUD_C'"));
-	//if (UW.Succeeded()) 
-	//{
-	//	GameHUDWidgetClass = UW.Class;
-	//}
 }
 
 float ARifaCharacter::GetFlyTime()
@@ -154,7 +147,6 @@ void ARifaCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
-	//CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket"));
 	GameModeReference = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
@@ -187,12 +179,7 @@ void ARifaCharacter::BeginPlay()
 	}
 
 	HeadTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacter::OnHeadOverlapped);
-	//if (IsValid(GameHUDWidgetClass))
-	//{
-	//	GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-	//	GameHUDWidgetAsset->Init();
-	//}
-	//Add Input Mapping Context
+
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -220,9 +207,6 @@ void ARifaCharacter::BeginPlay()
 		}
 	}
 	SwimEnergyPercent = MaxSwimEnergyPercent;
-
-	//GameStart();
-
 	Bgm->PlayBgm();	
 }
 
@@ -302,35 +286,6 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 	PickupItem.Clear();
 }
 
-//void ARifaCharacter::OnComponentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	if (Cast<IInteractionInterface>(OtherActor)) 
-//	{
-//		InteractionInRange.AddUnique(Cast<IInteractionInterface>(OtherActor));
-//	}
-//	else 
-//	{
-//		for (UActorComponent* var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
-//		{
-//			InteractionInRange.AddUnique(Cast<IInteractionInterface>(var));
-//		}
-//	}
-//}
-//
-//void ARifaCharacter::EndCompoenentOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-//{
-//	if (Cast<IInteractionInterface>(OtherActor))
-//	{
-//		InteractionInRange.Remove(Cast<IInteractionInterface>(OtherActor));
-//	}
-//	else
-//	{
-//		for (UActorComponent * var : OtherActor->GetComponentsByInterface(UInteractionInterface::StaticClass()))
-//		{
-//			InteractionInRange.Remove(Cast<IInteractionInterface>(var));
-//		}
-//	}
-//}
 
 void ARifaCharacter::Die(AActor* trap)
 {
@@ -339,45 +294,6 @@ void ARifaCharacter::Die(AActor* trap)
 
 	ATrap* Trap = Cast<ATrap>(trap);
 	Trap->isDie = false;
-}
-
-//void ARifaCharacter::Save()
-//{
-//	URIFASaveGame* NewPlayerData = NewObject<URIFASaveGame>();
-//	NewPlayerData->SavePosition = Position;
-//	NewPlayerData->ItemList = ItemList;
-//	NewPlayerData->SoundTrack = SoundTrack;
-//
-//	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
-//}
-
-//void ARifaCharacter::Load()
-//{
-//	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
-//	if (nullptr == RIFASaveGame)
-//	{
-//		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-//	}
-//	Position = RIFASaveGame->SavePosition;
-//	ItemList = RIFASaveGame->ItemList;
-//	SoundTrack = RIFASaveGame->SoundTrack;
-//}
-
-void ARifaCharacter::Respawn()
-{
-	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
-	{
-		//SetActorLocation(Position);
-	}
-}
-
-void ARifaCharacter::GameStart()
-{
-	//Load();
-	if (GetWorld()->GetFirstPlayerController()->GetPawn() == this)
-	{
-		//SetActorLocation(Position);
-	}
 }
 
 void ARifaCharacter::Dash()
@@ -403,52 +319,13 @@ void ARifaCharacter::Pause()
 void ARifaCharacter::EnableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
-	//if (RifaHUD != nullptr) {
-	//	RifaHUD->ShowCrossHair = false;
-	//}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = true;
 }
 
 void ARifaCharacter::DisableMouseCursor()
 {
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
-	//if (RifaHUD != nullptr) {
-	//	RifaHUD->ShowCrossHair = true;
-	//}
 	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
-}
-
-//void ARifaCharacter::ChangeHairPart()
-//{
-//	if (CurrentHair)
-//	{
-//		//auto tempMesh = CurrentHairMesh->GetSkeletalMeshAsset();
-//		//auto tempMaterial = CurrentHairMesh->GetSkeletalMeshAsset()->GetMaterials()[0].MaterialInterface;
-//		auto tempHairPart = CurrentHairPart;
-//		CurrentHairMesh->SetSkeletalMesh(CurrentHair->Mesh->GetSkeletalMeshAsset());
-//		RifaGameInstance->CurrentCharacterHairPart = CurrentHairPart;
-//		CurrentHairMesh->SetMaterial(0, CurrentHair->Mesh->GetMaterial(0));
-//		CurrentHair->Mesh->SetSkeletalMeshAsset(tempMesh);
-//		RifaGameInstance->CurrentHairPart[CurrentHair->ThisHairPart] = CurrentHair->Mesh->GetSkeletalMeshAsset();
-//		CurrentHair->Mesh->SetMaterial(0, tempMaterial);
-//	}
-//}
-
-
-
-void ARifaCharacter::UseAction()
-{
-	return;
-}
-
-void ARifaCharacter::DropAction(AActor* DropToItem)
-{
-	return;
-}
-
-void ARifaCharacter::OnInterAction(ARifaCharacter* InterActionCharacter)
-{
-	return;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -475,9 +352,6 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 		//Dash
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ARifaCharacter::Dash);
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ARifaCharacter::EndDash);
-		//PlayerInputComponent->BindAction(TEXT("Fly"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Fly);
-		//PlayerInputComponent->BindAction(TEXT("Swim"), EInputEvent::IE_Pressed, this, &ARifaCharacter::SwimCheck);
-		//PlayerInputComponent->BindAction(TEXT("Interaction"), EInputEvent::IE_Pressed, this, &ARifaCharacter::Interaction);
 	}
 
 }
@@ -487,10 +361,6 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	
-	if (InventoryOpen) {
-		return;
-	}
 	if (bIsWaterFall)
 	{
 		GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -507,7 +377,6 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		//UE_LOG(LogTemp, Log, TEXT("ForwardDierction : %s\n FowardVector : %s"), *ForwardDirection.ToString(), *GetActorForwardVector().ToString());
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -545,9 +414,6 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
-	if (InventoryOpen) {
-		return;
-	}
 	if (Controller != nullptr)
 	{
 		// add yaw and pitch input to controller
@@ -575,65 +441,6 @@ void ARifaCharacter::Fly()
 	}
 }
 
-void ARifaCharacter::OpenAndCloseInventory()
-{
-	/*if (GameHUDWidget->GetActivateInventory()) 
-	{
-		if (First) {
-			GameHUDWidget->SetInventoryVisible(ESlateVisibility::Visible);
-			First = false;
-			EnableMouseCursor();
-			GameHUDWidget->PlayAnimation(GameHUDWidget->MenuAnim);
-			InventoryOpen = true;
-		}
-		else {
-			GameHUDWidget->PlayAnimationReverse(GameHUDWidget->MenuAnim);
-			if(WidgetAnimTimer.IsValid())
-			{
-				GetWorld()->GetTimerManager().ClearTimer(WidgetAnimTimer);
-			}
-			GetWorld()->GetTimerManager().SetTimer(WidgetAnimTimer, this, &ARifaCharacter::AnimTimerFunc, GameHUDWidget->MenuAnim->GetEndTime(), false);
-		}
-	}*/
-}
-
-FHitResult ARifaCharacter::SwimCheck()
-{
-	FHitResult HitResult;
-	FCollisionQueryParams Params(NAME_None, false, this);
-	float CollisionRange = 1500.f;
-
-	bool bResult = GetWorld()->LineTraceSingleByChannel(
-		OUT HitResult,
-		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_GameTraceChannel1,
-		Params
-	);
-	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
-	DrawDebugLine(
-		GetWorld(),
-		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * CollisionRange,
-		DrawColor,
-		false,
-		2.f);
-	if (bResult)
-	{
-		for (auto obj : HitResult.GetActor()->GetComponents()) {
-		}
-		SwimStartLocation = HitResult.Location;
-	}
-	return HitResult;
-}
-
-void ARifaCharacter::AnimTimerFunc()
-{
-	/*GameHUDWidget->SetInventoryVisible(ESlateVisibility::Hidden);
-	DisableMouseCursor();
-	First = true;
-	InventoryOpen = false;*/
-}
 
 void ARifaCharacter::Landed(const FHitResult& Hit)
 {
@@ -669,25 +476,6 @@ void ARifaCharacter::Swim()
 	{
 		return;
 	}
-	//FHitResult HitResult = SwimCheck();
-	//if (HitResult.GetActor()->IsValidLowLevel() && HitResult.GetActor()->GetName().Contains(TEXT("Water"))) 
-	//{
-	//	bIsSwimming = true;
-	//	StartLocation = GetActorLocation();
-	//	if (HitResult.GetActor()->GetName().Contains(TEXT("WaterFall")))
-	//	{
-	//		bIsWaterFall = true;
-	//		AddActorWorldRotation(FRotator(0, 0, -90));
-	//		//SetActorLocation(SwimStartLocation + getactor * SwimHeight);
-	//	}
-	//	else 
-	//	{
-	//		SetActorLocation(SwimStartLocation + GetActorUpVector() * SwimHeight);
-	//	}
-	//	RifaCharacterMovement->bCheatFlying = true;
-	//	RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-	//	GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, ARifaCharacter::GetSwimTime(SwimEnergyValue), false);
-	//}
 	if (bCanSwim) 
 	{
 		bIsSwimming = true;
@@ -758,9 +546,6 @@ void ARifaCharacter::EndSwim()
 
 void ARifaCharacter::Interaction()
 {
-	if (InventoryOpen) {
-		return;
-	}
 	ASwitch* target = Cast<ASwitch>(InteractionTargetActor);
 	if (target == nullptr) 
 	{

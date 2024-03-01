@@ -32,8 +32,6 @@ public:
 	ECharacterMaterialItem ECurrentMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	TObjectPtr<UMyGameInstance> RifaGameInstance;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	TObjectPtr<class ARifaGameMode> RifaGameMode;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActorReference;
 	UFUNCTION(BlueprintCallable)

@@ -5,7 +5,7 @@
 #include "RifaCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include <Kismet/GameplayStatics.h>
-#include "RifaGameMode.h"
+#include "Game/RifaGameMode.h"
 
 
 void URifaAnimInstance::NativeBeginPlay()

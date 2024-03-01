@@ -2,8 +2,7 @@
 
 
 #include "MyGameInstance.h"
-#include "RifaGameMode.h"
-#include "RifaDataTable.h"
+#include "Game/RifaGameMode.h"
 #include "RIFASaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Texture2D.h"
