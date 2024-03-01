@@ -77,5 +77,6 @@ void AShrinItem::PickupShrineItem()
 				RifaGameInstance->bCanSwim = true;
 			}
 		}
+		Particle->SetActive(false);
 	}
 }

@@ -37,7 +37,7 @@ ARifaCharacter::ARifaCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HeadTrigger = CreateDefaultSubobject<USphereComponent>(TEXT("HeadTrigger"));
-	HeadTrigger->SetupAttachment(GetMesh(), TEXT("head_socket"));
+	HeadTrigger->SetupAttachment(RootComponent);
 	HeadTrigger->SetSphereRadius(23.f);
 	HeadTrigger->SetCollisionProfileName(TEXT("Trigger"));
 
@@ -479,7 +479,7 @@ void ARifaCharacter::Swim()
 	if (bCanSwim) 
 	{
 		bIsSwimming = true;
-		StartLocation = GetActorLocation();
+		StartLocation = (GetActorLocation() - GetActorForwardVector() * 50);
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
 		//RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
