@@ -33,10 +33,6 @@ void ASoundItem::BeginPlay()
 	}
 	else
 	{
-		ItemInfo.ItemActor = Cast<AActor>(this);
-		ItemInfo.ItemImage = CustomImage;
-		ItemInfo.ItemName = CustomItemName;
-		//Mesh->SetStaticMesh(CustomStaticMesh);
 		if (IsValid(PickupTextClass))
 		{
 			if (IsValid(PickupTextReference))
