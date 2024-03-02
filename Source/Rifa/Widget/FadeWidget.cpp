@@ -13,7 +13,6 @@ void UFadeWidget::NativeConstruct()
 	BindToAnimationFinished(FadeIn, EndDelegate);
 }
 
-
 void UFadeWidget::AnimationFinished()
 {
 	auto Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
@@ -21,4 +20,5 @@ void UFadeWidget::AnimationFinished()
 	{
 		Player->EnableInput(Cast<APlayerController>(Player->Controller));
 	}
+	CloseWidget();
 }

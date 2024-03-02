@@ -91,14 +91,22 @@ void ARifaGameMode::EndLevelSequence()
 void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 {
 	Player->bIsDied = true;
-	FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeOut);
+	if (IsValid(FadeWidgetReference))
+	{
+		FadeWidgetReference->Init();
+		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeOut);
+	}
 	Player->DisableInput(Cast<APlayerController>(Player->Controller));
 }
 
 void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
 {
 	Player->bIsDied = false;
-	FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeIn);
+	if (IsValid(FadeWidgetReference))
+	{
+		FadeWidgetReference->Init();
+		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeIn);
+	}
 	//Player->EnableInput(Cast<APlayerController>(Player->Controller));
 	if (!(GameInstanceReference->SavePosition == FVector(0, 0, 0))) 
 	{
