@@ -17,10 +17,14 @@ public:
 	void PlayerDie(class ARifaCharacter* Player);
 	UFUNCTION(BlueprintCallable)
 	void PlayerRespawn(class ARifaCharacter* Player);
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget)
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget)
 	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Widget)
+	TSubclassOf<class UUserWidget> FadeWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Widget)
+	TObjectPtr<class UFadeWidget> FadeWidgetReference;
 protected:
 	virtual void BeginPlay();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")

@@ -36,10 +36,10 @@ void UGameSettingWidget::Init()
 
 void UGameSettingWidget::CloseWidget()
 {
-	Super::CloseWidget();
 	APlayerController* Controller = Cast<APlayerController>(Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetController());
 	Controller->SetInputMode(FInputModeGameOnly());
 	Controller->bShowMouseCursor = false;
+	Super::CloseWidget();
 	//UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
 
