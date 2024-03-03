@@ -27,21 +27,11 @@ void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
-	Trigger->OnComponentEndOverlap.AddDynamic(this, &ALevelSequencePlayActor::EndCharacterOverlap);
 }
-
-// Called every frame
-void ALevelSequencePlayActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-
 
 void ALevelSequencePlayActor::PlayLevelSequence()
 {
-	if (bCanPlayLevelSequence && !RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
+	if (!RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
 	{
 		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
 		{
@@ -79,28 +69,9 @@ void ALevelSequencePlayActor::EndLevelSequence()
 void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (ThisLevelSequenceType == ELevelSequenceType::Trigger)
+	if (Cast<class ARifaCharacter>(OtherActor))
 	{
-		if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
-		{
-			bCanPlayLevelSequence = true;
-			PlayLevelSequence();
-		}
-	}
-	else
-	{
-		if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
-		{
-			bCanPlayLevelSequence = true;
-		}
+		PlayLevelSequence();
 	}
 }
 
-void ALevelSequencePlayActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	Super::EndCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex);
-	if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
-	{
-		bCanPlayLevelSequence = false;
-	}
-}

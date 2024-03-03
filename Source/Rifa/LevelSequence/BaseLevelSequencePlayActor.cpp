@@ -54,26 +54,11 @@ void ABaseLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overla
 	}
 }
 
-void ABaseLevelSequencePlayActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (Cast<class ARifaCharacter>(OtherActor) && GetActorEnableCollision())
-	{
-		bCanPlayLevelSequence = false;
-	}
-}
-
 void ABaseLevelSequencePlayActor::PlayLevelSequence()
 {
 }
 
 void ABaseLevelSequencePlayActor::EndLevelSequence()
 {
-}
-
-// Called every frame
-void ABaseLevelSequencePlayActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 

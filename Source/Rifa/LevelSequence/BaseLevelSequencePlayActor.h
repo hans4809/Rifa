@@ -22,8 +22,6 @@ class RIFA_API ABaseLevelSequencePlayActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABaseLevelSequencePlayActor();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
-	bool bCanPlayLevelSequence;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
 	int32 ThisLevelSequenceIndex;
 protected:
@@ -38,14 +36,9 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ULevelSequencePlayer> LevelSequencePlayer;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	ELevelSequenceType ThisLevelSequenceType;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UFUNCTION(BlueprintCallable)
-	virtual void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION(BlueprintCallable)
-	virtual void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	virtual void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
@@ -53,8 +46,4 @@ protected:
 	virtual void PlayLevelSequence();
 	UFUNCTION(BlueprintCallable)
 	virtual void EndLevelSequence();
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

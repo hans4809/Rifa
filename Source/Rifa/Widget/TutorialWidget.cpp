@@ -25,7 +25,8 @@ void UTutorialWidget::NativeConstruct()
 		if (IsValid(TutorialTexture))
 		{
 			TutorialImage->SetBrushFromTexture(TutorialTexture);
-			TutorialImage->SetBrushSize(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
+			//TutorialImage->SetBrushSize(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
+			TutorialImage->SetDesiredSizeOverride(FVector2D(TutorialTexture->GetSizeX(), TutorialTexture->GetSizeY()));
 		}
 	}
 }

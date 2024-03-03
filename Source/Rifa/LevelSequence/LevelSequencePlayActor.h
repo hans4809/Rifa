@@ -24,8 +24,4 @@ protected:
 	virtual void PlayLevelSequence() override;
 	virtual void EndLevelSequence() override;
 	virtual void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	virtual void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 };
