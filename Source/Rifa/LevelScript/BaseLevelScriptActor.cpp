@@ -30,4 +30,12 @@ void ABaseLevelScriptActor::BeginPlay()
 	Super::BeginPlay();
 	RifaGameInstanceReference = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (IsValid(GameHUDWidgetClass))
+	{
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if (IsValid(GameHUDWidgetAsset))
+		{
+			GameHUDWidgetAsset->Init();
+		}
+	}
 }

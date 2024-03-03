@@ -13,6 +13,8 @@
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include "Components/SphereComponent.h"
 
 ASkillItem::ASkillItem()
 {
@@ -33,6 +35,7 @@ void ASkillItem::BeginPlay()
 			if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex])
 			{
 				Particle->SetActive(false);
+				Trigger->DestroyComponent();
 			}
 			break;
 		case EEnergyType::Fly:
@@ -40,6 +43,7 @@ void ASkillItem::BeginPlay()
 			if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
 			{
 				Particle->SetActive(false);
+				Trigger->DestroyComponent();
 			}
 			break;
 		}
@@ -85,9 +89,16 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				else
 				{
-					if (RifaGameInstance->LevelSequencePlayerArr[8]) 
+					if (CharacterReference->SwimEnergyNum < 5)
 					{
-						if (!(LevelSequenceActor)) 
+						CharacterReference->SwimEnergyNum++;
+						CharacterReference->MaxSwimEnergyPercent += 0.2f;
+						RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
+						CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
+					}
+					if (!RifaGameInstance->LevelSequencePlayerArr[1]) 
+					{
+						if (LevelSequenceActor) 
 						{
 							auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 							if (IsValid(CurrentLevelScriptActor))
@@ -95,7 +106,7 @@ void ASkillItem::PickupEnergyEvent()
 								FTimerHandle LevelSequenceTimer;
 								FMovieSceneSequencePlaybackParams Param;
 								CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-								CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+								//CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
 								auto LevelSequncePlayer = LevelSequenceActor->SequencePlayer.Get();
 								LevelSequncePlayer->SetPlaybackPosition(Param);
 								LevelSequncePlayer->Play();
@@ -104,17 +115,12 @@ void ASkillItem::PickupEnergyEvent()
 
 						}
 					}
-					if (CharacterReference->SwimEnergyNum < 5)
-					{
-						CharacterReference->SwimEnergyNum++;
-						CharacterReference->MaxSwimEnergyPercent += 0.2f;
-						RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
-						CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
-					}
 				}
 				break;
 		}
 		Particle->SetActive(false);
+		Trigger->DestroyComponent();
+		PickupTextReference->CloseWidget();
 	}
 }
 
@@ -122,11 +128,14 @@ void ASkillItem::EndLevelSequence()
 {
 	if (IsValid(CharacterReference)) {
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		if (IsValid(CurrentLevelScriptActor))
 		{
+			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			{
+				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+			}
 			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		Destroy();
 	}
 }

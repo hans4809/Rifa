@@ -6,6 +6,7 @@
 #include "Widget/PickupText.h"
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
+#include "Data/MyGameInstance.h"
 
 // Sets default values
 AWaterActor::AWaterActor()
@@ -22,18 +23,6 @@ AWaterActor::AWaterActor()
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 }
 
-void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	CharacterReference->bCanSwim = true;
-	PickupTextReference->AddToViewport();
-}
-
-void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	CharacterReference->bCanSwim = false;
-	PickupTextReference->RemoveFromParent();
-}
-
 // Called when the game starts or when spawned
 void AWaterActor::BeginPlay()
 {
@@ -47,10 +36,6 @@ void AWaterActor::BeginPlay()
 			PickupTextReference->ViewPortPosition = Trigger->GetComponentLocation() + FVector(0, 0, 50);
 			PickupTextReference->PickupText = FString(TEXT("Click LeftMouseButton"));
 			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			/*if (CharacterReference->PickupItem.IsBound()) {
-				CharacterReference->PickupItem.Clear();
-			}*/
-			//CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
 		}
 	}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterActor::OnCharacterOverlap);
@@ -65,3 +50,27 @@ void AWaterActor::Tick(float DeltaTime)
 
 }
 
+void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (UMyGameInstance* RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
+	{
+		if (RifaGameInstance->bCanSwim)
+		{
+			CharacterReference->bCanSwim = true;
+			PickupTextReference->AddToViewport();
+		}
+	}
+
+}
+
+void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (UMyGameInstance* RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
+	{
+		if (RifaGameInstance->bCanSwim)
+		{
+			CharacterReference->bCanSwim = false;
+			PickupTextReference->RemoveFromParent();
+		}
+	}
+}

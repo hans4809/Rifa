@@ -10,6 +10,9 @@
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
+#include <LevelScript/IslandLevelScriptActor.h>
+#include "Widget/GameHUD.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 ASoundItem::ASoundItem()
 {
@@ -57,13 +60,19 @@ void ASoundItem::PickupSoundItemEvent()
 		if (!RifaGameInstance->LevelSequencePlayerArr[2])
 		{
 			if (LevelSequencActor) {
-				FMovieSceneSequencePlaybackParams Param;
-				FTimerHandle LevelSequenceTimer;
-				LevelSequencActor->SequencePlayer->SetPlaybackPosition(Param);
-				LevelSequencActor->SequencePlayer->Play();
-				GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASoundItem::OnEndLevelSequence, LevelSequencActor->SequencePlayer->GetDuration().AsSeconds(), false);
-				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-				CharacterReference->SetActorHiddenInGame(true);
+				auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+				if (IsValid(CurrentLevelScriptActor))
+				{
+					FTimerHandle LevelSequenceTimer;
+					FMovieSceneSequencePlaybackParams Param;
+					CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+					//CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+					UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+					auto LevelSequncePlayer = LevelSequencActor->SequencePlayer.Get();
+					LevelSequncePlayer->SetPlaybackPosition(Param);
+					LevelSequncePlayer->Play();
+					GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASoundItem::OnEndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
+				}
 			}
 		}
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
@@ -75,6 +84,16 @@ void ASoundItem::PickupSoundItemEvent()
 
 void ASoundItem::OnEndLevelSequence()
 {
-	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	CharacterReference->SetActorHiddenInGame(false);
+	if (IsValid(CharacterReference)) 
+	{
+		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+		if (IsValid(CurrentLevelScriptActor))
+		{
+			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			{
+				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+			}
+		}
+		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	}
 }

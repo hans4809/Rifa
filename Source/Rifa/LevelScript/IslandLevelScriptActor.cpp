@@ -25,22 +25,14 @@ void AIslandLevelScriptActor::BeginPlay()
 		if (IsValid(FirstLevelSequenceActor)) 
 		{
 			FTimerHandle SequenceTimer;
+			if (GameHUDWidgetAsset) 
+			{
+				GameHUDWidgetAsset->CloseWidget();
+			}
 			FirstLevelSequenceActor->SequencePlayer->Play();
 			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(),false);
 		}
 	}
-	else
-	{
-		if (IsValid(GameHUDWidgetClass))
-		{
-			GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-			if (IsValid(GameHUDWidgetAsset))
-			{
-				GameHUDWidgetAsset->Init();
-			}
-		}
-	}
-
 }
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()

@@ -18,32 +18,24 @@ AFieldLevelScriptActor::AFieldLevelScriptActor()
 void AFieldLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if (!RifaGameInstanceReference->LevelSequencePlayerArr[3])
+	if (!RifaGameInstanceReference->LevelSequencePlayerArr[4])
 	{
 		if (IsValid(LevelSequenceActor))
 		{
 			FTimerHandle SequenceTimer;
+			if (GameHUDWidgetAsset)
+			{
+				GameHUDWidgetAsset->CloseWidget();
+			}
 			LevelSequenceActor->SequencePlayer->Play();
 			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 		}
 	}
-	else
-	{
-		if (IsValid(GameHUDWidgetClass))
-		{
-			GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-			if (IsValid(GameHUDWidgetAsset))
-			{
-				GameHUDWidgetAsset->Init();
-			}
-		}
-	}
-
 }
 
 void AFieldLevelScriptActor::OnFinishedLevelSequence()
 {
-	RifaGameInstanceReference->LevelSequencePlayerArr[3] = true;
+	RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));

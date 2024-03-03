@@ -26,14 +26,6 @@ ABaseLevelSequencePlayActor::ABaseLevelSequencePlayActor()
 void ABaseLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	FMovieSceneSequencePlaybackSettings Settings;
-	if (LevelSequenceActor)
-	{
-		LevelSequence = LevelSequenceActor->LevelSequenceAsset;
-		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
-	}
-
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
@@ -43,6 +35,13 @@ void ABaseLevelSequencePlayActor::BeginPlay()
 			Destroy();
 		}
 	}
+
+	if (LevelSequenceActor)
+	{
+		LevelSequence = LevelSequenceActor->LevelSequenceAsset;
+		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
+	}
+
 }
 void ABaseLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

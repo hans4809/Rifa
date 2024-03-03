@@ -8,6 +8,9 @@
 #include "GraphicSettingWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Character/RifaCharacter.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include <LevelScript/IslandLevelScriptActor.h>
+#include "Widget/GameHUD.h"
 
 void UGameSettingWidget::NativeConstruct()
 {
@@ -19,7 +22,7 @@ void UGameSettingWidget::NativeConstruct()
 	SaveButton = Cast<UButton>(GetWidgetFromName(TEXT("SaveButton")));
 	MainButton = Cast<UButton>(GetWidgetFromName(TEXT("MainButton")));
 
-	ReturnButton->OnClicked.AddDynamic(this, &UGameSettingWidget::CloseWidget);
+	ReturnButton->OnClicked.AddDynamic(this, &UGameSettingWidget::ReturnButtonClicked);
 	SoundButton->OnClicked.AddDynamic(this, &UGameSettingWidget::SoundButtonClicked);
 	GraphicButton->OnClicked.AddDynamic(this, &UGameSettingWidget::GraphicButtonClicked);
 	ControlButton->OnClicked.AddDynamic(this, &UGameSettingWidget::InputButtonClicked);
@@ -36,11 +39,23 @@ void UGameSettingWidget::Init()
 
 void UGameSettingWidget::CloseWidget()
 {
+	Super::CloseWidget();
+	//UGameplayStatics::SetGamePaused(GetWorld(), false);
+}
+
+void UGameSettingWidget::ReturnButtonClicked()
+{
 	APlayerController* Controller = Cast<APlayerController>(Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetController());
 	Controller->SetInputMode(FInputModeGameOnly());
 	Controller->bShowMouseCursor = false;
-	Super::CloseWidget();
-	//UGameplayStatics::SetGamePaused(GetWorld(), false);
+	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+	if (auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AIslandLevelScriptActor::StaticClass())))
+	{
+		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		{
+			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+		}
+	}
 }
 
 void UGameSettingWidget::SoundButtonClicked()

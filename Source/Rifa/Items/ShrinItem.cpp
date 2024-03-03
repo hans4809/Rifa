@@ -7,6 +7,7 @@
 #include "NiagaraComponent.h"
 #include "Widget/PickupText.h"
 #include <Kismet/GameplayStatics.h>
+#include "Components/SphereComponent.h"
 
 
 AShrinItem::AShrinItem()
@@ -30,12 +31,14 @@ void AShrinItem::BeginPlay()
 		if(RifaGameInstance->bCanSwim)
 		{
 			Particle->SetActive(false);
+			Trigger->DestroyComponent();
 		}
 		break;
 	case EEnergyType::Fly:
 		if (RifaGameInstance->bCanFly)
 		{
 			Particle->SetActive(false);
+			Trigger->DestroyComponent();
 		}
 		break;
 	}
@@ -78,5 +81,6 @@ void AShrinItem::PickupShrineItem()
 			}
 		}
 		Particle->SetActive(false);
+		Trigger->DestroyComponent();
 	}
 }

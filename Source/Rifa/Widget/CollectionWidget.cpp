@@ -49,10 +49,8 @@ void UCollectionWidget::RefreshInventory_C()
 	for (int i = 0; i < SlotArray.Num(); i++)
 	{
 		SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(EItem)i];
-		//SlotArray[i]->IsHave = true;
 		if (SlotArray[i]->IsHave)
 		{
-			SlotArray[i]->HavingImage = HavingImage;
 			if (DoOnce.Execute())
 			{
 				for (int j = 0; j < SlotArray.Num(); j++)

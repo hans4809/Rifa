@@ -19,6 +19,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 	UFUNCTION(BlueprintCallable)
+	void ReturnButtonClicked();
+	UFUNCTION(BlueprintCallable)
 	void SoundButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void GraphicButtonClicked();
