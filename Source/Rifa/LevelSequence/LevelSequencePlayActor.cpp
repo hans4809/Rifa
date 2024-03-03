@@ -45,9 +45,12 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 	{
 		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
 		{
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			if (IsValid(CurrentLevelScriptActor))
 			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+				if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset)) 
+				{
+					CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+				}
 			}
 			CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 			FTimerHandle LevelSequenceTimer;
