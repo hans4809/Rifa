@@ -28,30 +28,30 @@ public:
 	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UBoxComponent* Trigger;
+	TObjectPtr<class UBoxComponent> Trigger;
 	UPROPERTY(EditAnywhere, Category = "Etc")
-	USceneComponent* end;
+	TObjectPtr<USceneComponent> End;
 
 	UPROPERTY(EditAnywhere, Category = "Variable")
-		float StartDegree;
+	float StartDegree;
 	UPROPERTY(EditAnywhere, Category = "Variable")
-		float EndDegree;
+	float EndDegree;
 
 	UPROPERTY()
-		bool IsChangeStart;
+	bool bIsChangeStart;
 
 	UPROPERTY()
-		AActor* player;
+	TObjectPtr<class ARifaCharacter> Player;
 
 	UPROPERTY()
-		float MaxDistance;
+	float MaxDistance;
 
 	UPROPERTY()
-		float Distance;
+	float Distance;
 
 	UPROPERTY(EditAnywhere)
-		AActor* light;
+	AActor* Light;
 		
 	UPROPERTY(EditAnywhere)
-		FRotator lightDefault;
+	FRotator LightDefaultRotation;
 };
