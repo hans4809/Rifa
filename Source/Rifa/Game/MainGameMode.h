@@ -14,7 +14,11 @@ class RIFA_API AMainGameMode : public AGameMode
 {
 	GENERATED_BODY()
 public:
-
+	AMainGameMode();
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class USceneWidget> MainHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	class URifaMainHUD* MainHUDWidgetAsset;
 protected:
 	virtual void BeginPlay();
 };

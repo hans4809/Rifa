@@ -18,19 +18,31 @@ AFieldLevelScriptActor::AFieldLevelScriptActor()
 void AFieldLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if (!RifaGameInstanceReference->LevelSequencePlayerArr[4])
+
+	if (RifaGameInstanceReference) 
 	{
-		if (IsValid(LevelSequenceActor))
+		if (!RifaGameInstanceReference->LevelSequencePlayerArr[4])
 		{
-			FTimerHandle SequenceTimer;
-			if (GameHUDWidgetAsset)
+			if (IsValid(LevelSequenceActor))
 			{
-				GameHUDWidgetAsset->CloseWidget();
+				FTimerHandle SequenceTimer;
+				if (GameHUDWidgetAsset)
+				{
+					GameHUDWidgetAsset->CloseWidget();
+				}
+				LevelSequenceActor->SequencePlayer->Play();
+				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 			}
-			LevelSequenceActor->SequencePlayer->Play();
-			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
+		}
+		if (CharacterReference) 
+		{
+			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
+			{
+				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+			}
 		}
 	}
+
 }
 
 void AFieldLevelScriptActor::OnFinishedLevelSequence()

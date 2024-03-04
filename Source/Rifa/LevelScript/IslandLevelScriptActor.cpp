@@ -20,19 +20,30 @@ void AIslandLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!RifaGameInstanceReference->LevelSequencePlayerArr[0]) 
+	if (RifaGameInstanceReference) 
 	{
-		if (IsValid(FirstLevelSequenceActor)) 
+		if (!RifaGameInstanceReference->LevelSequencePlayerArr[0])
 		{
-			FTimerHandle SequenceTimer;
-			if (GameHUDWidgetAsset) 
+			if (IsValid(FirstLevelSequenceActor))
 			{
-				GameHUDWidgetAsset->CloseWidget();
+				FTimerHandle SequenceTimer;
+				if (GameHUDWidgetAsset)
+				{
+					GameHUDWidgetAsset->CloseWidget();
+				}
+				FirstLevelSequenceActor->SequencePlayer->Play();
+				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 			}
-			FirstLevelSequenceActor->SequencePlayer->Play();
-			GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(),false);
+		}
+		if (CharacterReference) 
+		{
+			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
+			{
+				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+			}
 		}
 	}
+	
 }
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()

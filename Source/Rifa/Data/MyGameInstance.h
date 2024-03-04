@@ -96,6 +96,8 @@ public:
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	EHairPartsItem ECurrentCharacterHairPart;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	FName CurrentLevelName;
 //InGame Data Section
 public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")

@@ -47,6 +47,7 @@ void AMaterailItem::PickupCharacterMaterial()
 		if (CharacterReference->ECurrentCharacterHairPart == EHairPartsItem::Default)
 		{
 			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
-		}
+		}		
+		RifaGameInstance->Save();
 	}
 }

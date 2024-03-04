@@ -75,6 +75,7 @@ void AHairpartItem::PickupCharacterParts()
 		{
 			CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
+		RifaGameInstance->Save();
 	}
 
 }

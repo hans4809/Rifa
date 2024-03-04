@@ -50,4 +50,6 @@ public:
 	bool bCanFly;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bCanSwim;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	FName CurrentLevelName;
 };

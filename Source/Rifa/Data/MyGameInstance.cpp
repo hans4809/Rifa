@@ -65,6 +65,7 @@ void UMyGameInstance::Save()
 	NewPlayerData->IsTutorialFinishedMap = IsTutorialFinishedMap;
 	NewPlayerData->bCanFly = bCanFly;
 	NewPlayerData->bCanSwim = bCanSwim;
+	NewPlayerData->CurrentLevelName = CurrentLevelName;
 	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
@@ -89,6 +90,11 @@ void UMyGameInstance::Load()
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 	bCanFly = RIFASaveGame->bCanFly;
 	bCanSwim = RIFASaveGame->bCanSwim;
+	CurrentLevelName = RIFASaveGame->CurrentLevelName;
+	if (CurrentLevelName == TEXT("MainMenu"))
+	{
+		CurrentLevelName = "Island";
+	}
 }
 
 void UMyGameInstance::Init()

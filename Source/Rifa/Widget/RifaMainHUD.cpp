@@ -7,6 +7,7 @@
 #include "Sound/SoundBase.h"
 #include "Sound/SoundCue.h"
 #include <Kismet/GameplayStatics.h>
+#include <Data/MyGameInstance.h>
 
 void URifaMainHUD::NativeConstruct()
 {
@@ -36,5 +37,10 @@ void URifaMainHUD::SettingButtonClicked()
 
 void URifaMainHUD::LoadButtonClicked()
 {
-	UGameplayStatics::OpenLevel(this, TEXT("Island"));
+	auto GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (GameInstance) 
+	{
+		FName LevelName = GameInstance->CurrentLevelName;
+		UGameplayStatics::OpenLevel(this, LevelName);
+	}
 }
