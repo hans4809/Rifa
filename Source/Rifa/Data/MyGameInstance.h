@@ -134,6 +134,9 @@ public:
 
 	UFUNCTION()
 	void Load();
+
+	UFUNCTION()
+	void ResetSaveData();
 	virtual void Init() override;
 	virtual void Shutdown() override;
 };

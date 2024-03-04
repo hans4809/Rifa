@@ -97,6 +97,30 @@ void UMyGameInstance::Load()
 	}
 }
 
+void UMyGameInstance::ResetSaveData()
+{
+	URIFASaveGame* RIFASaveGame = GetMutableDefault<URIFASaveGame>();
+	SavePosition = RIFASaveGame->SavePosition;
+	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
+	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
+	SoundTrack = RIFASaveGame->SoundTrack;
+	FlyItemArr = RIFASaveGame->FlyItemArr;
+	SwimItemArr = RIFASaveGame->SwimItemArr;
+	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
+	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
+	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
+	ECurrentCharacterMaterial = RIFASaveGame->ECurrentCharacterMaterial;
+	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
+	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
+	bCanFly = RIFASaveGame->bCanFly;
+	bCanSwim = RIFASaveGame->bCanSwim;
+	CurrentLevelName = RIFASaveGame->CurrentLevelName;
+	if (CurrentLevelName == TEXT("MainMenu"))
+	{
+		CurrentLevelName = "Island";
+	}
+}
+
 void UMyGameInstance::Init()
 {
 	Super::Init();

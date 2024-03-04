@@ -82,8 +82,6 @@ protected:
 	//TObjectPtr<class UInventorySlot> Slot_14;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Collection", meta = (AllowPrivateAccess = true))
 	TArray<TObjectPtr<class UInventorySlot>> SlotArray;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Collection", meta = (AllowPrivateAccess = true))
-	UTexture2D* HavingImage;
 //ActionMenu Reference
 protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)

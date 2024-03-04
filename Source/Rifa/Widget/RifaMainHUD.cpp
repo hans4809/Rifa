@@ -16,6 +16,9 @@ void URifaMainHUD::NativeConstruct()
 	LoadButton = Cast<UButton>(GetWidgetFromName(TEXT("LoadButton")));
 	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
 	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));
+
+	ResetButton->OnClicked.AddDynamic(this, &URifaMainHUD::ResetButtonClicked);
+	QuitButton->OnClicked.AddDynamic(this, &URifaMainHUD::QuitButtonClicked);
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
 	LoadButton->OnClicked.AddDynamic(this, &URifaMainHUD::LoadButtonClicked);
 	PlaySound(MainBGM);
@@ -42,5 +45,25 @@ void URifaMainHUD::LoadButtonClicked()
 	{
 		FName LevelName = GameInstance->CurrentLevelName;
 		UGameplayStatics::OpenLevel(this, LevelName);
+	}
+}
+
+void URifaMainHUD::ResetButtonClicked()
+{
+	auto GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (GameInstance)
+	{
+		GameInstance->ResetSaveData();
+		FName LevelName = GameInstance->CurrentLevelName;
+		UGameplayStatics::OpenLevel(this, LevelName);
+	}
+}
+
+void URifaMainHUD::QuitButtonClicked()
+{
+	auto PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (PlayerController)
+	{
+		PlayerController->ConsoleCommand("quit");
 	}
 }

@@ -37,4 +37,8 @@ public:
 	void SettingButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void LoadButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void ResetButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void QuitButtonClicked();
 };
