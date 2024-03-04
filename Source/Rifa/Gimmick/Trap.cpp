@@ -35,5 +35,4 @@ void ATrap::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComp
 	isDie = true;
 
 	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(Other);
-	RifaCharacter->Die(this);
 }

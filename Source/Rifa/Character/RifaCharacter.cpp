@@ -286,16 +286,6 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 	PickupItem.Clear();
 }
 
-
-void ARifaCharacter::Die(AActor* trap)
-{
-	//SetActorLocation(Position);
-	UE_LOG(LogTemp, Log, TEXT("Die"));
-
-	ATrap* Trap = Cast<ATrap>(trap);
-	Trap->isDie = false;
-}
-
 void ARifaCharacter::Dash()
 {
 	RifaCharacterMovement->MaxWalkSpeed = 1000.f;
@@ -314,18 +304,6 @@ void ARifaCharacter::Pause()
 		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
 		GameSettingWidgetAsset->Init();
 	}
-}
-
-void ARifaCharacter::EnableMouseCursor()
-{
-	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameAndUI());
-	Cast<APlayerController>(Controller)->bShowMouseCursor = true;
-}
-
-void ARifaCharacter::DisableMouseCursor()
-{
-	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
-	Cast<APlayerController>(Controller)->bShowMouseCursor = false;
 }
 
 //////////////////////////////////////////////////////////////////////////

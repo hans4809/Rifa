@@ -10,6 +10,7 @@
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include "Widget/FadeWidget.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 ARifaGameMode::ARifaGameMode()
@@ -102,13 +103,14 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
 {
 	Player->bIsDied = false;
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 	if (IsValid(FadeWidgetReference))
 	{
 		FadeWidgetReference->Init();
 		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeIn);
 	}
 	//Player->EnableInput(Cast<APlayerController>(Player->Controller));
-	if (!(GameInstanceReference->SavePosition == FVector(0, 0, 0))) 
+	if (GameInstanceReference->SavePosition != FVector(0, 0, 0))
 	{
 		Player->SetActorLocation(GameInstanceReference->SavePosition);
 	}

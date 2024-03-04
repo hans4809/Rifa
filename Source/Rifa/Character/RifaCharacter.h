@@ -109,12 +109,6 @@ public:
 	TObjectPtr<AActor> InteractionTargetActor;
 	UPROPERTY(EditAnywhere)
 	class UBGMAudioComponent* Bgm;
-	UFUNCTION()
-	void Die(AActor* trap);
-	UFUNCTION(BlueprintCallable)
-	void EnableMouseCursor();
-	UFUNCTION(BlueprintCallable)
-	void DisableMouseCursor();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
