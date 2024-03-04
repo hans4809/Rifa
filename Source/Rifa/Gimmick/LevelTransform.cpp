@@ -32,8 +32,16 @@ void ALevelTransform::PostInitializeComponents()
 void ALevelTransform::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	ARifaCharacter* character = Cast<ARifaCharacter>(OtherActor);
-	if (character)
+	if (character) 
+	{
+		auto GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+		if (GameInstance)
+		{
+			GameInstance->CurrentLevelName = FName(LevelName);
+			GameInstance->SavePosition = FVector(0, 0, 0);
+		}
 		UGameplayStatics::OpenLevel(GetWorld(), FName(LevelName));
+	}
 }
 
 // Called every frame

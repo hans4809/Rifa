@@ -121,12 +121,14 @@ void ASkillItem::PickupEnergyEvent()
 		Particle->SetActive(false);
 		Trigger->DestroyComponent();
 		PickupTextReference->CloseWidget();
+		RifaGameInstance->Save();
 	}
 }
 
 void ASkillItem::EndLevelSequence()
 {
-	if (IsValid(CharacterReference)) {
+	if (IsValid(CharacterReference)) 
+	{
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (IsValid(CurrentLevelScriptActor))
 		{
@@ -134,7 +136,6 @@ void ASkillItem::EndLevelSequence()
 			{
 				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
 			}
-			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 	}

@@ -27,7 +27,6 @@ void USoundSettingWidget::NativeConstruct()
 	EnviromentalSlider->OnValueChanged.AddDynamic(this, &USoundSettingWidget::EnviromentalSliderValueChanged);
 	SFXSlider->OnValueChanged.AddDynamic(this, &USoundSettingWidget::SFXSliderValueChanged);
 
-	BGMComponent = Cast<UAudioComponent>(UGameplayStatics::GetActorOfClass(GetWorld(), ABGMSoundActor::StaticClass()));
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
 	BGMSlider->SetValue(RifaGameInstance->BGMVolume);
@@ -43,14 +42,6 @@ void USoundSettingWidget::Init()
 void USoundSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
-}
-
-void USoundSettingWidget::CrossFadeSound()
-{
-	AudioParam += 0.4f;
-	if (BGMComponent == nullptr)
-		return;
-	BGMComponent->SetFloatParameter(TEXT("BGM_6"), AudioParam);
 }
 
 void USoundSettingWidget::CollectionButtonClicked()

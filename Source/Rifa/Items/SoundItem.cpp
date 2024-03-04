@@ -13,6 +13,7 @@
 #include <LevelScript/IslandLevelScriptActor.h>
 #include "Widget/GameHUD.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Components/SphereComponent.h"
 
 ASoundItem::ASoundItem()
 {
@@ -78,7 +79,8 @@ void ASoundItem::PickupSoundItemEvent()
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
-		Destroy();
+		SetActorHiddenInGame(true);
+		Trigger->DestroyComponent();
 	}
 }
 
