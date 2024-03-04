@@ -106,7 +106,7 @@ void ASkillItem::PickupEnergyEvent()
 								FTimerHandle LevelSequenceTimer;
 								FMovieSceneSequencePlaybackParams Param;
 								CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-								//CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
+								CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
 								auto LevelSequncePlayer = LevelSequenceActor->SequencePlayer.Get();
 								LevelSequncePlayer->SetPlaybackPosition(Param);
 								LevelSequncePlayer->Play();
