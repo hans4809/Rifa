@@ -39,4 +39,6 @@ URIFASaveGame::URIFASaveGame()
 		IsTutorialFinishedMap.Add((ETutorialType)m, false);
 	}
 	CurrentLevelName = TEXT("Island");
+	bClearIslandForest = false;
+	bClearFieldForest = false;
 }

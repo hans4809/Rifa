@@ -52,4 +52,8 @@ public:
 	bool bCanSwim;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FName CurrentLevelName;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bClearIslandForest;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bClearFieldForest;
 };

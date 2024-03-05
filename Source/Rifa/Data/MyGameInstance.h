@@ -118,6 +118,10 @@ public:
 	bool bCanFly;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bCanSwim;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bClearIslandForest;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	bool bClearFieldForest;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;

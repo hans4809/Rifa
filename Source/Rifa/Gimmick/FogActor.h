@@ -6,6 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "FogActor.generated.h"
 
+UENUM()
+enum class EForestType : uint8 
+{
+	Island UMETA(DisplayName = "Island"),
+	Field UMETA(DisplayName = "Field")
+};
+
 UCLASS()
 class RIFA_API AFogActor : public AActor
 {
@@ -22,6 +29,8 @@ protected:
 	TObjectPtr<class UStaticMeshComponent> Mesh;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Trigger", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UBoxComponent> Trigger;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Type", meta = (AllowPrivateAccess = "true"))
+	EForestType ThisForestType;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

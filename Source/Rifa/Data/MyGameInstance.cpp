@@ -66,6 +66,8 @@ void UMyGameInstance::Save()
 	NewPlayerData->bCanFly = bCanFly;
 	NewPlayerData->bCanSwim = bCanSwim;
 	NewPlayerData->CurrentLevelName = CurrentLevelName;
+	NewPlayerData->bClearIslandForest = bClearIslandForest;
+	NewPlayerData->bClearFieldForest = bClearFieldForest;
 	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
@@ -91,6 +93,8 @@ void UMyGameInstance::Load()
 	bCanFly = RIFASaveGame->bCanFly;
 	bCanSwim = RIFASaveGame->bCanSwim;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
+	bClearIslandForest = RIFASaveGame->bClearIslandForest;
+	bClearFieldForest = RIFASaveGame->bClearFieldForest;
 	if (CurrentLevelName == TEXT("MainMenu"))
 	{
 		CurrentLevelName = "Island";
@@ -115,6 +119,8 @@ void UMyGameInstance::ResetSaveData()
 	bCanFly = RIFASaveGame->bCanFly;
 	bCanSwim = RIFASaveGame->bCanSwim;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
+	bClearIslandForest = RIFASaveGame->bClearIslandForest;
+	bClearFieldForest = RIFASaveGame->bClearFieldForest;
 	if (CurrentLevelName == TEXT("MainMenu"))
 	{
 		CurrentLevelName = "Island";
@@ -129,6 +135,6 @@ void UMyGameInstance::Init()
 
 void UMyGameInstance::Shutdown()
 {
-	Save();
 	Super::Shutdown();
+	Save();
 }
