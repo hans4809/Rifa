@@ -48,7 +48,10 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 			LevelSequencePlayer->SetPlaybackPosition(Param);
 			LevelSequencePlayer->Play();
 			GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
-
+			if (EndOfLevelSequencePlayerLocation != FVector(0, 0, 0))
+			{
+				CharacterReference->SetActorLocationAndRotation(EndOfLevelSequencePlayerLocation, EndOfLevelSequencePlayerRotation);
+			}
 			RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
 		}
 	}
