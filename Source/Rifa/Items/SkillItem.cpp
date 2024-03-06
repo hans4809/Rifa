@@ -119,6 +119,7 @@ void ASkillItem::PickupEnergyEvent()
 				break;
 		}
 		Particle->SetActive(false);
+		RifaGameInstance->LevelSequencePlayerArr[1] = true;
 		Trigger->DestroyComponent();
 		PickupTextReference->CloseWidget();
 		RifaGameInstance->Save();
@@ -129,6 +130,7 @@ void ASkillItem::EndLevelSequence()
 {
 	if (IsValid(CharacterReference)) 
 	{
+		RifaGameInstance->LevelSequencePlayerArr[1] = true;
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (IsValid(CurrentLevelScriptActor))
 		{

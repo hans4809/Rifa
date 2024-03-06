@@ -14,6 +14,7 @@
 #include "Widget/GameHUD.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/SphereComponent.h"
+#include "Sound/BGMAudioComponent.h"
 
 ASoundItem::ASoundItem()
 {
@@ -77,6 +78,9 @@ void ASoundItem::PickupSoundItemEvent()
 			}
 		}
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
+		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;
+		RifaGameInstance->LevelSequencePlayerArr[2] = true;
+		CharacterReference->Bgm->CrossfadeSound();
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);
@@ -88,6 +92,7 @@ void ASoundItem::OnEndLevelSequence()
 {
 	if (IsValid(CharacterReference)) 
 	{
+		RifaGameInstance->LevelSequencePlayerArr[2] = true;
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (IsValid(CurrentLevelScriptActor))
 		{

@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "LevelSequencePlayActor.h"
+#include "LevelSequence/EndingLevelSequencePlayActor.h"
+#include "Widget/EndingKeyWidget.h"
 #include "Components/BoxComponent.h"
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
@@ -11,25 +12,29 @@
 #include "Animation/SkeletalMeshActor.h"
 #include "Data/MyGameInstance.h"
 #include "Widget/GameHUD.h"
-#include "LevelScript/IslandLevelScriptActor.h"
+#include "LevelScript/FieldLevelScriptActor.h"
 
-
-
-// Sets default values
-ALevelSequencePlayActor::ALevelSequencePlayActor()
+AEndingLevelSequencePlayActor::AEndingLevelSequencePlayActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	static ConstructorHelpers::FClassFinder<UUserWidget> EndingKeyWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_EndingKeyWidget.WG_EndingKeyWidget_C'"));
+	if(EndingKeyWidget.Succeeded())
+	{
+		EndingKeyWidgetClass = EndingKeyWidget.Class;
+	}
+	ThisLevelSequenceIndex = 9;
 }
 
-// Called when the game starts or when spawned
-void ALevelSequencePlayActor::BeginPlay()
+void AEndingLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
+	if (IsValid(EndingKeyWidgetClass))
+	{
+		EndingKeyWidgetAsset = CreateWidget<UEndingKeyWidget>(GetWorld(), EndingKeyWidgetClass);
+	}
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AEndingLevelSequencePlayActor::OnCharacterOverlap);
 }
 
-void ALevelSequencePlayActor::PlayLevelSequence()
+void AEndingLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
 	if (!RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
@@ -38,7 +43,7 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 		{
 			if (IsValid(CurrentLevelScriptActor))
 			{
-				if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset)) 
+				if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
 				{
 					CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
 				}
@@ -48,7 +53,7 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 			FMovieSceneSequencePlaybackParams Param;
 			LevelSequencePlayer->SetPlaybackPosition(Param);
 			LevelSequencePlayer->Play();
-			GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
+			GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AEndingLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 			if (EndOfLevelSequencePlayerLocation != FVector(0, 0, 0))
 			{
 				CharacterReference->SetActorLocationAndRotation(EndOfLevelSequencePlayerLocation, EndOfLevelSequencePlayerRotation);
@@ -58,7 +63,7 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 	}
 }
 
-void ALevelSequencePlayActor::EndLevelSequence()
+void AEndingLevelSequencePlayActor::EndLevelSequence()
 {
 	Super::EndLevelSequence();
 	if (IsValid(CharacterReference)) {
@@ -67,16 +72,18 @@ void ALevelSequencePlayActor::EndLevelSequence()
 			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		Destroy();
+		if (EndingKeyWidgetAsset) 
+		{
+			EndingKeyWidgetAsset->Init();
+		}
 	}
 }
 
-void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AEndingLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (Cast<class ARifaCharacter>(OtherActor))
+	if(Cast<ARifaCharacter>(OtherActor))
 	{
 		PlayLevelSequence();
 	}
 }
-

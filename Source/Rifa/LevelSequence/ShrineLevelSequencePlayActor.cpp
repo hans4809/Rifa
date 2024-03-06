@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "FinalLevelSequencePlayActor.h"
+#include "LevelSequence/ShrineLevelSequencePlayActor.h"
 #include "Data/MyGameInstance.h"
 #include "NiagaraComponent.h"
 #include "Components/BoxComponent.h"
@@ -12,8 +12,7 @@
 #include "LevelScript/BaseLevelScriptActor.h"
 #include "Widget/GameHUD.h"
 
-
-AFinalLevelSequencePlayActor::AFinalLevelSequencePlayActor()
+AShrineLevelSequencePlayActor::AShrineLevelSequencePlayActor()
 {
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComponent);
@@ -27,10 +26,10 @@ AFinalLevelSequencePlayActor::AFinalLevelSequencePlayActor()
 	}
 }
 
-void AFinalLevelSequencePlayActor::BeginPlay()
+void AShrineLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AFinalLevelSequencePlayActor::OnCharacterOverlap);
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShrineLevelSequencePlayActor::OnCharacterOverlap);
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Swim:
@@ -48,8 +47,9 @@ void AFinalLevelSequencePlayActor::BeginPlay()
 	}
 }
 
-void AFinalLevelSequencePlayActor::PlayLevelSequence()
+void AShrineLevelSequencePlayActor::PlayLevelSequence()
 {
+	Super::PlayLevelSequence();
 	if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
 	{
 		if (IsValid(CurrentLevelScriptActor))
@@ -64,14 +64,15 @@ void AFinalLevelSequencePlayActor::PlayLevelSequence()
 		FMovieSceneSequencePlaybackParams Param;
 		LevelSequencePlayer->SetPlaybackPosition(Param);
 		LevelSequencePlayer->Play();
-		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AFinalLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
+		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AShrineLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 
 		RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
 	}
 }
 
-void AFinalLevelSequencePlayActor::EndLevelSequence()
+void AShrineLevelSequencePlayActor::EndLevelSequence()
 {
+	Super::EndLevelSequence();
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Fly:
@@ -95,11 +96,17 @@ void AFinalLevelSequencePlayActor::EndLevelSequence()
 		}
 	}
 	Particle->SetActive(false);
-	Super::EndLevelSequence();
-
+	if (IsValid(CharacterReference)) {
+		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		{
+			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+		}
+		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+		Destroy();
+	}
 }
 
-void AFinalLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AShrineLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	if (Cast<class ARifaCharacter>(OtherActor))

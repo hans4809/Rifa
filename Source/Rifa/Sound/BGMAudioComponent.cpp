@@ -37,7 +37,6 @@ UBGMAudioComponent::UBGMAudioComponent()
 
 void UBGMAudioComponent::CrossfadeSound()
 {
-    UE_LOG(LogTemp, Log, TEXT("Hi3"));
     // ���� ���带 ��� ���� ����� ������Ʈ�� ��ȿ�� ��쿡�� ����
     if (BgmAudioPrevious)
     {
