@@ -5,7 +5,6 @@
 #include "Data/MyGameInstance.h"
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
-#include "Engine/SkeletalMesh.h"
 
 // Sets default values
 ALevelSequenceCharacterActor::ALevelSequenceCharacterActor()

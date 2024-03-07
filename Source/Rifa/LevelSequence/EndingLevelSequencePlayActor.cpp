@@ -16,12 +16,7 @@
 
 AEndingLevelSequencePlayActor::AEndingLevelSequencePlayActor()
 {
-	static ConstructorHelpers::FClassFinder<UUserWidget> EndingKeyWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_EndingKeyWidget.WG_EndingKeyWidget_C'"));
-	if(EndingKeyWidget.Succeeded())
-	{
-		EndingKeyWidgetClass = EndingKeyWidget.Class;
-	}
-	ThisLevelSequenceIndex = 9;
+
 }
 
 void AEndingLevelSequencePlayActor::BeginPlay()
