@@ -38,13 +38,14 @@ void AFlowWaterActor::BeginPlay()
 void AFlowWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	bCharacterOverlapped = true;
 	CharacterReference->WaterForcingVector = GetActorRightVector();
 }
 
 void AFlowWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	bCharacterOverlapped = false;
 	Super::EndCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex);
-	CharacterReference->WaterForcingVector.Set(0, 0, 0);
+	if (!CharacterReference->bIsSwimming)
+	{
+		CharacterReference->WaterForcingVector.Set(0, 0, 0);
+	}
 }

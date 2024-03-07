@@ -458,8 +458,8 @@ void ARifaCharacter::Swim()
 	{
 		bIsSwimming = true;
 		StartLocation = (GetActorLocation() - GetActorForwardVector() * 50);
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * 100 + GetActorForwardVector() * 50);
-		//RifaCharacterMovement->bCheatFlying = true;
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * 25 + GetActorForwardVector() * 50);
+		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
@@ -475,7 +475,7 @@ void ARifaCharacter::Swim()
 		StartLocation = GetActorLocation();
 		SetActorLocation(SwimStartLocation);
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		//RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
@@ -491,7 +491,7 @@ void ARifaCharacter::Swim()
 		SetActorRotation(WaterFallRotation + FRotator(0, 90.f, 0));
 		SetActorLocation(SwimStartLocation);
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		//RifaCharacterMovement->bCheatFlying = true;
+		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
@@ -504,7 +504,7 @@ void ARifaCharacter::ReturnWalk()
 	RifaCharacterMovement->MaxFlySpeed = 600;
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
-	//RifaCharacterMovement->bCheatFlying = false;
+	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }
@@ -517,7 +517,7 @@ void ARifaCharacter::EndSwim()
 	SetActorLocation(StartLocation);
 	SetActorRotation(FRotator(0.f, 0.f, 0.f));
 	ClientCheatWalk();
-	//RifaCharacterMovement->bCheatFlying = false;
+	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 }

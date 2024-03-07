@@ -47,7 +47,6 @@ void AWaterActor::BeginPlay()
 void AWaterActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -57,8 +56,13 @@ void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor
 		if (RifaGameInstance->bCanSwim)
 		{
 			CharacterReference->bCanSwim = true;
-			PickupTextReference->AddToViewport();
+			if (!CharacterReference->bIsSwimming) 
+			{
+				PickupTextReference->AddToViewport();
+			}
 		}
+		FTimerHandle OverlapHandle;
+		GetWorld()->GetTimerManager().SetTimer(OverlapHandle, this, &AWaterActor::CharacterOverlapping, 0.1f, true);
 	}
 
 }
@@ -73,4 +77,16 @@ void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActo
 			PickupTextReference->RemoveFromParent();
 		}
 	}
+}
+
+void AWaterActor::CharacterOverlapping()
+{
+	if (IsOverlappingActor(CharacterReference))
+	{
+		if (CharacterReference->bIsSwimming && PickupTextReference->IsInViewport() == true)
+		{
+			PickupTextReference->RemoveFromParent();
+		}
+	}
+
 }

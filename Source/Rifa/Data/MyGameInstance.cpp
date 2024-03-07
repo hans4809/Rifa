@@ -64,7 +64,8 @@ void UMyGameInstance::Save()
 	NewPlayerData->ECurrentCharacterMaterial = ECurrentCharacterMaterial;
 	NewPlayerData->IsTutorialFinishedMap = IsTutorialFinishedMap;
 	NewPlayerData->bCanFly = bCanFly;
-	NewPlayerData->bCanSwim = bCanSwim;
+	//NewPlayerData->bCanSwim = bCanSwim;
+	NewPlayerData->bCanSwim = true;
 	NewPlayerData->CurrentLevelName = CurrentLevelName;
 	NewPlayerData->bClearIslandForest = bClearIslandForest;
 	NewPlayerData->bClearFieldForest = bClearFieldForest;
@@ -91,7 +92,8 @@ void UMyGameInstance::Load()
 	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 	bCanFly = RIFASaveGame->bCanFly;
-	bCanSwim = RIFASaveGame->bCanSwim;
+	//bCanSwim = RIFASaveGame->bCanSwim;
+	bCanSwim = true;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 	bClearIslandForest = RIFASaveGame->bClearIslandForest;
 	bClearFieldForest = RIFASaveGame->bClearFieldForest;
