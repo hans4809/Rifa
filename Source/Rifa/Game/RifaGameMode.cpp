@@ -64,12 +64,14 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeOut);
 	}
 	Player->DisableInput(Cast<APlayerController>(Player->Controller));
+	auto PlayerAnim = Player->GetMesh()->GetAnimInstance();
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ARifaGameMode::PlayerRespawn, 2.f, false);
 }
 
-void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
+void ARifaGameMode::PlayerRespawn()
 {
-	Player->bIsDied = false;
-	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	auto Player = CharacterReference;
 	if (IsValid(FadeWidgetReference))
 	{
 		FadeWidgetReference->Init();
@@ -84,4 +86,7 @@ void ARifaGameMode::PlayerRespawn(ARifaCharacter* Player)
 	{
 		Player->SetActorLocation(FindPlayerStart(Player->GetController())->GetActorLocation());
 	}
+	Player->bIsDied = false;
+	Player->GetCharacterMovement()->bCheatFlying = false;
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 }

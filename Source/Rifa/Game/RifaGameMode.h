@@ -16,7 +16,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayerDie(class ARifaCharacter* Player);
 	UFUNCTION(BlueprintCallable)
-	void PlayerRespawn(class ARifaCharacter* Player);
+	void PlayerRespawn();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget)
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget)
