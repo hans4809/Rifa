@@ -19,7 +19,6 @@ void UGameSettingWidget::NativeConstruct()
 	GraphicButton = Cast<UButton>(GetWidgetFromName(TEXT("GraphicButton")));
 	ControlButton = Cast<UButton>(GetWidgetFromName(TEXT("ControlButton")));
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
-	SaveButton = Cast<UButton>(GetWidgetFromName(TEXT("SaveButton")));
 	MainButton = Cast<UButton>(GetWidgetFromName(TEXT("MainButton")));
 
 	ReturnButton->OnClicked.AddDynamic(this, &UGameSettingWidget::ReturnButtonClicked);

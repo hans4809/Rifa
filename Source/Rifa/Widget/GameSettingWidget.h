@@ -51,7 +51,5 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
 	TObjectPtr<class UButton> ReturnButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
-	TObjectPtr<class UButton> SaveButton;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Button", meta = (BindWidget))
 	TObjectPtr<class UButton> MainButton;
 };
