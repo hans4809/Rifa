@@ -26,18 +26,13 @@ public:
 	FORCEINLINE bool GetActivateInventory() { return bActivateInventory; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetActivateInventory(bool _bActivateInventory) { bActivateInventory = _bActivateInventory; }
-	/*UFUNCTION(BlueprintCallable)
-	FORCEINLINE ESlateVisibility GetActionMenuVisible() { return ActionMenuVisible; }
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE void SetActionMenuVisible(ESlateVisibility _ActionMenuVisible) { ActionMenuVisible = _ActionMenuVisible; }*/
+
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(VisibleAnywhere)
 	FDoOnce DoOnce;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
-	/*UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
-	ESlateVisibility ActionMenuVisible = ESlateVisibility::Hidden;*/
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
 	FString ActionText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))

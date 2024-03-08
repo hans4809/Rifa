@@ -19,8 +19,6 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	void FirstConstruct();
-	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
-	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 };

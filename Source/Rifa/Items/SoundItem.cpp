@@ -15,6 +15,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/SphereComponent.h"
 #include "Sound/BGMAudioComponent.h"
+#include "Widget/CollectionWidget.h"
 
 ASoundItem::ASoundItem()
 {
@@ -50,6 +51,10 @@ void ASoundItem::BeginPlay()
 					CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
 				}
 			}
+		}
+		if (IsValid(CollectionWidgetClass)) 
+		{
+			CollectionWidgetReference = CreateWidget<UCollectionWidget>(GetWorld(), CollectionWidgetClass);
 		}
 	}
 }
@@ -102,5 +107,9 @@ void ASoundItem::OnEndLevelSequence()
 			}
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+		if (IsValid(CollectionWidgetReference)) 
+		{
+			CollectionWidgetReference->Init();
+		}
 	}
 }

@@ -57,9 +57,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool ListenforRemap;
 public:
-	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
-	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 	UFUNCTION(BlueprintCallable)
 	void KeyChangedClicked();

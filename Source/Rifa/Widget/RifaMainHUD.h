@@ -25,7 +25,6 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* QuitButton;
 public:
-	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> MainSettingWidgetClass;

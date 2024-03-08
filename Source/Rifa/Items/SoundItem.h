@@ -17,15 +17,13 @@ class RIFA_API ASoundItem : public AInteractableActor
 public:
 	ASoundItem();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	TObjectPtr<UTexture2D> CustomImage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	FString CustomItemName;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
-	FString CustomActionText;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom")
 	TObjectPtr<UStaticMesh> CustomStaticMesh;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	TObjectPtr<class ALevelSequenceActor> LevelSequencActor;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget")
+	TSubclassOf<UUserWidget> CollectionWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget")
+	TObjectPtr<class UCollectionWidget> CollectionWidgetReference;
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UNiagaraComponent> Particle;

@@ -50,9 +50,7 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USoundMix> SFXClassMix;
 public:
-	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
-	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 	UFUNCTION(BlueprintCallable)
 	void CollectionButtonClicked();

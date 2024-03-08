@@ -34,9 +34,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	void NativeConstruct();
-	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
-	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget() override;
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynam OnSpeakFinished;

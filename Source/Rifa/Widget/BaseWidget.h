@@ -15,6 +15,8 @@ class RIFA_API UBaseWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
 	virtual void Init();
+	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget();
 };
