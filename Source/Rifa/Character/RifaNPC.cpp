@@ -7,7 +7,6 @@
 #include "Widget/PickupText.h"
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include "Widget/DialogComponent.h"
 
 // Sets default values
 ARifaNPC::ARifaNPC()
