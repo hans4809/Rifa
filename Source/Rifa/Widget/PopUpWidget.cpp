@@ -8,6 +8,7 @@
 void UPopUpWidget::Init()
 {
 	Super::Init();
+	SetInputActionPriority(Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->PopupSort);
 	AddToViewport(Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->PopupSort++);
 }
 
