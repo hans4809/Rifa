@@ -15,12 +15,12 @@ class RIFA_API ABaseLevelScriptActor : public ALevelScriptActor
 	GENERATED_BODY()
 public:
 	ABaseLevelScriptActor();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget")
+	UPROPERTY(BlueprintReadWrite, Category = "Widget")
 	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
+	UPROPERTY(BlueprintReadWrite, Category = "Widget")
+	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 protected:
 	virtual void BeginPlay() override;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> TutorialWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))

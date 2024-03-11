@@ -44,16 +44,6 @@ void ARifaGameMode::BeginPlay()
 	}
 }
 
-void ARifaGameMode::EndLevelSequence()
-{
-	if (IsValid(GameHUDWidgetClass))
-	{
-		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-		GameHUDWidgetAsset->Init();
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	}
-}
-
 
 void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 {
