@@ -32,6 +32,7 @@ void AIslandLevelScriptActor::BeginPlay()
 					GameHUDWidgetAsset->CloseWidget();
 				}
 				FirstLevelSequenceActor->SequencePlayer->Play();
+				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 			}
 		}
@@ -49,6 +50,7 @@ void AIslandLevelScriptActor::BeginPlay()
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
 	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
+	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
