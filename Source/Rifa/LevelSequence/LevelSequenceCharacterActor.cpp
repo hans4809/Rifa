@@ -23,34 +23,6 @@ ALevelSequenceCharacterActor::ALevelSequenceCharacterActor()
 	CurrentHairMesh->SetCollisionProfileName(TEXT("NoCollision"));
 }
 
-void ALevelSequenceCharacterActor::CharacterApperanceChanged()
-{
-	CurrentCharacterMesh->SetMaterial(0, RifaGameInstance->CharacterMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]);
-	CurrentHairMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]);
-
-	if (RifaGameInstance->ECurrentCharacterHairPart == EHairPartsItem::Default)
-	{
-		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[RifaGameInstance->ECurrentCharacterMaterial]); 
-		CurrentHairMesh->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
-	}
-	else
-	{
-		CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[RifaGameInstance->ECurrentCharacterHairPart]->GetMaterials()[0].MaterialInterface);
-		CurrentHairMesh->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
-	}
-
-	const UEnum* HairPartEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.EHairPartsItem"));
-	FString EnumMetaData = HairPartEnum->GetDisplayNameTextByValue((int)CharacterReference->ECurrentCharacterHairPart).ToString();
-	if (EnumMetaData.Contains(TEXT("Default")))
-	{
-		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_Default"));
-	}
-	else
-	{
-		CurrentHairMesh->AttachToComponent(CurrentCharacterMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
-	}
-}
-
 // Called when the game starts or when spawned
 void ALevelSequenceCharacterActor::BeginPlay()
 {

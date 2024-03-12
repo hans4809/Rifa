@@ -34,16 +34,14 @@ void ASkillItem::BeginPlay()
 			Particle->SetAsset(LoadObject<UNiagaraSystem>(nullptr, TEXT("/Script/Niagara.NiagaraSystem'/Game/VFX/VFX_skill_liquid.VFX_skill_liquid'")));
 			if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex])
 			{
-				Particle->SetActive(false);
-				Trigger->DestroyComponent();
+				Destroy();
 			}
 			break;
 		case EEnergyType::Fly:
 			Particle->SetAsset(LoadObject<UNiagaraSystem>(nullptr, TEXT("/Script/Niagara.NiagaraSystem'/Game/VFX/VFX_skill_air.VFX_skill_air'")));
 			if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
 			{
-				Particle->SetActive(false);
-				Trigger->DestroyComponent();
+				Destroy();
 			}
 			break;
 		}
@@ -118,7 +116,8 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				break;
 		}
-		Particle->SetActive(false);
+		//Particle->SetActive(false);
+		SetActorHiddenInGame(true);
 		RifaGameInstance->LevelSequencePlayerArr[1] = true;
 		Trigger->DestroyComponent();
 		PickupTextReference->CloseWidget();
@@ -140,5 +139,6 @@ void ASkillItem::EndLevelSequence()
 			}
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+		Destroy();
 	}
 }

@@ -97,9 +97,13 @@ void AShrineLevelSequencePlayActor::EndLevelSequence()
 	}
 	Particle->SetActive(false);
 	if (IsValid(CharacterReference)) {
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetClass))
 		{
-			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+			CurrentLevelScriptActor->GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), CurrentLevelScriptActor->GameHUDWidgetClass));
+			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			{
+				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+			}
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 		Destroy();
