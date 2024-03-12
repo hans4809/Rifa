@@ -40,7 +40,7 @@ void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
 	if (IsValid(RifaCharacter))
 	{
-		if (IsBgmPlay)
-			RifaCharacter->Bgm->PlayBgm();
+		//if (IsBgmPlay)
+			//RifaCharacter->Bgm->PlayBgm();
 	}
 }

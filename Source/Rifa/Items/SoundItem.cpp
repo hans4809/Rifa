@@ -85,7 +85,7 @@ void ASoundItem::PickupSoundItemEvent()
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
-		CharacterReference->Bgm->CrossfadeSound();
+		//CharacterReference->Bgm->CrossfadeSound();
 		RifaGameInstance->Save();
 		PickupTextReference->CloseWidget();
 		SetActorHiddenInGame(true);

@@ -107,8 +107,8 @@ public:
 	FRotator WaterFallRotation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	TObjectPtr<AActor> InteractionTargetActor;
-	UPROPERTY(EditAnywhere)
-	class UBGMAudioComponent* Bgm;
+	//UPROPERTY(EditAnywhere)
+	//class UBGMAudioComponent* Bgm;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")

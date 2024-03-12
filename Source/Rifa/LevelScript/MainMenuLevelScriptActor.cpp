@@ -24,8 +24,11 @@ void AMainMenuLevelScriptActor::BeginPlay()
 	{
 		GameHUDWidgetAsset->CloseWidget();
 		MainHUDWidgetAsset = Cast<URifaMainHUD>(CreateWidget(GetWorld(), MainHUDWidgetClass));
+		if (MainHUDWidgetAsset)
+		{
+			MainHUDWidgetAsset->Init();
+		}
 	}
-	MainHUDWidgetAsset->Init();
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
 	if (IsValid(BGM))

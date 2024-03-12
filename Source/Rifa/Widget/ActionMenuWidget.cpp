@@ -56,7 +56,7 @@ void UActionMenuWidget::BGMOnButtonClicked()
 		}
 		if (auto CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) 
 		{
-			CharacterReference->Bgm->BgmRefresh();
+			//CharacterReference->Bgm->BgmRefresh();
 		}
 	}
 
@@ -65,7 +65,7 @@ void UActionMenuWidget::BGMOnButtonClicked()
 void UActionMenuWidget::BGMOffButtonClicked()
 {
 	RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)] = false;
-	Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Bgm->BgmRefresh();
+	//Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->Bgm->BgmRefresh();
 }
 
 void UActionMenuWidget::CancelButtonClicked()
