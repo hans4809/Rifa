@@ -42,6 +42,7 @@ void UCollectionWidget::NativeConstruct()
 			Controller->bShowMouseCursor = true;
 		}
 	}
+	
 }
 
 void UCollectionWidget::Init()

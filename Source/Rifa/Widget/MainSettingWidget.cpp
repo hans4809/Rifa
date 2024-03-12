@@ -6,10 +6,12 @@
 #include "SoundSettingWidget.h"
 #include "InputSettingWidget.h"
 #include "GraphicSettingWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 void UMainSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	//UGameplayStatics::SetGamePaused(GetWorld(), true);
 	SoundButton = Cast<UButton>(GetWidgetFromName(TEXT("SoundButton")));
 	GraphicButton = Cast<UButton>(GetWidgetFromName(TEXT("GraphicButton")));
 	ControlButton = Cast<UButton>(GetWidgetFromName(TEXT("ControlButton")));
@@ -28,6 +30,7 @@ void UMainSettingWidget::Init()
 void UMainSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
+	//UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
 
 void UMainSettingWidget::SoundButtonClicked()

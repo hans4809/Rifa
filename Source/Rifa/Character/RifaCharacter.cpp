@@ -300,7 +300,7 @@ void ARifaCharacter::Pause()
 {
 	if (IsValid(GameSettingWidgetClass))
 	{
-		//UGameplayStatics::SetGamePaused(GetWorld(), true);
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
 		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
 		GameSettingWidgetAsset->Init();
 	}

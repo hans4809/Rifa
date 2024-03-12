@@ -19,6 +19,8 @@ public:
 	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 	UPROPERTY(BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound")
+	TObjectPtr<class AAmbientSound> BGM;
 protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))

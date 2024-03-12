@@ -31,10 +31,6 @@ protected:
 	TObjectPtr<class ARifaCharacter> CharacterReference;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
 	TObjectPtr<class UMyGameInstance> GameInstanceReference;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class ALevelSequenceActor> FirstLevelSequence;
-	UFUNCTION()
-	void EndLevelSequence();
 };
 
 

@@ -7,19 +7,25 @@
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
 #include "Sound/BGMAudioComponent.h"
+#include "Components/AudioComponent.h"
 
 void UActionMenuWidget::NativeConstruct()
 {
 	OnButton = Cast<UButton>(GetWidgetFromName(TEXT("OnButton")));
-	//OffButton = Cast<UButton>(GetWidgetFromName(TEXT("OffButton")));
 	CancelButton = Cast<UButton>(GetWidgetFromName(TEXT("CancelButton")));
 
 	OnButton->OnClicked.AddDynamic(this, &UActionMenuWidget::BGMOnButtonClicked);
-	//OffButton->OnClicked.AddDynamic(this, &UActionMenuWidget::BGMOffButtonClicked);
 	CancelButton->OnClicked.AddDynamic(this, &UActionMenuWidget::CancelButtonClicked);
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	IsOn = RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)];
+	FString InstSoundPath = FString::Printf(TEXT("/Game/Sounds/SFX/UI_Listen_Collect_%d.UI_Listen_Collect_%d"), InventorySlot, InventorySlot);
+	USoundBase* InstAsset = LoadObject<USoundBase>(NULL, *InstSoundPath, NULL, LOAD_None, NULL);
+	if (IsValid(InstAsset))
+	{
+		InstSound = InstAsset;
+		InstAudioComponent = UGameplayStatics::CreateSound2D(GetWorld(), InstSound, 0.f, 0.f, 0.f, nullptr, false, false);
+	}
 }
 
 void UActionMenuWidget::BGMOnButtonClicked()
@@ -30,11 +36,23 @@ void UActionMenuWidget::BGMOnButtonClicked()
 		{
 			RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)] = false;
 			IsOn = RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)];
+			InstAudioComponent->Stop();
+			InstSound->DestroyNonNativeProperties();
 		}
 		else 
 		{
 			RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)] = true;
 			IsOn = RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)];
+			InstAudioComponent->Play();
+			if (IsValid(InstSound)) 
+			{
+				auto Sound = InstAudioComponent->Sound;
+				UGameplayStatics::PlaySound2D(GetWorld(), Sound, 1.f, 1.f, 0.f, InstSoundConcurrency, nullptr, false);
+			}
+			else 
+			{
+				UGameplayStatics::PlaySound2D(GetWorld(), InstSound, 1.f, 1.f, 0.f, InstSoundConcurrency, nullptr, false);
+			}
 		}
 		if (auto CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) 
 		{
@@ -53,5 +71,7 @@ void UActionMenuWidget::BGMOffButtonClicked()
 void UActionMenuWidget::CancelButtonClicked()
 {
 	SetVisibility(ESlateVisibility::Hidden);
+	InstAudioComponent->Stop();
+	InstSound->DestroyNonNativeProperties();
 }
 

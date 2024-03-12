@@ -39,7 +39,7 @@ void UGameSettingWidget::Init()
 void UGameSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
-	//UGameplayStatics::SetGamePaused(GetWorld(), false);
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
 
 void UGameSettingWidget::ReturnButtonClicked()
