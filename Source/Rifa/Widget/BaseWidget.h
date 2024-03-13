@@ -19,4 +19,6 @@ public:
 	virtual void Init();
 	UFUNCTION(BlueprintCallable)
 	virtual void CloseWidget();
+	UPROPERTY(BlueprintReadWrite, category = "LevelScript")
+	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
 };

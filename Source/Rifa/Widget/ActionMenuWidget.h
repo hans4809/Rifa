@@ -26,10 +26,8 @@ public:
 	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	TObjectPtr<class USoundBase> InstSound;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
-	TObjectPtr<class UAudioComponent> InstAudioComponent;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
-	TObjectPtr<class USoundConcurrency> InstSoundConcurrency;
+	UPROPERTY(BlueprintReadWrite, Category = "LevelScript")
+	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
 	UFUNCTION(BlueprintCallable)
 	void BGMOnButtonClicked();
 	UFUNCTION(BlueprintCallable)

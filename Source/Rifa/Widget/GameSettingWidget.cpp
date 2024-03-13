@@ -11,6 +11,10 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include <LevelScript/IslandLevelScriptActor.h>
 #include "Widget/GameHUD.h"
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
+#include "Character/RifaCharacter.h"
 
 void UGameSettingWidget::NativeConstruct()
 {
@@ -26,6 +30,15 @@ void UGameSettingWidget::NativeConstruct()
 	GraphicButton->OnClicked.AddDynamic(this, &UGameSettingWidget::GraphicButtonClicked);
 	ControlButton->OnClicked.AddDynamic(this, &UGameSettingWidget::InputButtonClicked);
 	MainButton->OnClicked.AddDynamic(this, &UGameSettingWidget::MainButtonClicked);
+
+	if (IsValid(CurrentLevelScriptActor)) 
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			//CurrentLevelScriptActor->BGM->Stop();
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
+		}
+	}
 }
 
 void UGameSettingWidget::Init()
@@ -39,7 +52,13 @@ void UGameSettingWidget::Init()
 void UGameSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
-	UGameplayStatics::SetGamePaused(GetWorld(), false);
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		}
+	}
 }
 
 void UGameSettingWidget::ReturnButtonClicked()
@@ -48,12 +67,20 @@ void UGameSettingWidget::ReturnButtonClicked()
 	Controller->SetInputMode(FInputModeGameOnly());
 	Controller->bShowMouseCursor = false;
 	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
-	if (auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AIslandLevelScriptActor::StaticClass())))
+	if (IsValid(CurrentLevelScriptActor))
 	{
 		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
 		{
 			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
 		}
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		}
+	}
+	if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
+	{
+		Character->CustomTimeDilation = 1.f;
 	}
 }
 

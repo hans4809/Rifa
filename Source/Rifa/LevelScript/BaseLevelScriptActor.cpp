@@ -7,6 +7,7 @@
 #include "Character/RifaCharacter.h"
 #include "Widget/GameHUD.h"
 #include "Widget/TutorialWidget.h"
+#include "Sound/AmbientSound.h"
 
 ABaseLevelScriptActor::ABaseLevelScriptActor()
 {
@@ -37,5 +38,9 @@ void ABaseLevelScriptActor::BeginPlay()
 		{
 			GameHUDWidgetAsset->Init();
 		}
+	}
+	if (IsValid(BGMActor)) 
+	{
+		BGMActor->Play();
 	}
 }

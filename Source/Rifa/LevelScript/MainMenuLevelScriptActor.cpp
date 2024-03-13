@@ -31,8 +31,8 @@ void AMainMenuLevelScriptActor::BeginPlay()
 	}
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
-	if (IsValid(BGM))
+	if (IsValid(BGMActor))
 	{
-		BGM->Play();
+		BGMActor->Play();
 	}
 }

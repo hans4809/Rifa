@@ -7,6 +7,9 @@
 #include "InputSettingWidget.h"
 #include "GraphicSettingWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 void UMainSettingWidget::NativeConstruct()
 {
@@ -20,6 +23,16 @@ void UMainSettingWidget::NativeConstruct()
 	SoundButton->OnClicked.AddDynamic(this, &UMainSettingWidget::SoundButtonClicked);
 	GraphicButton->OnClicked.AddDynamic(this, &UMainSettingWidget::GraphicButtonClicked);
 	ControlButton->OnClicked.AddDynamic(this, &UMainSettingWidget::InputButtonClicked);
+
+	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			//CurrentLevelScriptActor->BGM->Stop();
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
+		}
+	}
 }
 
 void UMainSettingWidget::Init()
@@ -30,6 +43,14 @@ void UMainSettingWidget::Init()
 void UMainSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			//CurrentLevelScriptActor->BGM->Stop();
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		}
+	}
 	//UGameplayStatics::SetGamePaused(GetWorld(), false);
 }
 

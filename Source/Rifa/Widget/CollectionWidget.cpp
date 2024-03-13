@@ -30,7 +30,6 @@ void UCollectionWidget::NativeConstruct()
 		{
 			FString ActionMenuName = FString::Printf(TEXT("ActionMenu_%d"), i);
 			ActionMenuArray.Add(Cast<UActionMenuWidget>(GetWidgetFromName(FName(ActionMenuName))));
-			//SlotArray[i]->IsHave = RifaGameInstance->SoundItemMap[(Item)i];
 			ActionMenuArray[i]->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}

@@ -24,7 +24,6 @@ protected:
 	class UButton* ControlButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ReturnButton;
-
 public:
 	virtual void Init() override;
 	virtual void CloseWidget() override;

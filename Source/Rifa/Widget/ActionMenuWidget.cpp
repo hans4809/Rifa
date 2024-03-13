@@ -8,6 +8,8 @@
 #include "Character/RifaCharacter.h"
 #include "Sound/BGMAudioComponent.h"
 #include "Components/AudioComponent.h"
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
 
 void UActionMenuWidget::NativeConstruct()
 {
@@ -24,8 +26,9 @@ void UActionMenuWidget::NativeConstruct()
 	if (IsValid(InstAsset))
 	{
 		InstSound = InstAsset;
-		InstAudioComponent = UGameplayStatics::CreateSound2D(GetWorld(), InstSound, 0.f, 0.f, 0.f, nullptr, false, false);
+		//InstAudioComponent = UGameplayStatics::CreateSound2D(GetWorld(), InstSound, 0.f, 0.f, 0.f, nullptr, false, false);
 	}
+	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 }
 
 void UActionMenuWidget::BGMOnButtonClicked()
@@ -36,22 +39,25 @@ void UActionMenuWidget::BGMOnButtonClicked()
 		{
 			RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)] = false;
 			IsOn = RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)];
-			InstAudioComponent->Stop();
-			InstSound->DestroyNonNativeProperties();
+			if (IsValid(CurrentLevelScriptActor))
+			{
+				if (CurrentLevelScriptActor->InstSoundActor)
+				{
+					CurrentLevelScriptActor->InstSoundActor->Stop();
+				}
+			}
 		}
 		else 
 		{
 			RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)] = true;
 			IsOn = RifaGameInstance->SoundItemOnOffMap[EItem(InventorySlot)];
-			InstAudioComponent->Play();
-			if (IsValid(InstSound)) 
+			if (IsValid(CurrentLevelScriptActor)) 
 			{
-				auto Sound = InstAudioComponent->Sound;
-				UGameplayStatics::PlaySound2D(GetWorld(), Sound, 1.f, 1.f, 0.f, InstSoundConcurrency, nullptr, false);
-			}
-			else 
-			{
-				UGameplayStatics::PlaySound2D(GetWorld(), InstSound, 1.f, 1.f, 0.f, InstSoundConcurrency, nullptr, false);
+				if (CurrentLevelScriptActor->InstSoundActor) 
+				{
+					CurrentLevelScriptActor->InstSoundActor->GetAudioComponent()->SetSound(InstSound);
+					CurrentLevelScriptActor->InstSoundActor->Play();
+				}
 			}
 		}
 		if (auto CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))) 
@@ -71,7 +77,13 @@ void UActionMenuWidget::BGMOffButtonClicked()
 void UActionMenuWidget::CancelButtonClicked()
 {
 	SetVisibility(ESlateVisibility::Hidden);
-	InstAudioComponent->Stop();
-	InstSound->DestroyNonNativeProperties();
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (CurrentLevelScriptActor->InstSoundActor)
+		{
+			CurrentLevelScriptActor->InstSoundActor->GetAudioComponent()->SetSound(InstSound);
+			CurrentLevelScriptActor->InstSoundActor->Stop();
+		}
+	}
 }
 
