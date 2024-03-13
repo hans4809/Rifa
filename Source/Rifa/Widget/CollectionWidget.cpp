@@ -72,7 +72,7 @@ void UCollectionWidget::CloseWidget()
 			for (int i = 0; i < RifaGameInstance->SoundItemOnOffMap.Num(); i++)
 			{
 				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
-				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i] = true)
+				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i] == true)
 				{
 					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
 				}

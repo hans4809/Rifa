@@ -21,7 +21,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TMap <EItem, bool> SoundItemOnOffMap;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Categoory = "SaveData")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	int32 BGMIndex;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;

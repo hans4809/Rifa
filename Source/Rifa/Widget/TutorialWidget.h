@@ -18,8 +18,6 @@ class RIFA_API UTutorialWidget : public UPopUpWidget
 public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Type")
 	ETutorialType ThisTutorialType = ETutorialType::Movement;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")
-	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	virtual void Init() override;
 	virtual void CloseWidget() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelScript")

@@ -24,8 +24,6 @@ protected:
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<class ARifaCharacter> CharacterReference;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
-	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UFUNCTION(BlueprintCallable)
 	void PlayEndingLevelSequence();
 	UFUNCTION(BlueprintCallable)

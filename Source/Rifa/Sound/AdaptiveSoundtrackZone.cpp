@@ -54,6 +54,4 @@ void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 			}
 		}
 	}
-	
-	
 }

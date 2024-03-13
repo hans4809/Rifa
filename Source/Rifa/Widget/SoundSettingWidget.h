@@ -33,8 +33,6 @@ protected:
 	TSubclassOf<class UPopUpWidget> CollectionWidgetClass;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCollectionWidget> CollectionWidgetAsset;
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 // SoundClass Section
 protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))

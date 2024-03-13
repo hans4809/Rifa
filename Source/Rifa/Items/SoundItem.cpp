@@ -16,6 +16,8 @@
 #include "Components/SphereComponent.h"
 #include "Sound/BGMAudioComponent.h"
 #include "Widget/CollectionWidget.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 ASoundItem::ASoundItem()
 {
@@ -64,10 +66,10 @@ void ASoundItem::PickupSoundItemEvent()
 {
 	if (bIsInRange && !RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex])
 	{
+		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (!RifaGameInstance->LevelSequencePlayerArr[2])
 		{
 			if (LevelSequencActor) {
-				auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 				if (IsValid(CurrentLevelScriptActor))
 				{
 					FTimerHandle LevelSequenceTimer;
@@ -78,12 +80,28 @@ void ASoundItem::PickupSoundItemEvent()
 					auto LevelSequncePlayer = LevelSequencActor->SequencePlayer.Get();
 					LevelSequncePlayer->SetPlaybackPosition(Param);
 					LevelSequncePlayer->Play();
+					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
 					GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASoundItem::OnEndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
 				}
 			}
 		}
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;
+		if (IsValid(RifaGameInstance) && IsValid(CurrentLevelScriptActor))
+		{
+			for (int i = 0; i < RifaGameInstance->SoundItemOnOffMap.Num(); i++)
+			{
+				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
+				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i])
+				{
+					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+				}
+				else
+				{
+					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+				}
+			}
+		}
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
 		//CharacterReference->Bgm->CrossfadeSound();
 		RifaGameInstance->Save();
@@ -104,6 +122,8 @@ void ASoundItem::OnEndLevelSequence()
 			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
 			{
 				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 			}
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));

@@ -22,8 +22,6 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<class ARifaCharacter> CharacterReference;
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
-	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	virtual void Init() override;
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
