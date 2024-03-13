@@ -8,6 +8,9 @@
 #include "ActionMenuWidget.h"
 #include "Components/Button.h"
 #include <Character/RifaCharacter.h>
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 void UCollectionWidget::NativeConstruct()
 {
@@ -41,7 +44,16 @@ void UCollectionWidget::NativeConstruct()
 			Controller->bShowMouseCursor = true;
 		}
 	}
-	
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			if (CurrentLevelScriptActor->BGMActor->GetAudioComponent()->IsPlaying())
+			{
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
+			}
+		}
+	}
 }
 
 void UCollectionWidget::Init()
@@ -53,7 +65,26 @@ void UCollectionWidget::Init()
 void UCollectionWidget::CloseWidget()
 {
 	Super::CloseWidget();
-	if (RifaGameInstance->PopupSort == 5 || RifaGameInstance->PopupSort == 4) 
+	if (IsValid(CurrentLevelScriptActor))
+	{
+		if (IsValid(CurrentLevelScriptActor->BGMActor))
+		{
+			for (int i = 0; i < RifaGameInstance->SoundItemOnOffMap.Num(); i++)
+			{
+				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
+				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i] = true)
+				{
+					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+				}
+				else
+				{
+					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+				}
+			}
+		}
+	}
+	
+	if (RifaGameInstance->PopupSort == 4) 
 	{
 		if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 		{
@@ -61,6 +92,13 @@ void UCollectionWidget::CloseWidget()
 			{
 				Controller->SetInputMode(FInputModeGameOnly());
 				Controller->bShowMouseCursor = false;
+			}
+		}
+		if (IsValid(CurrentLevelScriptActor)) 
+		{
+			if (IsValid(CurrentLevelScriptActor->BGMActor))
+			{
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 			}
 		}
 	}

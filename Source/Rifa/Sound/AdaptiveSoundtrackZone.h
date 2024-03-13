@@ -23,12 +23,11 @@ protected:
 
 	UFUNCTION()
 		void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-public:	
-
+	UPROPERTY()
+	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UBoxComponent* Trigger;
-
+	TObjectPtr<class UBoxComponent> Trigger;
+public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable")
 	FString SoundTrack;
 
@@ -36,5 +35,7 @@ public:
 	bool IsBgmPlay = true;
 
 	UPROPERTY(EditAnyWhere)
-	class UMyGameInstance* RifaGameInstance;
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
+	UPROPERTY(EditInstanceOnly, Category = "Index")
+	int32 BGMIndex;
 };

@@ -8,6 +8,8 @@
 #include "Data/MyGameInstance.h"
 #include "BGMAudioComponent.h"
 #include "Components/AudioComponent.h"
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
 
 // Sets default values
 AAdaptiveSoundtrackZone::AAdaptiveSoundtrackZone()
@@ -22,6 +24,7 @@ void AAdaptiveSoundtrackZone::BeginPlay()
 {
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 }
 
 void AAdaptiveSoundtrackZone::PostInitializeComponents()
@@ -34,13 +37,23 @@ void AAdaptiveSoundtrackZone::PostInitializeComponents()
 
 void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (RifaGameInstance->SoundTrack == SoundTrack)
-		return;
-	RifaGameInstance->SoundTrack = SoundTrack;
-	ARifaCharacter* RifaCharacter = Cast<ARifaCharacter>(OtherActor);
-	if (IsValid(RifaCharacter))
-	{
-		//if (IsBgmPlay)
-			//RifaCharacter->Bgm->PlayBgm();
+	if (Cast<ARifaCharacter>(OtherActor)) {
+		if (RifaGameInstance->SoundTrack != SoundTrack)
+		{
+			RifaGameInstance->SoundTrack = SoundTrack;
+		}
+		if (RifaGameInstance->BGMIndex != BGMIndex) 
+		{
+			RifaGameInstance->BGMIndex = BGMIndex;
+		}
+		if (IsValid(CurrentLevelScriptActor))
+		{
+			if (CurrentLevelScriptActor->BGMActor)
+			{
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(TEXT("BGM"), (float)BGMIndex);
+			}
+		}
 	}
+	
+	
 }

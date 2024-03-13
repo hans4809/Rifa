@@ -10,6 +10,7 @@
 #include "LevelScript/BaseLevelScriptActor.h"
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
+#include "Data/MyGameInstance.h"
 
 void UMainSettingWidget::NativeConstruct()
 {
@@ -47,7 +48,6 @@ void UMainSettingWidget::CloseWidget()
 	{
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
 		{
-			//CurrentLevelScriptActor->BGM->Stop();
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 		}
 	}

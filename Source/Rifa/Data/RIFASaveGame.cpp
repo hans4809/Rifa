@@ -13,6 +13,7 @@ URIFASaveGame::URIFASaveGame()
 		SoundItemHavingMap.Add((EItem)i, false);
 		SoundItemOnOffMap.Add((EItem)i, false);
 	}
+	BGMIndex = 0;
 
 	bCanFly = false;
 	bCanSwim = false;

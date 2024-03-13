@@ -55,6 +55,7 @@ void UMyGameInstance::Save()
 	NewPlayerData->SoundItemHavingMap = SoundItemHavingMap;
 	NewPlayerData->SoundItemOnOffMap = SoundItemOnOffMap;
 	NewPlayerData->SoundTrack = SoundTrack;
+	NewPlayerData->BGMIndex = BGMIndex;
 	NewPlayerData->FlyItemArr = FlyItemArr;
 	NewPlayerData->SwimItemArr = SwimItemArr;
 	NewPlayerData->LevelSequencePlayerArr = LevelSequencePlayerArr;
@@ -83,6 +84,7 @@ void UMyGameInstance::Load()
 	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
 	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
 	SoundTrack = RIFASaveGame->SoundTrack;
+	BGMIndex = RIFASaveGame->BGMIndex;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
 	SwimItemArr = RIFASaveGame->SwimItemArr;
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
@@ -110,6 +112,7 @@ void UMyGameInstance::ResetSaveData()
 	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
 	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
 	SoundTrack = RIFASaveGame->SoundTrack;
+	BGMIndex = RIFASaveGame->BGMIndex;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
 	SwimItemArr = RIFASaveGame->SwimItemArr;
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;

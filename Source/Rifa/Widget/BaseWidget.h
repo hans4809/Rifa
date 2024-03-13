@@ -21,4 +21,6 @@ public:
 	virtual void CloseWidget();
 	UPROPERTY(BlueprintReadWrite, category = "LevelScript")
 	TObjectPtr<class ABaseLevelScriptActor> CurrentLevelScriptActor;
+	UPROPERTY(BlueprintReadWrite, category = "GameInstnace")
+	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 };

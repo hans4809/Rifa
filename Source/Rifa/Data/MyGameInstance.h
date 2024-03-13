@@ -87,6 +87,8 @@ public:
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	FString SoundTrack;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	int32 BGMIndex;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TArray<EHairPartsItem> CurrentHairPartsArr;

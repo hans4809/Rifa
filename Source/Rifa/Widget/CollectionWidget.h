@@ -22,23 +22,14 @@ public:
 	void RefreshInventory_C();
 	UFUNCTION(BlueprintCallable)
 	void ButtonWasClicked_Evt(int SlotClicked);
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE bool GetActivateInventory() { return bActivateInventory; }
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE void SetActivateInventory(bool _bActivateInventory) { bActivateInventory = _bActivateInventory; }
-
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(VisibleAnywhere)
 	FDoOnce DoOnce;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
-	TObjectPtr<class UMyGameInstance> RifaGameInstance;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Binding", meta = (AllowPrivateAccess = true))
 	FString ActionText;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
 	int InventorySlotClicked;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Inventory", meta = (AllowPrivateAccess = true))
-	bool bActivateInventory = true;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<class UButton> ReturnButton;
 //Slot Reference
