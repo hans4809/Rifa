@@ -82,7 +82,12 @@ void UCollectionWidget::CloseWidget()
 				}
 			}
 		}
+		if (IsValid(CurrentLevelScriptActor->InstSoundActor))
+		{
+			CurrentLevelScriptActor->InstSoundActor->Stop();
+		}
 	}
+
 	
 	if (RifaGameInstance->PopupSort == 4) 
 	{

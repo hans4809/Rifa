@@ -10,6 +10,8 @@
 #include <Kismet/GameplayStatics.h>
 #include "Widget/GameHUD.h"
 #include "Widget/TutorialWidget.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 AFieldLevelScriptActor::AFieldLevelScriptActor()
 {
@@ -43,7 +45,37 @@ void AFieldLevelScriptActor::BeginPlay()
 			}
 		}
 	}
-
+	if (IsValid(BGMActor))
+	{
+		if (IsValid(RifaGameInstanceReference))
+		{
+			for (int i = 0; i < RifaGameInstanceReference->SoundItemOnOffMap.Num(); i++)
+			{
+				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
+				if (RifaGameInstanceReference->SoundItemHavingMap[EItem(i)])
+				{
+					if (RifaGameInstanceReference->SoundItemOnOffMap[EItem(i)])
+					{
+						BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+					}
+					else
+					{
+						BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+					}
+				}
+				else
+				{
+					BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+				}
+			}
+		}
+		if (BGMActor->GetAudioComponent()->IsPlaying())
+		{
+			BGMActor->Stop();
+		}
+		BGMActor->Play();
+		BGMActor->GetAudioComponent()->FadeIn(0.1f);
+	}
 }
 
 void AFieldLevelScriptActor::OnFinishedLevelSequence()

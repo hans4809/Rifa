@@ -31,8 +31,13 @@ void AMainMenuLevelScriptActor::BeginPlay()
 	}
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
 	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
+	if (BGMActor->GetAudioComponent()->IsPlaying())
+	{
+		BGMActor->Stop();
+	}
 	if (IsValid(BGMActor))
 	{
 		BGMActor->Play();
+		BGMActor->GetAudioComponent()->FadeIn(0.1f);
 	}
 }
