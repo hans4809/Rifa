@@ -50,7 +50,7 @@ void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 		{
 			if (CurrentLevelScriptActor->BGMActor)
 			{
-				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(TEXT("BGM"), (float)BGMIndex);
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetIntParameter(TEXT("BGMIndex"), BGMIndex);
 			}
 		}
 	}

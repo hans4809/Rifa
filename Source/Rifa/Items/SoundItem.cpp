@@ -92,9 +92,16 @@ void ASoundItem::PickupSoundItemEvent()
 			for (int i = 0; i < RifaGameInstance->SoundItemOnOffMap.Num(); i++)
 			{
 				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
-				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i])
+				if (RifaGameInstance->SoundItemHavingMap[EItem(i)])
 				{
-					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+					if (RifaGameInstance->SoundItemOnOffMap[EItem(i)])
+					{
+						CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+					}
+					else
+					{
+						CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+					}
 				}
 				else
 				{
