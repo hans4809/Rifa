@@ -75,7 +75,6 @@ void AIslandLevelScriptActor::BeginPlay()
 			BGMActor->Stop();
 		}
 		BGMActor->Play();
-		BGMActor->GetAudioComponent()->FadeIn(0.1f);
 	}
 	
 }

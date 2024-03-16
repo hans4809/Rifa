@@ -38,6 +38,5 @@ void AMainMenuLevelScriptActor::BeginPlay()
 	if (IsValid(BGMActor))
 	{
 		BGMActor->Play();
-		BGMActor->GetAudioComponent()->FadeIn(0.1f);
 	}
 }
