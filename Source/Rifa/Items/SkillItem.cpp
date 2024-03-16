@@ -96,7 +96,7 @@ void ASkillItem::PickupEnergyEvent()
 					}
 					if (!RifaGameInstance->LevelSequencePlayerArr[1]) 
 					{
-						if (LevelSequenceActor) 
+						if (IsValid(LevelSequenceActor)) 
 						{
 							auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 							if (IsValid(CurrentLevelScriptActor))

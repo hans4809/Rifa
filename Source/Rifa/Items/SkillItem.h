@@ -29,7 +29,7 @@ private:
 	int32 ThisSkillItemIndex;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Data, meta = (AllowPrivateAccess = "true"))
 	EEnergyType ThisEnergyType;
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void PickupEnergyEvent();
 // Tutorial Section
 private:
