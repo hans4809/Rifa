@@ -26,6 +26,12 @@ public:
 	TObjectPtr<USceneComponent> TopStartPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> BottomStartPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> TopEndPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> BottomEndPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UStaticMeshComponent> Mesh;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

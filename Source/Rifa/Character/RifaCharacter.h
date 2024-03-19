@@ -105,6 +105,8 @@ public:
 	FVector WaterForcingVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	FRotator WaterFallRotation;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
+	FVector WaterFallEndVector;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	TObjectPtr<AActor> InteractionTargetActor;
 	//UPROPERTY(EditAnywhere)
