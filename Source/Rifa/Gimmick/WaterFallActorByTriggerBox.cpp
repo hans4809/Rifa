@@ -7,6 +7,7 @@
 #include "Widget/PickupText.h"
 #include "Character/RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
@@ -19,14 +20,24 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	WaterFall = CreateDefaultSubobject<UNiagaraComponent>(TEXT("WaterFall"));
 	TopStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopStartPoint"));
 	BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
+	TopEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopEndPoint"));
+	BottomEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomEndPoint"));
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 
 
 	RootComponent = Root;
 	BottomTrigger->SetupAttachment(RootComponent);
 	TopTrigger->SetupAttachment(RootComponent);
 	WaterFall->SetupAttachment(RootComponent);
-	TopStartPoint->SetupAttachment(WaterFall);
-	BottomStartPoint->SetupAttachment(WaterFall);
+	TopStartPoint->SetupAttachment(TopTrigger);
+	BottomStartPoint->SetupAttachment(BottomTrigger);
+	TopEndPoint->SetupAttachment(TopTrigger);
+	BottomEndPoint->SetupAttachment(BottomTrigger);
+	Mesh->SetupAttachment(WaterFall);
+
+	BottomTrigger->SetCollisionProfileName(TEXT("Trigger"));
+	TopTrigger->SetCollisionProfileName(TEXT("Trigger"));
+	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
 }
 
 // Called when the game starts or when spawned
@@ -54,11 +65,10 @@ void AWaterFallActorByTriggerBox::BeginPlay()
 	}
 	BottomTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::OnCharacterBottomOverlap);
 	BottomTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::EndCharacterBottomOverlap);
-	BottomTrigger->SetCollisionProfileName(TEXT("Trigger"));
+
 
 	TopTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::OnCharacterTopOverlap);
 	TopTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::EndCharacterTopOverlap);
-	TopTrigger->SetCollisionProfileName(TEXT("Trigger"));
 }
 
 // Called every frame
@@ -70,43 +80,61 @@ void AWaterFallActorByTriggerBox::Tick(float DeltaTime)
 
 void AWaterFallActorByTriggerBox::OnCharacterBottomOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ARifaCharacter>(OtherActor)) 
+	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		BottomPickupTextReference->Init();
-		CharacterReference->bCanRideUpWaterFall = true;
-		CharacterReference->SwimStartLocation = BottomStartPoint->GetComponentLocation();
-		CharacterReference->WaterFallRotation = GetActorRotation();
+		if (!CharacterReference->bIsWaterFall)
+		{
+			BottomPickupTextReference->Init();
+			CharacterReference->bCanRideUpWaterFall = true;
+			CharacterReference->SwimStartLocation = BottomStartPoint->GetComponentLocation();
+			CharacterReference->WaterFallRotation = GetActorRotation();
+			CharacterReference->WaterFallEndVector = TopEndPoint->GetComponentLocation();
+		}
+		else
+		{
+		}
 	}
 }
 
 void AWaterFallActorByTriggerBox::EndCharacterBottomOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (Cast<ARifaCharacter>(OtherActor))
+	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		BottomPickupTextReference->CloseWidget();
+		if(!CharacterReference->bIsWaterFall)
+		{
+			CharacterReference->SwimStartLocation = FVector::Zero();
+		}
 		CharacterReference->bCanRideUpWaterFall = false;
-		CharacterReference->SwimStartLocation = FVector::Zero();
+		BottomPickupTextReference->CloseWidget();
 	}
 }
 
 void AWaterFallActorByTriggerBox::OnCharacterTopOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ARifaCharacter>(OtherActor))
+	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		TopPickupTextReference->Init();
-		CharacterReference->bCanRideDownWaterFall = true;
-		CharacterReference->SwimStartLocation = TopStartPoint->GetComponentLocation();
-		CharacterReference->WaterFallRotation = GetActorRotation();
+		if (!CharacterReference->bIsSwimming)
+		{
+			TopPickupTextReference->Init();
+			CharacterReference->bCanRideDownWaterFall = true;
+			CharacterReference->SwimStartLocation = TopStartPoint->GetComponentLocation();
+			CharacterReference->WaterFallRotation = GetActorRotation();
+			CharacterReference->WaterFallEndVector = BottomEndPoint->GetComponentLocation();
+		}
 	}
 }
 
 void AWaterFallActorByTriggerBox::EndCharacterTopOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (Cast<ARifaCharacter>(OtherActor))
+	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
+		if (!CharacterReference->bIsWaterFall)
+		{
+
+			CharacterReference->SwimStartLocation = FVector::Zero();
+		}
+		CharacterReference->bCanRideUpWaterFall = false;
 		TopPickupTextReference->CloseWidget();
-		CharacterReference->bCanRideDownWaterFall = false;
-		CharacterReference->SwimStartLocation = FVector::Zero();
 	}
 }
 

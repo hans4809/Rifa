@@ -86,7 +86,11 @@ void UMyGameInstance::Load()
 	SoundTrack = RIFASaveGame->SoundTrack;
 	BGMIndex = RIFASaveGame->BGMIndex;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
-	SwimItemArr = RIFASaveGame->SwimItemArr;
+	//SwimItemArr = RIFASaveGame->SwimItemArr;
+	for (int i = 0; i < 5; i++)
+	{
+		SwimItemArr.Add(true);
+	}
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
 	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
 	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
@@ -94,8 +98,8 @@ void UMyGameInstance::Load()
 	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 	bCanFly = RIFASaveGame->bCanFly;
-	bCanSwim = RIFASaveGame->bCanSwim;
-	//bCanSwim = true;
+	//bCanSwim = RIFASaveGame->bCanSwim;
+	bCanSwim = true;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 	bClearIslandForest = RIFASaveGame->bClearIslandForest;
 	bClearFieldForest = RIFASaveGame->bClearFieldForest;

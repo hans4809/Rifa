@@ -503,7 +503,14 @@ void ARifaCharacter::ReturnWalk()
 	bIsSwimming = false;
 	bIsWaterFall = false;
 	RifaCharacterMovement->MaxFlySpeed = 600;
-	SetActorRotation(FRotator(0.f, 0.f, 0.f));
+	if (WaterFallEndVector != FVector(0,0,0))
+	{
+		SetActorLocationAndRotation(WaterFallEndVector, FRotator::ZeroRotator);
+	}
+	else 
+	{
+		SetActorRotation(FRotator(0.f, 0.f, 0.f));
+	}
 	ClientCheatWalk();
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Walking);
