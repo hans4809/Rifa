@@ -85,6 +85,10 @@ void ASoundItem::PickupSoundItemEvent()
 				}
 			}
 		}
+		else 
+		{
+			Destroy();
+		}
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;
 		if (IsValid(RifaGameInstance) && IsValid(CurrentLevelScriptActor))
@@ -138,5 +142,6 @@ void ASoundItem::OnEndLevelSequence()
 		{
 			CollectionWidgetReference->Init();
 		}
+		Destroy();
 	}
 }

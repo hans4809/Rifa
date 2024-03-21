@@ -42,7 +42,7 @@ void AIslandLevelScriptActor::BeginPlay()
 		{
 			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
 			{
-				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+				//CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
 			}
 		}
 	}
