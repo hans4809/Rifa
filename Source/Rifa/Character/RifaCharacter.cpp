@@ -423,18 +423,26 @@ void ARifaCharacter::Fly()
 
 void ARifaCharacter::Landed(const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Log, TEXT("Falling Velocity : %f"), RifaCharacterMovement->Velocity.Z);
-	if (RifaCharacterMovement->Velocity.Z <= -2000)
+	Super::Landed(Hit);
+	if (bIsDied)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
-		if (GameModeReference) 
-		{
-			GameModeReference->PlayerDie(this);
-		}
+		return;
 	}
 	else 
 	{
-		return;
+		UE_LOG(LogTemp, Log, TEXT("Falling Velocity : %f"), RifaCharacterMovement->Velocity.Z);
+		if (RifaCharacterMovement->Velocity.Z <= -2000)
+		{
+			UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
+			if (GameModeReference)
+			{
+				GameModeReference->PlayerDie(this);
+			}
+		}
+		else
+		{
+			return;
+		}
 	}
 }
 

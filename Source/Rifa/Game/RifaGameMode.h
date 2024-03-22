@@ -25,6 +25,8 @@ public:
 	TSubclassOf<class UUserWidget> FadeWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Widget)
 	TObjectPtr<class UFadeWidget> FadeWidgetReference;
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<class UCameraComponent> CameraReference;
 protected:
 	virtual void BeginPlay();
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference")

@@ -11,6 +11,9 @@
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include "Widget/FadeWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/PhysicsVolume.h"
 
 
 ARifaGameMode::ARifaGameMode()
@@ -31,6 +34,7 @@ ARifaGameMode::ARifaGameMode()
 	{
 		FadeWidgetClass = FadeWidget.Class;
 	}
+	CameraReference = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 }
 
 void ARifaGameMode::BeginPlay()
@@ -54,7 +58,13 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeOut);
 	}
 	Player->DisableInput(Cast<APlayerController>(Player->Controller));
-	auto PlayerAnim = Player->GetMesh()->GetAnimInstance();
+	//Player->GetCharacterMovement()->GravityScale = 0;
+	//Player->GetCharacterMovement()->AddImpulse(FVector(0.f, 0.f, -100.f), true);
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_None);
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	Player->GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
+	Player->GetFollowCamera()->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	CameraReference = Player->GetFollowCamera();
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ARifaGameMode::PlayerRespawn, 2.f, false);
 }
@@ -62,11 +72,15 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 void ARifaGameMode::PlayerRespawn()
 {
 	auto Player = CharacterReference;
+	CharacterReference->GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	//Player->GetCharacterMovement()->GravityScale = 1;
+	Player->GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = false;
 	if (IsValid(FadeWidgetReference))
 	{
 		FadeWidgetReference->Init();
 		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeIn);
 	}
+	CameraReference->AttachToComponent(Player->GetCameraBoom(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, USpringArmComponent::SocketName);
 	//Player->EnableInput(Cast<APlayerController>(Player->Controller));
 	if (GameInstanceReference->SavePosition != FVector(0, 0, 0))
 	{

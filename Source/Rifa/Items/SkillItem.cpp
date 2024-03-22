@@ -77,6 +77,7 @@ void ASkillItem::PickupEnergyEvent()
 						CharacterReference->MaxFlyEnergyPercent += 0.2f;
 						RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
 						CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
+						Destroy();
 					}
 				}
 				break;
@@ -110,16 +111,17 @@ void ASkillItem::PickupEnergyEvent()
 								LevelSequncePlayer->Play();
 								GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASkillItem::EndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
 							}
-
 						}
+					}
+					else
+					{
+						Destroy();
 					}
 				}
 				break;
 		}
-		//Particle->SetActive(false);
 		SetActorHiddenInGame(true);
 		RifaGameInstance->LevelSequencePlayerArr[1] = true;
-		Trigger->DestroyComponent();
 		PickupTextReference->CloseWidget();
 		RifaGameInstance->Save();
 	}
