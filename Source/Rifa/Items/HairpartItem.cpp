@@ -5,6 +5,7 @@
 #include "Data/MyGameInstance.h"
 #include "Character/RifaCharacter.h"
 #include "Widget/PickupText.h"
+#include "Components/AudioComponent.h"
 
 AHairpartItem::AHairpartItem()
 {
@@ -37,6 +38,7 @@ void AHairpartItem::PickupCharacterParts()
 {
 	if (bIsInRange)
 	{
+		AudioComponent->Play();
 		EHairPartsItem EtempHairPart = ECurrentHairPart;
 
 		ECurrentHairPart = CharacterReference->ECurrentCharacterHairPart;

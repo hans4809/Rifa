@@ -66,6 +66,7 @@ void ASoundItem::PickupSoundItemEvent()
 {
 	if (bIsInRange && !RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex])
 	{
+		AudioComponent->Play();
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (!RifaGameInstance->LevelSequencePlayerArr[2])
 		{
