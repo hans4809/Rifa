@@ -5,6 +5,7 @@
 #include "Data/MyGameInstance.h"
 #include "Character/RifaCharacter.h"
 #include "Widget/PickupText.h"
+#include "Components/AudioComponent.h"
 
 AMaterailItem::AMaterailItem()
 {
@@ -33,6 +34,7 @@ void AMaterailItem::PickupCharacterMaterial()
 {
 	if (bIsInRange)
 	{
+		AudioComponent->Play();
 		ECharacterMaterialItem ETempMaterial = ECurrentMaterial;
 
 		ECurrentMaterial = CharacterReference->ECurrentCharacterMaterial;

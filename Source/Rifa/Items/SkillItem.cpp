@@ -15,6 +15,7 @@
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/SphereComponent.h"
+#include "Components/AudioComponent.h"
 
 ASkillItem::ASkillItem()
 {
@@ -120,6 +121,7 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				break;
 		}
+		AudioComponent->Play();
 		SetActorHiddenInGame(true);
 		RifaGameInstance->LevelSequencePlayerArr[1] = true;
 		PickupTextReference->CloseWidget();

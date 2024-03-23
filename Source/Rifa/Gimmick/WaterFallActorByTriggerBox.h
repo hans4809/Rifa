@@ -32,6 +32,8 @@ public:
 	TObjectPtr<USceneComponent> BottomEndPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UStaticMeshComponent> Mesh;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UAudioComponent> Sound;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

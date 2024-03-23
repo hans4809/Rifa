@@ -8,6 +8,7 @@
 #include "Character/RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
@@ -23,6 +24,7 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	TopEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopEndPoint"));
 	BottomEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomEndPoint"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Sound = CreateDefaultSubobject<UAudioComponent>(TEXT("Sound"));
 
 
 	RootComponent = Root;
@@ -34,10 +36,17 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	TopEndPoint->SetupAttachment(TopTrigger);
 	BottomEndPoint->SetupAttachment(BottomTrigger);
 	Mesh->SetupAttachment(WaterFall);
+	Sound->SetupAttachment(RootComponent);
 
 	BottomTrigger->SetCollisionProfileName(TEXT("Trigger"));
 	TopTrigger->SetCollisionProfileName(TEXT("Trigger"));
 	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
+
+	const ConstructorHelpers::FObjectFinder<USoundBase> WaterFallSound(TEXT("/Script/Engine.SoundCue'/Game/Sounds/SFX/Waterfall_Water.Waterfall_Water'"));
+	if (WaterFallSound.Succeeded())
+	{
+		Sound->SetSound(WaterFallSound.Object);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -69,6 +78,10 @@ void AWaterFallActorByTriggerBox::BeginPlay()
 
 	TopTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::OnCharacterTopOverlap);
 	TopTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::EndCharacterTopOverlap);
+	/*if (IsValid(Sound->Sound))
+	{
+		Sound->Play();
+	}*/
 }
 
 // Called every frame

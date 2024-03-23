@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Data/MyGameInstance.h"
 #include "Widget/PickupText.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 AInteractableActor::AInteractableActor()
@@ -15,12 +16,21 @@ AInteractableActor::AInteractableActor()
 	PrimaryActorTick.bCanEverTick = false;
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AUDIOCOMPONENT"));
 
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(RootComponent);
+	AudioComponent->SetupAttachment(RootComponent);
 
 	Trigger->SetSphereRadius(200.f);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> Sound(TEXT("/Script/Engine.SoundWave'/Game/Sounds/SFX/Char_Interact_Get.Char_Interact_Get'"));
+	if (Sound.Succeeded()) 
+	{
+		AudioComponent->Sound = Sound.Object;
+	}
+	AudioComponent->bAutoActivate = false;
 
 	static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
 	if (UW.Succeeded()) 
