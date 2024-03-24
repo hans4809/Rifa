@@ -5,6 +5,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "DialogReplyObject.h"
+#include "DialogWidget.h"
 
 void UReplyEntryWidget::NativeConstruct()
 {
@@ -14,11 +15,24 @@ void UReplyEntryWidget::NativeConstruct()
 	ReplyButton->OnClicked.AddDynamic(this, &UReplyEntryWidget::ReplyButtonClicked);
 	ReplyButton->OnHovered.AddDynamic(this, &UReplyEntryWidget::ReplyButtonHovered);
 	ReplyButton->OnUnhovered.AddDynamic(this, &UReplyEntryWidget::ReplyButtonUnHovered);
+
+	UDialogWidget* Parent = Cast<UDialogWidget>(GetParent());
+	if (IsValid(Parent))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Parent %s is valid"), *Parent->GetName());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Parent is invalid"));
+	}
 }
 
 void UReplyEntryWidget::ReplyButtonClicked()
 {
-	if (DialogReplyObject_C->OnClicked.IsBound()) { DialogReplyObject_C->OnClicked.Broadcast(DialogReplyObject_C); }
+	if (IsValid(DialogReplyObject_C))
+	{
+		if (DialogReplyObject_C->OnClicked.IsBound()) { DialogReplyObject_C->OnClicked.Broadcast(DialogReplyObject_C); }
+	}
 }
 
 void UReplyEntryWidget::ReplyButtonHovered()
