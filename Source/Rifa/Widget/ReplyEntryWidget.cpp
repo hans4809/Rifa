@@ -44,3 +44,11 @@ void UReplyEntryWidget::ReplyButtonUnHovered()
 {
 	ReplyText->SetColorAndOpacity(DefaultColor);
 }
+
+void UReplyEntryWidget::NativeOnListItemObjectSet(UObject* ListItemObject)
+{
+	IUserObjectListEntry::NativeOnListItemObjectSet(ListItemObject);
+
+	DialogReplyObject_C = Cast<UDialogReplyObject>(ListItemObject);
+	ReplyText->SetText(DialogReplyObject_C->Reply);
+}

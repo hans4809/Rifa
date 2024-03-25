@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/IUserObjectListEntry.h"
 #include "ReplyEntryWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RIFA_API UReplyEntryWidget : public UUserWidget
+class RIFA_API UReplyEntryWidget : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
 protected:
@@ -33,4 +34,5 @@ public:
 	void ReplyButtonHovered();
 	UFUNCTION(BlueprintCallable)
 	void ReplyButtonUnHovered();
+	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 };

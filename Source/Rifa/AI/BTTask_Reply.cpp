@@ -15,15 +15,15 @@
 
 UBTTask_Reply::UBTTask_Reply()
 {
-    DialogWidget.SelectedKeyName = "DialogWidget";
+    DialogWidget.SelectedKeyName = TEXT("DialogWidget");
     DialogWidget.SelectedKeyType = UDialogWidget::StaticClass();
-    OutReplyIndex.SelectedKeyName = "OutReplyIndex";
+    OutReplyIndex.SelectedKeyName = TEXT("ReplyIndex");
 }
 
 EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
-
+    OwnerCompRef = &OwnerComp;
     AIController = Cast<ANPCAIController>(OwnerComp.GetAIOwner());
 
     ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
@@ -53,8 +53,7 @@ EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 void UBTTask_Reply::OnReplyFinished_Evt(int32 Index)
 {
-    DialogWidgetAsset->OnReplyFinished.RemoveDynamic(this, &UBTTask_Reply::OnReplyFinished_Evt);
+    //DialogWidgetAsset->OnReplyFinished.RemoveDynamic(this, &UBTTask_Reply::OnReplyFinished_Evt);
     AIController->GetBlackboardComponent()->SetValueAsInt(OutReplyIndex.SelectedKeyName, Index);
-    UBehaviorTreeComponent* OwnerComp = Cast<UBehaviorTreeComponent>(GetOuter());
-    FinishLatentTask(*OwnerComp, EBTNodeResult::Succeeded);
+    FinishLatentTask(*OwnerCompRef, EBTNodeResult::Succeeded);
 }

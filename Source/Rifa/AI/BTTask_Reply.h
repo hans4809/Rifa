@@ -24,8 +24,10 @@ public:
 protected:
 	//Task 실행 함수 오버라이딩
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
+	UPROPERTY()
+	TObjectPtr<class UBehaviorTreeComponent> OwnerCompRef;
 private:
+	UFUNCTION()
 	void OnReplyFinished_Evt(int32 Index);
 	UPROPERTY(EditAnywhere, Category = "Blackboard")
 	TObjectPtr<class APawn> ControllingPawn;
