@@ -26,25 +26,19 @@ EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp
     OwnerCompRef = &OwnerComp;
     AIController = Cast<ANPCAIController>(OwnerComp.GetAIOwner());
 
-    ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
+    APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
     if(ControllingPawn == nullptr)
 	{
 		return EBTNodeResult::Failed;
 	}
 
-    DialogWidgetAsset = Cast<UDialogWidget>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(DialogWidget.SelectedKeyName));
+    UDialogWidget* DialogWidgetAsset = Cast<UDialogWidget>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(DialogWidget.SelectedKeyName));
     if(DialogWidgetAsset == nullptr)
 	{
 		return EBTNodeResult::Failed;
 	}
 
     DialogWidgetAsset->OnReplyFinished.AddDynamic(this, &UBTTask_Reply::OnReplyFinished_Evt);
-    if(Replies.Num() == 0)
-	{
-		Replies.Add(FText::FromString(TEXT("OK")));
-		Replies.Add(FText::FromString(TEXT("Yes")));
-		Replies.Add(FText::FromString(TEXT("No")));
-	}
 
     DialogWidgetAsset->Reply_C(Replies);
     Result = EBTNodeResult::InProgress;
@@ -53,7 +47,6 @@ EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 void UBTTask_Reply::OnReplyFinished_Evt(int32 Index)
 {
-    //DialogWidgetAsset->OnReplyFinished.RemoveDynamic(this, &UBTTask_Reply::OnReplyFinished_Evt);
     AIController->GetBlackboardComponent()->SetValueAsInt(OutReplyIndex.SelectedKeyName, Index);
     FinishLatentTask(*OwnerCompRef, EBTNodeResult::Succeeded);
 }

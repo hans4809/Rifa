@@ -30,9 +30,5 @@ private:
 	UFUNCTION()
 	void OnReplyFinished_Evt(int32 Index);
 	UPROPERTY(EditAnywhere, Category = "Blackboard")
-	TObjectPtr<class APawn> ControllingPawn;
-	UPROPERTY(EditAnywhere, Category = "Blackboard")
 	TObjectPtr<class ANPCAIController> AIController;
-	UPROPERTY(EditAnywhere, Category = "Blackboard")
-	TObjectPtr<class UDialogWidget> DialogWidgetAsset;
 };
