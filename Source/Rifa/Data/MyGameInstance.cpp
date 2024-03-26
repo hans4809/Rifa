@@ -70,6 +70,7 @@ void UMyGameInstance::Save()
 	NewPlayerData->CurrentLevelName = CurrentLevelName;
 	NewPlayerData->bClearIslandForest = bClearIslandForest;
 	NewPlayerData->bClearFieldForest = bClearFieldForest;
+	NewPlayerData->NPCDialogMap = NPCDialogMap;
 	UGameplayStatics::SaveGameToSlot(NewPlayerData, "RIFASaveFile", 0);
 }
 
@@ -91,6 +92,7 @@ void UMyGameInstance::Load()
 	{
 		SwimItemArr.Add(true);
 	}
+	NPCDialogMap = RIFASaveGame->NPCDialogMap;
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
 	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
 	CurrentMaterialItemArr = RIFASaveGame->CurrentMaterialItemArr;
@@ -113,6 +115,7 @@ void UMyGameInstance::ResetSaveData()
 {
 	URIFASaveGame* RIFASaveGame = GetMutableDefault<URIFASaveGame>();
 	SavePosition = RIFASaveGame->SavePosition;
+	NPCDialogMap = RIFASaveGame->NPCDialogMap;
 	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
 	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
 	SoundTrack = RIFASaveGame->SoundTrack;

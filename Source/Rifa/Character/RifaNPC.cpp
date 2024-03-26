@@ -7,6 +7,7 @@
 #include "Widget/PickupText.h"
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include <BehaviorTree/BehaviorTree.h>
 
 // Sets default values
 ARifaNPC::ARifaNPC()
@@ -60,7 +61,17 @@ void ARifaNPC::Dialog()
 {
 	if (IsInRange) 
 	{
-		DialogComponent->OnInterAction(CharacterReference);
+		const UEnum* NPCEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ENPCType"));
+		if(NPCEnum)
+		{
+			FString EnumMetaData = NPCEnum->GetDisplayNameTextByValue((int32)ThisNPCType).ToString();
+			FString DialogPath = FString::Printf(TEXT("/Script/AIModule.BehaviorTree'/Game/BluePrint/UI/DialogSystem/DialogTree/NPC/NPC_%s_DialogTree.NPC_%s_DialogTree'"), *EnumMetaData, *EnumMetaData);
+			DialogComponent->DialogTree = LoadObject<UBehaviorTree>(nullptr, *DialogPath);
+		}
+		if (IsValid(DialogComponent->DialogTree)) 
+		{
+			DialogComponent->OnInterAction(CharacterReference);
+		}
 	}
 }
 

@@ -13,6 +13,10 @@ URIFASaveGame::URIFASaveGame()
 		SoundItemHavingMap.Add((EItem)i, false);
 		SoundItemOnOffMap.Add((EItem)i, false);
 	}
+	for(int i = 0; i < (int)ENPCType::MaxCount; i++)
+	{
+		NPCDialogMap.Add((ENPCType)i, 1);
+	}
 	BGMIndex = 0;
 
 	bCanFly = false;
