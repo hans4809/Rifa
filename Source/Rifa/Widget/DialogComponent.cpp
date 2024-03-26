@@ -31,6 +31,7 @@ void UDialogComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	DialogAIController = Cast<ANPCAIController>(GetWorld()->SpawnActor(ANPCAIController::StaticClass()));
+	DialogAIController->SetPawn(Cast<APawn>(GetOwner()));
 	// ...
 	if (IsValid(DialogWidgetClass))
 	{

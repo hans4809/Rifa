@@ -47,6 +47,14 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	{
 		Sound->SetSound(WaterFallSound.Object);
 	}
+
+	const ConstructorHelpers::FObjectFinder<UStaticMesh> MESH(TEXT("/Script/Engine.StaticMesh'/Game/BluePrint/Gimmick/Waterfall_Collsion.Waterfall_Collsion'"));
+	if (MESH.Succeeded())
+	{
+		Mesh->SetStaticMesh(MESH.Object);
+	}
+	Mesh->SetRelativeLocationAndRotation(FVector(0, -360.0f, 0), FRotator(0, 0, 0));
+	Mesh->SetRelativeScale3D(FVector(1.75f, 1.0f, 1.715f));
 }
 
 // Called when the game starts or when spawned
