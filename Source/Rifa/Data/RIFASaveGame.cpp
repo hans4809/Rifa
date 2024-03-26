@@ -15,7 +15,7 @@ URIFASaveGame::URIFASaveGame()
 	}
 	for(int i = 0; i < (int)ENPCType::MaxCount; i++)
 	{
-		NPCDialogMap.Add((ENPCType)i, 1);
+		NPCDialogMap.Add((ENPCType)i, 0);
 	}
 	BGMIndex = 0;
 
