@@ -65,7 +65,7 @@ void ARifaNPC::Dialog()
 		const UEnum* NPCEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ENPCType"));
 		if(NPCEnum)
 		{
-			FString EnumMetaData = NPCEnum->GetDisplayNameTextByValue((int32)ThisNPCType).ToString();
+			FString EnumMetaData = NPCEnum->GetDisplayNameTextByIndex((int32)ThisNPCType).ToString();
 			if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(GetGameInstance()))
 			{
 				int32 DialogIndex = GameInstance->NPCDialogMap[ThisNPCType];
