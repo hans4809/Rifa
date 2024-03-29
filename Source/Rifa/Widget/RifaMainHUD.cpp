@@ -8,6 +8,12 @@
 #include "Sound/SoundCue.h"
 #include <Kismet/GameplayStatics.h>
 #include <Data/MyGameInstance.h>
+#include "Widget/ResetDataQuestionWidget.h"
+
+URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+}
 
 void URifaMainHUD::NativeConstruct()
 {
@@ -50,12 +56,10 @@ void URifaMainHUD::LoadButtonClicked()
 
 void URifaMainHUD::ResetButtonClicked()
 {
-	auto GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (GameInstance)
+	if (IsValid(ResetDataQuestionWidgetClass))
 	{
-		GameInstance->ResetSaveData();
-		FName LevelName = GameInstance->CurrentLevelName;
-		UGameplayStatics::OpenLevel(this, LevelName);
+		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
+		ResetDataQuestionWidgetAsset->Init();
 	}
 }
 

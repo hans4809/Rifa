@@ -14,6 +14,8 @@ UCLASS()
 class RIFA_API URifaMainHUD : public USceneWidget
 {
 	GENERATED_BODY()
+public:
+	URifaMainHUD(const FObjectInitializer &ObjectInitializer);
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
@@ -30,6 +32,10 @@ public:
 	TSubclassOf<class UPopUpWidget> MainSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	class UMainSettingWidget* MainSettingWidgetAsset;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> ResetDataQuestionWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UResetDataQuestionWidget> ResetDataQuestionWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
 	class USoundCue* MainBGM;
 	UFUNCTION(BlueprintCallable)

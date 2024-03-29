@@ -74,7 +74,7 @@ void UDialogWidget::SetDialogState_C(EDialogState_C DialogState)
 		break;
 	case EDialogState_C::Reply:
 		ReplySizeBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
-		SpeakSizeBox->SetVisibility(ESlateVisibility::Collapsed);
+		SpeakSizeBox->SetVisibility(ESlateVisibility::Visible);
 		break;
 	default:
 		break;
