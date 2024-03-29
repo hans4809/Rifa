@@ -7,6 +7,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
 #include "Data/MyGameInstance.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 AWaterActor::AWaterActor()
@@ -19,6 +20,7 @@ AWaterActor::AWaterActor()
 	RootComponent = Root;
 	Mesh->SetupAttachment(Root);
 	Trigger->SetupAttachment(Mesh);
+
 	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 }

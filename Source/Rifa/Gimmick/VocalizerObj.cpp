@@ -40,6 +40,7 @@ void AVocalizerObj::BeginPlay()
 	Super::BeginPlay();
 
 	vocalizerInterval = 2.f;
+	speed = 2.f;
 	
 	if(isPhysicCollision)
 		staticMesh->SetCollisionProfileName(TEXT("BlockAll"));
