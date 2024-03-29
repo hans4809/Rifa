@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
 #include "MyGameInstance.h"
+#include "Character/RifaNPC.h"
 #include "RIFASaveGame.generated.h"
 
 UCLASS()
@@ -57,4 +58,6 @@ public:
 	bool bClearIslandForest;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bClearFieldForest;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TMap<ENPCType, int32> NPCDialogMap;
 };

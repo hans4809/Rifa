@@ -12,6 +12,9 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BTNode.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+#include "Character/RifaNPC.h"
+#include "Data/MyGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 UBTTask_Exit::UBTTask_Exit()
 {
@@ -23,7 +26,7 @@ EBTNodeResult::Type UBTTask_Exit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 {
 	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
 
-	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
+	ARifaNPC* ControllingPawn = Cast<ARifaNPC>(OwnerComp.GetAIOwner()->GetPawn());
 	if (ControllingPawn == nullptr)
 	{
 		return EBTNodeResult::Failed;
@@ -34,8 +37,13 @@ EBTNodeResult::Type UBTTask_Exit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 		return EBTNodeResult::Failed;
 	}
 	DialogWidgetAsset->Exit_C();
-	Result = EBTNodeResult::Succeeded;
 
+	if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
+	{
+		GameInstance->NPCDialogMap[ControllingPawn->ThisNPCType]++;
+	}
+
+	Result = EBTNodeResult::Succeeded;
 
 	return Result;
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Character/RifaNPC.h"
 #include "MyGameInstance.generated.h"
 /**
  * 
@@ -116,6 +117,7 @@ public:
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> HairMaterialMap;	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<ECharacterMaterialItem, TObjectPtr<UMaterialInterface>> CharacterMaterialMap;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bCanFly;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
@@ -124,6 +126,8 @@ public:
 	bool bClearIslandForest;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bClearFieldForest;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
+	TMap<ENPCType, int32> NPCDialogMap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int PopupSort = 5;

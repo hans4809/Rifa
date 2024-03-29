@@ -52,27 +52,25 @@ void AIslandLevelScriptActor::BeginPlay()
 		{
 			for (int i = 0; i < RifaGameInstanceReference->SoundItemOnOffMap.Num(); i++)
 			{
-				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
+				FName InstParam = FName(FString::Printf(TEXT("Inst%d"), i));
+				FName BGMParam = FName(FString::Printf(TEXT("BGMIndex")));
+				BGMActor->GetAudioComponent()->SetIntParameter(BGMParam, RifaGameInstanceReference->BGMIndex);
 				if (RifaGameInstanceReference->SoundItemHavingMap[EItem(i)])
 				{
 					if (RifaGameInstanceReference->SoundItemOnOffMap[EItem(i)])
 					{
-						BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
+						BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 1.f);
 					}
 					else
 					{
-						BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+						BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 0.f);
 					}
 				}
 				else
 				{
-					BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
+					BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 0.f);
 				}
 			}
-		}
-		if (BGMActor->GetAudioComponent()->IsPlaying())
-		{
-			BGMActor->Stop();
 		}
 		BGMActor->Play();
 	}

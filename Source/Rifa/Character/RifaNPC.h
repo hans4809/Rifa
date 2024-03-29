@@ -6,6 +6,16 @@
 #include "GameFramework/Character.h"
 #include "RifaNPC.generated.h"
 
+UENUM()
+enum class ENPCType : uint8
+{
+	A UMETA(DisplayName = "A"),
+	P UMETA(DisplayName = "P"),
+	R UMETA(DisplayName = "R"),
+	S UMETA(DisplayName = "S"),
+	T UMETA(DisplayName = "T"),
+	MaxCount UMETA(Hidden)
+};
 UCLASS()
 class RIFA_API ARifaNPC : public ACharacter
 {
@@ -43,4 +53,7 @@ private:
 	void EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
 	bool IsInRange;
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))
+	ENPCType ThisNPCType;
 };

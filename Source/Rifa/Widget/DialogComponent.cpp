@@ -51,12 +51,10 @@ void UDialogComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 {
-
-	DialogWidgetAsset->Init();
-
 	DialogAIController->RunBehaviorTree(DialogTree);
 	DialogAIController->UseBlackboard(DialogBlackBoard, BlackboardComponent);
 	BlackboardComponent->SetValueAsObject(FName(TEXT("DialogWidget")), DialogWidgetAsset);
+	DialogWidgetAsset->Init();
 }
 
 void UDialogComponent::OnExit()
