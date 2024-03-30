@@ -8,6 +8,7 @@
 #include "Data/MyGameInstance.h"
 #include "Widget/PickupText.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 
 // Sets default values
 AInteractableActor::AInteractableActor()
@@ -17,10 +18,12 @@ AInteractableActor::AInteractableActor()
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AUDIOCOMPONENT"));
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WIDGETCOMPONENT"));
 
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(RootComponent);
 	AudioComponent->SetupAttachment(RootComponent);
+	WidgetComponent->SetupAttachment(RootComponent);
 
 	Trigger->SetSphereRadius(200.f);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
@@ -36,6 +39,9 @@ AInteractableActor::AInteractableActor()
 	if (UW.Succeeded()) 
 	{
 		PickupTextClass = UW.Class;
+		WidgetComponent->SetWidgetClass(PickupTextClass);
+		WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+		WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }
 
@@ -51,6 +57,7 @@ void AInteractableActor::BeginPlay()
 	}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AInteractableActor::EndCharacterOverlap);
+	WidgetComponent->SetVisibility(false);
 }
 
 // Called every frame
@@ -64,7 +71,8 @@ void AInteractableActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp,
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->Init();
+		//PickupTextReference->Init();
+		WidgetComponent->SetVisibility(true);
 		bIsInRange = true;
 	}
 }
@@ -73,7 +81,8 @@ void AInteractableActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->CloseWidget();
+		//PickupTextReference->CloseWidget();
+		WidgetComponent->SetVisibility(false);
 		bIsInRange = false;
 	}
 }

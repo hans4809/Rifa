@@ -89,7 +89,7 @@ void UCollectionWidget::CloseWidget()
 	}
 
 	
-	if (RifaGameInstance->PopupSort == 4) 
+	if (RifaGameInstance->PopupSort == 4 || RifaGameInstance->PopupSort == 5) 
 	{
 		if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 		{
