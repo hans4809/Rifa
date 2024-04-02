@@ -42,6 +42,7 @@ AInteractableActor::AInteractableActor()
 		WidgetComponent->SetWidgetClass(PickupTextClass);
 		WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 		WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		WidgetComponent->SetDrawSize(FVector2D(100, 100));
 	}
 }
 
@@ -51,10 +52,10 @@ void AInteractableActor::BeginPlay()
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (IsValid(PickupTextClass)) 
-	{
-		PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
-	}
+	//if (IsValid(PickupTextClass)) 
+	//{
+	//	PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+	//}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AInteractableActor::EndCharacterOverlap);
 	WidgetComponent->SetVisibility(false);
