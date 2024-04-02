@@ -8,6 +8,29 @@
 #include "Sound/SoundCue.h"
 #include <Kismet/GameplayStatics.h>
 #include <Data/MyGameInstance.h>
+#include "Widget/ResetDataQuestionWidget.h"
+
+URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	static ConstructorHelpers::FClassFinder<UUserWidget> MainSettingWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_MainSettingWidget.WG_MainSettingWidget_C'"));
+	if (MainSettingWidget.Succeeded())
+	{
+		MainSettingWidgetClass = MainSettingWidget.Class;
+	}
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> ResetDataQuestionWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_ResetDataQuestionWidget.WG_ResetDataQuestionWidget_C'"));
+	if (ResetDataQuestionWidget.Succeeded())
+	{
+		ResetDataQuestionWidgetClass = ResetDataQuestionWidget.Class;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundCue> MainBGMSound(TEXT("/Script/Engine.SoundCue'/Game/Sounds/GameBGM.GameBGM'"));
+	if (MainBGMSound.Succeeded())
+	{
+		MainBGM = MainBGMSound.Object;
+	}
+}
 
 void URifaMainHUD::NativeConstruct()
 {
@@ -34,8 +57,11 @@ void URifaMainHUD::SettingButtonClicked()
 	if (IsValid(MainSettingWidgetClass))
 	{
 		MainSettingWidgetAsset = Cast<UMainSettingWidget>(CreateWidget(GetWorld(), MainSettingWidgetClass));
+		if (IsValid(MainSettingWidgetAsset)) 
+		{
+			MainSettingWidgetAsset->Init();
+		}
 	}
-	MainSettingWidgetAsset->Init();
 }
 
 void URifaMainHUD::LoadButtonClicked()
@@ -50,12 +76,13 @@ void URifaMainHUD::LoadButtonClicked()
 
 void URifaMainHUD::ResetButtonClicked()
 {
-	auto GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (GameInstance)
+	if (IsValid(ResetDataQuestionWidgetClass))
 	{
-		GameInstance->ResetSaveData();
-		FName LevelName = GameInstance->CurrentLevelName;
-		UGameplayStatics::OpenLevel(this, LevelName);
+		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
+		if (IsValid(ResetDataQuestionWidgetAsset))
+		{
+			ResetDataQuestionWidgetAsset->Init();
+		}
 	}
 }
 

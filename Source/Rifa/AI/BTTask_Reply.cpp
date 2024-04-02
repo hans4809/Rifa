@@ -12,6 +12,7 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BTNode.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+#include <Character/RifaNPC.h>
 
 UBTTask_Reply::UBTTask_Reply()
 {
@@ -32,6 +33,12 @@ EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		return EBTNodeResult::Failed;
 	}
 
+    ARifaNPC* ControllingNPC = Cast<ARifaNPC>(ControllingPawn);
+    if (ControllingNPC == nullptr)
+    {
+        return EBTNodeResult::Failed;
+    }
+    
     UDialogWidget* DialogWidgetAsset = Cast<UDialogWidget>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(DialogWidget.SelectedKeyName));
     if(DialogWidgetAsset == nullptr)
 	{
