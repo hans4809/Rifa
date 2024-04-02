@@ -10,6 +10,7 @@
 #include "Data/MyGameInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ARifaNPC::ARifaNPC()
@@ -57,10 +58,6 @@ void ARifaNPC::BeginPlay()
 	if (IsValid(CharacterReference))
 	{
 		CharacterReference->NPCTalk.AddDynamic(this, &ARifaNPC::Dialog);
-	}
-	if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(GetGameInstance()))
-	{
-		ThisNPCDialogIndex = GameInstance->NPCDialogMap[ThisNPCType];
 	}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaNPC::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaNPC::EndCharacterOverlap);

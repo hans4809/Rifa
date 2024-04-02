@@ -10,6 +10,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Character/RifaNPC.h"
+#include "Data/MyGameInstance.h"
 
 // Sets default values for this component's properties
 UDialogComponent::UDialogComponent()
@@ -57,7 +58,10 @@ void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 	BlackboardComponent->SetValueAsObject(FName(TEXT("DialogWidget")), DialogWidgetAsset);
 	if (ARifaNPC* ControllingNPC = Cast<ARifaNPC>(GetOwner()))
 	{
-		BlackboardComponent->SetValueAsInt(FName(TEXT("DialogIndex")), ControllingNPC->ThisNPCDialogIndex);
+		if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
+		{
+			int32 DialogIndex = GameInstance->NPCDialogMap[ControllingNPC->ThisNPCType];
+		}
 	}
 	DialogWidgetAsset->Init();
 }
