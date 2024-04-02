@@ -7,7 +7,6 @@
 #include "Widget/PickupText.h"
 #include "RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include <BehaviorTree/BehaviorTree.h>
 #include "Data/MyGameInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
@@ -21,7 +20,8 @@ ARifaNPC::ARifaNPC()
 	DialogComponent = CreateDefaultSubobject<UDialogComponent>(TEXT("DialogComponent"));
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
 
-	Trigger->SetupAttachment(RootComponent);
+	Trigger->SetupAttachment(RootComponent);	
+	WidgetComponent->SetupAttachment(RootComponent);
 	Trigger->SetSphereRadius(150.f);
 
 	static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/Inventory/WG_PickupText.WG_PickupText_C'"));
@@ -53,8 +53,6 @@ void ARifaNPC::BeginPlay()
 	//		CharacterReference->NPCTalk.AddDynamic(this, &ARifaNPC::Dialog);
 	//	}
 	//}
-	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaNPC::EndCharacterOverlap);
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (IsValid(CharacterReference))
 	{
@@ -64,6 +62,9 @@ void ARifaNPC::BeginPlay()
 	{
 		ThisNPCDialogIndex = GameInstance->NPCDialogMap[ThisNPCType];
 	}
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaNPC::OnCharacterOverlap);
+	Trigger->OnComponentEndOverlap.AddDynamic(this, &ARifaNPC::EndCharacterOverlap);
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	WidgetComponent->SetVisibility(false);
 }
 
@@ -85,10 +86,9 @@ void ARifaNPC::Dialog()
 {
 	if (IsInRange) 
 	{
-		WidgetComponent->SetVisibility(true);
-		if (IsValid(DialogComponent->DialogTree))
+		WidgetComponent->SetVisibility(false);
+		if (IsValid(CharacterReference))
 		{
-			GetDialogCommponent()->BlackboardComponent->SetValueAsInt(TEXT("DialogIndex"), ThisNPCDialogIndex);
 			DialogComponent->OnInterAction(CharacterReference);
 		}
 		/*const UEnum* NPCEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ENPCType"));
@@ -134,7 +134,7 @@ void ARifaNPC::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
 		//PickupTextReference->RemoveFromParent();
-		WidgetComponent->SetVisibility(true);
+		WidgetComponent->SetVisibility(false);
 		IsInRange = false;
 	}
 }

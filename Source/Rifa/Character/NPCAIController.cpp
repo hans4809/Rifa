@@ -3,3 +3,6 @@
 
 #include "NPCAIController.h"
 
+ANPCAIController::ANPCAIController()
+{
+}

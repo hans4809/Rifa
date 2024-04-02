@@ -546,12 +546,13 @@ void ARifaCharacter::Interaction()
 		if (PickupItem.IsBound() == true) 
 		{
 			PickupItem.Broadcast();
-			if (NPCTalk.IsBound() == true)
-				NPCTalk.Broadcast();
+		}
+		if (NPCTalk.IsBound() == true)
+		{
+			NPCTalk.Broadcast();
 		}
 		return;
 	}
-
 	target->Interaction();
 	target->DoWork();
 }

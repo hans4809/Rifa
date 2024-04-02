@@ -9,13 +9,14 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Character/RifaNPC.h"
 
 // Sets default values for this component's properties
 UDialogComponent::UDialogComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("/Script/AIModule.BlackboardData'/Game/BluePrint/UI/DialogSystem/DialogBlackBoard.DialogBlackBoard'"));
 	if (BBObject.Succeeded())
 	{
@@ -54,6 +55,10 @@ void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 	DialogAIController->RunBehaviorTree(DialogTree);
 	DialogAIController->UseBlackboard(DialogBlackBoard, BlackboardComponent);
 	BlackboardComponent->SetValueAsObject(FName(TEXT("DialogWidget")), DialogWidgetAsset);
+	if (ARifaNPC* ControllingNPC = Cast<ARifaNPC>(GetOwner()))
+	{
+		BlackboardComponent->SetValueAsInt(FName(TEXT("DialogIndex")), ControllingNPC->ThisNPCDialogIndex);
+	}
 	DialogWidgetAsset->Init();
 }
 
