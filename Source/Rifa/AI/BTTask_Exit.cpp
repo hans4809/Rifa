@@ -15,6 +15,7 @@
 #include "Character/RifaNPC.h"
 #include "Data/MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/WidgetComponent.h"
 
 UBTTask_Exit::UBTTask_Exit()
 {
@@ -41,6 +42,7 @@ EBTNodeResult::Type UBTTask_Exit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
 	{
 		GameInstance->NPCDialogMap[ControllingPawn->ThisNPCType]++;
+		ControllingPawn->GetWidgetComponent()->SetVisibility(true);
 	}
 
 	Result = EBTNodeResult::Succeeded;

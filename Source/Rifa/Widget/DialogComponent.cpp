@@ -61,6 +61,7 @@ void UDialogComponent::OnInterAction(ARifaCharacter* InterActionCharacter)
 		if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
 		{
 			int32 DialogIndex = GameInstance->NPCDialogMap[ControllingNPC->ThisNPCType];
+			BlackboardComponent->SetValueAsInt(FName(TEXT("DialogIndex")), DialogIndex);
 		}
 	}
 	DialogWidgetAsset->Init();

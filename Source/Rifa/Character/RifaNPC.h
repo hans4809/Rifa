@@ -71,5 +71,6 @@ private:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction)
 	ENPCType ThisNPCType;
-
+	UFUNCTION()
+	FORCEINLINE class UWidgetComponent* GetWidgetComponent() const { return WidgetComponent; }
 };
