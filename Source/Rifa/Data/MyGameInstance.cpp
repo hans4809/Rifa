@@ -133,10 +133,7 @@ void UMyGameInstance::ResetSaveData()
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 	bClearIslandForest = RIFASaveGame->bClearIslandForest;
 	bClearFieldForest = RIFASaveGame->bClearFieldForest;
-	if (CurrentLevelName == TEXT("MainMenu"))
-	{
-		CurrentLevelName = "Island";
-	}
+	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 }
 
 void UMyGameInstance::Init()

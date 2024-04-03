@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include <BehaviorTree/BehaviorTreeTypes.h>
 #include "NPCAIController.generated.h"
+
 
 /**
  * 
@@ -13,5 +15,6 @@ UCLASS()
 class RIFA_API ANPCAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+public:
+	ANPCAIController();
 };
