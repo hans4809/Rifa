@@ -42,7 +42,7 @@ AInteractableActor::AInteractableActor()
 		WidgetComponent->SetWidgetClass(PickupTextClass);
 		WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 		WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		WidgetComponent->SetDrawSize(FVector2D(100, 100));
+		WidgetComponent->SetDrawSize(FVector2D(50, 50));
 	}
 }
 
