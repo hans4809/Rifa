@@ -25,6 +25,8 @@ protected:
 	TObjectPtr<class USphereComponent> Trigger;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Dialog", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UDialogComponent> DialogComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UWidgetComponent> WidgetComponent;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

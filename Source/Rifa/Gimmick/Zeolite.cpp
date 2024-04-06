@@ -7,6 +7,7 @@
 #include "Widget/PickupText.h"
 #include "Character/RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/WidgetComponent.h"
 
 // Sets default values
 AZeolite::AZeolite()
@@ -16,9 +17,11 @@ AZeolite::AZeolite()
 	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("Trigger"));
 	DialogComponent = CreateDefaultSubobject<UDialogComponent>(TEXT("DialogComponent"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
 
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(RootComponent);
+	WidgetComponent->SetupAttachment(RootComponent);
 
 	Trigger->SetSphereRadius(150.f);
 	
@@ -26,7 +29,12 @@ AZeolite::AZeolite()
 	if (WC.Succeeded()) 
 	{
 		PickupTextClass = WC.Class;
+		WidgetComponent->SetWidgetClass(PickupTextClass);
+		WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+		WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		WidgetComponent->SetDrawSize(FVector2D(50, 50));
 	}
+
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM(TEXT("/Script/Engine.StaticMesh'/Game/artifacts/bisuk_bisuk.bisuk_bisuk'"));
 	if (SM.Succeeded())
@@ -63,6 +71,7 @@ void AZeolite::BeginPlay()
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AZeolite::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AZeolite::EndCharacterOverlap);
 	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	WidgetComponent->SetVisibility(false);
 }
 
 // Called every frame
@@ -76,7 +85,7 @@ void AZeolite::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->AddToViewport();
+		WidgetComponent->SetVisibility(true);
 		IsInRange = true;
 	}
 }
@@ -85,7 +94,7 @@ void AZeolite::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		PickupTextReference->RemoveFromParent();
+		WidgetComponent->SetVisibility(false);
 		IsInRange = false;
 	}
 }
@@ -94,6 +103,7 @@ void AZeolite::Dialog()
 {
 	if (IsInRange)
 	{
+		WidgetComponent->SetVisibility(false);
 		DialogComponent->OnInterAction(CharacterReference);
 	}
 }
