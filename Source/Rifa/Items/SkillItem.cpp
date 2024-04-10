@@ -22,6 +22,8 @@ ASkillItem::ASkillItem()
 	Particle = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Particle"));
 	Particle->SetupAttachment(RootComponent);
 	Particle->SetRelativeRotation(FRotator(90.f, 0, 0));
+
+	Mesh->DestroyComponent();
 }
 
 void ASkillItem::BeginPlay()
