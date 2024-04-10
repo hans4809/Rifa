@@ -16,21 +16,21 @@ AHairpartItem::AHairpartItem()
 
 void AHairpartItem::BeginPlay()
 {
+	Super::BeginPlay();
 	if (IsValid(RifaGameInstance))
 	{
 		ECurrentHairPart = RifaGameInstance->CurrentHairPartsArr[HairPartArrIdx];
 		SKMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
 		SKMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
 	}
-	if (IsValid(PickupTextReference))
+	//if (IsValid(PickupTextReference))
+	//{
+	//	PickupTextReference->PickupActor = Cast<AActor>(this);
+	//	PickupTextReference->PickupText = TEXT("Press E");
+	//}
+	if (IsValid(CharacterReference))
 	{
-		PickupTextReference->PickupActor = Cast<AActor>(this);
-		PickupTextReference->PickupText = TEXT("Press E");
-
-		if (IsValid(CharacterReference))
-		{
-			CharacterReference->PickupItem.AddDynamic(this, &AHairpartItem::PickupCharacterParts);
-		}
+		CharacterReference->PickupItem.AddDynamic(this, &AHairpartItem::PickupCharacterParts);
 	}
 }
 

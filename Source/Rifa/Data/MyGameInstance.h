@@ -36,11 +36,11 @@ UENUM()
 enum class EHairPartsItem : uint8
 {
 	Default UMETA(DisplayName = "Default"),
-	Flower UMETA(DisplayName = "Flower"),
 	Leaf UMETA(DisplayName = "Leaf"),
+	Stone UMETA(DisplayName = "Stone"),
 	MushRoom UMETA(DisplayName = "MushRoom"),
 	Stick UMETA(DisplayName = "Stick"),
-	Stone UMETA(DisplayName = "Stone"),
+	Flower UMETA(DisplayName = "Flower"),
 	MaxCount
 };
 
@@ -50,10 +50,10 @@ enum class ECharacterMaterialItem : uint8
 {
 	Default UMETA(DisplayName = "Default"),
 	White UMETA(DisplayName = "White"),
-	Blue UMETA(DisplayName = "Blue"),
 	Green UMETA(DisplayName = "Green"),
-	Red UMETA(DisplayName = "Red"),
 	Yellow UMETA(DisplayName = "Yellow"),
+	Red UMETA(DisplayName = "Red"),
+	Blue UMETA(DisplayName = "Blue"),
 	Black UMETA(DisplayName = "Black"),
 	MaxCount
 };

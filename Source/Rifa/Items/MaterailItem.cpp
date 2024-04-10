@@ -13,20 +13,21 @@ AMaterailItem::AMaterailItem()
 
 void AMaterailItem::BeginPlay()
 {
+	Super::BeginPlay();
 	if (IsValid(RifaGameInstance))
 	{
 		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
 		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentMaterial]);
 	}
-	if (IsValid(PickupTextReference))
+	/*if (IsValid(PickupTextReference))
 	{
 		PickupTextReference->PickupActor = Cast<AActor>(this);
 		PickupTextReference->PickupText = TEXT("Press E");
+	}*/
 
-		if (IsValid(CharacterReference))
-		{
-			CharacterReference->PickupItem.AddDynamic(this, &AMaterailItem::PickupCharacterMaterial);
-		}
+	if (IsValid(CharacterReference))
+	{
+		CharacterReference->PickupItem.AddDynamic(this, &AMaterailItem::PickupCharacterMaterial);
 	}
 }
 

@@ -41,22 +41,23 @@ void ASoundItem::BeginPlay()
 	}
 	else
 	{
-		if (IsValid(PickupTextClass))
-		{
-			if (IsValid(PickupTextReference))
-			{
-				PickupTextReference->PickupActor = Cast<AActor>(this);
-				PickupTextReference->ViewPortPosition = Cast<AActor>(this)->GetActorLocation() + FVector(0, 0, 50);
-				PickupTextReference->PickupText = TEXT("Press E");
-				if (IsValid(CharacterReference))
-				{
-					CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
-				}
-			}
-		}
+		//if (IsValid(PickupTextClass))
+		//{
+		//	if (IsValid(PickupTextReference))
+		//	{
+		//		PickupTextReference->PickupActor = Cast<AActor>(this);
+		//		PickupTextReference->ViewPortPosition = Cast<AActor>(this)->GetActorLocation() + FVector(0, 0, 50);
+		//		PickupTextReference->PickupText = TEXT("Press E");
+		//		
+		//	}
+		//}
 		if (IsValid(CollectionWidgetClass)) 
 		{
 			CollectionWidgetReference = CreateWidget<UCollectionWidget>(GetWorld(), CollectionWidgetClass);
+		}
+		if (IsValid(CharacterReference))
+		{
+			CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
 		}
 	}
 }
