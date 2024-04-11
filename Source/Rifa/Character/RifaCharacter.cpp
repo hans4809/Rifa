@@ -448,7 +448,7 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 
 void ARifaCharacter::OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<AWaterActor>(OtherActor)) 
+	if (IsValid(Cast<AWaterActor>(OtherActor))) 
 	{
 		if (GameModeReference)
 		{

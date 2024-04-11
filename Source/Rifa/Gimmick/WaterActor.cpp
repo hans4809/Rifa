@@ -19,13 +19,17 @@ AWaterActor::AWaterActor()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("ROOT"));
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TRIGGER"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
-	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WIDGETCOMPONENT"));
+	//WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WIDGETCOMPONENT"));
 	RootComponent = Root;
 	Mesh->SetupAttachment(Root);
 	Trigger->SetupAttachment(Mesh);
-	WidgetComponent->SetupAttachment(Mesh);
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> WC(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_LeftClick.WG_LeftClick_C'"));
+	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
+
+	//WidgetComponent->SetupAttachment(Mesh);
+
+	/*static ConstructorHelpers::FClassFinder<UUserWidget> WC(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_LeftClick.WG_LeftClick_C'"));
 	if (WC.Succeeded())
 	{
 		WidgetClass = WC.Class;
@@ -33,9 +37,8 @@ AWaterActor::AWaterActor()
 		WidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 		WidgetComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		WidgetComponent->SetDrawSize(FVector2D(71.25f, 61.25f));
-	}
-	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
+	}*/
+
 }
 
 // Called when the game starts or when spawned
@@ -44,9 +47,8 @@ void AWaterActor::BeginPlay()
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterActor::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AWaterActor::EndCharacterOverlap);
-	Trigger->SetCollisionProfileName(TEXT("Trigger"));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	WidgetComponent->SetVisibility(false);
+	//WidgetComponent->SetVisibility(false);
 }
 
 // Called every frame
@@ -64,10 +66,10 @@ void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor
 			if (IsValid(CharacterReference))
 			{
 				CharacterReference->bCanSwim = true;
-				if (!CharacterReference->bIsSwimming && !CharacterReference->GetCharacterMovement()->IsFalling())
-				{
-					WidgetComponent->SetVisibility(true);
-				}
+				//if (!CharacterReference->bIsSwimming && !CharacterReference->GetCharacterMovement()->IsFalling())
+				//{
+				//	//WidgetComponent->SetVisibility(true);
+				//}
 			}
 		}
 		FTimerHandle OverlapHandle;
@@ -83,7 +85,7 @@ void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActo
 		if (RifaGameInstance->bCanSwim)
 		{
 			CharacterReference->bCanSwim = false;
-			WidgetComponent->SetVisibility(false);
+			//WidgetComponent->SetVisibility(false);
 			//PickupTextReference->RemoveFromParent();
 		}
 	}
@@ -91,12 +93,12 @@ void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActo
 
 void AWaterActor::CharacterOverlapping()
 {
-	if (IsOverlappingActor(CharacterReference)&& WidgetComponent->IsVisible())
+	if (IsOverlappingActor(CharacterReference)/*&& WidgetComponent->IsVisible()*/)
 	{
 		if (CharacterReference->bIsSwimming)
 		{
 			//PickupTextReference->RemoveFromParent();
-			WidgetComponent->SetVisibility(false);
+			//WidgetComponent->SetVisibility(false);
 		}
 	}
 
