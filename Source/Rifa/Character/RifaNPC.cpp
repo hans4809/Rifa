@@ -73,12 +73,13 @@ void ARifaNPC::Dialog()
 		WidgetComponent->SetVisibility(false);
 		if (IsValid(CharacterReference))
 		{
-			DialogComponent->OnInterAction(CharacterReference);
+			FVector ToCharacter = CharacterReference->GetActorLocation() - GetActorLocation();
+			FRotator LookAtRotation = FRotator(0.f, ToCharacter.Rotation().Yaw, 0.f);
+			SetActorRotation(LookAtRotation);
 		}
 		const UEnum* NPCEnum = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ENPCType"));
 		if(NPCEnum)
 		{
-
 			FString EnumMetaData = NPCEnum->GetDisplayNameTextByIndex((int32)ThisNPCType).ToString();
 			if (UMyGameInstance* GameInstance = Cast<UMyGameInstance>(GetGameInstance()))
 			{

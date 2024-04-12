@@ -20,7 +20,7 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	TopTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TopTrigger"));
 	WaterFall = CreateDefaultSubobject<UNiagaraComponent>(TEXT("WaterFall"));
 	TopStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopStartPoint"));
-	BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
+	//BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
 	TopEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopEndPoint"));
 	BottomEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomEndPoint"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -32,7 +32,7 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	TopTrigger->SetupAttachment(RootComponent);
 	WaterFall->SetupAttachment(RootComponent);
 	TopStartPoint->SetupAttachment(TopTrigger);
-	BottomStartPoint->SetupAttachment(BottomTrigger);
+	//BottomStartPoint->SetupAttachment(BottomTrigger);
 	TopEndPoint->SetupAttachment(TopTrigger);
 	BottomEndPoint->SetupAttachment(BottomTrigger);
 	Mesh->SetupAttachment(WaterFall);
@@ -61,25 +61,25 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 void AWaterFallActorByTriggerBox::BeginPlay()
 {
 	Super::BeginPlay();
-	if (IsValid(PickupTextClass))
-	{
-		TopPickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
-		BottomPickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
-		if (IsValid(TopPickupTextReference)&& IsValid(BottomPickupTextReference))
-		{
-			TopPickupTextReference->PickupActor = Cast<AActor>(this);
-			BottomPickupTextReference->PickupActor = Cast<AActor>(this);
-			TopPickupTextReference->ViewPortPosition = TopTrigger->GetComponentLocation() + FVector(0, 0, 50);
-			BottomPickupTextReference->ViewPortPosition = BottomTrigger->GetComponentLocation() + FVector(0, 0, 50);
-			TopPickupTextReference->PickupText = FString(TEXT("Click LeftMouseButton"));
-			BottomPickupTextReference->PickupText = FString(TEXT("Click LeftMouseButton"));
-			CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-			/*if (CharacterReference->PickupItem.IsBound()) {
-				CharacterReference->PickupItem.Clear();
-			}*/
-			//CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
-		}
-	}
+	//if (IsValid(PickupTextClass))
+	//{
+	//	TopPickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+	//	BottomPickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
+	//	if (IsValid(TopPickupTextReference)&& IsValid(BottomPickupTextReference))
+	//	{
+	//		TopPickupTextReference->PickupActor = Cast<AActor>(this);
+	//		BottomPickupTextReference->PickupActor = Cast<AActor>(this);
+	//		TopPickupTextReference->ViewPortPosition = TopTrigger->GetComponentLocation() + FVector(0, 0, 50);
+	//		BottomPickupTextReference->ViewPortPosition = BottomTrigger->GetComponentLocation() + FVector(0, 0, 50);
+	//		TopPickupTextReference->PickupText = FString(TEXT("Click LeftMouseButton"));
+	//		BottomPickupTextReference->PickupText = FString(TEXT("Click LeftMouseButton"));
+	//		CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	//		/*if (CharacterReference->PickupItem.IsBound()) {
+	//			CharacterReference->PickupItem.Clear();
+	//		}*/
+	//		//CharacterReference->PickupItem.AddDynamic(this, &ATemplate_Pickup::PickupItemEvent);
+	//	}
+	//}
 	BottomTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::OnCharacterBottomOverlap);
 	BottomTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFallActorByTriggerBox::EndCharacterBottomOverlap);
 
@@ -107,12 +107,13 @@ void AWaterFallActorByTriggerBox::OnCharacterBottomOverlap(UPrimitiveComponent* 
 		{
 			BottomPickupTextReference->Init();
 			CharacterReference->bCanRideUpWaterFall = true;
-			CharacterReference->SwimStartLocation = BottomStartPoint->GetComponentLocation();
+			CharacterReference->SwimStartLocation = BottomEndPoint->GetComponentLocation();
 			CharacterReference->WaterFallRotation = GetActorRotation();
 			CharacterReference->WaterFallEndVector = TopEndPoint->GetComponentLocation();
 		}
 		else
 		{
+			CharacterReference->ReturnWalk();
 		}
 	}
 }
@@ -141,6 +142,10 @@ void AWaterFallActorByTriggerBox::OnCharacterTopOverlap(UPrimitiveComponent* Ove
 			CharacterReference->SwimStartLocation = TopStartPoint->GetComponentLocation();
 			CharacterReference->WaterFallRotation = GetActorRotation();
 			CharacterReference->WaterFallEndVector = BottomEndPoint->GetComponentLocation();
+		}
+		else
+		{
+			CharacterReference->ReturnWalk();
 		}
 	}
 }

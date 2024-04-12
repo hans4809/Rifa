@@ -120,7 +120,9 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
+	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset; 
+	UFUNCTION(BlueprintCallable)
+	void ReturnWalk();
 protected:
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -131,8 +133,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void Swim();
-	UFUNCTION(BlueprintCallable)
-	void ReturnWalk();
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim", meta = (AllowPrivateAccess = true))
 	bool IsFlying;
 	UFUNCTION(BlueprintCallable)
@@ -153,6 +153,7 @@ protected:
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
 	virtual void EndPlay(EEndPlayReason::Type) override;
+	std::pair<FHitResult, bool> WaterHitResult();
 private:
 
 	UPROPERTY()
