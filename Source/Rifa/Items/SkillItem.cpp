@@ -16,6 +16,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 
 ASkillItem::ASkillItem()
 {
@@ -126,7 +127,7 @@ void ASkillItem::PickupEnergyEvent()
 		AudioComponent->Play();
 		SetActorHiddenInGame(true);
 		RifaGameInstance->LevelSequencePlayerArr[1] = true;
-		PickupTextReference->CloseWidget();
+		WidgetComponent->SetVisibility(false);
 		RifaGameInstance->Save();
 	}
 }

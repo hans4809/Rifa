@@ -30,8 +30,6 @@ protected:
 protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> PickupTextClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UPickupText> PickupTextReference;
 // Extra Section
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Interaction, meta = (AllowPrivateAccess = "true"))

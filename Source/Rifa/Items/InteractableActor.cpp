@@ -52,10 +52,6 @@ void AInteractableActor::BeginPlay()
 	Super::BeginPlay();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	//if (IsValid(PickupTextClass)) 
-	//{
-	//	PickupTextReference = Cast<UPickupText>(CreateWidget(GetWorld(), PickupTextClass));
-	//}
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AInteractableActor::OnCharacterOverlap);
 	Trigger->OnComponentEndOverlap.AddDynamic(this, &AInteractableActor::EndCharacterOverlap);
 	WidgetComponent->SetVisibility(false);
@@ -72,7 +68,6 @@ void AInteractableActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp,
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		//PickupTextReference->Init();
 		WidgetComponent->SetVisibility(true);
 		bIsInRange = true;
 	}
@@ -82,7 +77,6 @@ void AInteractableActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		//PickupTextReference->CloseWidget();
 		WidgetComponent->SetVisibility(false);
 		bIsInRange = false;
 	}

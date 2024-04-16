@@ -6,6 +6,7 @@
 #include "Character/RifaCharacter.h"
 #include "Widget/PickupText.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 
 AHairpartItem::AHairpartItem()
 {
@@ -23,11 +24,6 @@ void AHairpartItem::BeginPlay()
 		SKMesh->SetSkeletalMesh(RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]);
 		SKMesh->SetMaterial(0, RifaGameInstance->HairPartsMeshMap[ECurrentHairPart]->GetMaterials()[0].MaterialInterface);
 	}
-	//if (IsValid(PickupTextReference))
-	//{
-	//	PickupTextReference->PickupActor = Cast<AActor>(this);
-	//	PickupTextReference->PickupText = TEXT("Press E");
-	//}
 	if (IsValid(CharacterReference))
 	{
 		CharacterReference->PickupItem.AddDynamic(this, &AHairpartItem::PickupCharacterParts);
@@ -78,6 +74,7 @@ void AHairpartItem::PickupCharacterParts()
 			CharacterReference->CurrentHairMesh->AttachToComponent(CharacterReference->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
 		RifaGameInstance->Save();
+		WidgetComponent->SetVisibility(false);
 	}
 
 }

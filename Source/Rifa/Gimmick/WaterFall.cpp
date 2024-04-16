@@ -73,13 +73,16 @@ void AWaterFall::OnCharacterBottomOverlap(UPrimitiveComponent* OverlappedComp, A
 {
 	if (ARifaCharacter* Character = Cast<ARifaCharacter>(OtherActor))
 	{
-		if (!Character->bIsWaterFall)
+		if (!Character->bIsRideDownWaterFall)
 		{
-			WaterFallWidgetInstance->SetVisibility(ESlateVisibility::Visible);
-		}
-		else
-		{
-			Character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Falling);
+			if (IsValid(WaterFallWidgetClass))
+			{
+				if (!IsValid(WaterFallWidgetInstance))
+				{
+					WaterFallWidgetInstance = CreateWidget<UWaterFallWidget>(GetWorld(), WaterFallWidgetClass);
+				}
+				WaterFallWidgetInstance->Init();
+			}
 		}
 	}
 }
@@ -88,7 +91,8 @@ void AWaterFall::EndCharacterBottomOverlap(UPrimitiveComponent* OverlappedComp, 
 {
 	if (ARifaCharacter* Character = Cast<ARifaCharacter>(OtherActor))
 	{
-		WaterFallWidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+		WaterFallWidgetInstance->CloseWidget();
+		Character->bCanRideUpWaterFall = false;
 	}
 }
 
@@ -96,15 +100,19 @@ void AWaterFall::OnCharacterTopOverlap(UPrimitiveComponent* OverlappedComp, AAct
 {
 	if (ARifaCharacter* Character = Cast<ARifaCharacter>(OtherActor))
 	{
-		if (!Character->bIsWaterFall)
+		if (!Character->bIsRideUpWaterFall)
 		{
-			WaterFallWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+			if (IsValid(WaterFallWidgetClass))
+			{
+				if (!IsValid(WaterFallWidgetInstance))
+				{
+					WaterFallWidgetInstance = CreateWidget<UWaterFallWidget>(GetWorld(), WaterFallWidgetClass);
+				}
+				WaterFallWidgetInstance->Init();
+			}
 			Character->bCanRideDownWaterFall = true;
+			Character->WaterFallRotation = GetActorRotation();
 			Character->SwimStartLocation = TopStartPoint->GetComponentLocation();
-		}
-		else
-		{
-
 		}
 	}
 }
@@ -113,7 +121,8 @@ void AWaterFall::EndCharacterTopOverlap(UPrimitiveComponent* OverlappedComp, AAc
 {
 	if (ARifaCharacter* Character = Cast<ARifaCharacter>(OtherActor))
 	{
-		WaterFallWidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+		WaterFallWidgetInstance->CloseWidget();
+		Character->bCanRideDownWaterFall = false;
 	}
 }
 

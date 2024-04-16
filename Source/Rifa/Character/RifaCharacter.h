@@ -94,15 +94,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool bIsSwimming;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	bool bIsWaterFall;
+	bool bIsRideUpWaterFall;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool bIsRideDownWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideDownWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanSwim;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	FVector WaterForcingVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	FRotator WaterFallRotation;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")

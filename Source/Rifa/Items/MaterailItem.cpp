@@ -6,6 +6,7 @@
 #include "Character/RifaCharacter.h"
 #include "Widget/PickupText.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 
 AMaterailItem::AMaterailItem()
 {
@@ -19,11 +20,6 @@ void AMaterailItem::BeginPlay()
 		ECurrentMaterial = RifaGameInstance->CurrentMaterialItemArr[CharacterMaterialArrIdx];
 		Mesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[ECurrentMaterial]);
 	}
-	/*if (IsValid(PickupTextReference))
-	{
-		PickupTextReference->PickupActor = Cast<AActor>(this);
-		PickupTextReference->PickupText = TEXT("Press E");
-	}*/
 
 	if (IsValid(CharacterReference))
 	{
@@ -52,5 +48,6 @@ void AMaterailItem::PickupCharacterMaterial()
 			CharacterReference->CurrentHairMesh->SetMaterial(0, RifaGameInstance->HairMaterialMap[CharacterReference->ECurrentCharacterMaterial]);
 		}		
 		RifaGameInstance->Save();
+		WidgetComponent->SetVisibility(false);
 	}
 }

@@ -103,7 +103,7 @@ void AWaterFallActorByTriggerBox::OnCharacterBottomOverlap(UPrimitiveComponent* 
 {
 	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		if (!CharacterReference->bIsWaterFall)
+		if (!CharacterReference->bIsRideDownWaterFall)
 		{
 			BottomPickupTextReference->Init();
 			CharacterReference->bCanRideUpWaterFall = true;
@@ -122,7 +122,7 @@ void AWaterFallActorByTriggerBox::EndCharacterBottomOverlap(UPrimitiveComponent*
 {
 	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		if(!CharacterReference->bIsWaterFall)
+		if(!CharacterReference->bIsRideDownWaterFall)
 		{
 			CharacterReference->SwimStartLocation = FVector::Zero();
 		}
@@ -154,7 +154,7 @@ void AWaterFallActorByTriggerBox::EndCharacterTopOverlap(UPrimitiveComponent* Ov
 {
 	if (IsValid(CharacterReference = Cast<ARifaCharacter>(OtherActor)))
 	{
-		if (!CharacterReference->bIsWaterFall)
+		if (!CharacterReference->bIsRideUpWaterFall)
 		{
 
 			CharacterReference->SwimStartLocation = FVector::Zero();

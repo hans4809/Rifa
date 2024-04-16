@@ -18,6 +18,7 @@
 #include "Widget/CollectionWidget.h"
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 
 ASoundItem::ASoundItem()
 {
@@ -118,7 +119,7 @@ void ASoundItem::PickupSoundItemEvent()
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
 		//CharacterReference->Bgm->CrossfadeSound();
 		RifaGameInstance->Save();
-		PickupTextReference->CloseWidget();
+		WidgetComponent->SetVisibility(false);
 		SetActorHiddenInGame(true);
 		Trigger->DestroyComponent();
 	}
