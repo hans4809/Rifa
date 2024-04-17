@@ -43,6 +43,8 @@ AWaterFall::AWaterFall()
 		WaterFallWidgetClass = WaterFallWidget.Class;
 	}
 	WaterFallBox->SetCollisionProfileName(TEXT("WaterBodyCollision"));
+	TopTrigger->SetCollisionProfileName(TEXT("Trigger"));
+	BottomTrigger->SetCollisionProfileName(TEXT("Trigger"));
 }
 
 // Called when the game starts or when spawned

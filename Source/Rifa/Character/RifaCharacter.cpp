@@ -26,6 +26,7 @@
 #include "Widget/GameHUD.h"
 #include "Components/SphereComponent.h"
 #include <Gimmick/WaterActor.h>
+#include <Gimmick/WaterFall.h>
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -288,14 +289,48 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 std::pair<FHitResult, bool> ARifaCharacter::LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility)
 {	
 	FHitResult HitResult;
+	TArray<FHitResult> HitResults;
 	FCollisionQueryParams Params(NAME_None, false, this);
-	bool bResult = GetWorld()->LineTraceSingleByChannel(
-		OUT HitResult,
-		GetActorLocation(),
-		GetActorLocation() + DirectionVector * LineLength,
-		TraceChannel,
-		Params
-	);
+	bool bResult = false;
+
+	if (TraceChannel == ECollisionChannel::ECC_GameTraceChannel1)
+	{
+		bResult = GetWorld()->LineTraceMultiByChannel(
+			OUT HitResults,
+			GetActorLocation(),
+			GetActorLocation() + DirectionVector * LineLength,
+			TraceChannel,
+			Params
+		);
+
+		if (bResult)
+		{
+			for (auto Hit : HitResults)
+			{
+				if (Cast<AWaterFall>(Hit.GetActor()))
+				{
+					HitResult = Hit;
+					bResult = true;
+					break;
+				}
+				else 
+				{
+					bResult = false;
+				}
+			}
+		}
+	}
+	else
+	{
+		bResult = GetWorld()->LineTraceSingleByChannel(
+			OUT HitResult,
+			GetActorLocation(),
+			GetActorLocation() + DirectionVector * LineLength,
+			TraceChannel,
+			Params
+		);
+	}
+
 	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	DrawDebugLine(
 		GetWorld(),
@@ -304,6 +339,7 @@ std::pair<FHitResult, bool> ARifaCharacter::LineHitResult(FVector DirectionVecto
 		DrawColor,
 		false,
 		2.f);
+
 	return std::make_pair(HitResult, bResult);
 }
 

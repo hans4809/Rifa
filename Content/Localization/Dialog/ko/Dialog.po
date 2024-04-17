@@ -1,0 +1,1373 @@
+﻿# Dialog Korean translation.
+# Copyright Epic Games, Inc. All Rights Reserved.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Dialog\n"
+"POT-Creation-Date: 2024-04-17 11:00\n"
+"PO-Revision-Date: 2024-04-17 11:00\n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. Key:	0056D7194C30F7FFCF6AE8899963CB72
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",0056D7194C30F7FFCF6AE8899963CB72"
+msgid "... 부서지고 모호한 형태가 되었으나, 여전히 실존하는 ..."
+msgstr "... 부서지고 모호한 형태가 되었으나, 여전히 실존하는 ..."
+
+#. Key:	00633E054C33AC4D2E01A28417C8A440
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",00633E054C33AC4D2E01A28417C8A440"
+msgid "물론 인류의 기원이었던 곳이니만큼 여전히 인간의 다수가 지구에 남아있었죠. 그러던 와중..."
+msgstr "물론 인류의 기원이었던 곳이니만큼 여전히 인간의 다수가 지구에 남아있었죠. 그러던 와중..."
+
+#. Key:	00D257F1401AECC5A71255B53AD0DDFD
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",00D257F1401AECC5A71255B53AD0DDFD"
+msgid "뭐긴 뭐야. 이 공중섬에 갇혀서 못 내려가고 있잖아."
+msgstr "뭐긴 뭐야. 이 공중섬에 갇혀서 못 내려가고 있잖아."
+
+#. Key:	00F53A68458A39F9B362C7AD113C0998
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",00F53A68458A39F9B362C7AD113C0998"
+msgid "우리들은 이렇게 몸의 형체만 파편화 되어 있는것 같아 보이지만,"
+msgstr "우리들은 이렇게 몸의 형체만 파편화 되어 있는것 같아 보이지만,"
+
+#. Key:	013C6CB04614FEE23FBC6E9A8453B223
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",013C6CB04614FEE23FBC6E9A8453B223"
+msgid "왜 자꾸 말을 걸어? 귀찮게. "
+msgstr "왜 자꾸 말을 걸어? 귀찮게. "
+
+#. Key:	020D38604346D2D8EDA88C8077B70097
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",020D38604346D2D8EDA88C8077B70097"
+msgid "안녕, 여기까지 누가 오다니 별일이네."
+msgstr "안녕, 여기까지 누가 오다니 별일이네."
+
+#. Key:	02E4F22745D71CC474A998AC4C499CCC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",02E4F22745D71CC474A998AC4C499CCC"
+msgid "이제야 일어났네."
+msgstr "이제야 일어났네."
+
+#. Key:	032156A84B14AF1494EF3A94167049D8
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",032156A84B14AF1494EF3A94167049D8"
+msgid "저쪽에 있는 폭포도 한번 가봐. 네 능력이라면 쉽게 오르내릴 수 있을것 같아. "
+msgstr "저쪽에 있는 폭포도 한번 가봐. 네 능력이라면 쉽게 오르내릴 수 있을것 같아. "
+
+#. Key:	041642EE49EB2B0B9389A09F85170995
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",041642EE49EB2B0B9389A09F85170995"
+msgid "목적 없이 떠도는 거야? 뭐, 그것도 나쁘지 않지. 그럼 내가 한 곳 추천해 줘도 될까?"
+msgstr "목적 없이 떠도는 거야? 뭐, 그것도 나쁘지 않지. 그럼 내가 한 곳 추천해 줘도 될까?"
+
+#. Key:	04F48B1E4B4F6B2446F62ABC8A8E259E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_22.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_22.SpeakText
+msgctxt ",04F48B1E4B4F6B2446F62ABC8A8E259E"
+msgid "그래서 과거 인류사에서는 인간의 단일한 몸에 의해 많은 것이 물질적으로 속단되어왔는데... 아차. 이 얘기는 별로 궁금하지 않겠네요."
+msgstr "그래서 과거 인류사에서는 인간의 단일한 몸에 의해 많은 것이 물질적으로 속단되어왔는데... 아차. 이 얘기는 별로 궁금하지 않겠네요."
+
+#. Key:	0698045A4E1D8320D2D6DB9D35A2785F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",0698045A4E1D8320D2D6DB9D35A2785F"
+msgid "지금까지 위험한 것이 발견된 적은 거의 없었어."
+msgstr "지금까지 위험한 것이 발견된 적은 거의 없었어."
+
+#. Key:	072BDB4A4A48B312F980A2943112E2FE
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(2).Replies
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(2).Replies
+msgctxt ",072BDB4A4A48B312F980A2943112E2FE"
+msgid "넌 뭐야?"
+msgstr "넌 뭐야?"
+
+#. Key:	081435EA4830B7DEE7D47B897B5A24A9
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",081435EA4830B7DEE7D47B897B5A24A9"
+msgid "몇 년 전에 이곳을 연구하겠다고 설치던 학자 나부랭이 말고는 처음인 것 같네."
+msgstr "몇 년 전에 이곳을 연구하겠다고 설치던 학자 나부랭이 말고는 처음인 것 같네."
+
+#. Key:	08A864034ABD5588B888B4BC37C67424
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_23.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_23.SpeakText
+msgctxt ",08A864034ABD5588B888B4BC37C67424"
+msgid "얘기는 여기까지예요. 이 설명이 당신에게 도움이 되었다면 좋겠군요."
+msgstr "얘기는 여기까지예요. 이 설명이 당신에게 도움이 되었다면 좋겠군요."
+
+#. Key:	09D41F954C9B2AC0234078AF66BD1D8B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_3.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_3.Replies(0).Replies
+msgctxt ",09D41F954C9B2AC0234078AF66BD1D8B"
+msgid "안녕히 계세요"
+msgstr "안녕히 계세요"
+
+#. Key:	0B28A6CA44B6578C922E93ACD7754960
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_17.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_17.SpeakText
+msgctxt ",0B28A6CA44B6578C922E93ACD7754960"
+msgid "얘기는 여기까지예요. 이 설명이 당신에게 도움이 되었다면 좋겠군요."
+msgstr "얘기는 여기까지예요. 이 설명이 당신에게 도움이 되었다면 좋겠군요."
+
+#. Key:	0C8CA2D846B45D6068386F9F36BB720A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",0C8CA2D846B45D6068386F9F36BB720A"
+msgid "... 뭐하세요?"
+msgstr "... 뭐하세요?"
+
+#. Key:	0DCD01C64FD0D3B133F0D88134040B6B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",0DCD01C64FD0D3B133F0D88134040B6B"
+msgid "이 대지를 가로막고 있는 산맥을 넘어가면 마을이 있어."
+msgstr "이 대지를 가로막고 있는 산맥을 넘어가면 마을이 있어."
+
+#. Key:	1153D91840D4252B059AC8BD272C5AC7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(1).Replies
+msgctxt ",1153D91840D4252B059AC8BD272C5AC7"
+msgid "조각난 몸에 대해"
+msgstr "조각난 몸에 대해"
+
+#. Key:	11B93AAC440EF499243992BD9B27B34B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",11B93AAC440EF499243992BD9B27B34B"
+msgid "안녕, 못보던 얼굴이네."
+msgstr "안녕, 못보던 얼굴이네."
+
+#. Key:	11EB23F74D832DC027D266BC6294767D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",11EB23F74D832DC027D266BC6294767D"
+msgid "저는 본래 마을에 있다가 잠시 조사 차원 이곳에 머물고 있답니다."
+msgstr "저는 본래 마을에 있다가 잠시 조사 차원 이곳에 머물고 있답니다."
+
+#. Key:	129518E544DC7B8242476F87BE9670A0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",129518E544DC7B8242476F87BE9670A0"
+msgid "기회가 되면 한번 들러봐."
+msgstr "기회가 되면 한번 들러봐."
+
+#. Key:	130D2EEF4C98729EF7BD219BDFCEDB32
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",130D2EEF4C98729EF7BD219BDFCEDB32"
+msgid "그래도 궁금하니까. 뭐가 있는지."
+msgstr "그래도 궁금하니까. 뭐가 있는지."
+
+#. Key:	14BA02A442A17EA7AB8D3A9A8C985C16
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(0).Replies
+msgctxt ",14BA02A442A17EA7AB8D3A9A8C985C16"
+msgid "뭐가?"
+msgstr "뭐가?"
+
+#. Key:	1502D0B649E1034D7ED0D9828A6DA26B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",1502D0B649E1034D7ED0D9828A6DA26B"
+msgid "그 학자는 이걸 왜 세운 걸까?"
+msgstr "그 학자는 이걸 왜 세운 걸까?"
+
+#. Key:	150BEA894D55FA19542CACAD81D73E80
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",150BEA894D55FA19542CACAD81D73E80"
+msgid "어디서 희미하게 종소리가 들리는 것도 같은데... 까마귀 소리니, 뭐니 시끄러워서 찾을 수가 없어."
+msgstr "어디서 희미하게 종소리가 들리는 것도 같은데... 까마귀 소리니, 뭐니 시끄러워서 찾을 수가 없어."
+
+#. Key:	1551A70243AA42AFAD1330A0CB3AA1EB
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",1551A70243AA42AFAD1330A0CB3AA1EB"
+msgid "저 기다란 빛이 뭔지 너도 궁금한 거야?"
+msgstr "저 기다란 빛이 뭔지 너도 궁금한 거야?"
+
+#. Key:	155570794E4061ADB77525B0E3F98439
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_1.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_1.Replies(0).Replies
+msgctxt ",155570794E4061ADB77525B0E3F98439"
+msgid "잘 모르겠어"
+msgstr "잘 모르겠어"
+
+#. Key:	156BDAEC42E109C10CBAF6813E7EA04D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",156BDAEC42E109C10CBAF6813E7EA04D"
+msgid "뭐, 생김새가 우리와 비슷하니... 위험할 건 없겠지."
+msgstr "뭐, 생김새가 우리와 비슷하니... 위험할 건 없겠지."
+
+#. Key:	15BF0A134C88E18740B5BC86AE72B1C0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",15BF0A134C88E18740B5BC86AE72B1C0"
+msgid "언제 보든 항상 음침하고... 이상한 소리도 난다니까."
+msgstr "언제 보든 항상 음침하고... 이상한 소리도 난다니까."
+
+#. Key:	1744A07D4CB4842119AE0FA4CDBD5EB6
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",1744A07D4CB4842119AE0FA4CDBD5EB6"
+msgid "그래, 그럼 가던 길 가라."
+msgstr "그래, 그럼 가던 길 가라."
+
+#. Key:	184FD234467F883CAFBB83976F54AC3C
+#. SourceLocation:	/Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_2.SpeakText
+msgctxt ",184FD234467F883CAFBB83976F54AC3C"
+msgid "2번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+msgstr "2번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+
+#. Key:	18ED39644A71C5B3DB48358947205426
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_20.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_20.SpeakText
+msgctxt ",18ED39644A71C5B3DB48358947205426"
+msgid "뭐, 그 대재해를 과연 '재해'라고 칭해야 하는 것인지에 대한 이의가 최근 제기되고 있지만요."
+msgstr "뭐, 그 대재해를 과연 '재해'라고 칭해야 하는 것인지에 대한 이의가 최근 제기되고 있지만요."
+
+#. Key:	19ABC47A4F36701BE39D5FAC4C0D170B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",19ABC47A4F36701BE39D5FAC4C0D170B"
+msgid "여기만큼 누군가 찾아오지 않는 곳도 없지. 하지만 적적해지면 언제든 나를 찾아와도 좋아."
+msgstr "여기만큼 누군가 찾아오지 않는 곳도 없지. 하지만 적적해지면 언제든 나를 찾아와도 좋아."
+
+#. Key:	1EC8F26B4AF76E4A39AC21A207222C63
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_28.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_28.SpeakText
+msgctxt ",1EC8F26B4AF76E4A39AC21A207222C63"
+msgid "일단 제 나이는 224살이고요. 음, 좋아하는 음식은..."
+msgstr "일단 제 나이는 224살이고요. 음, 좋아하는 음식은..."
+
+#. Key:	2075564445CBDCE93942BDBD4B75AB2C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",2075564445CBDCE93942BDBD4B75AB2C"
+msgid "나 혼자만 그런 건 아니라니 다행인 건가."
+msgstr "나 혼자만 그런 건 아니라니 다행인 건가."
+
+#. Key:	208E6A504625DFD15DE27CBAF9C79812
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",208E6A504625DFD15DE27CBAF9C79812"
+msgid "음, 그래... 어떻게 알았냐. 인생이 짜증 난다."
+msgstr "음, 그래... 어떻게 알았냐. 인생이 짜증 난다."
+
+#. Key:	21039DB5466C9AC811F3319A4FFB2624
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",21039DB5466C9AC811F3319A4FFB2624"
+msgid "너라면 저쪽에 있는 폭포도 갈 수 있을 거야."
+msgstr "너라면 저쪽에 있는 폭포도 갈 수 있을 거야."
+
+#. Key:	231FC80D411E467BDE15408757AE7B19
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_31.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_31.SpeakText
+msgctxt ",231FC80D411E467BDE15408757AE7B19"
+msgid "... ... 연구와 관련해 궁금한 게 있다면 언제든 다시 말을 걸어 주세요."
+msgstr "... ... 연구와 관련해 궁금한 게 있다면 언제든 다시 말을 걸어 주세요."
+
+#. Key:	245E954D40465090CA3197AE8771B045
+#. SourceLocation:	/Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_1.SpeakText
+msgctxt ",245E954D40465090CA3197AE8771B045"
+msgid "1번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+msgstr "1번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+
+#. Key:	272E64C54A61BA5990383290A0CFF8C9
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",272E64C54A61BA5990383290A0CFF8C9"
+msgid "뒷 내용이 더 궁금하신가요?"
+msgstr "뒷 내용이 더 궁금하신가요?"
+
+#. Key:	277DC9C6460D81794F7FA8A082B46ADA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",277DC9C6460D81794F7FA8A082B46ADA"
+msgid "나도 가끔은 시끄럽고 북적이는 것도 나쁘지 않아. 어서 마을로 향하는 건 어때."
+msgstr "나도 가끔은 시끄럽고 북적이는 것도 나쁘지 않아. 어서 마을로 향하는 건 어때."
+
+#. Key:	28229D5549FF66602F12B580F76FB66C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_2.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_2.Replies(0).Replies
+msgctxt ",28229D5549FF66602F12B580F76FB66C"
+msgid "응"
+msgstr "응"
+
+#. Key:	2940B08D4D3FE2E6C70F998C3B73E254
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_10.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_10.SpeakText
+msgctxt ",2940B08D4D3FE2E6C70F998C3B73E254"
+msgid "당신은 당신의 조각난 몸을 어떻게 생각하고 있을지 궁금하네요."
+msgstr "당신은 당신의 조각난 몸을 어떻게 생각하고 있을지 궁금하네요."
+
+#. Key:	29784115426ED2676B62CF8EA387E3BE
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",29784115426ED2676B62CF8EA387E3BE"
+msgid "... ... ... 진짜? 용기 있네."
+msgstr "... ... ... 진짜? 용기 있네."
+
+#. Key:	2A6D198041895FF082DF8FAE8C062CFF
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",2A6D198041895FF082DF8FAE8C062CFF"
+msgid "누군가는 가능할지도 모르지."
+msgstr "누군가는 가능할지도 모르지."
+
+#. Key:	2D2B2B5D4E64BDC5FEF896A6A449F16A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_29.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_29.SpeakText
+msgctxt ",2D2B2B5D4E64BDC5FEF896A6A449F16A"
+msgid "음... ... ... ... ... ..."
+msgstr "음... ... ... ... ... ..."
+
+#. Key:	30D4EE0342B0C947DD17A0A985919415
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_4.Zeolite_DialogTree_4:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_4.Zeolite_DialogTree_4:BP_Speak_C_0.Text
+msgctxt ",30D4EE0342B0C947DD17A0A985919415"
+msgid "… 불구하고 … 형태를 지니고… 불가사의한 …"
+msgstr "… 불구하고 … 형태를 지니고… 불가사의한 …"
+
+#. Key:	320E4E2842100851F6082F88D7080A9E
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_3.Zeolite_DialogTree_3:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_3.Zeolite_DialogTree_3:BP_Speak_C_0.Text
+msgctxt ",320E4E2842100851F6082F88D7080A9E"
+msgid "… 년만에 … 발을 디뎠다 …"
+msgstr "… 년만에 … 발을 디뎠다 …"
+
+#. Key:	32E9255F4ECEE37F1C1431A41E4970B2
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",32E9255F4ECEE37F1C1431A41E4970B2"
+msgid "저기 섬에서 온거니?"
+msgstr "저기 섬에서 온거니?"
+
+#. Key:	346FD9ED4DA562EB3FA834A5F52CBB70
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",346FD9ED4DA562EB3FA834A5F52CBB70"
+msgid "저기 커다란 산맥 보여?"
+msgstr "저기 커다란 산맥 보여?"
+
+#. Key:	3552AE5D4576E0ADEAEE9EB062A2123A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",3552AE5D4576E0ADEAEE9EB062A2123A"
+msgid "아니"
+msgstr "아니"
+
+#. Key:	3719E6424D5EDE03618210B627E15A1D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_17.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_17.SpeakText
+msgctxt ",3719E6424D5EDE03618210B627E15A1D"
+msgid "내가 네게 가장 바라는 건..."
+msgstr "내가 네게 가장 바라는 건..."
+
+#. Key:	3796D47741878E14CE158C89CB8B3201
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",3796D47741878E14CE158C89CB8B3201"
+msgid "아무튼, 시비 걸지 말고 가던 길 가. 안 그래도 피곤하니까."
+msgstr "아무튼, 시비 걸지 말고 가던 길 가. 안 그래도 피곤하니까."
+
+#. Key:	38072B4E4585CF24F325F8949942FE3A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",38072B4E4585CF24F325F8949942FE3A"
+msgid "어, 뭐야. 누구야?"
+msgstr "어, 뭐야. 누구야?"
+
+#. Key:	3A0D2EE64424508B0026EAB08A778413
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",3A0D2EE64424508B0026EAB08A778413"
+msgid "... 의 주요 거점이었던 '지구'는 점차 파괴되어 갔고 ..."
+msgstr "... 의 주요 거점이었던 '지구'는 점차 파괴되어 갔고 ..."
+
+#. Key:	3BDF477B4EC306B54B9CC290BDC059DC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",3BDF477B4EC306B54B9CC290BDC059DC"
+msgid "... 모종의 대재해가 '지구'를 덮쳐 ..."
+msgstr "... 모종의 대재해가 '지구'를 덮쳐 ..."
+
+#. Key:	3C8086034A64A9CA932537ABCD467FC0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_15.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_15.SpeakText
+msgctxt ",3C8086034A64A9CA932537ABCD467FC0"
+msgid "그래서, 여기에는 무슨 일로 왔어?"
+msgstr "그래서, 여기에는 무슨 일로 왔어?"
+
+#. Key:	3CA69EC14A8074484BACE88A58D7D936
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_25.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_25.SpeakText
+msgctxt ",3CA69EC14A8074484BACE88A58D7D936"
+msgid "... ... ...!"
+msgstr "... ... ...!"
+
+#. Key:	3D277357414C2BCC5FE4738571EA018E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",3D277357414C2BCC5FE4738571EA018E"
+msgid "저 어두컴컴한 곳 말이야, 안개가 걷어질 일이 없어."
+msgstr "저 어두컴컴한 곳 말이야, 안개가 걷어질 일이 없어."
+
+#. Key:	3D8E108249E0036A39C179B2BCA54B73
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",3D8E108249E0036A39C179B2BCA54B73"
+msgid "넌 누구지? 처음보는 얼굴인데."
+msgstr "넌 누구지? 처음보는 얼굴인데."
+
+#. Key:	3E587E9C4EED71572464C5A41D3DCCC4
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",3E587E9C4EED71572464C5A41D3DCCC4"
+msgid "무서워서 못 건너겠다니까. "
+msgstr "무서워서 못 건너겠다니까. "
+
+#. Key:	3F877675493E6C68ADFF0C92DD0CF608
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",3F877675493E6C68ADFF0C92DD0CF608"
+msgid "역시 이 째진 눈이 문제인가...?"
+msgstr "역시 이 째진 눈이 문제인가...?"
+
+#. Key:	4024D03540E856C22786C8A9F1890388
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",4024D03540E856C22786C8A9F1890388"
+msgid "난 몸이 워낙 무거워서 날 수 는 없겠지만,"
+msgstr "난 몸이 워낙 무거워서 날 수 는 없겠지만,"
+
+#. Key:	4110E9E34EE37E101C9C8486D5D28AD2
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",4110E9E34EE37E101C9C8486D5D28AD2"
+msgid "돌아다니다가 나랑 비슷하게 생긴 사람이 있으면 말 걸어봐. 우리 동생이 이런 거에 관심이 많거든. "
+msgstr "돌아다니다가 나랑 비슷하게 생긴 사람이 있으면 말 걸어봐. 우리 동생이 이런 거에 관심이 많거든. "
+
+#. Key:	4141B29448A96DF0937292ABB372A5F7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",4141B29448A96DF0937292ABB372A5F7"
+msgid "이를테면⋯ 저희의 생각이나 자아도 분산되어 있을 수 있겠죠."
+msgstr "이를테면⋯ 저희의 생각이나 자아도 분산되어 있을 수 있겠죠."
+
+#. Key:	43C2EE0C4B6F4AD7424F07977CC61972
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",43C2EE0C4B6F4AD7424F07977CC61972"
+msgid "저기 빛나는 거 보여?"
+msgstr "저기 빛나는 거 보여?"
+
+#. Key:	457CFA244184D868E0D0F9AB16FE0993
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",457CFA244184D868E0D0F9AB16FE0993"
+msgid "그러면 그 존재는 저기 있는 떠다니는 섬 정도는 단숨에 오를 수 있을 텐데."
+msgstr "그러면 그 존재는 저기 있는 떠다니는 섬 정도는 단숨에 오를 수 있을 텐데."
+
+#. Key:	4B800DA74BDA9100442450B467A1317F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",4B800DA74BDA9100442450B467A1317F"
+msgid "대재해 이전의 지구를 연구하던 학자였다는데."
+msgstr "대재해 이전의 지구를 연구하던 학자였다는데."
+
+#. Key:	4C0449C1441942B05CD028B6063DF0C0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",4C0449C1441942B05CD028B6063DF0C0"
+msgid "엑. 잘 모르겠다고?"
+msgstr "엑. 잘 모르겠다고?"
+
+#. Key:	4C061A16440A174837E4FDB9CA3D7ADC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",4C061A16440A174837E4FDB9CA3D7ADC"
+msgid "... ... ... 다행이라고 내가 짜증 나는 게 변하지는 않지만."
+msgstr "... ... ... 다행이라고 내가 짜증 나는 게 변하지는 않지만."
+
+#. Key:	4C8D9D7048EA0206FD13DCA2734EA270
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",4C8D9D7048EA0206FD13DCA2734EA270"
+msgid "뭐, 사실 그냥 앞으로 쭉 가면 나갈 수 있긴 하더라고."
+msgstr "뭐, 사실 그냥 앞으로 쭉 가면 나갈 수 있긴 하더라고."
+
+#. Key:	4EAA9C5F41D6B753764361B1184C9CD7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_27.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_27.SpeakText
+msgctxt ",4EAA9C5F41D6B753764361B1184C9CD7"
+msgid "이, 이, 이런 질문은 처음이라... 뭐라고 답해야 할지."
+msgstr "이, 이, 이런 질문은 처음이라... 뭐라고 답해야 할지."
+
+#. Key:	51F7D59B4BADF557F5374AB7CE36F784
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",51F7D59B4BADF557F5374AB7CE36F784"
+msgid "여긴 별거 없지만, 저 산맥을 넘어가면 마을이라는 게 있다고 해. 거긴 좀 더 뭐가 많을 테니, 가고 싶으면 가 봐."
+msgstr "여긴 별거 없지만, 저 산맥을 넘어가면 마을이라는 게 있다고 해. 거긴 좀 더 뭐가 많을 테니, 가고 싶으면 가 봐."
+
+#. Key:	5310AC604EC0A46C5D3D6188AFD550CD
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",5310AC604EC0A46C5D3D6188AFD550CD"
+msgid "내가 그런 말을 많이 듣긴 해! 하하하... 미안, 오랜만에 보는 새로운 사람이라 좀 신나서."
+msgstr "내가 그런 말을 많이 듣긴 해! 하하하... 미안, 오랜만에 보는 새로운 사람이라 좀 신나서."
+
+#. Key:	53BBBBF14D9EAB6942878F8F3A844814
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",53BBBBF14D9EAB6942878F8F3A844814"
+msgid "어디서 떠내려온 거야? 이 섬에 새로운 사람이 들어온 건... 몇 년 만이더라."
+msgstr "어디서 떠내려온 거야? 이 섬에 새로운 사람이 들어온 건... 몇 년 만이더라."
+
+#. Key:	55743EAF4E09C11B2C8D218F89843ADB
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",55743EAF4E09C11B2C8D218F89843ADB"
+msgid "난 마을처럼 북적이는 곳보다 이런 한적한 곳이 좋아."
+msgstr "난 마을처럼 북적이는 곳보다 이런 한적한 곳이 좋아."
+
+#. Key:	568BEF99463364B8A2914585E5A4DDD3
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",568BEF99463364B8A2914585E5A4DDD3"
+msgid "뭔가 있을 것 같은데, 만져봐도... 아무 일 없더라고."
+msgstr "뭔가 있을 것 같은데, 만져봐도... 아무 일 없더라고."
+
+#. Key:	575DFAFE4B8D07F199DD98B682A192E7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",575DFAFE4B8D07F199DD98B682A192E7"
+msgid "행성 지구는 인간 종의 초기 문명이 번성한 곳이죠. "
+msgstr "행성 지구는 인간 종의 초기 문명이 번성한 곳이죠. "
+
+#. Key:	58222DCA483700CB2A08D6A5583F21AB
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_14.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_14.SpeakText
+msgctxt ",58222DCA483700CB2A08D6A5583F21AB"
+msgid "인류 또한 새로운 형상으로 지구에 존재하고 있습니다."
+msgstr "인류 또한 새로운 형상으로 지구에 존재하고 있습니다."
+
+#. Key:	59A577EB4DE689B5227A309F2F9CD9C1
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",59A577EB4DE689B5227A309F2F9CD9C1"
+msgid "어어, 저 바위를 건너갈 생각이야?"
+msgstr "어어, 저 바위를 건너갈 생각이야?"
+
+#. Key:	5B74EF8A44B5C99AE07F5A8FB152222F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_15.SpeakText
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_15.SpeakText
+msgctxt ",5B74EF8A44B5C99AE07F5A8FB152222F"
+msgid "저 산맥 너머에 있는 곳이지."
+msgstr "저 산맥 너머에 있는 곳이지."
+
+#. Key:	5C1172314BDFED0E229E7C8A6041B16F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",5C1172314BDFED0E229E7C8A6041B16F"
+msgid "마을에 어떻게 가는지 모른다고?"
+msgstr "마을에 어떻게 가는지 모른다고?"
+
+#. Key:	5C699D18497C490FA3A1B3A2BBDE9DB8
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_15.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_15.SpeakText
+msgctxt ",5C699D18497C490FA3A1B3A2BBDE9DB8"
+msgid "당신이나, 저나, 다른 사람들처럼요."
+msgstr "당신이나, 저나, 다른 사람들처럼요."
+
+#. Key:	5D43E2734E7DB617B5EDE6867832082D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",5D43E2734E7DB617B5EDE6867832082D"
+msgid "다른 분들과 함께 말이죠."
+msgstr "다른 분들과 함께 말이죠."
+
+#. Key:	5D81564E4E2B74CDCED08D800C023693
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",5D81564E4E2B74CDCED08D800C023693"
+msgid "뭐해?"
+msgstr "뭐해?"
+
+#. Key:	5DCA742744F4D78DD57D5FBD3AA487B3
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_10.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_10.SpeakText
+msgctxt ",5DCA742744F4D78DD57D5FBD3AA487B3"
+msgid "응? 누구나 다 이렇잖아. 별걸 다 묻네."
+msgstr "응? 누구나 다 이렇잖아. 별걸 다 묻네."
+
+#. Key:	5E55D3954068015A3733D296B2A4AF3D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_19.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_19.SpeakText
+msgctxt ",5E55D3954068015A3733D296B2A4AF3D"
+msgid "인간의 몸은 대재해 이후 이렇게 조각난 형상이 되었죠."
+msgstr "인간의 몸은 대재해 이후 이렇게 조각난 형상이 되었죠."
+
+#. Key:	5E9C76B747815F1FB563D6BEBBF11CEA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_2.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_2.Replies(1).Replies
+msgctxt ",5E9C76B747815F1FB563D6BEBBF11CEA"
+msgid "놀러왔어"
+msgstr "놀러왔어"
+
+#. Key:	6197E3294BE45D889D1D66A1AF5810E5
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",6197E3294BE45D889D1D66A1AF5810E5"
+msgid "하늘을 날 수 있는 능력이라도 있으면 몰라도."
+msgstr "하늘을 날 수 있는 능력이라도 있으면 몰라도."
+
+#. Key:	61AB60A8481134DC5980BAB57A248BDC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",61AB60A8481134DC5980BAB57A248BDC"
+msgid "말이 쉽지... 숲을 지나더라도 바로 산맥을 넘긴 쉽지 않을 거야. 거길 넘나드는 사람을 본 적이 없거든."
+msgstr "말이 쉽지... 숲을 지나더라도 바로 산맥을 넘긴 쉽지 않을 거야. 거길 넘나드는 사람을 본 적이 없거든."
+
+#. Key:	633CF24A43E76F1D30ED3CABFFE21160
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(2).Replies
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(2).Replies
+msgctxt ",633CF24A43E76F1D30ED3CABFFE21160"
+msgid "니 인생이?"
+msgstr "니 인생이?"
+
+#. Key:	641FB687499F79B4D10678826AC892F3
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",641FB687499F79B4D10678826AC892F3"
+msgid "먼 과거에는 사람의 몸이 이렇게 조각나있지 않았다고 합니다."
+msgstr "먼 과거에는 사람의 몸이 이렇게 조각나있지 않았다고 합니다."
+
+#. Key:	64FC45594BB225379104F9BBF2569ECE
+#. SourceLocation:	/Game/DialogTree/NPC/DialogTree1.DialogTree1:Speak_C_3.Text
+#: /Game/DialogTree/NPC/DialogTree1.DialogTree1:Speak_C_3.Text
+msgctxt ",64FC45594BB225379104F9BBF2569ECE"
+msgid "3번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+msgstr "3번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+
+#. Key:	65E1750F4E4F33F48501F7867F75BE31
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",65E1750F4E4F33F48501F7867F75BE31"
+msgid "깜짝이야. 나한테 할 말 있어?"
+msgstr "깜짝이야. 나한테 할 말 있어?"
+
+#. Key:	6716F1AC4737565FEC45B0B403CC939C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(2).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(2).Replies
+msgctxt ",6716F1AC4737565FEC45B0B403CC939C"
+msgid "당신에 대해"
+msgstr "당신에 대해"
+
+#. Key:	671C046049F9B5AAD053D9A8F80F141E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",671C046049F9B5AAD053D9A8F80F141E"
+msgid "그 대재해를 과연 '재해'라고 칭해야 하는 것인지에 대한 이의가 최근 제기되고 있지만요. 이건 중요한 게 아니고..."
+msgstr "그 대재해를 과연 '재해'라고 칭해야 하는 것인지에 대한 이의가 최근 제기되고 있지만요. 이건 중요한 게 아니고..."
+
+#. Key:	6894D3234BA01EE61799BCA5A229B4B0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",6894D3234BA01EE61799BCA5A229B4B0"
+msgid "누군가는 이렇게 동떨어진 조각처럼 있는 게 편한 법이지."
+msgstr "누군가는 이렇게 동떨어진 조각처럼 있는 게 편한 법이지."
+
+#. Key:	6F534DB040F53B22D51243800B728638
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",6F534DB040F53B22D51243800B728638"
+msgid "여기랑 비슷한데 훨씬 넓어 보여. 누가 살고 있으려나."
+msgstr "여기랑 비슷한데 훨씬 넓어 보여. 누가 살고 있으려나."
+
+#. Key:	6FE37B944B112D1F2256AEA158FD092D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",6FE37B944B112D1F2256AEA158FD092D"
+msgid "뭐야, 죽은 건 줄 알았는데."
+msgstr "뭐야, 죽은 건 줄 알았는데."
+
+#. Key:	706BB3B545DDB0E59A9D53BDF9CA4F97
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_5.Zeolite_DialogTree_5:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_5.Zeolite_DialogTree_5:BP_Speak_C_0.Text
+msgctxt ",706BB3B545DDB0E59A9D53BDF9CA4F97"
+msgid " … 을 제외하고 … 무너져 … "
+msgstr " … 을 제외하고 … 무너져 … "
+
+#. Key:	70DAB00644CB2144C4F3DD83DDB5ADC9
+#. SourceLocation:	/Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/DialogTree1.DialogTree1:BTTask_Speak_3.SpeakText
+msgctxt ",70DAB00644CB2144C4F3DD83DDB5ADC9"
+msgid "3번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+msgstr "3번 째 대답에 대한 NPC가 말하길 원하는 내용 적기"
+
+#. Key:	71AF4EFB4A628443CE24D5A93D7988DE
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",71AF4EFB4A628443CE24D5A93D7988DE"
+msgid "나도 모르겠어"
+msgstr "나도 모르겠어"
+
+#. Key:	72A676724F9D3FB7207448A90F254E5A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",72A676724F9D3FB7207448A90F254E5A"
+msgid "아쉽게도 오래되어서인지 글자가 잘 읽히진 않더라고."
+msgstr "아쉽게도 오래되어서인지 글자가 잘 읽히진 않더라고."
+
+#. Key:	739FB14E4161561A0B7F9EB4B5711837
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",739FB14E4161561A0B7F9EB4B5711837"
+msgid "왜 몸이 조각나있지?"
+msgstr "왜 몸이 조각나있지?"
+
+#. Key:	74F44B194CFB26371906F994D2B6C19A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",74F44B194CFB26371906F994D2B6C19A"
+msgid "그 학자? 나야 잘 모르는데..."
+msgstr "그 학자? 나야 잘 모르는데..."
+
+#. Key:	76BDAA634DD4BE86475CCEB2FB5298D1
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",76BDAA634DD4BE86475CCEB2FB5298D1"
+msgid "거기로는 어떻게 가?"
+msgstr "거기로는 어떻게 가?"
+
+#. Key:	778B1D1148EF9A2CF337439C9F9F903C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",778B1D1148EF9A2CF337439C9F9F903C"
+msgid "과거 인류의 주요 거점으로 사용되었으나, 인간은 지나친 개발로 망가진 지구를 벗어나 다른 곳으로 이주하기 시작했습니다."
+msgstr "과거 인류의 주요 거점으로 사용되었으나, 인간은 지나친 개발로 망가진 지구를 벗어나 다른 곳으로 이주하기 시작했습니다."
+
+#. Key:	77B9A9F6461C592AD98B248762E925B8
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_2.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_2.Replies(0).Replies
+msgctxt ",77B9A9F6461C592AD98B248762E925B8"
+msgid "나도 모르겠어"
+msgstr "나도 모르겠어"
+
+#. Key:	78373BD442B4B161E38FC18937E0AEA8
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",78373BD442B4B161E38FC18937E0AEA8"
+msgid "놀러왔어"
+msgstr "놀러왔어"
+
+#. Key:	7A69B75347987D6C5FC314B2E02160B9
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",7A69B75347987D6C5FC314B2E02160B9"
+msgid "뭐, 어쨌거나 이곳저곳 둘러봐. 예쁜 곳이니까."
+msgstr "뭐, 어쨌거나 이곳저곳 둘러봐. 예쁜 곳이니까."
+
+#. Key:	7A90AC3A459E9576BA05C1BF2DEFEDA2
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",7A90AC3A459E9576BA05C1BF2DEFEDA2"
+msgid "음?"
+msgstr "음?"
+
+#. Key:	7B9689364CF8A839BB72E2BEF17476EB
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",7B9689364CF8A839BB72E2BEF17476EB"
+msgid "그걸 네 목표로 삼아보면 어때?"
+msgstr "그걸 네 목표로 삼아보면 어때?"
+
+#. Key:	7BA2E4564F23C245218E519DA42CBDE0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",7BA2E4564F23C245218E519DA42CBDE0"
+msgid "만약 정보를 더 알고 싶다면 제 동생을 찾아 주세요. 저와 닮아서 알아보기 쉬울 겁니다."
+msgstr "만약 정보를 더 알고 싶다면 제 동생을 찾아 주세요. 저와 닮아서 알아보기 쉬울 겁니다."
+
+#. Key:	7DF91BE74FF62BDF1131CEB486683237
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",7DF91BE74FF62BDF1131CEB486683237"
+msgid "그렇구나"
+msgstr "그렇구나"
+
+#. Key:	802B267D49AC9535AF96D0BB961A2298
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_16.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_16.SpeakText
+msgctxt ",802B267D49AC9535AF96D0BB961A2298"
+msgid "과거 인류사에서는 인간의 단일한 몸에 의해 많은 것이 물질적으로 속단되어왔는데⋯. 아차. 이 얘기는 필요 없겠네요."
+msgstr "과거 인류사에서는 인간의 단일한 몸에 의해 많은 것이 물질적으로 속단되어왔는데⋯. 아차. 이 얘기는 필요 없겠네요."
+
+#. Key:	819F2AB7464D7A1A97393DA461266B27
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",819F2AB7464D7A1A97393DA461266B27"
+msgid "어디긴, 지구잖아. 별걸 다 묻네."
+msgstr "어디긴, 지구잖아. 별걸 다 묻네."
+
+#. Key:	84D52AD7400BB096D0C532968602650F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",84D52AD7400BB096D0C532968602650F"
+msgid "역시 그렇지?"
+msgstr "역시 그렇지?"
+
+#. Key:	875FD099486BDF25BFF95B9D02AC9731
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",875FD099486BDF25BFF95B9D02AC9731"
+msgid "그 학자에 대해 아는 게 더 있어?"
+msgstr "그 학자에 대해 아는 게 더 있어?"
+
+#. Key:	8840386E42C6BC42445E08BC87C90CFB
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_18.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_18.SpeakText
+msgctxt ",8840386E42C6BC42445E08BC87C90CFB"
+msgid "그렇군요. 뒷이야기가 궁금하면 다시 말을 걸어 주세요."
+msgstr "그렇군요. 뒷이야기가 궁금하면 다시 말을 걸어 주세요."
+
+#. Key:	88F1A7334D8EC1838FA40783F5AB1E9D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Reply_1.Replies(1).Replies
+msgctxt ",88F1A7334D8EC1838FA40783F5AB1E9D"
+msgid "나도 그래"
+msgstr "나도 그래"
+
+#. Key:	893E64314BAB14C70CABADA5CED883AA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_2.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_2.Replies(1).Replies
+msgctxt ",893E64314BAB14C70CABADA5CED883AA"
+msgid "아니"
+msgstr "아니"
+
+#. Key:	8B00DB9041D0E38432C6FAB9F1717C21
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_21.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_21.SpeakText
+msgctxt ",8B00DB9041D0E38432C6FAB9F1717C21"
+msgid "이전까지 인간의 몸은 단일한 형상으로, 신체가 전부 하나로 이어진 형태였다고 전해집니다."
+msgstr "이전까지 인간의 몸은 단일한 형상으로, 신체가 전부 하나로 이어진 형태였다고 전해집니다."
+
+#. Key:	8BFF2B2646D55AA3559BDB9DEFE56E3B
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_16.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_16.SpeakText
+msgctxt ",8BFF2B2646D55AA3559BDB9DEFE56E3B"
+msgid "사실... 목표니, 뭐니 말은 거창하게 했지만."
+msgstr "사실... 목표니, 뭐니 말은 거창하게 했지만."
+
+#. Key:	94AD7BEB4E3E71086969509770F9A953
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_14.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_14.SpeakText
+msgctxt ",94AD7BEB4E3E71086969509770F9A953"
+msgid "그럼 다음에는 어디로 갈 거야?"
+msgstr "그럼 다음에는 어디로 갈 거야?"
+
+#. Key:	95F724764265A4441F824589B3A004DA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",95F724764265A4441F824589B3A004DA"
+msgid "친구가 될 누군가나, 갖고 싶은 무언가나, 이루고 싶은 꿈이나... 그런 것들 말이야."
+msgstr "친구가 될 누군가나, 갖고 싶은 무언가나, 이루고 싶은 꿈이나... 그런 것들 말이야."
+
+#. Key:	9869C8A349C86996771512BB1DE65457
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Reply_1.Replies(0).Replies
+msgctxt ",9869C8A349C86996771512BB1DE65457"
+msgid "지구의 역사에 대해"
+msgstr "지구의 역사에 대해"
+
+#. Key:	99899F6D4837C660CEB0D1A12C31D881
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_A3_DialogTree.NPC_A3_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",99899F6D4837C660CEB0D1A12C31D881"
+msgid "별 볼 일 없는 걸 찾게 되더라도 말이야."
+msgstr "별 볼 일 없는 걸 찾게 되더라도 말이야."
+
+#. Key:	9A6D306C4FDCDC032191F5B8F26998B1
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",9A6D306C4FDCDC032191F5B8F26998B1"
+msgid "아~ 짜증 나 죽겠어."
+msgstr "아~ 짜증 나 죽겠어."
+
+#. Key:	A6C46EF74C85DD79E0AD7BA0EA20E511
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",A6C46EF74C85DD79E0AD7BA0EA20E511"
+msgid "궁금한 게 있으면 물어보세요!"
+msgstr "궁금한 게 있으면 물어보세요!"
+
+#. Key:	A7D1005647145829F0DB919A0765DFE9
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",A7D1005647145829F0DB919A0765DFE9"
+msgid "그래도 마을을 지키는 것이 내 일이지."
+msgstr "그래도 마을을 지키는 것이 내 일이지."
+
+#. Key:	A8C7A8AE4F8D6769D66CF39D7A31365E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",A8C7A8AE4F8D6769D66CF39D7A31365E"
+msgid "볼 일 없어"
+msgstr "볼 일 없어"
+
+#. Key:	A96D44C54044B8E4C31DB1B05DF970AD
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",A96D44C54044B8E4C31DB1B05DF970AD"
+msgid "여기엔 무슨 일로 왔어? 놀러 온 건가? 여기에 친구나 가족이 있어? 아! 혹시 연구하러? 종종 그런 사람들도 있다던데. 아니면 그냥 여행? 몇 살이야? 하는 일은?"
+msgstr "여기엔 무슨 일로 왔어? 놀러 온 건가? 여기에 친구나 가족이 있어? 아! 혹시 연구하러? 종종 그런 사람들도 있다던데. 아니면 그냥 여행? 몇 살이야? 하는 일은?"
+
+#. Key:	AA015740447543EC45E3049B188552FA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",AA015740447543EC45E3049B188552FA"
+msgid "... ... 어디에 있을지는 잘 모르겠지만요."
+msgstr "... ... 어디에 있을지는 잘 모르겠지만요."
+
+#. Key:	AA7197C343FE927646C0E28A2AC61A4E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",AA7197C343FE927646C0E28A2AC61A4E"
+msgid "이 작은 섬도 어쩌면 거대한 하나의 대륙이었을 수도 있지 않을까요?"
+msgstr "이 작은 섬도 어쩌면 거대한 하나의 대륙이었을 수도 있지 않을까요?"
+
+#. Key:	AC806FE74C3E3A72BCFC2B967F3FBB6C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",AC806FE74C3E3A72BCFC2B967F3FBB6C"
+msgid "너 저 섬에서 온 거야? ... ... 대체 어떻게?"
+msgstr "너 저 섬에서 온 거야? ... ... 대체 어떻게?"
+
+#. Key:	AD21004248EC272D0614FDB64157C508
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",AD21004248EC272D0614FDB64157C508"
+msgid "누군가는 저 떠다니는 섬에도 갈 수 있을지 모르겠네."
+msgstr "누군가는 저 떠다니는 섬에도 갈 수 있을지 모르겠네."
+
+#. Key:	ADA622A6451C08EBAB02A78EEBF59224
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_7.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_7.SpeakText
+msgctxt ",ADA622A6451C08EBAB02A78EEBF59224"
+msgid "지구에 대재해가 있었던 건 알지? 모르려나? 아무튼. 여긴 사람도 적고, 다들 유유자적하게 떠도는 사람들뿐이지만... 저 산 너머에는 꽤 큰 마을이 있다고 해. "
+msgstr "지구에 대재해가 있었던 건 알지? 모르려나? 아무튼. 여긴 사람도 적고, 다들 유유자적하게 떠도는 사람들뿐이지만... 저 산 너머에는 꽤 큰 마을이 있다고 해. "
+
+#. Key:	AE3C190A49C7A7E42FFE0E8EBDBC6C08
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",AE3C190A49C7A7E42FFE0E8EBDBC6C08"
+msgid "하하, 오지랖이었다면 미안! 앞으로 네 여정에 행운이 있길."
+msgstr "하하, 오지랖이었다면 미안! 앞으로 네 여정에 행운이 있길."
+
+#. Key:	AE8D674D4869045F54A17DA518E4819D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_9.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_9.SpeakText
+msgctxt ",AE8D674D4869045F54A17DA518E4819D"
+msgid "저 섬은 외부에서는 다가갈 수 없거든. 다가가려고만 하면 파도랑 바람이 거칠어져서 ..."
+msgstr "저 섬은 외부에서는 다가갈 수 없거든. 다가가려고만 하면 파도랑 바람이 거칠어져서 ..."
+
+#. Key:	AF0E28EE41A2C151208B73B601CFBC48
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",AF0E28EE41A2C151208B73B601CFBC48"
+msgid "너는 어때?"
+msgstr "너는 어때?"
+
+#. Key:	B5BAEE6543AB9D44949BDA8D4FB2FA4A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",B5BAEE6543AB9D44949BDA8D4FB2FA4A"
+msgid "한 번 가보는거 어때?"
+msgstr "한 번 가보는거 어때?"
+
+#. Key:	B6691D8E4EAFB0F02B7FDDA76BA3AEAC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_26.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_26.SpeakText
+msgctxt ",B6691D8E4EAFB0F02B7FDDA76BA3AEAC"
+msgid "그, 그래요. 제게 관심이 있는 거군요! "
+msgstr "그, 그래요. 제게 관심이 있는 거군요! "
+
+#. Key:	B8ED11E24FF4F97DC33425A9EFAB3C87
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_10.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_10.SpeakText
+msgctxt ",B8ED11E24FF4F97DC33425A9EFAB3C87"
+msgid "그러던 와중 모종의 대재해가 지구를 휩쓸었죠."
+msgstr "그러던 와중 모종의 대재해가 지구를 휩쓸었죠."
+
+#. Key:	BA4D8B224ED530A15554B0898DF20847
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",BA4D8B224ED530A15554B0898DF20847"
+msgid "... ... ... 지금은 그걸 말한 건 아니긴 한데."
+msgstr "... ... ... 지금은 그걸 말한 건 아니긴 한데."
+
+#. Key:	BBD97E734991ED3D2BB28FB880425538
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_10.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_10.SpeakText
+msgctxt ",BBD97E734991ED3D2BB28FB880425538"
+msgid "어쨌든 사람은 사람 곁에서 살아야 하니까. "
+msgstr "어쨌든 사람은 사람 곁에서 살아야 하니까. "
+
+#. Key:	BCC559F0487C3DA00394509700ADA67A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",BCC559F0487C3DA00394509700ADA67A"
+msgid "올라올 땐 몰랐는데, 내려가려니까... 생각보다 너무 무섭잖아."
+msgstr "올라올 땐 몰랐는데, 내려가려니까... 생각보다 너무 무섭잖아."
+
+#. Key:	BEC1A122415BCD08715B49B112A42B4C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_8.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_8.SpeakText
+msgctxt ",BEC1A122415BCD08715B49B112A42B4C"
+msgid "그곳으로 가면 네가 원하는 걸 찾을 수 있을지도 몰라."
+msgstr "그곳으로 가면 네가 원하는 걸 찾을 수 있을지도 몰라."
+
+#. Key:	C02BAE8649F9C3F0D45A409458F64FB5
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(2).Replies
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Reply_0.Replies(2).Replies
+msgctxt ",C02BAE8649F9C3F0D45A409458F64FB5"
+msgid "너 말이 참 많구나"
+msgstr "너 말이 참 많구나"
+
+#. Key:	C1CDF3BD419879D7B514E8A58D3586FE
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",C1CDF3BD419879D7B514E8A58D3586FE"
+msgid "하늘을 날 수 있는 능력이라도 있으면 몰라도."
+msgstr "하늘을 날 수 있는 능력이라도 있으면 몰라도."
+
+#. Key:	C254597A4E1C14822ABD1FB31C220C39
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",C254597A4E1C14822ABD1FB31C220C39"
+msgid "안녕하세요. 이곳은 처음이신가 보군요. "
+msgstr "안녕하세요. 이곳은 처음이신가 보군요. "
+
+#. Key:	C429CC7D47268911BEEAE582FD0E6AE8
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",C429CC7D47268911BEEAE582FD0E6AE8"
+msgid "떨어지면 어떻게 될지 상상도 하기 싫어."
+msgstr "떨어지면 어떻게 될지 상상도 하기 싫어."
+
+#. Key:	C49022CF4CCE034673F33C94C1FD8A5F
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Reply_0.Replies(1).Replies
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Reply_0.Replies(1).Replies
+msgctxt ",C49022CF4CCE034673F33C94C1FD8A5F"
+msgid "아니"
+msgstr "아니"
+
+#. Key:	C73FED194AB1492D4007049617E0FD42
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",C73FED194AB1492D4007049617E0FD42"
+msgid "저기 멀리 있는 곳을 구경하고 있지."
+msgstr "저기 멀리 있는 곳을 구경하고 있지."
+
+#. Key:	C8BBC312421351166ABF4F95047B4B48
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_R1_DialogTree.NPC_R1_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",C8BBC312421351166ABF4F95047B4B48"
+msgid "이 비석은 아주 오래전 어떤 학자가 세운 거래."
+msgstr "이 비석은 아주 오래전 어떤 학자가 세운 거래."
+
+#. Key:	C991F83945A6EB1214812D9C9239545A
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",C991F83945A6EB1214812D9C9239545A"
+msgid "뭐긴 뭐야, 짜증 나게 하지 마."
+msgstr "뭐긴 뭐야, 짜증 나게 하지 마."
+
+#. Key:	CA52A3624BA72B18AE0BDC81CEA05433
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",CA52A3624BA72B18AE0BDC81CEA05433"
+msgid "응"
+msgstr "응"
+
+#. Key:	CAEB4308437885B239E1DB9B5E4B35EA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",CAEB4308437885B239E1DB9B5E4B35EA"
+msgid "이 대지에 있는 신전은 이미 발견 하셨나요? "
+msgstr "이 대지에 있는 신전은 이미 발견 하셨나요? "
+
+#. Key:	CD2ABED446609AD2A17F18830C45068D
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",CD2ABED446609AD2A17F18830C45068D"
+msgid "정말 멋진데! 그렇게 물처럼 변할 수 있으면 이곳저곳 돌아다니기 좋을거야. "
+msgstr "정말 멋진데! 그렇게 물처럼 변할 수 있으면 이곳저곳 돌아다니기 좋을거야. "
+
+#. Key:	CE2F6D1242F3CD4A8B52A4BF0C904BC0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_0.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_0.SpeakText
+msgctxt ",CE2F6D1242F3CD4A8B52A4BF0C904BC0"
+msgid "뭐... 여긴 보다시피 그냥 바닷가야. 대재해로 많은 게 무너져서, 자연 빼곤 딱히 볼 게 없지. 너처럼 새로운 사람이 온 건 아주 오랜만이야. "
+msgstr "뭐... 여긴 보다시피 그냥 바닷가야. 대재해로 많은 게 무너져서, 자연 빼곤 딱히 볼 게 없지. 너처럼 새로운 사람이 온 건 아주 오랜만이야. "
+
+#. Key:	CE4444C3462A3076768574BF19DAD3F7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",CE4444C3462A3076768574BF19DAD3F7"
+msgid "놀러 왔구나! 여기에 있는 거라곤 자연뿐이지만, 큰 폭포가 있어서 멍 때리기 좋아. 폭포 쏟아지는 소리가 꽤 좋거든."
+msgstr "놀러 왔구나! 여기에 있는 거라곤 자연뿐이지만, 큰 폭포가 있어서 멍 때리기 좋아. 폭포 쏟아지는 소리가 꽤 좋거든."
+
+#. Key:	D31366A44435DD80344680BB9D076285
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_A0_DialogTree.NPC_A0_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",D31366A44435DD80344680BB9D076285"
+msgid "너 말이야, 저기 섬에서 부터 헤엄쳐 온거지?"
+msgstr "너 말이야, 저기 섬에서 부터 헤엄쳐 온거지?"
+
+#. Key:	D435E44346F581ACFCEDF28829CB2B91
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_A2_DialogTree.NPC_A2_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",D435E44346F581ACFCEDF28829CB2B91"
+msgid "... ... ..."
+msgstr "... ... ..."
+
+#. Key:	D583712645918E75FC1E12BE60349A26
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",D583712645918E75FC1E12BE60349A26"
+msgid "저 너머에 뭐가 있을지 궁금하긴 하지만..."
+msgstr "저 너머에 뭐가 있을지 궁금하긴 하지만..."
+
+#. Key:	D8D742B645BE5D2BA8FBBB84DBDAAF1C
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_24.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_24.SpeakText
+msgctxt ",D8D742B645BE5D2BA8FBBB84DBDAAF1C"
+msgid "저에 대해서요? "
+msgstr "저에 대해서요? "
+
+#. Key:	D9DF1A104AC170273F56D6B7C86D2271
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_19.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_19.SpeakText
+msgctxt ",D9DF1A104AC170273F56D6B7C86D2271"
+msgid "난 이곳을 참 좋아하거든. 여기가 네 마음에도 들면 좋겠다."
+msgstr "난 이곳을 참 좋아하거든. 여기가 네 마음에도 들면 좋겠다."
+
+#. Key:	DB3A4A0C4F3A1E6421811A8BEAED892E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",DB3A4A0C4F3A1E6421811A8BEAED892E"
+msgid "여긴 어디죠?"
+msgstr "여긴 어디죠?"
+
+#. Key:	DBBEFE6E4FAA940FA406199BCD40A4E7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_T3_DialogTree.NPC_T3_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",DBBEFE6E4FAA940FA406199BCD40A4E7"
+msgid "떨어지기라도 하면 어떻게 되려나."
+msgstr "떨어지기라도 하면 어떻게 되려나."
+
+#. Key:	DBE10DB5459B5A49C841618B11529F76
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",DBE10DB5459B5A49C841618B11529F76"
+msgid "특별한 것이 숨겨져있을 것 같은데 저는 아직 밝혀낸게 없답니다."
+msgstr "특별한 것이 숨겨져있을 것 같은데 저는 아직 밝혀낸게 없답니다."
+
+#. Key:	DF1EA0164062F5D53AADD89516DEB1D5
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_T0_DialogTree.NPC_T0_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",DF1EA0164062F5D53AADD89516DEB1D5"
+msgid "나도 그래"
+msgstr "나도 그래"
+
+#. Key:	E075CCE2415954052F9E8693991D3594
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_13.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_13.SpeakText
+msgctxt ",E075CCE2415954052F9E8693991D3594"
+msgid "아무튼, 재미있게 놀다 가! 이곳이 네 마음에 들면 좋겠다."
+msgstr "아무튼, 재미있게 놀다 가! 이곳이 네 마음에 들면 좋겠다."
+
+#. Key:	E08DB1AD480BCE5DA6A84E85224572FA
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_11.SpeakText
+#: /Game/DialogTree/NPC/NPC_S2_DialogTree.NPC_S2_DialogTree:BTTask_Speak_11.SpeakText
+msgctxt ",E08DB1AD480BCE5DA6A84E85224572FA"
+msgid "궁금한 게 있으면 알아서 알아봐. 다른 사람들은 더 친절할 수도."
+msgstr "궁금한 게 있으면 알아서 알아봐. 다른 사람들은 더 친절할 수도."
+
+#. Key:	E0BB2C254603D17CBFFD1789F460A737
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",E0BB2C254603D17CBFFD1789F460A737"
+msgid "... 아! 안녕하세요. 저는 행성 지구를 연구하는 사람입니다. 비석을 해독하고 있었죠."
+msgstr "... 아! 안녕하세요. 저는 행성 지구를 연구하는 사람입니다. 비석을 해독하고 있었죠."
+
+#. Key:	E1B37A7C48FA18893353C982C5A1C7E2
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_13.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_13.SpeakText
+msgctxt ",E1B37A7C48FA18893353C982C5A1C7E2"
+msgid "하지만 이것도 오래 전 일이죠. 대재해 이후 오랜 시간이 흘러 지구는 자생적으로 생태계를 복구하기 시작했고,"
+msgstr "하지만 이것도 오래 전 일이죠. 대재해 이후 오랜 시간이 흘러 지구는 자생적으로 생태계를 복구하기 시작했고,"
+
+#. Key:	E3796528436AD7441A65C292B94F13D0
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",E3796528436AD7441A65C292B94F13D0"
+msgid "여기 너머에도 다른 존재들이 있어."
+msgstr "여기 너머에도 다른 존재들이 있어."
+
+#. Key:	E3AAB17F4605018C1DAE5C8F9A36F365
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",E3AAB17F4605018C1DAE5C8F9A36F365"
+msgid "... ... 그래? 넌 뭐가 그렇게 짜증 나냐."
+msgstr "... ... 그래? 넌 뭐가 그렇게 짜증 나냐."
+
+#. Key:	E4B802564B0506F5E11B4F8A5F0F27B7
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_0.Zeolite_DialogTree_0:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_0.Zeolite_DialogTree_0:BP_Speak_C_0.Text
+msgctxt ",E4B802564B0506F5E11B4F8A5F0F27B7"
+msgid "… 은 행성 지구에서 처음 탄생한 종으로 …"
+msgstr "… 은 행성 지구에서 처음 탄생한 종으로 …"
+
+#. Key:	E65AD02B414B7404A26A9AB83B8C49DC
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_17.SpeakText
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Speak_17.SpeakText
+msgctxt ",E65AD02B414B7404A26A9AB83B8C49DC"
+msgid "웬만하면 가기 어려울 거다."
+msgstr "웬만하면 가기 어려울 거다."
+
+#. Key:	E7608A884599C631D8B6FF9489B592F3
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Reply_0.Replies(0).Replies
+#: /Game/DialogTree/NPC/NPC_S0_DialogTree.NPC_S0_DialogTree:BTTask_Reply_0.Replies(0).Replies
+msgctxt ",E7608A884599C631D8B6FF9489B592F3"
+msgid "마을은 어디에 있는데?"
+msgstr "마을은 어디에 있는데?"
+
+#. Key:	E7F2407040B67E2BB7B6CDB57F34234C
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_1.Zeolite_DialogTree_1:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_1.Zeolite_DialogTree_1:BP_Speak_C_0.Text
+msgctxt ",E7F2407040B67E2BB7B6CDB57F34234C"
+msgid "… 정형화 … 신체를 … 문명의 초기 …"
+msgstr "… 정형화 … 신체를 … 문명의 초기 …"
+
+#. Key:	EA14CE48419BE9BE4C285084B9EE9717
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_30.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_30.SpeakText
+msgctxt ",EA14CE48419BE9BE4C285084B9EE9717"
+msgid "... ... ... ... ..."
+msgstr "... ... ... ... ..."
+
+#. Key:	EB225C014C5C206353791D8137E28893
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",EB225C014C5C206353791D8137E28893"
+msgid "뭐가 떨어져 있는 것도 아니고, 그냥 땅에서 빛만 나더라고."
+msgstr "뭐가 떨어져 있는 것도 아니고, 그냥 땅에서 빛만 나더라고."
+
+#. Key:	EC79B18C4765C3A461117DAC9111DF34
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_2.Zeolite_DialogTree_2:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_2.Zeolite_DialogTree_2:BP_Speak_C_0.Text
+msgctxt ",EC79B18C4765C3A461117DAC9111DF34"
+msgid "… 휩쓴 이 대재해로 … 지구력 … 387년 이후 …"
+msgstr "… 휩쓴 이 대재해로 … 지구력 … 387년 이후 …"
+
+#. Key:	EC94B2E840C18D45E20213B83AA03186
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_6.SpeakText
+#: /Game/DialogTree/NPC/NPC_R0_DialogTree.NPC_R0_DialogTree:BTTask_Speak_6.SpeakText
+msgctxt ",EC94B2E840C18D45E20213B83AA03186"
+msgid "사실 다른 것들은 물론, 눈에 보이지 않는 많은 것도 조각나 있을 수 있답니다."
+msgstr "사실 다른 것들은 물론, 눈에 보이지 않는 많은 것도 조각나 있을 수 있답니다."
+
+#. Key:	EDF4CFF24B36482F1DB202A48EB4B4D5
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_4.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_4.SpeakText
+msgctxt ",EDF4CFF24B36482F1DB202A48EB4B4D5"
+msgid "이 해변을 지나서, 폭포와 공중에 뜬 섬, 어두운 숲을 지나가면 되는데."
+msgstr "이 해변을 지나서, 폭포와 공중에 뜬 섬, 어두운 숲을 지나가면 되는데."
+
+#. Key:	F0C73E5E47B2F72E8A1361A302FE1546
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_R3_DialogTree.NPC_R3_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",F0C73E5E47B2F72E8A1361A302FE1546"
+msgid "그로 인해 지구의 많은 문명이 부서져 내렸고, 인간 종의 형상 또한 변형을 피할 수 없었습니다."
+msgstr "그로 인해 지구의 많은 문명이 부서져 내렸고, 인간 종의 형상 또한 변형을 피할 수 없었습니다."
+
+#. Key:	F1DE111A4FAE991E26EFB682DAC3186A
+#. SourceLocation:	/Game/DialogTree/Zeolite/Zeolite_DialogTree_6.Zeolite_DialogTree_6:BP_Speak_C_0.Text
+#: /Game/DialogTree/Zeolite/Zeolite_DialogTree_6.Zeolite_DialogTree_6:BP_Speak_C_0.Text
+msgctxt ",F1DE111A4FAE991E26EFB682DAC3186A"
+msgid "… 여전히 … 에서 문명을 … "
+msgstr "… 여전히 … 에서 문명을 … "
+
+#. Key:	F291A68F469D37E0BA89B4B553F21298
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_18.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_18.SpeakText
+msgctxt ",F291A68F469D37E0BA89B4B553F21298"
+msgid "여기에서 재미있게 놀다 가는 거야! "
+msgstr "여기에서 재미있게 놀다 가는 거야! "
+
+#. Key:	F340BDAA47E4E5599A8D9998E7A641DF
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_10.SpeakText
+#: /Game/DialogTree/NPC/NPC_S1_DialogTree.NPC_S1_DialogTree:BTTask_Speak_10.SpeakText
+msgctxt ",F340BDAA47E4E5599A8D9998E7A641DF"
+msgid "인생의 모든 게 마음에 드는 사람은 없겠다만, 처음 본 너도 그렇게 물어볼 정도면... 티가 많이 나나?"
+msgstr "인생의 모든 게 마음에 드는 사람은 없겠다만, 처음 본 너도 그렇게 물어볼 정도면... 티가 많이 나나?"
+
+#. Key:	F482F9AD4711553117F14AA6B608787E
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_5.SpeakText
+#: /Game/DialogTree/NPC/NPC_P0_DialogTree.NPC_P0_DialogTree:BTTask_Speak_5.SpeakText
+msgctxt ",F482F9AD4711553117F14AA6B608787E"
+msgid "저쪽에 대지로 갈 수 있는 길이 있거든."
+msgstr "저쪽에 대지로 갈 수 있는 길이 있거든."
+
+#. Key:	FB9674294343D692F85A6AA2450E4CD5
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_3.SpeakText
+#: /Game/DialogTree/NPC/NPC_A1_DialogTree.NPC_A1_DialogTree:BTTask_Speak_3.SpeakText
+msgctxt ",FB9674294343D692F85A6AA2450E4CD5"
+msgid "어! 안녕? 처음 보는 사람이네. "
+msgstr "어! 안녕? 처음 보는 사람이네. "
+
+#. Key:	FDBB173A4AF50307D20C2DA47AE09A03
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_1.SpeakText
+#: /Game/DialogTree/NPC/NPC_P2_DialogTree.NPC_P2_DialogTree:BTTask_Speak_1.SpeakText
+msgctxt ",FDBB173A4AF50307D20C2DA47AE09A03"
+msgid "저게 대체 뭘까?"
+msgstr "저게 대체 뭘까?"
+
+#. Key:	FDEEADA545EF93C6AA733399A71543D7
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_12.SpeakText
+#: /Game/DialogTree/NPC/NPC_S3_DialogTree.NPC_S3_DialogTree:BTTask_Speak_12.SpeakText
+msgctxt ",FDEEADA545EF93C6AA733399A71543D7"
+msgid "저 산맥을 넘으면 마을에 갈 수 있지만, 가기는 힘들 거야."
+msgstr "저 산맥을 넘으면 마을에 갈 수 있지만, 가기는 힘들 거야."
+
+#. Key:	FFFB4F71487D646A150CA19B8F788128
+#. SourceLocation:	/Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_2.SpeakText
+#: /Game/DialogTree/NPC/NPC_R2_DialogTree.NPC_R2_DialogTree:BTTask_Speak_2.SpeakText
+msgctxt ",FFFB4F71487D646A150CA19B8F788128"
+msgid "들어보면 작게 무슨 노래가 들리는 것 같긴 한데."
+msgstr "들어보면 작게 무슨 노래가 들리는 것 같긴 한데."
+
