@@ -15,7 +15,7 @@ AWaterFall::AWaterFall()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	WaterFallBox = CreateDefaultSubobject<UBoxComponent>(TEXT("WaterFallBox"));
 	Sound = CreateDefaultSubobject<UAudioComponent>(TEXT("Sound"));
 	WaterFall = CreateDefaultSubobject<UNiagaraComponent>(TEXT("WaterFall"));
 	TopTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TopTrigger"));
@@ -24,7 +24,7 @@ AWaterFall::AWaterFall()
 	TopStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopStartPoint"));
 
 	RootComponent = WaterFall;
-	Mesh->SetupAttachment(RootComponent);
+	WaterFallBox->SetupAttachment(RootComponent);
 	Sound->SetupAttachment(RootComponent);
 	TopTrigger->SetupAttachment(RootComponent);
 	BottomTrigger->SetupAttachment(RootComponent);
@@ -37,19 +37,12 @@ AWaterFall::AWaterFall()
 		Sound->SetSound(WaterFallSound.Object);
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MESH(TEXT("/Script/Engine.StaticMesh'/Game/BluePrint/Gimmick/Waterfall_Collsion.Waterfall_Collsion'"));
-	if (MESH.Succeeded())
-	{
-		Mesh->SetStaticMesh(MESH.Object);
-		Mesh->SetRelativeLocationAndRotation(FVector(0, -360.0f, 0), FRotator(0, 0, 0));
-		Mesh->SetRelativeScale3D(FVector(1.75f, 1.0f, 1.715f));
-		Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
-	}
 	static ConstructorHelpers::FClassFinder<UUserWidget> WaterFallWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_WaterFallWidget.WG_WaterFallWidget_C'"));
 	if (WaterFallWidget.Succeeded())
 	{
 		WaterFallWidgetClass = WaterFallWidget.Class;
 	}
+	WaterFallBox->SetCollisionProfileName(TEXT("WaterBodyCollision"));
 }
 
 // Called when the game starts or when spawned

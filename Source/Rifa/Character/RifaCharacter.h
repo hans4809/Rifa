@@ -153,7 +153,7 @@ protected:
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
 	virtual void EndPlay(EEndPlayReason::Type) override;
-	std::pair<FHitResult, bool> WaterHitResult();
+	std::pair<FHitResult, bool> LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel);
 private:
 
 	UPROPERTY()

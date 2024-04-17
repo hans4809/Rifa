@@ -31,7 +31,7 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> BottomEndPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UStaticMeshComponent> Mesh;
+	TObjectPtr<class UBoxComponent> WaterFallBox;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UAudioComponent> Sound;
 protected:

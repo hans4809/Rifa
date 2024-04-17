@@ -23,7 +23,7 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	//BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
 	TopEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopEndPoint"));
 	BottomEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomEndPoint"));
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	WaterFallBox = CreateDefaultSubobject<UBoxComponent>(TEXT("WaterFallBox"));
 	Sound = CreateDefaultSubobject<UAudioComponent>(TEXT("Sound"));
 
 
@@ -35,26 +35,18 @@ AWaterFallActorByTriggerBox::AWaterFallActorByTriggerBox()
 	//BottomStartPoint->SetupAttachment(BottomTrigger);
 	TopEndPoint->SetupAttachment(TopTrigger);
 	BottomEndPoint->SetupAttachment(BottomTrigger);
-	Mesh->SetupAttachment(WaterFall);
+	WaterFallBox->SetupAttachment(WaterFall);
 	Sound->SetupAttachment(RootComponent);
 
 	BottomTrigger->SetCollisionProfileName(TEXT("Trigger"));
 	TopTrigger->SetCollisionProfileName(TEXT("Trigger"));
-	Mesh->SetCollisionProfileName(TEXT("WaterBodyCollision"));
+	WaterFallBox->SetCollisionProfileName(TEXT("WaterBodyCollision"));
 
 	const ConstructorHelpers::FObjectFinder<USoundBase> WaterFallSound(TEXT("/Script/Engine.SoundCue'/Game/Sounds/SFX/Waterfall_Water.Waterfall_Water'"));
 	if (WaterFallSound.Succeeded())
 	{
 		Sound->SetSound(WaterFallSound.Object);
 	}
-
-	const ConstructorHelpers::FObjectFinder<UStaticMesh> MESH(TEXT("/Script/Engine.StaticMesh'/Game/BluePrint/Gimmick/Waterfall_Collsion.Waterfall_Collsion'"));
-	if (MESH.Succeeded())
-	{
-		Mesh->SetStaticMesh(MESH.Object);
-	}
-	Mesh->SetRelativeLocationAndRotation(FVector(0, -360.0f, 0), FRotator(0, 0, 0));
-	Mesh->SetRelativeScale3D(FVector(1.75f, 1.0f, 1.715f));
 }
 
 // Called when the game starts or when spawned

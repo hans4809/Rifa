@@ -250,25 +250,9 @@ void ARifaCharacter::Tick(float DeltaTime)
 	{
 		if (bIsRideUpWaterFall)
 		{
-			FHitResult HitResult0;
-			FCollisionQueryParams Params(NAME_None, false, this);
-			bool bResult0 = GetWorld()->LineTraceSingleByChannel(
-				OUT HitResult0,
-				GetActorLocation(),
-				GetActorLocation() - GetActorForwardVector() * 100.f,
-				ECollisionChannel::ECC_Visibility,
-				Params
-			);
-			FColor DrawColor = bResult0 ? FColor::Green : FColor::Red;
-			DrawDebugLine(
-				GetWorld(),
-				GetActorLocation(),
-				GetActorLocation() - GetActorForwardVector() * 100.f,
-				DrawColor,
-				false,
-				2.f);
+			std::pair<FHitResult, bool> GroundHitResult = LineHitResult(-GetActorForwardVector(), 100.f, ECollisionChannel::ECC_Visibility);
 
-			if (bResult0 == true) {
+			if (GroundHitResult.second) {
 				bIsSwimming = false;
 				bIsRideUpWaterFall = false;
 				SetActorRotation(FRotator(0.f, 0.f, 0.f));
@@ -278,25 +262,9 @@ void ARifaCharacter::Tick(float DeltaTime)
 		}
 		else if (bIsRideDownWaterFall)
 		{
-			FHitResult HitResult0;
-			FCollisionQueryParams Params(NAME_None, false, this);
-			bool bResult0 = GetWorld()->LineTraceSingleByChannel(
-				OUT HitResult0,
-				GetActorLocation(),
-				GetActorLocation() + GetActorForwardVector() * 100.f,
-				ECollisionChannel::ECC_Visibility,
-				Params
-			);
-			FColor DrawColor = bResult0 ? FColor::Green : FColor::Red;
-			DrawDebugLine(
-				GetWorld(),
-				GetActorLocation(),
-				GetActorLocation() + GetActorForwardVector() * 100.f,
-				DrawColor,
-				false,
-				2.f);
+			std::pair<FHitResult, bool> GroundHitResult = LineHitResult(GetActorForwardVector(), 100.f, ECollisionChannel::ECC_Visibility);
 
-			if (bResult0 == true) {
+			if (GroundHitResult.second) {
 				bIsSwimming = false;
 				bIsRideDownWaterFall = false;
 				SetActorRotation(FRotator(0.f, 0.f, 0.f));
@@ -304,28 +272,10 @@ void ARifaCharacter::Tick(float DeltaTime)
 				GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 			}
 		}
-		FHitResult HitResult;
-		FCollisionQueryParams Params(NAME_None, false, this);
-		float CollisionRange = 500.f;
-		bool bResult = GetWorld()->LineTraceSingleByChannel(
-			OUT HitResult,
-			GetActorLocation(),
-			GetActorLocation() - GetActorUpVector() * CollisionRange,
-			ECollisionChannel::ECC_GameTraceChannel1,
-			Params
-		);
-		FColor DrawColor = bResult ? FColor::Green : FColor::Red;
-		DrawDebugLine(
-			GetWorld(),
-			GetActorLocation(),
-			GetActorLocation() - GetActorUpVector() * CollisionRange,
-			DrawColor,
-			false,
-			2.f);
 
-		if (bResult == false) {
+		std::pair<FHitResult, bool> WaterHitResult = LineHitResult(-GetActorUpVector(), 500.f, ECollisionChannel::ECC_GameTraceChannel1);
+		if (!WaterHitResult.second)
 			ReturnWalk();
-		}
 	}
 }
 
@@ -335,23 +285,22 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 	PickupItem.Clear();
 }
 
-std::pair<FHitResult, bool> ARifaCharacter::WaterHitResult()
+std::pair<FHitResult, bool> ARifaCharacter::LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility)
 {	
 	FHitResult HitResult;
 	FCollisionQueryParams Params(NAME_None, false, this);
-	float CollisionRange = 300.f;
 	bool bResult = GetWorld()->LineTraceSingleByChannel(
 		OUT HitResult,
 		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * CollisionRange,
-		ECollisionChannel::ECC_GameTraceChannel1,
+		GetActorLocation() + DirectionVector * LineLength,
+		TraceChannel,
 		Params
 	);
 	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	DrawDebugLine(
 		GetWorld(),
 		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * CollisionRange,
+		GetActorLocation() + DirectionVector * LineLength,
 		DrawColor,
 		false,
 		2.f);
@@ -437,22 +386,6 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 			AddMovementInput(FollowCamera->GetForwardVector(), MovementVector.Y);
 			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		//else if (bIsSwimming && !bIsRideUpWaterFall && !bIsRideDownWaterFall) 
-		//{
-		//	const float Dot = FVector::DotProduct(GetActorForwardVector(), WaterForcingVector);
-		//	const float ACosAngle = FMath::Acos(Dot);
-		//	const float Angle = FMath::RadiansToDegrees(ACosAngle);
-		//	AddMovementInput(ForwardDirection, MovementVector.Y);
-		//	AddMovementInput(RightDirection, MovementVector.X);
-		//	if (Angle <= 90) 
-		//	{
-		//		RifaCharacterMovement->MaxFlySpeed = 1000;
-		//	}
-		//	else 
-		//	{
-		//		RifaCharacterMovement->MaxFlySpeed = 600;
-		//	}
-		//}
 		else
 		{
 			AddMovementInput(ForwardDirection, MovementVector.Y );
@@ -535,7 +468,7 @@ void ARifaCharacter::Swim()
 	{
 		return;
 	}
-	if (bCanSwim) 
+	if (bCanSwim) // 그냥 수영
 	{
 		bIsSwimming = true;
 		StartLocation = (GetActorLocation() - GetActorForwardVector() * 50);
@@ -544,56 +477,45 @@ void ARifaCharacter::Swim()
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
-	else if (bCanRideDownWaterFall)
+	//else if (bCanRideDownWaterFall) // 폭포 타고 내려가는 거
+	//{
+	//	
+	//}
+	else // 폭포 체크
 	{
-		if (SwimStartLocation == FVector(0, 0, 0))
+		std::pair<FHitResult, bool> FrontWaterHitResult = LineHitResult(GetActorForwardVector(), 300.f, ECollisionChannel::ECC_GameTraceChannel1);
+		FRotator SwimRotation = FRotator::ZeroRotator;
+		FVector SwimLocation = FVector::ZeroVector;
+		if (FrontWaterHitResult.second) // 폭포를 타고 올라가는 것을 우선으로 체크
 		{
-			return;
+			SwimRotation = FrontWaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, -90.f, 0);
+			SwimLocation = FrontWaterHitResult.first.ImpactPoint - (GetActorForwardVector() * 300.f) + (GetActorUpVector() * 100.f);
+			bIsRideUpWaterFall = true;
+		}
+		else 
+		{
+			FVector DirectionVector = (GetActorForwardVector() - GetActorUpVector());
+			DirectionVector.Normalize();
+			std::pair<FHitResult, bool> DiagnolWaterHitResult = LineHitResult(DirectionVector, 500.f, ECollisionChannel::ECC_GameTraceChannel1);
+			if (!DiagnolWaterHitResult.second) // 폭포 타고 올라갈 곳이 없을 때 폭포 타고 내려갈 수 있는지 체크
+			{
+				return;
+			}
+			SwimRotation = DiagnolWaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, 90.f, 0);
+			//SetActorRotation(WaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, 90.f, 0));
+			//SetActorLocation(WaterHitResult.first.ImpactPoint + (GetActorForwardVector() * 300.f));
+			SwimLocation = DiagnolWaterHitResult.first.ImpactPoint + (GetActorForwardVector() * 300.f);
+			bIsRideDownWaterFall = true;
 		}
 		bIsSwimming = true;
-		bIsRideDownWaterFall = true;
 		StartLocation = GetActorLocation();
-		SetActorRotation(WaterFallRotation + FRotator(0, 90.f, 0));
-		SetActorLocation(SwimStartLocation);
+		SetActorRotation(SwimRotation);
+		SetActorLocation(SwimLocation);
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
 		RifaCharacterMovement->bCheatFlying = true;
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
-	else
-	{
-		std::pair<FHitResult, bool> HitResult = WaterHitResult();
-		if (HitResult.second == false)
-		{
-			return;
-		}
-		bIsSwimming = true;
-		bIsRideUpWaterFall = true;
-		StartLocation = GetActorLocation();
-		SetActorRotation(HitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, -90.f, 0));
-		SetActorLocation(HitResult.first.ImpactPoint - (GetActorForwardVector() * 300.f) + (GetActorUpVector() * 100.f));
-		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		RifaCharacterMovement->bCheatFlying = true;
-		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
-	}
-	/*else if (bCanRideUpWaterFall)
-	{
-		if (SwimStartLocation == FVector(0, 0, 0))
-		{
-			return;
-		}
-		bIsSwimming = true;
-		bIsWaterFall = true;
-		SetActorRotation(WaterFallRotation + FRotator(0, -90.f, 0));
-		StartLocation = GetActorLocation();
-		SetActorLocation(SwimStartLocation);
-		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		RifaCharacterMovement->bCheatFlying = true;
-		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
-	}*/
-	
 }
 
 void ARifaCharacter::ReturnWalk()
