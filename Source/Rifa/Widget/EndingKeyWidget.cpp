@@ -8,6 +8,17 @@
 #include "LevelSequence.h"
 #include "LevelSequenceActor.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Widget/CreditWidget.h"
+
+UEndingKeyWidget::UEndingKeyWidget(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	static ConstructorHelpers::FClassFinder<UUserWidget> CreditWidgetClassFinder(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_Credit.WG_Credit_C'"));
+	if (CreditWidgetClassFinder.Succeeded())
+	{
+		CreditWidgetClass = CreditWidgetClassFinder.Class;
+	}
+}
 
 void UEndingKeyWidget::NativeConstruct()
 {
@@ -19,6 +30,10 @@ void UEndingKeyWidget::NativeConstruct()
 		EndingLevelSequencePlayer = ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), EndingLevelSequence, FMovieSceneSequencePlaybackSettings(), EndingLevelSequenceActor);
 	}
 	Cast<APlayerController>(CharacterReference->GetController())->SetInputMode(FInputModeUIOnly());
+	if (CreditWidgetClass)
+	{
+		CreditWidgetAsset = CreateWidget<UCreditWidget>(GetWorld(), CreditWidgetClass);
+	}
 }
 
 void UEndingKeyWidget::PlayEndingLevelSequence()
@@ -42,6 +57,9 @@ void UEndingKeyWidget::PlayEndingLevelSequence()
 
 void UEndingKeyWidget::EndEndingLevelSequence()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
-	RifaGameInstance->ResetSaveData();
+	//UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
+	if (CreditWidgetAsset)
+	{
+		CreditWidgetAsset->Init();
+	}
 }

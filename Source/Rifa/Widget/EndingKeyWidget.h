@@ -14,12 +14,14 @@ class RIFA_API UEndingKeyWidget : public UPopUpWidget
 {
 	GENERATED_BODY()
 public:
+	UEndingKeyWidget(const FObjectInitializer& ObjectInitializer);
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	TObjectPtr<class ULevelSequence> EndingLevelSequence;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	TObjectPtr<class ULevelSequencePlayer> EndingLevelSequencePlayer;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	class ALevelSequenceActor* EndingLevelSequenceActor;
+
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
@@ -28,4 +30,9 @@ protected:
 	void PlayEndingLevelSequence();
 	UFUNCTION(BlueprintCallable)
 	void EndEndingLevelSequence();
+private:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UUserWidget> CreditWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCreditWidget> CreditWidgetAsset;
 };

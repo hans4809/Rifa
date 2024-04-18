@@ -289,47 +289,16 @@ void ARifaCharacter::EndPlay(EEndPlayReason::Type EndReason)
 std::pair<FHitResult, bool> ARifaCharacter::LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility)
 {	
 	FHitResult HitResult;
-	TArray<FHitResult> HitResults;
 	FCollisionQueryParams Params(NAME_None, false, this);
 	bool bResult = false;
 
-	if (TraceChannel == ECollisionChannel::ECC_GameTraceChannel1)
-	{
-		bResult = GetWorld()->LineTraceMultiByChannel(
-			OUT HitResults,
-			GetActorLocation(),
-			GetActorLocation() + DirectionVector * LineLength,
-			TraceChannel,
-			Params
-		);
-
-		if (bResult)
-		{
-			for (auto Hit : HitResults)
-			{
-				if (Cast<AWaterFall>(Hit.GetActor()))
-				{
-					HitResult = Hit;
-					bResult = true;
-					break;
-				}
-				else 
-				{
-					bResult = false;
-				}
-			}
-		}
-	}
-	else
-	{
-		bResult = GetWorld()->LineTraceSingleByChannel(
-			OUT HitResult,
-			GetActorLocation(),
-			GetActorLocation() + DirectionVector * LineLength,
-			TraceChannel,
-			Params
-		);
-	}
+	bResult = GetWorld()->LineTraceSingleByChannel(
+		OUT HitResult,
+		GetActorLocation(),
+		GetActorLocation() + DirectionVector * LineLength,
+		TraceChannel,
+		Params
+	);
 
 	FColor DrawColor = bResult ? FColor::Green : FColor::Red;
 	DrawDebugLine(
@@ -339,6 +308,18 @@ std::pair<FHitResult, bool> ARifaCharacter::LineHitResult(FVector DirectionVecto
 		DrawColor,
 		false,
 		2.f);
+
+	if (bResult && TraceChannel == ECC_GameTraceChannel1)
+	{
+		if (Cast<AWaterFall>(HitResult.GetActor()))
+		{
+			bResult = true;
+		}
+		else
+		{
+			bResult = false;
+		}
+	}
 
 	return std::make_pair(HitResult, bResult);
 }
@@ -519,7 +500,7 @@ void ARifaCharacter::Swim()
 	//}
 	else // 폭포 체크
 	{
-		std::pair<FHitResult, bool> FrontWaterHitResult = LineHitResult(GetActorForwardVector(), 300.f, ECollisionChannel::ECC_GameTraceChannel1);
+		std::pair<FHitResult, bool> FrontWaterHitResult = LineHitResult(GetActorForwardVector(), 300.f, ECollisionChannel::ECC_Visibility);
 		FRotator SwimRotation = FRotator::ZeroRotator;
 		FVector SwimLocation = FVector::ZeroVector;
 		if (FrontWaterHitResult.second) // 폭포를 타고 올라가는 것을 우선으로 체크
