@@ -432,13 +432,13 @@ void ARifaCharacter::Fly()
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
 		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, (FlyEnergyPercent / MaxFlyEnergyPercent) * ARifaCharacter::GetFlyTime(), false);
-		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
+		GetCharacterMovement()->SetMovementMode(MOVE_Flying);
 		SetActorLocation(GetActorLocation() + FVector(0, 0, FlyHeight));
 	}
 	else 
 	{
 		GetWorld()->GetTimerManager().ClearTimer(FlyTimer);
-		RifaCharacterMovement->SetMovementMode(MOVE_Falling);
+		GetCharacterMovement()->SetMovementMode(MOVE_Falling);
 	}
 }
 

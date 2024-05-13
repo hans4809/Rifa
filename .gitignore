@@ -74,3 +74,18 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 Package/*
+*.zip
+*.zip
+*.bin
+*.pak
+*.ucas
+*.ucas
+*.utoc
+Releases/1.0.zip
+Releases/1.0/Windows/AssetRegistry.bin
+Releases/1.0/Windows/Metadata/DevelopmentAssetRegistry.bin
+Releases/1.0/Windows/Rifa-Windows.pak
+Releases/1.0/Windows/Rifa-Windows.ucas
+Releases/1.0/Windows/Rifa-Windows.utoc
+Build/Windows/Application.ico
+Rifa.uproject
