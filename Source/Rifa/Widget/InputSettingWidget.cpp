@@ -97,6 +97,14 @@ void UInputSettingWidget::KeyChanged(const FInputChord SelectedKey, UInputAction
 	if (ListenforRemap) {
 		ListenforRemap = false;
 		DefaultMappingContext->UnmapKey(Action, CurrentKey);
+		for(auto Mapping : DefaultMappingContext->GetMappings())
+		{
+			if (Mapping.Key == SelectedKey.Key)
+			{
+				DefaultMappingContext->MapKey(Action, CurrentKey);
+				return;
+			}
+		}
 		DefaultMappingContext->MapKey(Action, SelectedKey.Key);
 		CurrentKey = SelectedKey.Key;
 	}
