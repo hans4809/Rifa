@@ -56,27 +56,44 @@ void UMainSettingWidget::CloseWidget()
 
 void UMainSettingWidget::SoundButtonClicked()
 {
-	if (IsValid(SoundSettingWidgetClass))
+	if (IsValid(SoundSettingWidgetClass)&& !IsValid(SoundSettingWidgetAsset))
 	{
 		SoundSettingWidgetAsset = Cast<USoundSettingWidget>(CreateWidget(GetWorld(), SoundSettingWidgetClass));
 	}
-	SoundSettingWidgetAsset->Init();
+
+	if (IsValid(SoundSettingWidgetAsset))
+	{
+		SoundSettingWidgetAsset->ParentWidget = this;
+		SoundSettingWidgetAsset->Init();
+	}
+
 }
 
 void UMainSettingWidget::GraphicButtonClicked()
 {
-	if (IsValid(GraphicSettingWidgetClass))
+	if (IsValid(GraphicSettingWidgetClass)&& !IsValid(GraphicSettingWidgetAsset))
 	{
 		GraphicSettingWidgetAsset = Cast<UGraphicSettingWidget>(CreateWidget(GetWorld(), GraphicSettingWidgetClass));
 	}
-	GraphicSettingWidgetAsset->Init();
+
+	if (IsValid(GraphicSettingWidgetAsset))
+	{
+		GraphicSettingWidgetAsset->ParentWidget = this;
+		GraphicSettingWidgetAsset->Init();
+	}
+
 }
 
 void UMainSettingWidget::InputButtonClicked()
 {
-	if (IsValid(InputSettingWidgetClass))
+	if (IsValid(InputSettingWidgetClass) && !IsValid(InputSettingWidgetAsset))
 	{
 		InputSettingWidgetAsset = Cast<UInputSettingWidget>(CreateWidget(GetWorld(), InputSettingWidgetClass));
 	}
-	InputSettingWidgetAsset->Init();
+
+	if(IsValid(InputSettingWidgetAsset))
+	{
+		SoundSettingWidgetAsset->ParentWidget = this;
+		InputSettingWidgetAsset->Init();
+	}
 }

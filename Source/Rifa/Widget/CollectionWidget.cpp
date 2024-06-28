@@ -16,23 +16,33 @@ void UCollectionWidget::NativeConstruct()
 {
 	DoOnce.Reset();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
+	if(ReturnButton->OnClicked.IsBound())
+		ReturnButton->OnClicked.Clear();
 	ReturnButton->OnClicked.AddDynamic(this, &UCollectionWidget::CloseWidget);
+
 	if (IsValid(SlotClass))
 	{
+		if(SlotArray.Num() != 0)
+			SlotArray.Empty();
+
 		for (int i = 0; i < 15; i++)
 		{
 			FString SlotName = FString::Printf(TEXT("Slot_%d"), i);
-			SlotArray.Add(Cast<UInventorySlot>(GetWidgetFromName(FName(SlotName))));
+			SlotArray.AddUnique(Cast<UInventorySlot>(GetWidgetFromName(FName(SlotName))));
 			SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(EItem)i];
 		}
 	}
 	if (IsValid(ActionMenuClass))
 	{
+		if (ActionMenuArray.Num() != 0)
+			ActionMenuArray.Empty();
+
 		for (int i = 0; i < 15; i++)
 		{
 			FString ActionMenuName = FString::Printf(TEXT("ActionMenu_%d"), i);
-			ActionMenuArray.Add(Cast<UActionMenuWidget>(GetWidgetFromName(FName(ActionMenuName))));
+			ActionMenuArray.AddUnique(Cast<UActionMenuWidget>(GetWidgetFromName(FName(ActionMenuName))));
 			ActionMenuArray[i]->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}

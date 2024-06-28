@@ -10,7 +10,7 @@ public class Rifa : ModuleRules
 
         PublicIncludePaths.AddRange(new string[] { "Rifa" });
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "EnhancedInput", "UMG", "AIModule", "GameplayTasks", "Niagara", "MovieScene", "LevelSequence"});
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "EnhancedInput", "UMG", "AIModule", "GameplayTasks", "Niagara", "MovieScene", "LevelSequence" });
 
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
     }

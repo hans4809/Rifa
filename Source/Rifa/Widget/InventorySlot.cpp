@@ -13,12 +13,8 @@ void UInventorySlot::NativeConstruct()
 	if(IsValid(ItemButton)) 
 	{
 		if (ItemButton->OnClicked.IsBound()) 
-		{
 			ItemButton->OnClicked.Clear();
-		}
 	}
-	
-
 	ItemButton->OnClicked.AddDynamic(this, &UInventorySlot::ButtonWasClicked_Event);
 }
 void UInventorySlot::NativeDestruct()

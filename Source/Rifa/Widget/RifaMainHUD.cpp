@@ -59,6 +59,7 @@ void URifaMainHUD::SettingButtonClicked()
 		MainSettingWidgetAsset = Cast<UMainSettingWidget>(CreateWidget(GetWorld(), MainSettingWidgetClass));
 		if (IsValid(MainSettingWidgetAsset)) 
 		{
+			MainSettingWidgetAsset->ParentWidget = this;
 			MainSettingWidgetAsset->Init();
 		}
 	}
@@ -81,6 +82,7 @@ void URifaMainHUD::ResetButtonClicked()
 		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
 		if (IsValid(ResetDataQuestionWidgetAsset))
 		{
+			ResetDataQuestionWidgetAsset->ParentWidget = this;
 			ResetDataQuestionWidgetAsset->Init();
 		}
 	}

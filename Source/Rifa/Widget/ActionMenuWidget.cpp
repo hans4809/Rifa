@@ -16,7 +16,12 @@ void UActionMenuWidget::NativeConstruct()
 	OnButton = Cast<UButton>(GetWidgetFromName(TEXT("OnButton")));
 	CancelButton = Cast<UButton>(GetWidgetFromName(TEXT("CancelButton")));
 
+	if(OnButton->OnClicked.IsBound())
+		OnButton->OnClicked.Clear();
 	OnButton->OnClicked.AddDynamic(this, &UActionMenuWidget::BGMOnButtonClicked);
+
+	if (CancelButton->OnClicked.IsBound())
+		CancelButton->OnClicked.Clear();
 	CancelButton->OnClicked.AddDynamic(this, &UActionMenuWidget::CancelButtonClicked);
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));

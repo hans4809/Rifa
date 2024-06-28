@@ -16,5 +16,21 @@ void UPopUpWidget::CloseWidget()
 {
 	Super::CloseWidget();
 	Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->PopupSort--;
-	RemoveFromParent();
+	if(IsValid(Cast<UPopUpWidget>(ParentWidget)))
+		ParentWidget->SetKeyboardFocus();
+	RemoveFromViewport();
+}
+
+FReply UPopUpWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
+{
+	Super::NativeOnKeyDown(InGeometry, InKeyEvent);
+	if (InKeyEvent.GetKey() == EKeys::Escape)
+		CloseWidget();
+	return FReply::Handled();
+}
+
+void UPopUpWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+	SetKeyboardFocus();
 }
