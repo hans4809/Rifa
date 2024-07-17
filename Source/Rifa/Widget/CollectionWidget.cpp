@@ -15,6 +15,7 @@
 
 void UCollectionWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
 	DoOnce.Reset();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
@@ -82,19 +83,13 @@ void UCollectionWidget::CloseWidget()
 			{
 				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
 				if (RifaGameInstance->SoundItemOnOffMap[(EItem)i] == true)
-				{
 					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
-				}
 				else
-				{
 					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
-				}
 			}
 		}
 		if (IsValid(CurrentLevelScriptActor->InstSoundActor))
-		{
 			CurrentLevelScriptActor->InstSoundActor->Stop();
-		}
 	}
 
 	
@@ -111,9 +106,7 @@ void UCollectionWidget::CloseWidget()
 		if (IsValid(CurrentLevelScriptActor)) 
 		{
 			if (IsValid(CurrentLevelScriptActor->BGMActor))
-			{
 				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
-			}
 		}
 	}
 }
@@ -130,9 +123,7 @@ void UCollectionWidget::RefreshInventory_C()
 				for (int j = 0; j < SlotArray.Num(); j++)
 				{
 					if (!SlotArray[j]->ButtonWasClicked.IsBound()) 
-					{
 						SlotArray[j]->ButtonWasClicked.AddDynamic(this, &UCollectionWidget::ButtonWasClicked_Evt);
-					}
 				}
 			}
 		}
@@ -143,10 +134,7 @@ void UCollectionWidget::ButtonWasClicked_Evt(int SlotClicked)
 {
 	if (!RifaGameInstance->SoundItemHavingMap[(EItem)SlotClicked])
 		return;
-	else 
-	{
-		InventorySlotClicked = SlotClicked;
-		ActionMenuArray[InventorySlotClicked]->SetVisibility(ESlateVisibility::Visible);
-	}
 
+	InventorySlotClicked = SlotClicked;
+	ActionMenuArray[InventorySlotClicked]->SetVisibility(ESlateVisibility::Visible);
 }

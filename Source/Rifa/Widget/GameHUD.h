@@ -26,8 +26,4 @@ public:
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE ARifaCharacter* GetCharacterReference() { return CharacterReference; }
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
 };

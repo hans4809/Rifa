@@ -336,13 +336,11 @@ void ARifaCharacter::EndDash()
 
 void ARifaCharacter::Pause()
 {
-	if (IsValid(GameSettingWidgetClass))
-	{
-		//UGameplayStatics::SetGamePaused(GetWorld(), true);
+	if (IsValid(GameSettingWidgetClass)&&!IsValid(GameSettingWidgetAsset))
 		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
-		GameSettingWidgetAsset->Init();
-		CustomTimeDilation = 0.f;
-	}
+	
+	GameSettingWidgetAsset->Init();
+	CustomTimeDilation = 0.f;
 }
 
 //////////////////////////////////////////////////////////////////////////

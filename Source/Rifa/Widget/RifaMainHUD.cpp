@@ -15,21 +15,15 @@ URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
 {
 	static ConstructorHelpers::FClassFinder<UUserWidget> MainSettingWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_MainSettingWidget.WG_MainSettingWidget_C'"));
 	if (MainSettingWidget.Succeeded())
-	{
 		MainSettingWidgetClass = MainSettingWidget.Class;
-	}
 
 	static ConstructorHelpers::FClassFinder<UUserWidget> ResetDataQuestionWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_ResetDataQuestionWidget.WG_ResetDataQuestionWidget_C'"));
 	if (ResetDataQuestionWidget.Succeeded())
-	{
 		ResetDataQuestionWidgetClass = ResetDataQuestionWidget.Class;
-	}
 
 	static ConstructorHelpers::FObjectFinder<USoundCue> MainBGMSound(TEXT("/Script/Engine.SoundCue'/Game/Sounds/GameBGM.GameBGM'"));
 	if (MainBGMSound.Succeeded())
-	{
 		MainBGM = MainBGMSound.Object;
-	}
 }
 
 void URifaMainHUD::NativeConstruct()
@@ -54,7 +48,7 @@ void URifaMainHUD::Init()
 
 void URifaMainHUD::SettingButtonClicked()
 {
-	if (IsValid(MainSettingWidgetClass))
+	if (IsValid(MainSettingWidgetClass)&&!IsValid(MainSettingWidgetAsset))
 	{
 		MainSettingWidgetAsset = Cast<UMainSettingWidget>(CreateWidget(GetWorld(), MainSettingWidgetClass));
 		if (IsValid(MainSettingWidgetAsset)) 
@@ -77,7 +71,7 @@ void URifaMainHUD::LoadButtonClicked()
 
 void URifaMainHUD::ResetButtonClicked()
 {
-	if (IsValid(ResetDataQuestionWidgetClass))
+	if (IsValid(ResetDataQuestionWidgetClass)&&!IsValid(ResetDataQuestionWidgetAsset))
 	{
 		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
 		if (IsValid(ResetDataQuestionWidgetAsset))

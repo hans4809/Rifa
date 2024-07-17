@@ -44,9 +44,8 @@ void UGameSettingWidget::NativeConstruct()
 void UGameSettingWidget::Init()
 {
 	Super::Init();
-	APlayerController* Controller = Cast<APlayerController>(Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetController());
-	Controller->SetInputMode(FInputModeUIOnly());
-	Controller->bShowMouseCursor = true;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 }
 
 void UGameSettingWidget::CloseWidget()
@@ -55,9 +54,7 @@ void UGameSettingWidget::CloseWidget()
 	if (IsValid(CurrentLevelScriptActor))
 	{
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
-		{
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
-		}
 	}
 }
 
@@ -70,44 +67,47 @@ void UGameSettingWidget::ReturnButtonClicked()
 	if (IsValid(CurrentLevelScriptActor))
 	{
 		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-		{
 			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
-		}
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
-		{
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
-		}
 	}
 	if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
-	{
 		Character->CustomTimeDilation = 1.f;
-	}
 }
 
 void UGameSettingWidget::SoundButtonClicked()
 {
-	if (IsValid(SoundSettingWidgetClass))
-	{
+	if (IsValid(SoundSettingWidgetClass)&&!IsValid(SoundSettingWidgetAsset))
 		SoundSettingWidgetAsset = Cast<USoundSettingWidget>(CreateWidget(GetWorld(), SoundSettingWidgetClass));
+	
+	if (IsValid(SoundSettingWidgetAsset))
+	{
 		SoundSettingWidgetAsset->Init();
+		SoundSettingWidgetAsset->ParentWidget = this;
 	}
 }
 
 void UGameSettingWidget::GraphicButtonClicked()
 {
-	if (IsValid(GraphicSettingWidgetClass))
-	{
+	if (IsValid(GraphicSettingWidgetClass) && !IsValid(GraphicSettingWidgetAsset))
 		GraphicSettingWidgetAsset = Cast<UGraphicSettingWidget>(CreateWidget(GetWorld(), GraphicSettingWidgetClass));
+
+	if (IsValid(GraphicSettingWidgetAsset))
+	{
 		GraphicSettingWidgetAsset->Init();
+		GraphicSettingWidgetAsset->ParentWidget = this;
 	}
 }
 
 void UGameSettingWidget::InputButtonClicked()
 {
-	if (IsValid(InputSettingWidgetClass))
-	{
+	if (IsValid(InputSettingWidgetClass) && !IsValid(InputSettingWidgetAsset))
 		InputSettingWidgetAsset = Cast<UInputSettingWidget>(CreateWidget(GetWorld(), InputSettingWidgetClass));
+	
+	if (IsValid(InputSettingWidgetAsset))
+	{
 		InputSettingWidgetAsset->Init();
+		InputSettingWidgetAsset->ParentWidget = this;
 	}
 }
 

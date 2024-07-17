@@ -54,7 +54,6 @@ void UInputSettingWidget::NativeConstruct()
 	FlyKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::FlyKeyChanged);
 	JumpKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
 	JumpKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::JumpKeyChanged);
-
 }
 
 void UInputSettingWidget::Init()

@@ -4,6 +4,8 @@
 #include "PopUpWidget.h"
 #include "Data/MyGameInstance.h"
 #include <Kismet/GameplayStatics.h>
+#include "SceneWidget.h"
+#include "GameHUD.h"
 
 void UPopUpWidget::Init()
 {
@@ -16,8 +18,16 @@ void UPopUpWidget::CloseWidget()
 {
 	Super::CloseWidget();
 	Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->PopupSort--;
-	if(IsValid(Cast<UPopUpWidget>(ParentWidget)))
+	if (IsValid(Cast<UPopUpWidget>(ParentWidget)))
+	{
 		ParentWidget->SetKeyboardFocus();
+	}
+	else if(IsValid(Cast<UGameHUD>(ParentWidget)))
+	{
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
+	}
+
 	RemoveFromViewport();
 }
 
