@@ -32,49 +32,18 @@ void AEndingLevelSequencePlayActor::BeginPlay()
 void AEndingLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
-	if (!RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
-	{
-		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
-		{
-			if (IsValid(CurrentLevelScriptActor))
-			{
-				if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-				{
-					CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-				}
-			}
-			CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-			FTimerHandle LevelSequenceTimer;
-			FMovieSceneSequencePlaybackParams Param;
-			LevelSequencePlayer->SetPlaybackPosition(Param);
-			LevelSequencePlayer->Play();
-			GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AEndingLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
-			if (EndOfLevelSequencePlayerLocation != FVector(0, 0, 0))
-			{
-				CharacterReference->SetActorLocationAndRotation(EndOfLevelSequencePlayerLocation, EndOfLevelSequencePlayerRotation);
-			}
-			RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
-		}
-	}
+
+	FTimerHandle LevelSequenceTimer;
+	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AEndingLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 }
 
 void AEndingLevelSequencePlayActor::EndLevelSequence()
 {
 	Super::EndLevelSequence();
-	if (IsValid(CharacterReference)) {
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetClass))
-		{
-			CurrentLevelScriptActor->GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), CurrentLevelScriptActor->GameHUDWidgetClass));
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
-			}
-		}
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		if (EndingKeyWidgetAsset) 
-		{
-			EndingKeyWidgetAsset->Init();
-		}
+
+	if (EndingKeyWidgetAsset) 
+	{
+		EndingKeyWidgetAsset->Init();
 	}
 }
 

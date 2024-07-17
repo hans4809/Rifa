@@ -20,8 +20,6 @@ public:
 	ETutorialType ThisTutorialType = ETutorialType::Movement;
 	virtual void Init() override;
 	virtual void CloseWidget() override;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelScript")
-	TObjectPtr<class AIslandLevelScriptActor> IslandLevelScriptActor;
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))

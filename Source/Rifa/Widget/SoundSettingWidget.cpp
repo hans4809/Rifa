@@ -47,9 +47,7 @@ void USoundSettingWidget::CloseWidget()
 void USoundSettingWidget::CollectionButtonClicked()
 {
 	if (IsValid(CollectionWidgetClass) && !IsValid(CollectionWidgetAsset)) 
-	{
 		CollectionWidgetAsset = Cast<UCollectionWidget>(CreateWidget(GetWorld(), CollectionWidgetClass));
-	}
 
 	if(IsValid(CollectionWidgetAsset))
 	{

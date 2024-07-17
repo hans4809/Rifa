@@ -50,24 +50,9 @@ void AShrineLevelSequencePlayActor::BeginPlay()
 void AShrineLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
-	if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
-	{
-		if (IsValid(CurrentLevelScriptActor))
-		{
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-			}
-		}
-		CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-		FTimerHandle LevelSequenceTimer;
-		FMovieSceneSequencePlaybackParams Param;
-		LevelSequencePlayer->SetPlaybackPosition(Param);
-		LevelSequencePlayer->Play();
-		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AShrineLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
-
-		RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
-	}
+	
+	FTimerHandle LevelSequenceTimer;
+	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AShrineLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 }
 
 void AShrineLevelSequencePlayActor::EndLevelSequence()
@@ -77,37 +62,17 @@ void AShrineLevelSequencePlayActor::EndLevelSequence()
 	{
 	case EEnergyType::Fly:
 		if (RifaGameInstance->bCanFly)
-		{
 			return;
-		}
 		else
-		{
 			RifaGameInstance->bCanFly = true;
-		}
 		break;
 	case EEnergyType::Swim:
 		if (RifaGameInstance->bCanSwim)
-		{
 			return;
-		}
 		else
-		{
 			RifaGameInstance->bCanSwim = true;
-		}
 	}
 	Particle->SetActive(false);
-	if (IsValid(CharacterReference)) {
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetClass))
-		{
-			CurrentLevelScriptActor->GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), CurrentLevelScriptActor->GameHUDWidgetClass));
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
-			}
-		}
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		Destroy();
-	}
 }
 
 void AShrineLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

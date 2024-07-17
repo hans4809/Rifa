@@ -29,7 +29,7 @@ AFinalLevelSequencePlayActor::AFinalLevelSequencePlayActor()
 
 void AFinalLevelSequencePlayActor::BeginPlay()
 {
-	Super::BeginPlay();
+	//Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AFinalLevelSequencePlayActor::OnCharacterOverlap);
 	switch (ThisEnergyType)
 	{
@@ -50,28 +50,15 @@ void AFinalLevelSequencePlayActor::BeginPlay()
 
 void AFinalLevelSequencePlayActor::PlayLevelSequence()
 {
-	if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
-	{
-		if (IsValid(CurrentLevelScriptActor))
-		{
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-			}
-		}
-		CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-		FTimerHandle LevelSequenceTimer;
-		FMovieSceneSequencePlaybackParams Param;
-		LevelSequencePlayer->SetPlaybackPosition(Param);
-		LevelSequencePlayer->Play();
-		GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AFinalLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
+	//Super::PlayLevelSequence();
 
-		RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
-	}
+	FTimerHandle LevelSequenceTimer;
+	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AFinalLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 }
 
 void AFinalLevelSequencePlayActor::EndLevelSequence()
 {
+	//Super::EndLevelSequence();
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Fly:
@@ -95,13 +82,11 @@ void AFinalLevelSequencePlayActor::EndLevelSequence()
 		}
 	}
 	Particle->SetActive(false);
-	Super::EndLevelSequence();
-
 }
 
 void AFinalLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+	//Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	if (Cast<class ARifaCharacter>(OtherActor))
 	{
 		PlayLevelSequence();

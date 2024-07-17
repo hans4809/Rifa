@@ -14,7 +14,6 @@ void UTutorialWidget::NativeConstruct()
 	Super::NativeConstruct();
 	TutorialImage = Cast<UImage>(GetWidgetFromName(TEXT("TutorialImage")));
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	IslandLevelScriptActor = Cast<AIslandLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AIslandLevelScriptActor::StaticClass()));
 
 	const UEnum* TutorialTypeName = FindObject<UEnum>(nullptr, TEXT("/Script/Rifa.ETutorialType"));
 	if (TutorialTypeName)

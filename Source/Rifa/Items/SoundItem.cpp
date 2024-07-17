@@ -53,13 +53,9 @@ void ASoundItem::BeginPlay()
 		//	}
 		//}
 		if (IsValid(CollectionWidgetClass)) 
-		{
 			CollectionWidgetReference = CreateWidget<UCollectionWidget>(GetWorld(), CollectionWidgetClass);
-		}
 		if (IsValid(CharacterReference))
-		{
 			CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
-		}
 	}
 }
 
@@ -102,18 +98,12 @@ void ASoundItem::PickupSoundItemEvent()
 				if (RifaGameInstance->SoundItemHavingMap[EItem(i)])
 				{
 					if (RifaGameInstance->SoundItemOnOffMap[EItem(i)])
-					{
 						CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 1.f);
-					}
 					else
-					{
 						CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
-					}
 				}
 				else
-				{
 					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(Parameter, 0.f);
-				}
 			}
 		}
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
@@ -141,10 +131,12 @@ void ASoundItem::OnEndLevelSequence()
 			}
 		}
 		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		if (IsValid(CollectionWidgetReference)) 
+		if (IsValid(CollectionWidgetReference))
 		{
 			CollectionWidgetReference->Init();
+			CollectionWidgetReference->ParentWidget = CurrentLevelScriptActor->GameHUDWidgetAsset;
 		}
+
 		Destroy();
 	}
 }

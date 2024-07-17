@@ -18,11 +18,6 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FVector EndOfLevelSequencePlayerLocation = FVector::Zero();
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FRotator EndOfLevelSequencePlayerRotation = FRotator::ZeroRotator;
 	virtual void PlayLevelSequence() override;
 	virtual void EndLevelSequence() override;
 	virtual void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;

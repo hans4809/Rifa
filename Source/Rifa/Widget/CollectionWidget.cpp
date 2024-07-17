@@ -11,6 +11,7 @@
 #include "LevelScript/BaseLevelScriptActor.h"
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
+#include "GameHUD.h"
 
 void UCollectionWidget::NativeConstruct()
 {
@@ -59,9 +60,7 @@ void UCollectionWidget::NativeConstruct()
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
 		{
 			if (CurrentLevelScriptActor->BGMActor->GetAudioComponent()->IsPlaying())
-			{
 				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
-			}
 		}
 	}
 }
@@ -99,7 +98,7 @@ void UCollectionWidget::CloseWidget()
 	}
 
 	
-	if (RifaGameInstance->PopupSort == 4 || RifaGameInstance->PopupSort == 5) 
+	if (IsValid(Cast<UGameHUD>(ParentWidget))) 
 	{
 		if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 		{
@@ -143,9 +142,7 @@ void UCollectionWidget::RefreshInventory_C()
 void UCollectionWidget::ButtonWasClicked_Evt(int SlotClicked)
 {
 	if (!RifaGameInstance->SoundItemHavingMap[(EItem)SlotClicked])
-	{
 		return;
-	}
 	else 
 	{
 		InventorySlotClicked = SlotClicked;

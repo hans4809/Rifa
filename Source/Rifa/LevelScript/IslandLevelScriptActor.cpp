@@ -30,9 +30,7 @@ void AIslandLevelScriptActor::BeginPlay()
 			{
 				FTimerHandle SequenceTimer;
 				if (GameHUDWidgetAsset)
-				{
 					GameHUDWidgetAsset->CloseWidget();
-				}
 				FirstLevelSequenceActor->SequencePlayer->Play();
 				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
@@ -58,18 +56,12 @@ void AIslandLevelScriptActor::BeginPlay()
 				if (RifaGameInstanceReference->SoundItemHavingMap[EItem(i)])
 				{
 					if (RifaGameInstanceReference->SoundItemOnOffMap[EItem(i)])
-					{
 						BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 1.f);
-					}
 					else
-					{
 						BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 0.f);
-					}
 				}
 				else
-				{
 					BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 0.f);
-				}
 			}
 		}
 		BGMActor->Play();
@@ -81,13 +73,12 @@ void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
 	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
 	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	Cast<APlayerController>(CharacterReference->Controller)->SetInputMode(FInputModeGameOnly());
 	if (IsValid(GameHUDWidgetClass))
 	{
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 		if (IsValid(GameHUDWidgetAsset))
-		{
 			GameHUDWidgetAsset->Init();
-		}
 	}
 	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement])
 	{

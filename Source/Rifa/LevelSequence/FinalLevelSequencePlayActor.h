@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class RIFA_API AFinalLevelSequencePlayActor : public ALevelSequencePlayActor
+class RIFA_API AFinalLevelSequencePlayActor : public ABaseLevelSequencePlayActor
 {
 	GENERATED_BODY()
 public:

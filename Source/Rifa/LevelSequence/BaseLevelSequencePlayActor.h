@@ -47,4 +47,8 @@ protected:
 	virtual void PlayLevelSequence();
 	UFUNCTION(BlueprintCallable)
 	virtual void EndLevelSequence();
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FVector EndOfLevelSequencePlayerLocation = FVector::Zero();
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FRotator EndOfLevelSequencePlayerRotation = FRotator::ZeroRotator;
 };
