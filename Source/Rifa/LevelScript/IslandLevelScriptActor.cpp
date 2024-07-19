@@ -28,16 +28,14 @@ void AIslandLevelScriptActor::BeginPlay()
 		{
 			if (IsValid(FirstLevelSequenceActor))
 			{
-				FTimerHandle SequenceTimer;
-				if (GameHUDWidgetAsset)
-					GameHUDWidgetAsset->CloseWidget();
 				FirstLevelSequenceActor->SequencePlayer->Play();
-				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
+				//CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+				//GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
+				FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence);
 			}
 		}
 		if (CharacterReference) 
-		{
+		{ 
 			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
 			{
 				//CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
@@ -72,14 +70,9 @@ void AIslandLevelScriptActor::BeginPlay()
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
 	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
-	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	Cast<APlayerController>(CharacterReference->Controller)->SetInputMode(FInputModeGameOnly());
-	if (IsValid(GameHUDWidgetClass))
-	{
-		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-		if (IsValid(GameHUDWidgetAsset))
-			GameHUDWidgetAsset->Init();
-	}
+	//CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
+	//Cast<APlayerController>(CharacterReference->Controller)->SetInputMode(FInputModeGameOnly());
+
 	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement])
 	{
 		if (IsValid(TutorialWidgetClass))

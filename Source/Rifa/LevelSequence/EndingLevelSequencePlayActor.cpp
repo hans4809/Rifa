@@ -23,9 +23,8 @@ void AEndingLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	if (IsValid(EndingKeyWidgetClass))
-	{
 		EndingKeyWidgetAsset = CreateWidget<UEndingKeyWidget>(GetWorld(), EndingKeyWidgetClass);
-	}
+
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AEndingLevelSequencePlayActor::OnCharacterOverlap);
 }
 
@@ -42,16 +41,12 @@ void AEndingLevelSequencePlayActor::EndLevelSequence()
 	Super::EndLevelSequence();
 
 	if (EndingKeyWidgetAsset) 
-	{
 		EndingKeyWidgetAsset->Init();
-	}
 }
 
 void AEndingLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	if(Cast<ARifaCharacter>(OtherActor))
-	{
 		PlayLevelSequence();
-	}
 }

@@ -19,6 +19,7 @@
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
 #include "Components/WidgetComponent.h"
+#include <Character/RifaPlayerController.h>
 
 ASoundItem::ASoundItem()
 {
@@ -56,6 +57,20 @@ void ASoundItem::BeginPlay()
 			CollectionWidgetReference = CreateWidget<UCollectionWidget>(GetWorld(), CollectionWidgetClass);
 		if (IsValid(CharacterReference))
 			CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
+
+		if (IsValid(LevelSequencActor))
+		{
+			auto levelSequencePlayer = LevelSequencActor->SequencePlayer;
+			levelSequencePlayer->OnFinished.AddDynamic(this, &ASoundItem::OnEndLevelSequence);
+
+			auto rifaPlayerController = Cast<ARifaPlayerController>(CharacterReference->Controller);
+			if (IsValid(rifaPlayerController))
+			{
+				levelSequencePlayer->OnPlay.AddDynamic(rifaPlayerController, &ARifaPlayerController::OnStartedLevelSequence);
+				levelSequencePlayer->OnFinished.AddDynamic(rifaPlayerController, &ARifaPlayerController::OnFinishedLevelSequence);
+			}
+			
+		}
 	}
 }
 
@@ -73,14 +88,10 @@ void ASoundItem::PickupSoundItemEvent()
 				{
 					FTimerHandle LevelSequenceTimer;
 					FMovieSceneSequencePlaybackParams Param;
-					CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-					//CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-					UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
-					auto LevelSequncePlayer = LevelSequencActor->SequencePlayer.Get();
-					LevelSequncePlayer->SetPlaybackPosition(Param);
-					LevelSequncePlayer->Play();
+					auto levelSequencePlayer = LevelSequencActor->SequencePlayer;
+					levelSequencePlayer->SetPlaybackPosition(Param);
+					levelSequencePlayer->Play();
 					CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
-					GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASoundItem::OnEndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
 				}
 			}
 		}
@@ -88,6 +99,7 @@ void ASoundItem::PickupSoundItemEvent()
 		{
 			Destroy();
 		}
+
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;
 		if (IsValid(RifaGameInstance) && IsValid(CurrentLevelScriptActor))
@@ -107,7 +119,6 @@ void ASoundItem::PickupSoundItemEvent()
 			}
 		}
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
-		//CharacterReference->Bgm->CrossfadeSound();
 		RifaGameInstance->Save();
 		WidgetComponent->SetVisibility(false);
 		SetActorHiddenInGame(true);
@@ -122,20 +133,10 @@ void ASoundItem::OnEndLevelSequence()
 		RifaGameInstance->LevelSequencePlayerArr[2] = true;
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (IsValid(CurrentLevelScriptActor))
-		{
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 
-				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
-			}
-		}
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 		if (IsValid(CollectionWidgetReference))
-		{
 			CollectionWidgetReference->Init();
-			CollectionWidgetReference->ParentWidget = CurrentLevelScriptActor->GameHUDWidgetAsset;
-		}
 
 		Destroy();
 	}

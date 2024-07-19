@@ -424,9 +424,8 @@ void ARifaCharacter::Look(const FInputActionValue& Value)
 void ARifaCharacter::Fly()
 {
 	if (FlyEnergyNum == 0 || !RifaGameInstance->bCanFly) 
-	{
 		return;
-	}
+
 	if (!(RifaCharacterMovement->IsFlying()))
 	{
 		GetWorld()->GetTimerManager().SetTimer(FlyTimer, this, &ARifaCharacter::ReturnWalk, (FlyEnergyPercent / MaxFlyEnergyPercent) * ARifaCharacter::GetFlyTime(), false);
@@ -445,9 +444,8 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
 	if (bIsDied)
-	{
 		return;
-	}
+
 	else if(RifaCharacterMovement->IsFalling())
 	{
 		UE_LOG(LogTemp, Log, TEXT("Falling Velocity : %f"), RifaCharacterMovement->Velocity.Z);
@@ -455,14 +453,10 @@ void ARifaCharacter::Landed(const FHitResult& Hit)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Palyer Fall Die"));
 			if (GameModeReference)
-			{
 				GameModeReference->PlayerDie(this);
-			}
 		}
 		else
-		{
 			return;
-		}
 	}
 }
 
@@ -471,9 +465,7 @@ void ARifaCharacter::OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActo
 	if (IsValid(Cast<AWaterActor>(OtherActor))) 
 	{
 		if (GameModeReference)
-		{
 			GameModeReference->PlayerDie(this);
-		}
 	}
 }
 

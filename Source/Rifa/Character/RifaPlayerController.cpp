@@ -3,6 +3,13 @@
 
 #include "Character/RifaPlayerController.h"
 #include <Widget/GameHUD.h>
+#include <LevelScript/IslandLevelScriptActor.h>
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
+#include <Kismet/GameplayStatics.h>
+#include "Character/RifaCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ARifaPlayerController::ARifaPlayerController()
 {
@@ -11,15 +18,59 @@ ARifaPlayerController::ARifaPlayerController()
 		GameHUDWidgetClass = GameHUDWidget.Class;
 }
 
-void ARifaPlayerController::BeginPlay()
+void ARifaPlayerController::PostInitializeComponents()
 {
-	if(IsValid(GameHUDWidgetClass))
+	Super::PostInitializeComponents();
+	if (IsValid(GameHUDWidgetClass))
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 
-	if(IsValid(GameHUDWidgetAsset))
-		GameHUDWidgetAsset->Init();
+	auto currentLevelScriptActor = GetWorld()->GetLevelScriptActor();
+
+	
+	if (IsValid(Cast<AIslandLevelScriptActor>(currentLevelScriptActor)))
+	{
+		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnPlay.AddDynamic(this, &ARifaPlayerController::OnStartedLevelSequence);
+		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &ARifaPlayerController::OnFinishedLevelSequence);
+	}
+}
+
+void ARifaPlayerController::BeginPlay()
+{
+
+		
 }
 
 void ARifaPlayerController::Tick(float DeltaTime)
 {
+}
+
+void ARifaPlayerController::OnStartedLevelSequence()
+{
+	auto character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+
+	if (IsValid(GameHUDWidgetClass) && !IsValid(GameHUDWidgetAsset))
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+
+	if (IsValid(GameHUDWidgetAsset))
+	{
+		if (GameHUDWidgetAsset->IsInViewport())
+			GameHUDWidgetAsset->CloseWidget();
+	}
+}
+
+void ARifaPlayerController::OnFinishedLevelSequence()
+{
+	EnableInput(this);
+	auto character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+
+	if (IsValid(GameHUDWidgetClass) && !IsValid(GameHUDWidgetAsset))
+		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+
+	if (IsValid(GameHUDWidgetAsset))
+	{
+		if (GameHUDWidgetAsset->IsInViewport() == false)
+			GameHUDWidgetAsset->Init();
+	}
 }

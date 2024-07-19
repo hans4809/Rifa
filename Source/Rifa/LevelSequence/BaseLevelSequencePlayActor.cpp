@@ -11,6 +11,7 @@
 #include "Data/MyGameInstance.h"
 #include "Widget/GameHUD.h"
 #include "LevelScript/BaseLevelScriptActor.h"
+#include <Character/RifaPlayerController.h>
 
 // Sets default values
 ABaseLevelSequencePlayActor::ABaseLevelSequencePlayActor()
@@ -27,19 +28,23 @@ void ABaseLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	auto playerContorller = Cast<ARifaPlayerController>(CharacterReference->Controller);
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 	if (IsValid(RifaGameInstance)) {
 		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
-		{
 			Destroy();
-		}
 	}
 
 	if (LevelSequenceActor)
 	{
 		LevelSequence = LevelSequenceActor->LevelSequenceAsset;
 		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
+		if (IsValid(playerContorller))
+		{
+			LevelSequencePlayer->OnPlay.AddDynamic(playerContorller, &ARifaPlayerController::OnStartedLevelSequence);
+			LevelSequencePlayer->OnFinished.AddDynamic(playerContorller, &ARifaPlayerController::OnFinishedLevelSequence);
+		}
 	}
 
 }
@@ -48,9 +53,7 @@ void ABaseLevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overla
 	if (IsValid(RifaGameInstance))
 	{
 		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
-		{
 			return;
-		}
 	}
 }
 
@@ -60,22 +63,14 @@ void ABaseLevelSequencePlayActor::PlayLevelSequence()
 	{
 		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
 		{
-			if (IsValid(CurrentLevelScriptActor))
-			{
-				if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-				{
-					CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-				}
-			}
-			CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
 			FTimerHandle LevelSequenceTimer;
 			FMovieSceneSequencePlaybackParams Param;
 			LevelSequencePlayer->SetPlaybackPosition(Param);
 			LevelSequencePlayer->Play();
+
 			if (EndOfLevelSequencePlayerLocation != FVector(0, 0, 0))
-			{
 				CharacterReference->SetActorLocationAndRotation(EndOfLevelSequencePlayerLocation, EndOfLevelSequencePlayerRotation);
-			}
+
 			RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex] = true;
 		}
 	}
@@ -83,17 +78,6 @@ void ABaseLevelSequencePlayActor::PlayLevelSequence()
 
 void ABaseLevelSequencePlayActor::EndLevelSequence()
 {
-	if (IsValid(CharacterReference)) {
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetClass))
-		{
-			CurrentLevelScriptActor->GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), CurrentLevelScriptActor->GameHUDWidgetClass));
-			if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
-		}
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		Cast<APlayerController>(CharacterReference->Controller)->SetInputMode(FInputModeGameOnly());
-		Cast<APlayerController>(CharacterReference->Controller)->DefaultMouseCursor = EMouseCursor::Crosshairs;
-		Destroy();
-	}
+	Destroy();
 }
 

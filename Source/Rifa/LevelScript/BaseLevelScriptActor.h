@@ -15,10 +15,6 @@ class RIFA_API ABaseLevelScriptActor : public ALevelScriptActor
 	GENERATED_BODY()
 public:
 	ABaseLevelScriptActor();
-	UPROPERTY(BlueprintReadWrite, Category = "Widget")
-	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
-	UPROPERTY(BlueprintReadWrite, Category = "Widget")
-	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound")
 	TObjectPtr<class AAmbientSound> BGMActor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound")

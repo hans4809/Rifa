@@ -93,7 +93,7 @@ void UCollectionWidget::CloseWidget()
 	}
 
 	
-	if (IsValid(Cast<UGameHUD>(ParentWidget))) 
+	if (IsValid(ParentWidget) == false) 
 	{
 		if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 		{

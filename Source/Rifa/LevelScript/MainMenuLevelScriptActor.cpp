@@ -22,7 +22,7 @@ void AMainMenuLevelScriptActor::BeginPlay()
 	Super::BeginPlay();
 	if (IsValid(MainHUDWidgetClass))
 	{
-		GameHUDWidgetAsset->CloseWidget();
+		//GameHUDWidgetAsset->CloseWidget();
 		MainHUDWidgetAsset = Cast<URifaMainHUD>(CreateWidget(GetWorld(), MainHUDWidgetClass));
 		if (MainHUDWidgetAsset)
 		{

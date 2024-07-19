@@ -33,8 +33,8 @@ void ALevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
 
-	FTimerHandle LevelSequenceTimer;
-	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
+	/*FTimerHandle LevelSequenceTimer;
+	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);*/
 }
 
 void ALevelSequencePlayActor::EndLevelSequence()
@@ -46,8 +46,6 @@ void ALevelSequencePlayActor::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 {
 	Super::OnCharacterOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	if (Cast<class ARifaCharacter>(OtherActor))
-	{
 		PlayLevelSequence();
-	}
 }
 

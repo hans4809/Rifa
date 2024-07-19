@@ -66,8 +66,8 @@ void UGameSettingWidget::ReturnButtonClicked()
 	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 	if (IsValid(CurrentLevelScriptActor))
 	{
-		if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
+		/*if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
+			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();*/
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 	}
