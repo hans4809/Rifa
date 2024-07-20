@@ -78,20 +78,19 @@ void UMyGameInstance::Load()
 {
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
-	{
 		RIFASaveGame = GetMutableDefault<URIFASaveGame>(); // Gets the mutable default object of a class.
-	}
+
 	SavePosition = RIFASaveGame->SavePosition;
 	SoundItemHavingMap = RIFASaveGame->SoundItemHavingMap;
 	SoundItemOnOffMap = RIFASaveGame->SoundItemOnOffMap;
 	SoundTrack = RIFASaveGame->SoundTrack;
 	BGMIndex = RIFASaveGame->BGMIndex;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
-	//SwimItemArr = RIFASaveGame->SwimItemArr;
-	for (int i = 0; i < 5; i++)
-	{
-		SwimItemArr.Add(true);
-	}
+	SwimItemArr = RIFASaveGame->SwimItemArr;
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	SwimItemArr.Add(true);
+	//}
 	NPCDialogMap = RIFASaveGame->NPCDialogMap;
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
 	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
@@ -100,15 +99,13 @@ void UMyGameInstance::Load()
 	ECurrentCharacterHairPart = RIFASaveGame->ECurrentCharacterHairPart;
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 	bCanFly = RIFASaveGame->bCanFly;
-	//bCanSwim = RIFASaveGame->bCanSwim;
-	bCanSwim = true;
+	bCanSwim = RIFASaveGame->bCanSwim;
+	//bCanSwim = true;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 	bClearIslandForest = RIFASaveGame->bClearIslandForest;
 	bClearFieldForest = RIFASaveGame->bClearFieldForest;
 	if (CurrentLevelName == TEXT("MainMenu"))
-	{
 		CurrentLevelName = "Island";
-	}
 }
 
 void UMyGameInstance::ResetSaveData()

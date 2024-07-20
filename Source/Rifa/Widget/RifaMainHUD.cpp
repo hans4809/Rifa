@@ -9,6 +9,7 @@
 #include <Kismet/GameplayStatics.h>
 #include <Data/MyGameInstance.h>
 #include "Widget/ResetDataQuestionWidget.h"
+#include <Data/RIFASaveGame.h>
 
 URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -29,6 +30,7 @@ URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
 void URifaMainHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
+	PlaySound(MainBGM);
 	ResetButton = Cast<UButton>(GetWidgetFromName(TEXT("ResetButton")));
 	LoadButton = Cast<UButton>(GetWidgetFromName(TEXT("LoadButton")));
 	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
@@ -38,7 +40,10 @@ void URifaMainHUD::NativeConstruct()
 	QuitButton->OnClicked.AddDynamic(this, &URifaMainHUD::QuitButtonClicked);
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
 	LoadButton->OnClicked.AddDynamic(this, &URifaMainHUD::LoadButtonClicked);
-	PlaySound(MainBGM);
+
+	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+	if (nullptr == RIFASaveGame)
+		LoadButton->SetIsEnabled(false);
 }
 
 void URifaMainHUD::Init()
@@ -71,6 +76,13 @@ void URifaMainHUD::LoadButtonClicked()
 
 void URifaMainHUD::ResetButtonClicked()
 {
+	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
+	if (nullptr == RIFASaveGame)
+	{
+		LoadButtonClicked();
+		return;
+	}
+
 	if (IsValid(ResetDataQuestionWidgetClass)&&!IsValid(ResetDataQuestionWidgetAsset))
 	{
 		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
