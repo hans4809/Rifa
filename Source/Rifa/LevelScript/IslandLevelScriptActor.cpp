@@ -22,6 +22,9 @@ void AIslandLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+#if WITH_EDITOR
+
+#elif
 	if (RifaGameInstanceReference) 
 	{
 		if (!RifaGameInstanceReference->LevelSequencePlayerArr[0])
@@ -29,8 +32,6 @@ void AIslandLevelScriptActor::BeginPlay()
 			if (IsValid(FirstLevelSequenceActor))
 			{
 				FirstLevelSequenceActor->SequencePlayer->Play();
-				//CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-				//GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence, FirstLevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 				FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence);
 			}
 		}
@@ -38,10 +39,11 @@ void AIslandLevelScriptActor::BeginPlay()
 		{ 
 			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
 			{
-				//CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
 			}
 		}
 	}
+#endif
 	if (IsValid(BGMActor))
 	{
 		if (IsValid(RifaGameInstanceReference))
@@ -70,8 +72,6 @@ void AIslandLevelScriptActor::BeginPlay()
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
 	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
-	//CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	//Cast<APlayerController>(CharacterReference->Controller)->SetInputMode(FInputModeGameOnly());
 
 	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement])
 	{
