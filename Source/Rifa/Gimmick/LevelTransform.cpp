@@ -4,6 +4,9 @@
 #include "Character/RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/BoxComponent.h"
+#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequence/Public/LevelSequence.h"
+#include "LevelSequence/Public/LevelSequencePlayer.h"
 
 // Sets default values
 ALevelTransform::ALevelTransform()
@@ -40,8 +43,19 @@ void ALevelTransform::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AA
 			GameInstance->CurrentLevelName = FName(LevelName);
 			GameInstance->SavePosition = FVector(0, 0, 0);
 		}
-		UGameplayStatics::OpenLevel(GetWorld(), FName(LevelName));
+		if (IsValid(LevelSequencActor))
+		{
+			LevelSequencActor->SequencePlayer->Play();
+			LevelSequencActor->SequencePlayer->OnFinished.AddDynamic(this, &ALevelTransform::OnFinishedLevelSequence);
+		}
+		else
+			UGameplayStatics::OpenLevel(GetWorld(), FName(LevelName));
 	}
+}
+
+void ALevelTransform::OnFinishedLevelSequence()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), FName(LevelName));
 }
 
 // Called every frame

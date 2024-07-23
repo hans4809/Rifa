@@ -36,15 +36,15 @@ void ABaseLevelSequencePlayActor::BeginPlay()
 			Destroy();
 	}
 
-	if (LevelSequenceActor)
+	if (IsValid(LevelSequenceActor))
 	{
 		LevelSequence = LevelSequenceActor->LevelSequenceAsset;
 		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
-		if (IsValid(playerContorller))
+		/*if (IsValid(playerContorller))
 		{
 			LevelSequencePlayer->OnPlay.AddDynamic(playerContorller, &ARifaPlayerController::OnStartedLevelSequence);
 			LevelSequencePlayer->OnFinished.AddDynamic(playerContorller, &ARifaPlayerController::OnFinishedLevelSequence);
-		}
+		}*/
 	}
 
 }

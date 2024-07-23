@@ -26,12 +26,27 @@ void ARifaPlayerController::PostInitializeComponents()
 
 	auto currentLevelScriptActor = GetWorld()->GetLevelScriptActor();
 
+	TArray<AActor*, FDefaultAllocator> levelSequenceActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ALevelSequenceActor::StaticClass(), levelSequenceActors);
+
+	for(auto actor : levelSequenceActors)
+	{
+		if (IsValid(actor))
+		{
+			auto levelSequenceActor = Cast<ALevelSequenceActor>(actor);
+			if(IsValid(levelSequenceActor))
+			{
+				levelSequenceActor->SequencePlayer->OnPlay.AddDynamic(this, &ARifaPlayerController::OnStartedLevelSequence);
+				levelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &ARifaPlayerController::OnFinishedLevelSequence);
+			}
+		}
+	}
 	
-	if (IsValid(Cast<AIslandLevelScriptActor>(currentLevelScriptActor)))
+	/*if (IsValid(Cast<AIslandLevelScriptActor>(currentLevelScriptActor)))
 	{
 		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnPlay.AddDynamic(this, &ARifaPlayerController::OnStartedLevelSequence);
 		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &ARifaPlayerController::OnFinishedLevelSequence);
-	}
+	}*/
 }
 
 void ARifaPlayerController::BeginPlay()
