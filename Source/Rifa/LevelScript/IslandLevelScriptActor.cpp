@@ -24,7 +24,7 @@ void AIslandLevelScriptActor::BeginPlay()
 
 #if WITH_EDITOR
 
-//#elif
+#elif
 	if (RifaGameInstanceReference) 
 	{
 		if (!RifaGameInstanceReference->LevelSequencePlayerArr[0])

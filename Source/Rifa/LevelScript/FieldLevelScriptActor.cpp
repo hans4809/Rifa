@@ -27,14 +27,16 @@ void AFieldLevelScriptActor::BeginPlay()
 		{
 			if (IsValid(LevelSequenceActor))
 			{
-				FTimerHandle SequenceTimer;
+				//FTimerHandle SequenceTimer;
 				/*if (GameHUDWidgetAsset)
 				{
 					GameHUDWidgetAsset->CloseWidget();
 				}*/
 				LevelSequenceActor->SequencePlayer->Play();
-				CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-				GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
+				RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
+				//LevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AFieldLevelScriptActor::OnFinishedLevelSequence);
+				//CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
+				//GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 			}
 		}
 		if (CharacterReference) 
@@ -80,7 +82,7 @@ void AFieldLevelScriptActor::BeginPlay()
 
 void AFieldLevelScriptActor::OnFinishedLevelSequence()
 {
-	RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
+
 	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 	//if (IsValid(GameHUDWidgetClass))
 	//{
