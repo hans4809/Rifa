@@ -28,15 +28,18 @@ void UPopUpWidget::CloseWidget()
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
 	}
 
-	RemoveFromViewport();
+	RemoveFromParent();
 }
 
 FReply UPopUpWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
 {
-	Super::NativeOnKeyDown(InGeometry, InKeyEvent);
+	FReply returnReply = Super::NativeOnKeyDown(InGeometry, InKeyEvent);
 	if (InKeyEvent.GetKey() == EKeys::Escape)
 		CloseWidget();
-	return FReply::Handled();
+	
+	returnReply = FReply::Handled();
+
+	return returnReply;
 }
 
 void UPopUpWidget::NativeConstruct()

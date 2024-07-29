@@ -9,6 +9,7 @@ void UPickupText::NativeConstruct()
 {
 	Super::NativeConstruct();
 	//PressKeyImage = Cast<UImage>(GetWidgetFromName(TEXT("PressKeyImage")));
+	bIsFocusable = false;
 }
 
 void UPickupText::Init()

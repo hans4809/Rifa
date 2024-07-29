@@ -33,8 +33,14 @@ protected:
 	class UListView* ReplyList;
 public:
 	UFUNCTION(BlueprintCallable)
-	void NativeConstruct();
+	void NativeConstruct() override;
+
+	FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+
+	FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
+
 	virtual void Init() override;
+
 	virtual void CloseWidget() override;
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynam OnSpeakFinished;
