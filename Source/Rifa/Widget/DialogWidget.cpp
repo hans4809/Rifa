@@ -16,45 +16,7 @@ void UDialogWidget::NativeConstruct()
 	SpeakSizeBox = Cast<USizeBox>(GetWidgetFromName(TEXT("SpeakSizeBox")));
 	SpeakText = Cast<UTextBlock>(GetWidgetFromName(TEXT("SpeakText")));
 	ReplyList = Cast<UListView>(GetWidgetFromName(TEXT("ReplyList")));
-}
-
-FReply UDialogWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
-{
-	FReply returnReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-
-	if (CurrentDialogState != EDialogState_C::Speak)
-	{
-		return returnReply;
-	}
-
-	if(InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
-	{
-		if (OnSpeakFinished.IsBound()) { OnSpeakFinished.Broadcast(); }
-	}
-
-	returnReply = FReply::Handled();
-
-	return returnReply;
-}
-
-FReply UDialogWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
-{
-	FReply returnReply = Super::NativeOnKeyDown(InGeometry, InKeyEvent);
-
-	if (CurrentDialogState != EDialogState_C::Speak)
-	{
-		return returnReply;
-	}
-
-	if (InKeyEvent.GetKey() == EKeys::E)
-	{
-		if (OnSpeakFinished.IsBound()) { OnSpeakFinished.Broadcast(); }
-	}
-
-	returnReply = FReply::Handled();
-
-	return returnReply;
-}
+ }
 
 void UDialogWidget::Init()
 {
@@ -67,6 +29,7 @@ void UDialogWidget::Init()
 void UDialogWidget::CloseWidget()
 {
 	Super::CloseWidget();
+	SpeakText->SetText(FText::FromString(TEXT("")));
 }
 
 void UDialogWidget::Speak_C(FText Text)
@@ -116,5 +79,43 @@ void UDialogWidget::SetDialogState_C(EDialogState_C DialogState)
 	default:
 		break;
 	}
+}
+
+FReply UDialogWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	FReply returnReply = Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+
+	if (CurrentDialogState != EDialogState_C::Speak)
+	{
+		return returnReply;
+	}
+
+	if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
+	{
+		if (OnSpeakFinished.IsBound()) { OnSpeakFinished.Broadcast(); }
+	}
+
+	returnReply = FReply::Handled();
+
+	return returnReply;
+}
+
+FReply UDialogWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
+{
+	FReply returnReply = Super::NativeOnKeyDown(InGeometry, InKeyEvent);
+
+	if (CurrentDialogState != EDialogState_C::Speak)
+	{
+		return returnReply;
+	}
+
+	if (InKeyEvent.GetKey() == EKeys::E)
+	{
+		if (OnSpeakFinished.IsBound()) { OnSpeakFinished.Broadcast(); }
+	}
+
+	returnReply = FReply::Handled();
+
+	return returnReply;
 }
 

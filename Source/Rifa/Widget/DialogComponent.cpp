@@ -38,8 +38,12 @@ void UDialogComponent::BeginPlay()
 	if (IsValid(DialogWidgetClass))
 	{
 		DialogWidgetAsset = Cast<UDialogWidget>(CreateWidget(GetWorld(), DialogWidgetClass));
+
+		if (IsValid(DialogWidgetAsset))
+		{
+			DialogWidgetAsset->OnExit.AddDynamic(this, &UDialogComponent::OnExit);
+		}
 	}
-	DialogWidgetAsset->OnExit.AddDynamic(this, &UDialogComponent::OnExit);
 }
 
 
