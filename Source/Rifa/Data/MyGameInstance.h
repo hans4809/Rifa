@@ -99,6 +99,7 @@ public:
 	ECharacterMaterialItem ECurrentCharacterMaterial;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	EHairPartsItem ECurrentCharacterHairPart;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	FName CurrentLevelName;
 //InGame Data Section
@@ -107,10 +108,13 @@ public:
 	TArray<bool> FlyItemArr;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")
 	TArray<bool> SwimItemArr;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "InGameData")
 	TArray<bool> LevelSequencePlayerArr;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "InGameData")
 	TMap<ETutorialType, bool> IsTutorialFinishedMap;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
 	TMap<EHairPartsItem, TObjectPtr<USkeletalMesh>> HairPartsMeshMap;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "SaveData")
@@ -126,6 +130,7 @@ public:
 	bool bClearIslandForest;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	bool bClearFieldForest;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "SaveData")
 	TMap<ENPCType, int32> NPCDialogMap;
 

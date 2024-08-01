@@ -16,8 +16,14 @@ class RIFA_API UCreditWidget : public UPopUpWidget
 public:
 	UPROPERTY(BlueprintReadWrite, Transient, Category = "Animation", meta = (BindWidgetAnim))
 	TObjectPtr<class UWidgetAnimation> Credit;
+
+	virtual void Init() override;
+
+	virtual void CloseWidget() override;
 protected:
 	virtual void NativeConstruct() override;
+
+
 	FWidgetAnimationDynamicEvent EndDelegate;
 	UFUNCTION()
 	void AnimationFinished();

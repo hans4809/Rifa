@@ -6,6 +6,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "SceneWidget.h"
 #include "GameHUD.h"
+#include "DialogWidget.h"
 
 void UPopUpWidget::Init()
 {
@@ -34,8 +35,12 @@ void UPopUpWidget::CloseWidget()
 FReply UPopUpWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
 {
 	FReply returnReply = Super::NativeOnKeyDown(InGeometry, InKeyEvent);
-	if (InKeyEvent.GetKey() == EKeys::Escape)
-		CloseWidget();
+
+	if (!IsValid(Cast<UDialogWidget>(this)))
+	{
+		if (InKeyEvent.GetKey() == EKeys::Escape)
+			CloseWidget();
+	}
 	
 	returnReply = FReply::Handled();
 

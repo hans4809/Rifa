@@ -19,6 +19,16 @@ void UCreditWidget::NativeConstruct()
 	}
 }
 
+void UCreditWidget::Init()
+{
+	Super::Init();
+}
+
+void UCreditWidget::CloseWidget()
+{
+	Super::CloseWidget();
+}
+
 void UCreditWidget::AnimationFinished()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");

@@ -40,11 +40,6 @@ void ABaseLevelSequencePlayActor::BeginPlay()
 	{
 		LevelSequence = LevelSequenceActor->LevelSequenceAsset;
 		LevelSequencePlayer = LevelSequenceActor->SequencePlayer.Get();
-		/*if (IsValid(playerContorller))
-		{
-			LevelSequencePlayer->OnPlay.AddDynamic(playerContorller, &ARifaPlayerController::OnStartedLevelSequence);
-			LevelSequencePlayer->OnFinished.AddDynamic(playerContorller, &ARifaPlayerController::OnFinishedLevelSequence);
-		}*/
 	}
 
 }
@@ -63,7 +58,6 @@ void ABaseLevelSequencePlayActor::PlayLevelSequence()
 	{
 		if (IsValid(CharacterReference) && IsValid(LevelSequencePlayer))
 		{
-			FTimerHandle LevelSequenceTimer;
 			FMovieSceneSequencePlaybackParams Param;
 			LevelSequencePlayer->SetPlaybackPosition(Param);
 			LevelSequencePlayer->Play();

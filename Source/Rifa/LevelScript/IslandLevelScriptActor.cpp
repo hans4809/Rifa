@@ -32,6 +32,7 @@ void AIslandLevelScriptActor::BeginPlay()
 			if (IsValid(FirstLevelSequenceActor))
 			{
 				FirstLevelSequenceActor->SequencePlayer->Play();
+				RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
 				FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence);
 			}
 		}
@@ -71,8 +72,6 @@ void AIslandLevelScriptActor::BeginPlay()
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()
 {
-	RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
-
 	if (!RifaGameInstanceReference->IsTutorialFinishedMap[ETutorialType::Movement])
 	{
 		if (IsValid(TutorialWidgetClass))

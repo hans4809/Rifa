@@ -30,6 +30,7 @@ void AShrineLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShrineLevelSequencePlayActor::OnCharacterOverlap);
+	LevelSequencePlayer->OnFinished.AddDynamic(this, &AShrineLevelSequencePlayActor::EndLevelSequence);
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Swim:
@@ -50,9 +51,6 @@ void AShrineLevelSequencePlayActor::BeginPlay()
 void AShrineLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
-	
-	FTimerHandle LevelSequenceTimer;
-	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AShrineLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 }
 
 void AShrineLevelSequencePlayActor::EndLevelSequence()
@@ -61,16 +59,11 @@ void AShrineLevelSequencePlayActor::EndLevelSequence()
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Fly:
-		if (RifaGameInstance->bCanFly)
-			return;
-		else
-			RifaGameInstance->bCanFly = true;
+		RifaGameInstance->bCanFly = true;
 		break;
 	case EEnergyType::Swim:
-		if (RifaGameInstance->bCanSwim)
-			return;
-		else
-			RifaGameInstance->bCanSwim = true;
+		RifaGameInstance->bCanSwim = true;
+		break;
 	}
 	Particle->SetActive(false);
 }

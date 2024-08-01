@@ -21,32 +21,28 @@ void AFieldLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+#if WITH_EDITOR
+
+#elif
 	if (RifaGameInstanceReference) 
 	{
 		if (!RifaGameInstanceReference->LevelSequencePlayerArr[4])
 		{
 			if (IsValid(LevelSequenceActor))
 			{
-				//FTimerHandle SequenceTimer;
-				/*if (GameHUDWidgetAsset)
-				{
-					GameHUDWidgetAsset->CloseWidget();
-				}*/
 				LevelSequenceActor->SequencePlayer->Play();
 				RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
-				//LevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AFieldLevelScriptActor::OnFinishedLevelSequence);
-				//CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-				//GetWorld()->GetTimerManager().SetTimer(SequenceTimer, this, &AFieldLevelScriptActor::OnFinishedLevelSequence, LevelSequenceActor->SequencePlayer->GetDuration().AsSeconds(), false);
 			}
 		}
 		if (CharacterReference) 
 		{
 			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
 			{
-				//CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
 			}
 		}
 	}
+#endif
 	if (IsValid(BGMActor))
 	{
 		if (IsValid(RifaGameInstanceReference))
@@ -82,14 +78,5 @@ void AFieldLevelScriptActor::BeginPlay()
 
 void AFieldLevelScriptActor::OnFinishedLevelSequence()
 {
-
 	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-	//if (IsValid(GameHUDWidgetClass))
-	//{
-	//	GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
-	//	if (IsValid(GameHUDWidgetAsset))
-	//	{
-	//		GameHUDWidgetAsset->Init();
-	//	}
-	//}
 }

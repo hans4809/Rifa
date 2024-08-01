@@ -26,14 +26,13 @@ void AEndingLevelSequencePlayActor::BeginPlay()
 		EndingKeyWidgetAsset = CreateWidget<UEndingKeyWidget>(GetWorld(), EndingKeyWidgetClass);
 
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AEndingLevelSequencePlayActor::OnCharacterOverlap);
+
+	LevelSequencePlayer->OnFinished.AddDynamic(this, &AEndingLevelSequencePlayActor::EndLevelSequence);
 }
 
 void AEndingLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
-
-	FTimerHandle LevelSequenceTimer;
-	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &AEndingLevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);
 }
 
 void AEndingLevelSequencePlayActor::EndLevelSequence()

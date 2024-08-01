@@ -10,12 +10,22 @@
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Widget/CreditWidget.h"
 
 ARifaPlayerController::ARifaPlayerController()
 {
 	static ConstructorHelpers::FClassFinder<UUserWidget> GameHUDWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_GameHUD.WG_GameHUD_C'"));
 	if (GameHUDWidget.Succeeded())
+	{
 		GameHUDWidgetClass = GameHUDWidget.Class;
+	}
+
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> CreditWidgetClassFinder(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_Credit.WG_Credit_C'"));
+	if (CreditWidgetClassFinder.Succeeded())
+	{
+		CreditWidgetClass = CreditWidgetClassFinder.Class;
+	}
 }
 
 void ARifaPlayerController::PostInitializeComponents()
@@ -23,6 +33,9 @@ void ARifaPlayerController::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	if (IsValid(GameHUDWidgetClass))
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+
+	if (CreditWidgetClass)
+		CreditWidgetAsset = CreateWidget<UCreditWidget>(GetWorld(), CreditWidgetClass);
 
 	auto currentLevelScriptActor = GetWorld()->GetLevelScriptActor();
 
@@ -41,12 +54,6 @@ void ARifaPlayerController::PostInitializeComponents()
 			}
 		}
 	}
-	
-	/*if (IsValid(Cast<AIslandLevelScriptActor>(currentLevelScriptActor)))
-	{
-		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnPlay.AddDynamic(this, &ARifaPlayerController::OnStartedLevelSequence);
-		Cast<AIslandLevelScriptActor>(currentLevelScriptActor)->FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &ARifaPlayerController::OnFinishedLevelSequence);
-	}*/
 }
 
 void ARifaPlayerController::BeginPlay()
@@ -72,6 +79,7 @@ void ARifaPlayerController::OnStartedLevelSequence()
 		if (GameHUDWidgetAsset->IsInViewport())
 			GameHUDWidgetAsset->CloseWidget();
 	}
+
 }
 
 void ARifaPlayerController::OnFinishedLevelSequence()
@@ -87,5 +95,13 @@ void ARifaPlayerController::OnFinishedLevelSequence()
 	{
 		if (GameHUDWidgetAsset->IsInViewport() == false)
 			GameHUDWidgetAsset->Init();
+	}
+}
+
+void ARifaPlayerController::OnFinishedGame()
+{
+	if (CreditWidgetAsset)
+	{
+		CreditWidgetAsset->Init();
 	}
 }

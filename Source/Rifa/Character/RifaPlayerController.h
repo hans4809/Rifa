@@ -23,6 +23,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> GameHUDWidgetClass;
 
+private:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UUserWidget> CreditWidgetClass;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UCreditWidget> CreditWidgetAsset;
 
 public:
 	// Called every frame
@@ -36,4 +42,7 @@ public:
 
 	UFUNCTION()
 	void OnFinishedLevelSequence();
+
+	UFUNCTION()
+	void OnFinishedGame();
 };

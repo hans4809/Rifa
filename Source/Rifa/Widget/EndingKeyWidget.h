@@ -3,36 +3,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Widget/PopUpWidget.h"
+#include "Widget/SceneWidget.h"
 #include "EndingKeyWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RIFA_API UEndingKeyWidget : public UPopUpWidget
+class RIFA_API UEndingKeyWidget : public USceneWidget
 {
 	GENERATED_BODY()
 public:
 	UEndingKeyWidget(const FObjectInitializer& ObjectInitializer);
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	TObjectPtr<class ULevelSequence> EndingLevelSequence;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	TObjectPtr<class ULevelSequencePlayer> EndingLevelSequencePlayer;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "LevelSequence")
 	class ALevelSequenceActor* EndingLevelSequenceActor;
 
 protected:
 	void NativeConstruct() override;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
-	TObjectPtr<class ARifaCharacter> CharacterReference;
+
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+
 	UFUNCTION(BlueprintCallable)
 	void PlayEndingLevelSequence();
-	UFUNCTION(BlueprintCallable)
-	void EndEndingLevelSequence();
-private:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> CreditWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UCreditWidget> CreditWidgetAsset;
 };

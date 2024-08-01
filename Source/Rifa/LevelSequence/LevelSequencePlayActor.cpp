@@ -27,14 +27,14 @@ void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
+
+	LevelSequencePlayer->OnFinished.AddDynamic(this, &ALevelSequencePlayActor::EndLevelSequence);
 }
 
 void ALevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
 
-	/*FTimerHandle LevelSequenceTimer;
-	GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ALevelSequencePlayActor::EndLevelSequence, LevelSequencePlayer->GetDuration().AsSeconds(), false);*/
 }
 
 void ALevelSequencePlayActor::EndLevelSequence()
