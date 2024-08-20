@@ -32,10 +32,24 @@ void ARifaPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	if (IsValid(GameHUDWidgetClass))
+	{
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
+		if(IsValid(GameHUDWidgetAsset))
+		{
+			GameHUDWidgetAsset->AddToViewport();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GameHUDWidgetAsset is not valid"));
+		}
+	}
+
 
 	if (CreditWidgetClass)
+	{
 		CreditWidgetAsset = CreateWidget<UCreditWidget>(GetWorld(), CreditWidgetClass);
+	}
+
 
 	auto currentLevelScriptActor = GetWorld()->GetLevelScriptActor();
 
@@ -58,8 +72,6 @@ void ARifaPlayerController::PostInitializeComponents()
 
 void ARifaPlayerController::BeginPlay()
 {
-
-		
 }
 
 void ARifaPlayerController::Tick(float DeltaTime)
