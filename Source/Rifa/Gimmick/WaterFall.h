@@ -19,8 +19,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UBoxComponent> WaterFallBox;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UAudioComponent> Sound;	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UNiagaraComponent> WaterFall;
@@ -29,9 +27,13 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UBoxComponent> TopTrigger;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> BottomStartPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> BottomEndPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> TopStartPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> TopEndPoint;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> WaterFallWidgetClass;
@@ -50,4 +52,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WaterFall")
+	bool bIsWaterFallActive = false;
 };

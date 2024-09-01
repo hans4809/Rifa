@@ -51,6 +51,7 @@ class ARifaCharacter : public ACharacter
 	UPROPERTY()
 	UCharacterMovementComponent* RifaCharacterMovement;
 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Trigget, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USphereComponent> HeadTrigger;
 	bool First = true;
@@ -63,6 +64,8 @@ public:
 	FDele_Dynamic PickupItem;
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic NPCTalk;
+
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
 	int FlyEnergyNum;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
@@ -75,6 +78,8 @@ public:
 	FTimerHandle FlyTimer;
 	UFUNCTION(BlueprintCallable)
 	float GetFlyTime();
+
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	int SwimEnergyNum;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
@@ -94,6 +99,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool bIsSwimming;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool bCanSwim;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bIsRideUpWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bIsRideDownWaterFall;
@@ -102,11 +111,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	bool bCanRideDownWaterFall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	bool bCanSwim;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	FRotator WaterFallRotation;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
 	FVector WaterFallEndVector;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
+	FVector WaterFallStartVector;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	float ElapsedTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	float WaterFallTime;
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	TObjectPtr<AActor> InteractionTargetActor;
 	//UPROPERTY(EditAnywhere)

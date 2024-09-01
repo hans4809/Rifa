@@ -22,9 +22,7 @@ void AIslandLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-#if WITH_EDITOR
 
-#elif
 	if (RifaGameInstanceReference) 
 	{
 		if (!RifaGameInstanceReference->LevelSequencePlayerArr[0])
@@ -44,7 +42,6 @@ void AIslandLevelScriptActor::BeginPlay()
 			}
 		}
 	}
-#endif
 	if (IsValid(BGMActor))
 	{
 		if (IsValid(RifaGameInstanceReference))
