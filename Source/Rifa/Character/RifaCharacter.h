@@ -113,9 +113,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	FRotator WaterFallRotation;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
-	FVector WaterFallEndVector;
+	FVector RideEndVector;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
-	FVector WaterFallStartVector;
+	FVector RideStartVector;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Swim")
+	FVector WaterFallTopVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	float ElapsedTime;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")

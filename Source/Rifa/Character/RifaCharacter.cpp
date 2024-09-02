@@ -262,7 +262,7 @@ void ARifaCharacter::Tick(float DeltaTime)
 			}
 			
 			float alpha = ElapsedTime / WaterFallTime;
-			FVector NewLocation = FMath::Lerp(WaterFallStartVector, WaterFallEndVector, alpha);
+			FVector NewLocation = FMath::Lerp(RideStartVector, RideEndVector, alpha);
 			SetActorLocation(NewLocation);
 		}
 		else
@@ -548,7 +548,7 @@ void ARifaCharacter::Swim()
 		bIsSwimming = true;
 		bIsRideUpWaterFall = true;
 		ElapsedTime = 0.f;
-		SetActorLocation(WaterFallStartVector);
+		SetActorLocation(RideStartVector);
 		SetActorRotation(WaterFallRotation + FRotator(0, -90.f, 0));
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
 		Cast<APlayerController>(Controller)->SetInputMode(FInputModeUIOnly());
@@ -558,7 +558,7 @@ void ARifaCharacter::Swim()
 		bIsSwimming = true;
 		bIsRideDownWaterFall = true;
 		ElapsedTime = 0.f;
-		SetActorLocation(WaterFallStartVector);
+		SetActorLocation(RideStartVector);
 		SetActorRotation(WaterFallRotation + FRotator(0, 90.f, 0));
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
 		Cast<APlayerController>(Controller)->SetInputMode(FInputModeUIOnly());
@@ -569,12 +569,17 @@ void ARifaCharacter::ReturnWalk()
 {
 	if (bIsRideUpWaterFall)
 	{
-		SetActorLocationAndRotation(GetActorLocation() - GetActorUpVector() * 400.f + GetActorForwardVector() * 400.f, FRotator::ZeroRotator);
+		if (WaterFallTopVector != FVector::ZeroVector)
+		{
+			SetActorLocationAndRotation(WaterFallTopVector, FRotator::ZeroRotator);
+			WaterFallTopVector = FVector::ZeroVector;
+		}
 	}
 	else
 	{
-		SetActorRotation(FRotator(0.f, 0.f, 0.f));
+		SetActorRotation(FRotator::ZeroRotator);
 	}
+
 	bIsSwimming = false;
 	bIsRideUpWaterFall = false;
 	bIsRideDownWaterFall = false;
@@ -590,7 +595,7 @@ void ARifaCharacter::EndSwim()
 	bIsRideUpWaterFall = false;
 	bIsRideDownWaterFall = false;
 	SetActorLocation(StartLocation);
-	SetActorRotation(FRotator(0.f, 0.f, 0.f));
+	SetActorRotation(FRotator::ZeroRotator);
 	RifaCharacterMovement->bCheatFlying = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);

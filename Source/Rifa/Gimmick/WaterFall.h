@@ -27,13 +27,15 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UBoxComponent> TopTrigger;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USceneComponent> BottomStartPoint;
+	TObjectPtr<USceneComponent> RideUpStartPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USceneComponent> BottomEndPoint;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USceneComponent> TopStartPoint;
+	TObjectPtr<USceneComponent> RideUpEndPoint;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> TopEndPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> RideDownStartPoint;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "WaterFall", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> RideDownEndPoint;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> WaterFallWidgetClass;

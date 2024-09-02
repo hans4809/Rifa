@@ -19,19 +19,21 @@ AWaterFall::AWaterFall()
 	WaterFall = CreateDefaultSubobject<UNiagaraComponent>(TEXT("WaterFall"));
 	TopTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TopTrigger"));
 	BottomTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BottomTrigger"));
-	BottomStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomStartPoint"));
-	BottomEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("BottomEndPoint"));
-	TopStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopStartPoint"));
+	RideUpStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("RideUpStartPoint"));
+	RideUpEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("RideUpEndPoint"));
+	RideDownStartPoint = CreateDefaultSubobject<USceneComponent>(TEXT("RideDownStartPoint"));
+	RideDownEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("RideDownEndPoint"));
 	TopEndPoint = CreateDefaultSubobject<USceneComponent>(TEXT("TopEndPoint"));
 
 	RootComponent = WaterFall;
 	Sound->SetupAttachment(RootComponent);
 	TopTrigger->SetupAttachment(RootComponent);
 	BottomTrigger->SetupAttachment(RootComponent);
-	BottomStartPoint->SetupAttachment(BottomTrigger);
-	BottomEndPoint->SetupAttachment(TopTrigger);
-	TopStartPoint->SetupAttachment(TopTrigger);
-	TopEndPoint->SetupAttachment(BottomTrigger);
+	RideUpStartPoint->SetupAttachment(BottomTrigger);
+	RideUpEndPoint->SetupAttachment(TopTrigger);
+	RideDownStartPoint->SetupAttachment(TopTrigger);
+	RideDownEndPoint->SetupAttachment(BottomTrigger);
+	TopEndPoint->SetupAttachment(TopTrigger);
 
 	static ConstructorHelpers::FObjectFinder<USoundBase> WaterFallSound(TEXT("/Script/Engine.SoundCue'/Game/Sounds/SFX/Waterfall_Water.Waterfall_Water'"));
 	if (WaterFallSound.Succeeded())
@@ -68,10 +70,11 @@ void AWaterFall::BeginPlay()
 	}
 	else
 	{
-		TopStartPoint->DestroyComponent();
+		RideUpStartPoint->DestroyComponent();
+		RideUpEndPoint->DestroyComponent();
 		TopEndPoint->DestroyComponent();
-		BottomStartPoint->DestroyComponent();
-		BottomEndPoint->DestroyComponent();
+		RideDownStartPoint->DestroyComponent();
+		RideDownEndPoint->DestroyComponent();
 		TopTrigger->DestroyComponent();
 		BottomTrigger->DestroyComponent();
 	}
@@ -93,8 +96,9 @@ void AWaterFall::OnCharacterBottomOverlap(UPrimitiveComponent* OverlappedComp, A
 			}
 			Character->bCanRideUpWaterFall = true;
 			Character->WaterFallRotation = GetActorRotation();
-			Character->WaterFallStartVector = BottomStartPoint->GetComponentLocation();
-			Character->WaterFallEndVector = BottomEndPoint->GetComponentLocation();
+			Character->RideStartVector = RideUpStartPoint->GetComponentLocation();
+			Character->RideEndVector = RideUpEndPoint->GetComponentLocation();
+			Character->WaterFallTopVector = TopEndPoint->GetComponentLocation();
 		}
 	}
 }
@@ -124,8 +128,8 @@ void AWaterFall::OnCharacterTopOverlap(UPrimitiveComponent* OverlappedComp, AAct
 			}
 			Character->bCanRideDownWaterFall = true;
 			Character->WaterFallRotation = GetActorRotation();
-			Character->WaterFallStartVector = TopStartPoint->GetComponentLocation();
-			Character->WaterFallEndVector = TopEndPoint->GetComponentLocation();
+			Character->RideStartVector = RideDownStartPoint->GetComponentLocation();
+			Character->RideEndVector = RideDownEndPoint->GetComponentLocation();
 		}
 	}
 }
