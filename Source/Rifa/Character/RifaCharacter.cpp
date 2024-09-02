@@ -92,6 +92,7 @@ ARifaCharacter::ARifaCharacter()
 	//WaterForcingVector = FVector(0, 0, 0);
 	FlyEnergyNum = 0;
 	SwimEnergyNum = 0;
+	ShouldDie = true;
 }
 
 float ARifaCharacter::GetFlyTime()
@@ -255,11 +256,11 @@ void ARifaCharacter::Tick(float DeltaTime)
 		{
 			ElapsedTime += DeltaTime;
 
-			if (ElapsedTime >= WaterFallTime)
-			{
-				ElapsedTime = WaterFallTime;
-				ReturnWalk();
-			}
+			//if (ElapsedTime >= WaterFallTime)
+			//{
+			//	ElapsedTime = WaterFallTime;
+			//	ReturnWalk();
+			//}
 			
 			float alpha = ElapsedTime / WaterFallTime;
 			FVector NewLocation = FMath::Lerp(RideStartVector, RideEndVector, alpha);
@@ -393,6 +394,8 @@ void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 void ARifaCharacter::Move(const FInputActionValue& Value)
 {
+	if (bIsRideUpWaterFall || bIsRideDownWaterFall)
+		return;
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
@@ -463,8 +466,12 @@ void ARifaCharacter::Fly()
 void ARifaCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
-	if (bIsDied)
+	if (bIsDied || !ShouldDie)
+	{
+		ShouldDie = true;
 		return;
+	}
+
 
 	else if(RifaCharacterMovement->IsFalling())
 	{
@@ -491,6 +498,9 @@ void ARifaCharacter::OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActo
 
 void ARifaCharacter::Swim()
 {
+	if (bIsRideUpWaterFall || bIsRideDownWaterFall)
+		return;
+
 	//if (SwimEnergyNum == 0 || !RifaGameInstance->bCanSwim)
 	//{
 	//	return;
@@ -551,7 +561,8 @@ void ARifaCharacter::Swim()
 		SetActorLocation(RideStartVector);
 		SetActorRotation(WaterFallRotation + FRotator(0, -90.f, 0));
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		Cast<APlayerController>(Controller)->SetInputMode(FInputModeUIOnly());
+		FTimerHandle timer;
+		GetWorld()->GetTimerManager().SetTimer(timer, this, &ARifaCharacter::ReturnWalk, WaterFallTime, false);
 	}
 	else if (bCanRideDownWaterFall)
 	{
@@ -561,7 +572,8 @@ void ARifaCharacter::Swim()
 		SetActorLocation(RideStartVector);
 		SetActorRotation(WaterFallRotation + FRotator(0, 90.f, 0));
 		AddActorWorldRotation(FRotator(0, 0, -90.f));
-		Cast<APlayerController>(Controller)->SetInputMode(FInputModeUIOnly());
+		FTimerHandle timer;
+		GetWorld()->GetTimerManager().SetTimer(timer, this, &ARifaCharacter::ReturnWalk, WaterFallTime, false);
 	}
 }
 
@@ -572,7 +584,6 @@ void ARifaCharacter::ReturnWalk()
 		if (WaterFallTopVector != FVector::ZeroVector)
 		{
 			SetActorLocationAndRotation(WaterFallTopVector, FRotator::ZeroRotator);
-			WaterFallTopVector = FVector::ZeroVector;
 		}
 	}
 	else
@@ -584,6 +595,7 @@ void ARifaCharacter::ReturnWalk()
 	bIsRideUpWaterFall = false;
 	bIsRideDownWaterFall = false;
 	RifaCharacterMovement->bCheatFlying = false;
+	ShouldDie = false;
 	RifaCharacterMovement->SetMovementMode(MOVE_Falling);
 	GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
 	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());

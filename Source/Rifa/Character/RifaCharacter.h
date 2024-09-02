@@ -121,7 +121,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	float ElapsedTime;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
-	float WaterFallTime;
+	float WaterFallTime; 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
+	bool ShouldDie = true;
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Interaction")
 	TObjectPtr<AActor> InteractionTargetActor;

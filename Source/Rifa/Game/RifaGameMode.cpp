@@ -58,11 +58,12 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 		FadeWidgetReference->PlayAnimation(FadeWidgetReference->FadeOut);
 	}
 	Player->DisableInput(Cast<APlayerController>(Player->Controller));
-	//Player->GetCharacterMovement()->GravityScale = 0;
-	//Player->GetCharacterMovement()->AddImpulse(FVector(0.f, 0.f, -100.f), true);
 	Player->GetCharacterMovement()->SetMovementMode(MOVE_None);
 	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 	Player->GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
+	Player->bIsRideUpWaterFall = false;
+	Player->bIsRideDownWaterFall = false;
+	Player->bIsSwimming = false;
 	Player->GetFollowCamera()->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	CameraReference = Player->GetFollowCamera();
 	FTimerHandle TimerHandle;
