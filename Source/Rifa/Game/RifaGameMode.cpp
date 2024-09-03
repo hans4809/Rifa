@@ -64,6 +64,7 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 	Player->bIsRideUpWaterFall = false;
 	Player->bIsRideDownWaterFall = false;
 	Player->bIsSwimming = false;
+	Player->ShouldDie = true;
 	Player->GetFollowCamera()->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	CameraReference = Player->GetFollowCamera();
 	FTimerHandle TimerHandle;

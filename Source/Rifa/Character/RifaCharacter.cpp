@@ -19,7 +19,6 @@
 #include "Data/MyGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Gimmick/RifaCharacterParts.h"
-//#include "Sound/BGMAudioComponent.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Widget/GameSettingWidget.h"
 #include "Game/RifaGameMode.h"
@@ -255,12 +254,6 @@ void ARifaCharacter::Tick(float DeltaTime)
 		if (bIsRideUpWaterFall || bIsRideDownWaterFall)
 		{
 			ElapsedTime += DeltaTime;
-
-			//if (ElapsedTime >= WaterFallTime)
-			//{
-			//	ElapsedTime = WaterFallTime;
-			//	ReturnWalk();
-			//}
 			
 			float alpha = ElapsedTime / WaterFallTime;
 			FVector NewLocation = FMath::Lerp(RideStartVector, RideEndVector, alpha);
@@ -272,30 +265,6 @@ void ARifaCharacter::Tick(float DeltaTime)
 			if (!WaterHitResult.second)
 				ReturnWalk();
 		}
-		//if (bIsRideUpWaterFall)
-		//{
-		//	std::pair<FHitResult, bool> GroundHitResult = LineHitResult(-GetActorForwardVector(), 100.f, ECollisionChannel::ECC_Visibility);
-
-		//	if (GroundHitResult.second) {
-		//		bIsSwimming = false;
-		//		bIsRideUpWaterFall = false;
-		//		SetActorRotation(FRotator(0.f, 0.f, 0.f));
-		//		GetCharacterMovement()->SetMovementMode(MOVE_Falling);
-		//		GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
-		//	}
-		//}
-		//else if (bIsRideDownWaterFall)
-		//{
-		//	std::pair<FHitResult, bool> GroundHitResult = LineHitResult(GetActorForwardVector(), 100.f, ECollisionChannel::ECC_Visibility);
-
-		//	if (GroundHitResult.second) {
-		//		bIsSwimming = false;
-		//		bIsRideDownWaterFall = false;
-		//		SetActorRotation(FRotator(0.f, 0.f, 0.f));
-		//		GetCharacterMovement()->SetMovementMode(MOVE_Falling);
-		//		GetWorld()->GetTimerManager().ClearTimer(SwimTimer);
-		//	}
-		//}
 	}
 
 	
@@ -396,16 +365,10 @@ void ARifaCharacter::Move(const FInputActionValue& Value)
 {
 	if (bIsRideUpWaterFall || bIsRideDownWaterFall)
 		return;
+
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	//if (bIsRideUpWaterFall || bIsRideDownWaterFall)
-	//{
-	//	GetCharacterMovement()->bOrientRotationToMovement = false;
-	//	AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-	//	AddMovementInput(GetActorRightVector(), MovementVector.X);
-	//	return;
-	//}
 	if (Controller != nullptr)
 	{
 		GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -466,12 +429,12 @@ void ARifaCharacter::Fly()
 void ARifaCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
+
 	if (bIsDied || !ShouldDie)
 	{
 		ShouldDie = true;
 		return;
 	}
-
 
 	else if(RifaCharacterMovement->IsFalling())
 	{
@@ -498,13 +461,14 @@ void ARifaCharacter::OnHeadOverlapped(UPrimitiveComponent* OverlappedComp, AActo
 
 void ARifaCharacter::Swim()
 {
+	if (SwimEnergyNum == 0 || !RifaGameInstance->bCanSwim)
+	{
+		return;
+	}
+
 	if (bIsRideUpWaterFall || bIsRideDownWaterFall)
 		return;
 
-	//if (SwimEnergyNum == 0 || !RifaGameInstance->bCanSwim)
-	//{
-	//	return;
-	//}
 	if (bCanSwim) // 그냥 수영
 	{
 		bIsSwimming = true;
@@ -514,45 +478,6 @@ void ARifaCharacter::Swim()
 		RifaCharacterMovement->SetMovementMode(MOVE_Flying);
 		GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
 	}
-	//else if (bCanRideDownWaterFall) // 폭포 타고 내려가는 거
-	//{
-	//	
-	//}
-	//else // 폭포 체크
-	//{
-		//std::pair<FHitResult, bool> FrontWaterHitResult = LineHitResult(GetActorForwardVector(), 300.f, ECollisionChannel::ECC_Visibility);
-		//FRotator SwimRotation = FRotator::ZeroRotator;
-		//FVector SwimLocation = FVector::ZeroVector;
-		//if (FrontWaterHitResult.second) // 폭포를 타고 올라가는 것을 우선으로 체크
-		//{
-		//	SwimRotation = FrontWaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, -90.f, 0);
-		//	SwimLocation = FrontWaterHitResult.first.ImpactPoint - (GetActorForwardVector() * 300.f) + (GetActorUpVector() * 100.f);
-		//	bIsRideUpWaterFall = true;
-		//}
-		//else 
-		//{
-		//	FVector DirectionVector = (GetActorForwardVector() - GetActorUpVector());
-		//	DirectionVector.Normalize();
-		//	std::pair<FHitResult, bool> DiagnolWaterHitResult = LineHitResult(DirectionVector, 500.f, ECollisionChannel::ECC_GameTraceChannel1);
-		//	if (!DiagnolWaterHitResult.second) // 폭포 타고 올라갈 곳이 없을 때 폭포 타고 내려갈 수 있는지 체크
-		//	{
-		//		return;
-		//	}
-		//	SwimRotation = DiagnolWaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, 90.f, 0);
-		//	//SetActorRotation(WaterHitResult.first.Component->GetOwner()->GetActorRotation() + FRotator(0, 90.f, 0));
-		//	//SetActorLocation(WaterHitResult.first.ImpactPoint + (GetActorForwardVector() * 300.f));
-		//	SwimLocation = DiagnolWaterHitResult.first.ImpactPoint + (GetActorForwardVector() * 300.f);
-		//	bIsRideDownWaterFall = true;
-		//}
-		//bIsSwimming = true;
-		//StartLocation = GetActorLocation();
-		//SetActorRotation(SwimRotation);
-		//SetActorLocation(SwimLocation);
-		//AddActorWorldRotation(FRotator(0, 0, -90.f));
-		//RifaCharacterMovement->bCheatFlying = true;
-		//RifaCharacterMovement->SetMovementMode(MOVE_Flying);
-		//GetWorld()->GetTimerManager().SetTimer(SwimTimer, this, &ARifaCharacter::EndSwim, (SwimEnergyPercent / MaxSwimEnergyPercent) * ARifaCharacter::GetSwimTime(), false);
-	//}
 	else if(bCanRideUpWaterFall)
 	{
 		bIsSwimming = true;
