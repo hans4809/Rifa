@@ -51,8 +51,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
 	class UInputKeySelector* FlyKeySelector;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
-	class UInputKeySelector* MoveKeySelector;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (BindWidget))
 	class UInputKeySelector* JumpKeySelector;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool ListenforRemap;

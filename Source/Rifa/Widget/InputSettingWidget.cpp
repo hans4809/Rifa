@@ -21,8 +21,8 @@ void UInputSettingWidget::NativeConstruct()
 	SwimKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("SwimKeySelector")));
 	FlyKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("FlyKeySelector")));
 	JumpKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("JumpKeySelector")));
-	MoveKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("MoveKeySelector")));
 	DefaultInputMappings = DefaultMappingContext->GetMappings();
+
 	for (int i = 0; i < DefaultInputMappings.Num(); i++)
 	{
 		if (DefaultInputMappings[i].Action == JumpAction) 
