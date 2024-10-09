@@ -17,6 +17,10 @@ public:
 	URifaMainHUD(const FObjectInitializer &ObjectInitializer);
 protected:
 	void NativeConstruct() override;
+
+protected:
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	class UButton* TranslateButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ResetButton;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
@@ -37,6 +41,7 @@ public:
 	TObjectPtr<class UResetDataQuestionWidget> ResetDataQuestionWidgetAsset;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
 	class USoundCue* MainBGM;
+private:
 	UFUNCTION(BlueprintCallable)
 	void SettingButtonClicked();
 	UFUNCTION(BlueprintCallable)
@@ -45,4 +50,6 @@ public:
 	void ResetButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void QuitButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void TranslateButtonClicked();
 };

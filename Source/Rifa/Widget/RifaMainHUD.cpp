@@ -35,11 +35,13 @@ void URifaMainHUD::NativeConstruct()
 	LoadButton = Cast<UButton>(GetWidgetFromName(TEXT("LoadButton")));
 	SettingButton = Cast<UButton>(GetWidgetFromName(TEXT("SettingButton")));
 	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));
+	TranslateButton = Cast<UButton>(GetWidgetFromName(TEXT("TranslateButton")));
 
 	ResetButton->OnClicked.AddDynamic(this, &URifaMainHUD::ResetButtonClicked);
 	QuitButton->OnClicked.AddDynamic(this, &URifaMainHUD::QuitButtonClicked);
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
 	LoadButton->OnClicked.AddDynamic(this, &URifaMainHUD::LoadButtonClicked);
+	TranslateButton->OnClicked.AddDynamic(this, &URifaMainHUD::TranslateButtonClicked);
 
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
@@ -101,4 +103,8 @@ void URifaMainHUD::QuitButtonClicked()
 	{
 		PlayerController->ConsoleCommand("quit");
 	}
+}
+
+void URifaMainHUD::TranslateButtonClicked()
+{
 }
