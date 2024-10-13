@@ -93,7 +93,7 @@ void UMainSettingWidget::InputButtonClicked()
 
 	if(IsValid(InputSettingWidgetAsset))
 	{
-		SoundSettingWidgetAsset->ParentWidget = this;
+		InputSettingWidgetAsset->ParentWidget = this;
 		InputSettingWidgetAsset->Init();
 	}
 }
