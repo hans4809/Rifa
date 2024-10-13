@@ -35,10 +35,10 @@ void AIslandLevelScriptActor::BeginPlay()
 		}
 		if (CharacterReference) 
 		{ 
-			/*if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
+			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
 			{
 				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
-			}*/
+			}
 		}
 	}
 	if (IsValid(BGMActor))
