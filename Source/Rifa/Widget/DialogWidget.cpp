@@ -109,7 +109,7 @@ FReply UDialogWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEve
 		return returnReply;
 	}
 
-	if (InKeyEvent.GetKey() == EKeys::E)
+	if (InKeyEvent.GetKey() == EKeys::SpaceBar)
 	{
 		if (OnSpeakFinished.IsBound()) { OnSpeakFinished.Broadcast(); }
 	}

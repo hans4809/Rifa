@@ -22,7 +22,6 @@ void AIslandLevelScriptActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	if (RifaGameInstanceReference) 
 	{
 		if (!RifaGameInstanceReference->LevelSequencePlayerArr[0])
@@ -36,10 +35,10 @@ void AIslandLevelScriptActor::BeginPlay()
 		}
 		if (CharacterReference) 
 		{ 
-			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
+			/*if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector)
 			{
 				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
-			}
+			}*/
 		}
 	}
 	if (IsValid(BGMActor))

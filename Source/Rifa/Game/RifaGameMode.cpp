@@ -59,7 +59,7 @@ void ARifaGameMode::PlayerDie(ARifaCharacter* Player)
 	}
 	Player->DisableInput(Cast<APlayerController>(Player->Controller));
 	Player->GetCharacterMovement()->SetMovementMode(MOVE_None);
-	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_Falling);
 	Player->GetCharacterMovement()->GetPhysicsVolume()->bWaterVolume = true;
 	Player->bIsRideUpWaterFall = false;
 	Player->bIsRideDownWaterFall = false;
@@ -93,6 +93,7 @@ void ARifaGameMode::PlayerRespawn()
 		Player->SetActorLocation(FindPlayerStart(Player->GetController())->GetActorLocation());
 	}
 	Player->bIsDied = false;
+	Player->GetCharacterMovement()->Velocity = FVector(0, 0, 0);
 	Player->GetCharacterMovement()->bCheatFlying = false;
-	Player->GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	Player->GetCharacterMovement()->SetMovementMode(MOVE_Falling);
 }

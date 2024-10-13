@@ -40,7 +40,6 @@ ARifaCharacter::ARifaCharacter()
 
 	HeadTrigger = CreateDefaultSubobject<USphereComponent>(TEXT("HeadTrigger"));
 	HeadTrigger->SetupAttachment(RootComponent);
-	HeadTrigger->SetSphereRadius(23.f);
 	HeadTrigger->SetCollisionProfileName(TEXT("Trigger"));
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("ABCharacter"));
