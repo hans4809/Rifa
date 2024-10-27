@@ -23,7 +23,12 @@ public:
 protected:
 	void NativeConstruct() override;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<class UImage> TutorialImage;
+	TObjectPtr<class UImage> WASDImage;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UImage> JumpImage;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UImage> DashImage;
 	UFUNCTION(BlueprintCallable)
 	void ChangeImage();
 };

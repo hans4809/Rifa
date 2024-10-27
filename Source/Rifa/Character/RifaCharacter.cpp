@@ -552,6 +552,6 @@ void ARifaCharacter::Interaction()
 		}
 		return;
 	}
-	target->Interaction();
-	target->DoWork();
+	//target->Interaction();
+	//target->DoWork();
 }
