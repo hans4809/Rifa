@@ -14,6 +14,9 @@ UCLASS()
 class RIFA_API UReplyEntryWidget : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
+public:
+	UReplyEntryWidget(const FObjectInitializer& ObjectInitializer);
+	
 protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (BindWidget))
 	class UButton* ReplyButton;
@@ -25,14 +28,24 @@ protected:
 	FLinearColor DefaultColor;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UDialogReplyObject* DialogReplyObject_C;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
+	class UTexture2D* ReplyImage0;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
+	class UTexture2D* ReplyImage1;
 public:
 	UFUNCTION(BlueprintCallable)
-	void NativeConstruct();
+	void NativeConstruct() override;
 	UFUNCTION(BlueprintCallable)
 	void ReplyButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void ReplyButtonHovered();
 	UFUNCTION(BlueprintCallable)
 	void ReplyButtonUnHovered();
+
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
+
+	void SetReplyIndex(uint32 index);
+private:
+	uint32 ReplyIndex;
 };

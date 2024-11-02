@@ -53,11 +53,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Reply_C(TArray<FText> Replies);
 	UFUNCTION(BlueprintCallable)
+	void RefreshReplyList();
+	UFUNCTION(BlueprintCallable)
 	void Exit_C();
 	UFUNCTION(BlueprintCallable)
 	void OnClicked_Event(class UDialogReplyObject* ClickedObject);
 	UFUNCTION(BlueprintCallable)
 	void SetDialogState_C(EDialogState_C DialogState);
+	UFUNCTION(BlueprintCallable)
+	void SetListViewHeightBasedOnChildren(class UListView* listView);
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	EDialogState_C CurrentDialogState;
 };
