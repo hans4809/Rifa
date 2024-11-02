@@ -8,6 +8,8 @@
 #include "Components/SizeBox.h"
 #include "Components/SizeBoxSlot.h"
 #include "DialogReplyObject.h"
+#include "Components/ListView.h"
+#include "ReplyEntryWidget.h"
 
 void UDialogWidget::NativeConstruct()
 {
@@ -46,8 +48,19 @@ void UDialogWidget::Reply_C(TArray<FText> Replies)
 		UDialogReplyObject* ReplyObj = NewObject<UDialogReplyObject>(this);
 		ReplyObj->Reply = Replies[i];
 		ReplyList->AddItem(ReplyObj);
+		UReplyEntryWidget* reply = Cast<UReplyEntryWidget>(ReplyList->GetEntryWidgetFromItem(ReplyObj));
 		ReplyObj->OnClicked.AddDynamic(this, &UDialogWidget::OnClicked_Event);
 		SetDialogState_C(EDialogState_C::Reply);
+	}
+}
+
+void UDialogWidget::RefreshReplyList()
+{
+	for(auto* item : ReplyList->GetListItems())
+	{
+		UReplyEntryWidget* reply = Cast<UReplyEntryWidget>(ReplyList->GetEntryWidgetFromItem(item));
+		if(IsValid(reply))
+			reply->SetReplyIndex(ReplyList->GetIndexForItem(item));
 	}
 }
 
@@ -58,7 +71,8 @@ void UDialogWidget::Exit_C()
 
 void UDialogWidget::OnClicked_Event(UDialogReplyObject* ClickedObject)
 {
-	if (OnReplyFinished.IsBound()) { 
+	if (OnReplyFinished.IsBound())
+	{ 
 		OnReplyFinished.Broadcast(ReplyList->GetIndexForItem(ClickedObject)); 
 	}
 }
@@ -75,10 +89,16 @@ void UDialogWidget::SetDialogState_C(EDialogState_C DialogState)
 	case EDialogState_C::Reply:
 		ReplySizeBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 		SpeakSizeBox->SetVisibility(ESlateVisibility::Visible);
+		RefreshReplyList();
 		break;
 	default:
 		break;
 	}
+}
+
+void UDialogWidget::SetListViewHeightBasedOnChildren(UListView* listView)
+{
+	
 }
 
 FReply UDialogWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
