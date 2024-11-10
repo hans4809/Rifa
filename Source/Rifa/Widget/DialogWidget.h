@@ -52,8 +52,7 @@ public:
 	void Speak_C(FText Text);
 	UFUNCTION(BlueprintCallable)
 	void Reply_C(TArray<FText> Replies);
-	UFUNCTION(BlueprintCallable)
-	void RefreshReplyList();
+
 	UFUNCTION(BlueprintCallable)
 	void Exit_C();
 	UFUNCTION(BlueprintCallable)
@@ -61,7 +60,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetDialogState_C(EDialogState_C DialogState);
 	UFUNCTION(BlueprintCallable)
-	void SetListViewHeightBasedOnChildren(class UListView* listView);
+	void AdjustListViewSize(UListView* ListView, USizeBox* ContainerSizeBox, float ItemHeight, float MaxHeight);
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
 	EDialogState_C CurrentDialogState;
+	void SetListViewHeightBasedOnChildren(UListView* listView);
 };

@@ -21,6 +21,7 @@ protected:
 	void NativeConstruct() override;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<class ARifaCharacter> CharacterReference;
+
 public:
 	virtual void Init() override;
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.

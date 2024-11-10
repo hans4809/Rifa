@@ -13,6 +13,7 @@
 
 void UActionMenuWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
 	OnButton = Cast<UButton>(GetWidgetFromName(TEXT("OnButton")));
 	CancelButton = Cast<UButton>(GetWidgetFromName(TEXT("CancelButton")));
 

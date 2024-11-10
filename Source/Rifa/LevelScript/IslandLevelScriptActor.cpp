@@ -30,6 +30,10 @@ void AIslandLevelScriptActor::BeginPlay()
 			{
 				FirstLevelSequenceActor->SequencePlayer->Play();
 				RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
+
+				if(FirstLevelSequenceActor->SequencePlayer->OnFinished.IsBound())
+					FirstLevelSequenceActor->SequencePlayer->OnFinished.Clear();
+
 				FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence);
 			}
 		}

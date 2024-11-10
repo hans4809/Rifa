@@ -23,9 +23,6 @@ void UDialogWidget::NativeConstruct()
 void UDialogWidget::Init()
 {
 	Super::Init();
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	PlayerController->SetInputMode(FInputModeUIOnly());
-	PlayerController->bShowMouseCursor = true;
 }
 
 void UDialogWidget::CloseWidget()
@@ -47,22 +44,15 @@ void UDialogWidget::Reply_C(TArray<FText> Replies)
 	{
 		UDialogReplyObject* ReplyObj = NewObject<UDialogReplyObject>(this);
 		ReplyObj->Reply = Replies[i];
+		ReplyObj->ReplyIndex = i;
 		ReplyList->AddItem(ReplyObj);
-		UReplyEntryWidget* reply = Cast<UReplyEntryWidget>(ReplyList->GetEntryWidgetFromItem(ReplyObj));
 		ReplyObj->OnClicked.AddDynamic(this, &UDialogWidget::OnClicked_Event);
 		SetDialogState_C(EDialogState_C::Reply);
 	}
+
+	//AdjustListViewSize(ReplyList, ReplySizeBox, 50.0f, 275.0f);
 }
 
-void UDialogWidget::RefreshReplyList()
-{
-	for(auto* item : ReplyList->GetListItems())
-	{
-		UReplyEntryWidget* reply = Cast<UReplyEntryWidget>(ReplyList->GetEntryWidgetFromItem(item));
-		if(IsValid(reply))
-			reply->SetReplyIndex(ReplyList->GetIndexForItem(item));
-	}
-}
 
 void UDialogWidget::Exit_C()
 {
@@ -89,16 +79,30 @@ void UDialogWidget::SetDialogState_C(EDialogState_C DialogState)
 	case EDialogState_C::Reply:
 		ReplySizeBox->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 		SpeakSizeBox->SetVisibility(ESlateVisibility::Visible);
-		RefreshReplyList();
 		break;
 	default:
 		break;
 	}
 }
 
-void UDialogWidget::SetListViewHeightBasedOnChildren(UListView* listView)
+void UDialogWidget::AdjustListViewSize(UListView* ListView, USizeBox* ContainerSizeBox, float ItemHeight, float MaxHeight)
 {
-	
+	if (!ListView || !ContainerSizeBox)
+	{
+		return;  // ListView 또는 ContainerSizeBox가 nullptr인 경우 함수를 종료합니다.
+	}
+
+	// 아이템의 총 개수 가져오기
+	int32 ItemCount = ListView->GetNumItems();
+
+	// 전체 높이를 아이템 수와 아이템 높이를 곱하여 계산
+	float CalculatedHeight = ItemCount * ItemHeight;
+
+	// 최대 높이를 초과하지 않도록 설정
+	float FinalHeight = FMath::Min(CalculatedHeight, MaxHeight);
+
+	// SizeBox의 높이를 설정하여 ListView의 크기를 조정
+	ContainerSizeBox->SetHeightOverride(FinalHeight);
 }
 
 FReply UDialogWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

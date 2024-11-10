@@ -31,6 +31,12 @@ void UEndingKeyWidget::NativeConstruct()
 		EndingLevelSequencePlayer = ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), EndingLevelSequence, FMovieSceneSequencePlaybackSettings(), EndingLevelSequenceActor);
 		if (IsValid(EndingLevelSequencePlayer))
 		{
+			if(EndingLevelSequencePlayer->OnPlay.IsBound())
+				EndingLevelSequencePlayer->OnPlay.Clear();
+
+			if (EndingLevelSequencePlayer->OnFinished.IsBound())
+				EndingLevelSequencePlayer->OnFinished.Clear();
+
 			EndingLevelSequencePlayer->OnPlay.AddDynamic(characterController, &ARifaPlayerController::OnStartedLevelSequence);
 			EndingLevelSequencePlayer->OnFinished.AddDynamic(characterController, &ARifaPlayerController::OnFinishedGame);
 			//EndingLevelSequencePlayer->OnFinished.AddDynamic(characterController, &ARifaPlayerController::OnFinishedLevelSequence);
@@ -38,7 +44,7 @@ void UEndingKeyWidget::NativeConstruct()
 
 	}
 
-	characterController->SetInputMode(FInputModeUIOnly());
+	characterController->bShowMouseCursor = false;
 }
 
 FReply UEndingKeyWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

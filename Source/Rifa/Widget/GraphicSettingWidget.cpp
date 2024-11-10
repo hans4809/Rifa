@@ -23,6 +23,19 @@ void UGraphicSettingWidget::NativeConstruct()
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	ApplyButton = Cast<UButton>(GetWidgetFromName(TEXT("ApplyButton")));
 
+	if(FullScreenLeft->OnClicked.IsBound())
+		FullScreenLeft->OnClicked.Clear();
+	if (FullScreenRight->OnClicked.IsBound())
+		FullScreenRight->OnClicked.Clear();
+	if (ResolutionDown->OnClicked.IsBound())
+		ResolutionDown->OnClicked.Clear();
+	if (ResolutionUp->OnClicked.IsBound())
+		ResolutionUp->OnClicked.Clear();
+	if (ReturnButton->OnClicked.IsBound())
+		ReturnButton->OnClicked.Clear();
+	if (ApplyButton->OnClicked.IsBound())
+		ApplyButton->OnClicked.Clear();
+
 	FullScreenLeft->OnClicked.AddDynamic(this, &UGraphicSettingWidget::OnFullScreenLeftClicked);	
 	FullScreenRight->OnClicked.AddDynamic(this, &UGraphicSettingWidget::OnFullScreenRightClicked);
 	ResolutionDown->OnClicked.AddDynamic(this, &UGraphicSettingWidget::OnResolutionDownClicked);

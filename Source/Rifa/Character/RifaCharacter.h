@@ -135,10 +135,6 @@ public:
 	EHairPartsItem ECurrentCharacterHairPart;
 // Widget Part
 public:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset; 
 	UFUNCTION(BlueprintCallable)
 	void ReturnWalk();
 protected:

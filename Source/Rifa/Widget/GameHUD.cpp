@@ -11,9 +11,11 @@
 
 void UGameHUD::NativeConstruct()
 {
+	Super::NativeConstruct();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	//캐릭터 인스턴스 참조할려고 초기화
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
 }
 
 void UGameHUD::Init()

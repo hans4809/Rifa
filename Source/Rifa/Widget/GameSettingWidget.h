@@ -16,6 +16,7 @@ class RIFA_API UGameSettingWidget : public UPopUpWidget
 public:
 	virtual void Init() override;
 	virtual void CloseWidget() override;
+	virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
 	UFUNCTION(BlueprintCallable)
 	void ReturnButtonClicked();
 	UFUNCTION(BlueprintCallable)

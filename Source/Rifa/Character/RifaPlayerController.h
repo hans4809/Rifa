@@ -25,7 +25,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UUserWidget> CreditWidgetClass;
+	TSubclassOf<UUserWidget> CreditWidgetClass;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCreditWidget> CreditWidgetAsset;
@@ -37,6 +37,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UGameHUD> GameHUDWidgetAsset;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UPopUpWidget> GameSettingWidgetClass;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UGameSettingWidget> GameSettingWidgetAsset;
+
 	UFUNCTION()
 	void OnStartedLevelSequence();
 
@@ -45,4 +50,7 @@ public:
 
 	UFUNCTION()
 	void OnFinishedGame();
+
+	UFUNCTION()
+	void OnPauseGame();
 };

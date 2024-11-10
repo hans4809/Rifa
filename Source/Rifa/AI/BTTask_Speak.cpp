@@ -36,7 +36,12 @@ EBTNodeResult::Type UBTTask_Speak::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		return EBTNodeResult::Failed;
 	}
 
+	if (DialogWidgetAsset->OnSpeakFinished.IsBound())
+	{
+		DialogWidgetAsset->OnSpeakFinished.Clear();
+	}
 	DialogWidgetAsset->OnSpeakFinished.AddDynamic(this, &UBTTask_Speak::OnSpeakFinished_Evt);
+
 	DialogWidgetAsset->Speak_C(SpeakText);
 
 	Result = EBTNodeResult::InProgress;

@@ -19,4 +19,6 @@ public:
 	FText Reply;
 	UPROPERTY(BlueprintAssignable, VisibleAnywhere, BlueprintCallable, Category = "Event")
 	FDele_Dynamic_Object OnClicked;
+
+	uint32 ReplyIndex;
 };

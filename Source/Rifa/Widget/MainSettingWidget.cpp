@@ -15,11 +15,33 @@
 void UMainSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	//UGameplayStatics::SetGamePaused(GetWorld(), true);
+	
 	SoundButton = Cast<UButton>(GetWidgetFromName(TEXT("SoundButton")));
 	GraphicButton = Cast<UButton>(GetWidgetFromName(TEXT("GraphicButton")));
 	ControlButton = Cast<UButton>(GetWidgetFromName(TEXT("ControlButton")));
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
+
+
+	if(SoundButton->OnClicked.IsBound())
+	{
+		SoundButton->OnClicked.Clear();
+	}
+
+	if(GraphicButton->OnClicked.IsBound())
+	{
+		GraphicButton->OnClicked.Clear();
+	}
+
+	if(ControlButton->OnClicked.IsBound())
+	{
+		ControlButton->OnClicked.Clear();
+	}
+
+	if (ReturnButton->OnClicked.IsBound())
+	{
+		ReturnButton->OnClicked.Clear();
+	}
+
 	ReturnButton->OnClicked.AddDynamic(this, &UMainSettingWidget::CloseWidget);
 	SoundButton->OnClicked.AddDynamic(this, &UMainSettingWidget::SoundButtonClicked);
 	GraphicButton->OnClicked.AddDynamic(this, &UMainSettingWidget::GraphicButtonClicked);

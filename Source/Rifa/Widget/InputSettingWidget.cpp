@@ -16,7 +16,12 @@ void UInputSettingWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
+
+	if (ReturnButton->OnClicked.IsBound())
+		ReturnButton->OnClicked.Clear();
+
 	ReturnButton->OnClicked.AddDynamic(this, &UInputSettingWidget::CloseWidget);
+
 	InteractionKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("InteractionKeySelector")));
 	SwimKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("SwimKeySelector")));
 	FlyKeySelector = Cast<UInputKeySelector>(GetWidgetFromName(TEXT("FlyKeySelector")));
@@ -46,6 +51,26 @@ void UInputSettingWidget::NativeConstruct()
 			CurrentInterActionKey = DefaultInputMappings[i].Key;
 		}
 	}
+	if(SwimKeySelector->OnIsSelectingKeyChanged.IsBound())
+		SwimKeySelector->OnIsSelectingKeyChanged.Clear();
+	if (SwimKeySelector->OnKeySelected.IsBound())
+		SwimKeySelector->OnKeySelected.Clear();
+
+	if (InteractionKeySelector->OnIsSelectingKeyChanged.IsBound())
+		InteractionKeySelector->OnIsSelectingKeyChanged.Clear();
+	if (InteractionKeySelector->OnKeySelected.IsBound())
+		InteractionKeySelector->OnKeySelected.Clear();
+
+	if (FlyKeySelector->OnIsSelectingKeyChanged.IsBound())
+		FlyKeySelector->OnIsSelectingKeyChanged.Clear();
+	if (FlyKeySelector->OnKeySelected.IsBound())
+		FlyKeySelector->OnKeySelected.Clear();
+
+	if (JumpKeySelector->OnIsSelectingKeyChanged.IsBound())
+		JumpKeySelector->OnIsSelectingKeyChanged.Clear();
+	if (JumpKeySelector->OnKeySelected.IsBound())
+		JumpKeySelector->OnKeySelected.Clear();
+
 	SwimKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);
 	SwimKeySelector->OnKeySelected.AddDynamic(this, &UInputSettingWidget::SwimKeyChanged);
 	InteractionKeySelector->OnIsSelectingKeyChanged.AddDynamic(this, &UInputSettingWidget::KeyChangedClicked);

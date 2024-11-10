@@ -21,6 +21,21 @@ void USoundSettingWidget::NativeConstruct()
 	EnviromentalSlider = Cast<USlider>(GetWidgetFromName(TEXT("EnviromentalSlider")));
 	SFXSlider = Cast<USlider>(GetWidgetFromName(TEXT("SFXSlider")));
 
+	if (CollectionButton->OnClicked.IsBound())
+		CollectionButton->OnClicked.Clear();
+
+	if (ReturnButton->OnClicked.IsBound())
+		ReturnButton->OnClicked.Clear();
+
+	if (BGMSlider->OnValueChanged.IsBound())
+		BGMSlider->OnValueChanged.Clear();
+
+	if (EnviromentalSlider->OnValueChanged.IsBound())
+		EnviromentalSlider->OnValueChanged.Clear();
+
+	if (SFXSlider->OnValueChanged.IsBound())
+		SFXSlider->OnValueChanged.Clear();
+
 	CollectionButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CollectionButtonClicked);
 	ReturnButton->OnClicked.AddDynamic(this, &USoundSettingWidget::CloseWidget);
 	BGMSlider->OnValueChanged.AddDynamic(this, &USoundSettingWidget::BGMSliderValueChanged);

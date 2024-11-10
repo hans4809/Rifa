@@ -45,6 +45,11 @@ EBTNodeResult::Type UBTTask_Reply::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		return EBTNodeResult::Failed;
 	}
 
+    if (DialogWidgetAsset->OnReplyFinished.IsBound())
+    {
+        DialogWidgetAsset->OnReplyFinished.Clear();
+    }
+
     DialogWidgetAsset->OnReplyFinished.AddDynamic(this, &UBTTask_Reply::OnReplyFinished_Evt);
 
     DialogWidgetAsset->Reply_C(Replies);

@@ -15,6 +15,7 @@
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
 #include "Character/RifaCharacter.h"
+#include "DialogWidget.h"
 
 void UGameSettingWidget::NativeConstruct()
 {
@@ -24,6 +25,17 @@ void UGameSettingWidget::NativeConstruct()
 	ControlButton = Cast<UButton>(GetWidgetFromName(TEXT("ControlButton")));
 	ReturnButton = Cast<UButton>(GetWidgetFromName(TEXT("ReturnButton")));
 	MainButton = Cast<UButton>(GetWidgetFromName(TEXT("MainButton")));
+
+	if(SoundButton->OnClicked.IsBound())
+		SoundButton->OnClicked.Clear();
+	if (GraphicButton->OnClicked.IsBound())
+		GraphicButton->OnClicked.Clear();
+	if (ControlButton->OnClicked.IsBound())
+		ControlButton->OnClicked.Clear();
+	if (ReturnButton->OnClicked.IsBound())
+		ReturnButton->OnClicked.Clear();
+	if (MainButton->OnClicked.IsBound())
+		MainButton->OnClicked.Clear();
 
 	ReturnButton->OnClicked.AddDynamic(this, &UGameSettingWidget::ReturnButtonClicked);
 	SoundButton->OnClicked.AddDynamic(this, &UGameSettingWidget::SoundButtonClicked);
@@ -35,7 +47,6 @@ void UGameSettingWidget::NativeConstruct()
 	{
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
 		{
-			//CurrentLevelScriptActor->BGM->Stop();
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
 		}
 	}
@@ -44,35 +55,59 @@ void UGameSettingWidget::NativeConstruct()
 void UGameSettingWidget::Init()
 {
 	Super::Init();
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 }
 
 void UGameSettingWidget::CloseWidget()
 {
 	Super::CloseWidget();
-	if (IsValid(CurrentLevelScriptActor))
+}
+
+FReply UGameSettingWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
+{
+	FReply returnReply = Super::NativeOnKeyDown(InGeometry, InKeyEvent);
+
+	if (InKeyEvent.GetKey() == EKeys::Escape)
 	{
-		if (IsValid(CurrentLevelScriptActor->BGMActor))
-			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		if (IsValid(CurrentLevelScriptActor))
+		{
+			if (IsValid(CurrentLevelScriptActor->BGMActor))
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		}
+
+		ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		if(IsValid(Character))
+			Character->CustomTimeDilation = 1.f;
+
+		APlayerController* Controller = Cast<APlayerController>(Character->GetController());
+		if (IsValid(Controller))
+		{
+			Controller->SetInputMode(FInputModeGameOnly());
+			Controller->bShowMouseCursor = false;
+		}
 	}
+
+	return returnReply;
 }
 
 void UGameSettingWidget::ReturnButtonClicked()
 {
-	APlayerController* Controller = Cast<APlayerController>(Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))->GetController());
-	Controller->SetInputMode(FInputModeGameOnly());
-	Controller->bShowMouseCursor = false;
-	UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+	CloseWidget();
 	if (IsValid(CurrentLevelScriptActor))
 	{
-		/*if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			CurrentLevelScriptActor->GameHUDWidgetAsset->Init();*/
 		if (IsValid(CurrentLevelScriptActor->BGMActor))
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 	}
-	if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
+
+	ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (IsValid(Character))
 		Character->CustomTimeDilation = 1.f;
+
+	APlayerController* Controller = Cast<APlayerController>(Character->GetController());
+	if (IsValid(Controller))
+	{
+		Controller->SetInputMode(FInputModeGameOnly());
+		Controller->bShowMouseCursor = false;
+	}
 }
 
 void UGameSettingWidget::SoundButtonClicked()

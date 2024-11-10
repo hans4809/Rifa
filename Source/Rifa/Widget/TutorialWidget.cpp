@@ -20,6 +20,9 @@ void UTutorialWidget::NativeConstruct()
 	DashImage->SetVisibility(ESlateVisibility::Hidden);
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
 }
 
 void UTutorialWidget::Init()

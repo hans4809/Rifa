@@ -36,6 +36,7 @@ void UCollectionWidget::NativeConstruct()
 			SlotArray[i]->IsHave = RifaGameInstance->SoundItemHavingMap[(EItem)i];
 		}
 	}
+
 	if (IsValid(ActionMenuClass))
 	{
 		if (ActionMenuArray.Num() != 0)
@@ -48,14 +49,7 @@ void UCollectionWidget::NativeConstruct()
 			ActionMenuArray[i]->SetVisibility(ESlateVisibility::Hidden);
 		}
 	}
-	if (ARifaCharacter* Character = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
-	{
-		if (APlayerController* Controller = Cast<APlayerController>(Character->GetController())) 
-		{
-			Controller->SetInputMode(FInputModeUIOnly());
-			Controller->bShowMouseCursor = true;
-		}
-	}
+
 	if (IsValid(CurrentLevelScriptActor))
 	{
 		if (IsValid(CurrentLevelScriptActor->BGMActor))

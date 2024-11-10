@@ -11,6 +11,16 @@ void UResetDataQuestionWidget::NativeConstruct()
 	Super::NativeConstruct();
 	YesButton = Cast<UButton>(GetWidgetFromName(TEXT("YesButton")));
 	NoButton = Cast<UButton>(GetWidgetFromName(TEXT("NoButton")));
+	if (YesButton->OnClicked.IsBound())
+	{
+		YesButton->OnClicked.Clear();
+	}
+
+	if (NoButton->OnClicked.IsBound())
+	{
+		NoButton->OnClicked.Clear();
+	}
+
 	YesButton->OnClicked.AddDynamic(this, &UResetDataQuestionWidget::OnYesButtonClicked);
 	NoButton->OnClicked.AddDynamic(this, &UResetDataQuestionWidget::OnNoButtonClicked);
 }

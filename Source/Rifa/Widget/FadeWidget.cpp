@@ -9,6 +9,8 @@
 void UFadeWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
 	EndDelegate.BindDynamic(this, &UFadeWidget::AnimationFinished);
 	BindToAnimationFinished(FadeIn, EndDelegate);
 }

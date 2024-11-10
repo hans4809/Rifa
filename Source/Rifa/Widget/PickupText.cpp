@@ -10,6 +10,8 @@ void UPickupText::NativeConstruct()
 	Super::NativeConstruct();
 	//PressKeyImage = Cast<UImage>(GetWidgetFromName(TEXT("PressKeyImage")));
 	bIsFocusable = false;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
 }
 
 void UPickupText::Init()

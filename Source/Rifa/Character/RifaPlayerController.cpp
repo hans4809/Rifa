@@ -11,6 +11,7 @@
 #include "Character/RifaCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Widget/CreditWidget.h"
+#include "Widget/GameSettingWidget.h"
 
 ARifaPlayerController::ARifaPlayerController()
 {
@@ -20,6 +21,11 @@ ARifaPlayerController::ARifaPlayerController()
 		GameHUDWidgetClass = GameHUDWidget.Class;
 	}
 
+	static ConstructorHelpers::FClassFinder<UUserWidget> GameSettingWidget(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_GameSettingWidget.WG_GameSettingWidget_C'"));
+	if (GameSettingWidget.Succeeded())
+	{
+		GameSettingWidgetClass = GameSettingWidget.Class;
+	}
 
 	static ConstructorHelpers::FClassFinder<UUserWidget> CreditWidgetClassFinder(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrint/UI/WG_Credit.WG_Credit_C'"));
 	if (CreditWidgetClassFinder.Succeeded())
@@ -36,7 +42,7 @@ void ARifaPlayerController::PostInitializeComponents()
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
 		if(IsValid(GameHUDWidgetAsset))
 		{
-			GameHUDWidgetAsset->AddToViewport();
+			GameHUDWidgetAsset->Init();
 		}
 		else
 		{
@@ -44,12 +50,10 @@ void ARifaPlayerController::PostInitializeComponents()
 		}
 	}
 
-
 	if (CreditWidgetClass)
 	{
 		CreditWidgetAsset = CreateWidget<UCreditWidget>(GetWorld(), CreditWidgetClass);
 	}
-
 
 	auto currentLevelScriptActor = GetWorld()->GetLevelScriptActor();
 
@@ -63,6 +67,11 @@ void ARifaPlayerController::PostInitializeComponents()
 			auto levelSequenceActor = Cast<ALevelSequenceActor>(actor);
 			if(IsValid(levelSequenceActor))
 			{
+				if(levelSequenceActor->SequencePlayer->OnPlay.IsBound())
+					levelSequenceActor->SequencePlayer->OnPlay.Clear();
+				if(levelSequenceActor->SequencePlayer->OnFinished.IsBound())
+					levelSequenceActor->SequencePlayer->OnFinished.Clear();
+
 				levelSequenceActor->SequencePlayer->OnPlay.AddDynamic(this, &ARifaPlayerController::OnStartedLevelSequence);
 				levelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &ARifaPlayerController::OnFinishedLevelSequence);
 			}
@@ -80,6 +89,7 @@ void ARifaPlayerController::Tick(float DeltaTime)
 
 void ARifaPlayerController::OnStartedLevelSequence()
 {
+	DisableInput(this);
 	auto character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
 
@@ -88,10 +98,8 @@ void ARifaPlayerController::OnStartedLevelSequence()
 
 	if (IsValid(GameHUDWidgetAsset))
 	{
-		if (GameHUDWidgetAsset->IsInViewport())
-			GameHUDWidgetAsset->CloseWidget();
+		GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Hidden);
 	}
-
 }
 
 void ARifaPlayerController::OnFinishedLevelSequence()
@@ -105,8 +113,7 @@ void ARifaPlayerController::OnFinishedLevelSequence()
 
 	if (IsValid(GameHUDWidgetAsset))
 	{
-		if (GameHUDWidgetAsset->IsInViewport() == false)
-			GameHUDWidgetAsset->Init();
+		GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 
@@ -115,5 +122,19 @@ void ARifaPlayerController::OnFinishedGame()
 	if (CreditWidgetAsset)
 	{
 		CreditWidgetAsset->Init();
+	}
+}
+
+void ARifaPlayerController::OnPauseGame()
+{
+	if (IsValid(GameSettingWidgetClass) && !IsValid(GameSettingWidgetAsset))
+	{
+		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
+	}
+
+	if (IsValid(GameSettingWidgetAsset))
+	{
+		GameSettingWidgetAsset->Init();
+		GameSettingWidgetAsset->ParentWidget = GameHUDWidgetAsset;
 	}
 }

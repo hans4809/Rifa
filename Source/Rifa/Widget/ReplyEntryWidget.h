@@ -44,8 +44,4 @@ public:
 	void ReplyButtonUnHovered();
 
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
-
-	void SetReplyIndex(uint32 index);
-private:
-	uint32 ReplyIndex;
 };

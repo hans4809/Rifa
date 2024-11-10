@@ -10,6 +10,7 @@
 #include <Data/MyGameInstance.h>
 #include "Widget/ResetDataQuestionWidget.h"
 #include <Data/RIFASaveGame.h>
+#include <Kismet/KismetInternationalizationLibrary.h>
 
 URifaMainHUD::URifaMainHUD(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -37,6 +38,27 @@ void URifaMainHUD::NativeConstruct()
 	QuitButton = Cast<UButton>(GetWidgetFromName(TEXT("QuitButton")));
 	TranslateButton = Cast<UButton>(GetWidgetFromName(TEXT("TranslateButton")));
 
+	if(ResetButton->OnClicked.IsBound())
+	{
+		ResetButton->OnClicked.Clear();
+	}
+	if(LoadButton->OnClicked.IsBound())
+	{
+		LoadButton->OnClicked.Clear();
+	}
+	if(SettingButton->OnClicked.IsBound())
+	{
+		SettingButton->OnClicked.Clear();
+	}
+	if(QuitButton->OnClicked.IsBound())
+	{
+		QuitButton->OnClicked.Clear();
+	}
+	if(TranslateButton->OnClicked.IsBound())
+	{
+		TranslateButton->OnClicked.Clear();
+	}
+
 	ResetButton->OnClicked.AddDynamic(this, &URifaMainHUD::ResetButtonClicked);
 	QuitButton->OnClicked.AddDynamic(this, &URifaMainHUD::QuitButtonClicked);
 	SettingButton->OnClicked.AddDynamic(this, &URifaMainHUD::SettingButtonClicked);
@@ -46,11 +68,15 @@ void URifaMainHUD::NativeConstruct()
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
 		LoadButton->SetIsEnabled(false);
+
+	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeUIOnly());
+	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->bShowMouseCursor = true;
 }
 
 void URifaMainHUD::Init()
 {
 	Super::Init();
+
 }
 
 void URifaMainHUD::SettingButtonClicked()
@@ -58,11 +84,12 @@ void URifaMainHUD::SettingButtonClicked()
 	if (IsValid(MainSettingWidgetClass)&&!IsValid(MainSettingWidgetAsset))
 	{
 		MainSettingWidgetAsset = Cast<UMainSettingWidget>(CreateWidget(GetWorld(), MainSettingWidgetClass));
-		if (IsValid(MainSettingWidgetAsset)) 
-		{
-			MainSettingWidgetAsset->ParentWidget = this;
-			MainSettingWidgetAsset->Init();
-		}
+	}
+
+	if (IsValid(MainSettingWidgetAsset))
+	{
+		MainSettingWidgetAsset->ParentWidget = this;
+		MainSettingWidgetAsset->Init();
 	}
 }
 
@@ -81,18 +108,18 @@ void URifaMainHUD::ResetButtonClicked()
 	URIFASaveGame* RIFASaveGame = Cast<URIFASaveGame>(UGameplayStatics::LoadGameFromSlot("RIFASaveFile", 0));
 	if (nullptr == RIFASaveGame)
 	{
-		LoadButtonClicked();
 		return;
 	}
 
 	if (IsValid(ResetDataQuestionWidgetClass)&&!IsValid(ResetDataQuestionWidgetAsset))
 	{
 		ResetDataQuestionWidgetAsset = Cast<UResetDataQuestionWidget>(CreateWidget(GetWorld(), ResetDataQuestionWidgetClass));
-		if (IsValid(ResetDataQuestionWidgetAsset))
-		{
-			ResetDataQuestionWidgetAsset->ParentWidget = this;
-			ResetDataQuestionWidgetAsset->Init();
-		}
+	}
+
+	if (IsValid(ResetDataQuestionWidgetAsset))
+	{
+		ResetDataQuestionWidgetAsset->ParentWidget = this;
+		ResetDataQuestionWidgetAsset->Init();
 	}
 }
 
@@ -107,4 +134,13 @@ void URifaMainHUD::QuitButtonClicked()
 
 void URifaMainHUD::TranslateButtonClicked()
 {
+	FString currentCulture = UKismetInternationalizationLibrary::GetCurrentLanguage();
+	if(currentCulture == TEXT("en"))
+	{
+		UKismetInternationalizationLibrary::SetCurrentLanguage(TEXT("ko-kR"), true);
+	}
+	else if(currentCulture == TEXT("ko-kR"))
+	{
+		UKismetInternationalizationLibrary::SetCurrentLanguage(TEXT("en"), true);
+	}
 }

@@ -26,6 +26,7 @@
 #include "Components/SphereComponent.h"
 #include <Gimmick/WaterActor.h>
 #include <Gimmick/WaterFall.h>
+#include "RifaPlayerController.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -148,7 +149,7 @@ void ARifaCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-	Cast<APlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->SetInputMode(FInputModeGameOnly());
+	Cast<APlayerController>(Controller)->SetInputMode(FInputModeGameOnly());
 	GameModeReference = Cast<ARifaGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
@@ -178,6 +179,11 @@ void ARifaCharacter::BeginPlay()
 		{
 			CurrentHairMesh->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hair_socket_HairParts"));
 		}
+	}
+
+	if(HeadTrigger->OnComponentBeginOverlap.IsBound())
+	{
+		HeadTrigger->OnComponentBeginOverlap.Clear();
 	}
 
 	HeadTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARifaCharacter::OnHeadOverlapped);
@@ -325,10 +331,7 @@ void ARifaCharacter::EndDash()
 
 void ARifaCharacter::Pause()
 {
-	if (IsValid(GameSettingWidgetClass)&&!IsValid(GameSettingWidgetAsset))
-		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));
-	
-	GameSettingWidgetAsset->Init();
+	Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0))->OnPauseGame();
 	CustomTimeDilation = 0.f;
 }
 
@@ -337,6 +340,7 @@ void ARifaCharacter::Pause()
 
 void ARifaCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		

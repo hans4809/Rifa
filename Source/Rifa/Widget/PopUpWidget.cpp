@@ -51,4 +51,6 @@ void UPopUpWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	SetKeyboardFocus();
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeUIOnly());
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 }
