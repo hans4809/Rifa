@@ -31,13 +31,13 @@ void AFieldLevelScriptActor::BeginPlay()
 				RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
 			}
 		}
-		if (CharacterReference) 
-		{
-			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
-			{
-				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
-			}
-		}
+		//if (CharacterReference) 
+		//{
+		//	if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
+		//	{
+		//		CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+		//	}
+		//}
 	}
 
 	if (IsValid(BGMActor))

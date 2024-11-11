@@ -69,29 +69,24 @@ void UReplyEntryWidget::NativeOnListItemObjectSet(UObject* ListItemObject)
 	switch (DialogReplyObject_C->ReplyIndex)
 	{
 	case 0:
-		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImage0);
+		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImageA);
+		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImageA);
+		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImageA);
 		break;
 	case 1:
-		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImage1);
-		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImage1);
-		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImage1);
+		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImageB);
+		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImageB);
+		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImageB);
 		break;
 	case 2:
-		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImage0);
-		break;
-	case 3:
-		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImage1);
-		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImage1);
-		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImage1);
+		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImageC);
+		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImageC);
+		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImageC);
 		break;
 	default:
-		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImage0);
-		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImage0);
+		ReplyButton->WidgetStyle.Normal.SetResourceObject(ReplyImageA);
+		ReplyButton->WidgetStyle.Hovered.SetResourceObject(ReplyImageA);
+		ReplyButton->WidgetStyle.Pressed.SetResourceObject(ReplyImageA);
 		break;
 	}
 }

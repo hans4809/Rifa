@@ -30,9 +30,11 @@ protected:
 	class UDialogReplyObject* DialogReplyObject_C;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
-	class UTexture2D* ReplyImage0;
+	class UTexture2D* ReplyImageA;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
-	class UTexture2D* ReplyImage1;
+	class UTexture2D* ReplyImageB;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
+	class UTexture2D* ReplyImageC;
 public:
 	UFUNCTION(BlueprintCallable)
 	void NativeConstruct() override;

@@ -57,6 +57,9 @@ void UGraphicSettingWidget::SetResolutionIndex(FIntPoint resolution)
 		case 1920:
 			CurrentResolutionIndex = 2;
 			break;
+		case 2560:
+			CurrentResolutionIndex = 3;
+			break;
 	}
 }
 
@@ -72,6 +75,9 @@ void UGraphicSettingWidget::SetResolution(int32 resolutionIndex)
 			break;
 		case 2:
 			CurrentResolutions = FIntPoint(1920, 1080);
+			break;
+		case 3:
+			CurrentResolutions = FIntPoint(2560, 1440);
 			break;
 	}
 
@@ -124,6 +130,10 @@ void UGraphicSettingWidget::OnResolutionUpClicked()
 			SetResolution(CurrentResolutionIndex);
 			break;
 		case 2:
+			CurrentResolutionIndex = 3;
+			SetResolution(CurrentResolutionIndex);
+			break;
+		case 3:
 			CurrentResolutionIndex = 0;
 			SetResolution(CurrentResolutionIndex);
 			break;
@@ -135,15 +145,19 @@ void UGraphicSettingWidget::OnResolutionDownClicked()
 	switch (CurrentResolutionIndex)
 	{
 	case 0:
-		CurrentResolutionIndex = 2;
+		CurrentResolutionIndex = 3;
 		SetResolution(CurrentResolutionIndex);
 		break;
 	case 1:
-		CurrentResolutionIndex = 0;
+		CurrentResolutionIndex = 1;
 		SetResolution(CurrentResolutionIndex);
 		break;
 	case 2:
-		CurrentResolutionIndex = 1;
+		CurrentResolutionIndex = 2;
+		SetResolution(CurrentResolutionIndex);
+		break;
+	case 3:
+		CurrentResolutionIndex = 0;
 		SetResolution(CurrentResolutionIndex);
 		break;
 	}
