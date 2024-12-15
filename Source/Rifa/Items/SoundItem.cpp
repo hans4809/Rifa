@@ -43,33 +43,25 @@ void ASoundItem::BeginPlay()
 	}
 	else
 	{
-		//if (IsValid(PickupTextClass))
-		//{
-		//	if (IsValid(PickupTextReference))
-		//	{
-		//		PickupTextReference->PickupActor = Cast<AActor>(this);
-		//		PickupTextReference->ViewPortPosition = Cast<AActor>(this)->GetActorLocation() + FVector(0, 0, 50);
-		//		PickupTextReference->PickupText = TEXT("Press E");
-		//		
-		//	}
-		//}
 		if (IsValid(CollectionWidgetClass)) 
 			CollectionWidgetReference = CreateWidget<UCollectionWidget>(GetWorld(), CollectionWidgetClass);
+
 		if (IsValid(CharacterReference))
 			CharacterReference->PickupItem.AddDynamic(this, &ASoundItem::PickupSoundItemEvent);
 
 		if (IsValid(LevelSequencActor))
 		{
 			auto levelSequencePlayer = LevelSequencActor->SequencePlayer;
+			if (levelSequencePlayer->OnFinished.IsBound())
+				levelSequencePlayer->OnFinished.Clear();
+
 			levelSequencePlayer->OnFinished.AddDynamic(this, &ASoundItem::OnEndLevelSequence);
 
 			auto rifaPlayerController = Cast<ARifaPlayerController>(CharacterReference->Controller);
 			if (IsValid(rifaPlayerController))
 			{
-				levelSequencePlayer->OnPlay.AddDynamic(rifaPlayerController, &ARifaPlayerController::OnStartedLevelSequence);
 				levelSequencePlayer->OnFinished.AddDynamic(rifaPlayerController, &ARifaPlayerController::OnFinishedLevelSequence);
 			}
-			
 		}
 	}
 }
@@ -83,7 +75,8 @@ void ASoundItem::PickupSoundItemEvent()
 		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
 		if (!RifaGameInstance->LevelSequencePlayerArr[2])
 		{
-			if (LevelSequencActor) {
+			if (LevelSequencActor) 
+			{
 				if (IsValid(CurrentLevelScriptActor))
 				{
 					FTimerHandle LevelSequenceTimer;
@@ -136,7 +129,18 @@ void ASoundItem::OnEndLevelSequence()
 			CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
 
 		if (IsValid(CollectionWidgetReference))
+		{
 			CollectionWidgetReference->Init();
+
+			auto pc = Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+			if(IsValid(pc))
+			{
+				if (IsValid(pc->GameHUDWidgetAsset))
+				{
+					CollectionWidgetReference->ParentWidget = pc->GameHUDWidgetAsset;
+				}
+			}
+		}
 
 		Destroy();
 	}

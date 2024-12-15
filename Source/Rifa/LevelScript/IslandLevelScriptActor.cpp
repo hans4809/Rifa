@@ -4,6 +4,7 @@
 #include "IslandLevelScriptActor.h"
 #include "Data/MyGameInstance.h"
 #include "Character/RifaCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
 #include "LevelSequence/Public/LevelSequenceActor.h"
@@ -12,6 +13,7 @@
 #include "Widget/TutorialWidget.h"
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"
+#include <Character/RifaPlayerController.h>
 
 AIslandLevelScriptActor::AIslandLevelScriptActor()
 {
@@ -31,10 +33,16 @@ void AIslandLevelScriptActor::BeginPlay()
 				FirstLevelSequenceActor->SequencePlayer->Play();
 				RifaGameInstanceReference->LevelSequencePlayerArr[0] = true;
 
-				if(FirstLevelSequenceActor->SequencePlayer->OnFinished.IsBound())
+				if (FirstLevelSequenceActor->SequencePlayer->OnFinished.IsBound())
 					FirstLevelSequenceActor->SequencePlayer->OnFinished.Clear();
 
 				FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(this, &AIslandLevelScriptActor::OnFinishedFirstLevelSequence);
+
+				auto pc = Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+				if (IsValid(pc))
+				{
+					FirstLevelSequenceActor->SequencePlayer->OnFinished.AddDynamic(pc, &ARifaPlayerController::OnFinishedLevelSequence);
+				}
 			}
 		}
 		if (CharacterReference) 
@@ -67,7 +75,6 @@ void AIslandLevelScriptActor::BeginPlay()
 		}
 		BGMActor->Play();
 	}
-	
 }
 
 void AIslandLevelScriptActor::OnFinishedFirstLevelSequence()

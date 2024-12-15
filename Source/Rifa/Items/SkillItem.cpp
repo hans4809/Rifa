@@ -17,6 +17,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
 #include "Components/WidgetComponent.h"
+#include <Character/RifaPlayerController.h>
 
 ASkillItem::ASkillItem()
 {
@@ -39,6 +40,7 @@ void ASkillItem::BeginPlay()
 			if (RifaGameInstance->SwimItemArr[ThisSkillItemIndex])
 			{
 				Destroy();
+				return;
 			}
 			break;
 		case EEnergyType::Fly:
@@ -46,19 +48,30 @@ void ASkillItem::BeginPlay()
 			if (RifaGameInstance->FlyItemArr[ThisSkillItemIndex])
 			{
 				Destroy();
+				return;
 			}
 			break;
 		}
 	}
-	//if (IsValid(PickupTextReference)) 
-	//{
-	//	PickupTextReference->PickupActor = Cast<AActor>(this);
-	//	PickupTextReference->ViewPortPosition = Cast<AActor>(this)->GetActorLocation() + FVector(0, 0, 50);
-	//	PickupTextReference->PickupText = TEXT("Press E");
-	//}
+
 	if (IsValid(CharacterReference))
 	{
 		CharacterReference->PickupItem.AddDynamic(this, &ASkillItem::PickupEnergyEvent);
+	}
+
+	if (IsValid(LevelSequenceActor))
+	{
+		auto levelSequencePlayer = LevelSequenceActor->SequencePlayer;
+		if (levelSequencePlayer->OnFinished.IsBound())
+			levelSequencePlayer->OnFinished.Clear();
+
+		levelSequencePlayer->OnFinished.AddDynamic(this, &ASkillItem::EndLevelSequence);
+
+		auto rifaPlayerController = Cast<ARifaPlayerController>(CharacterReference->Controller);
+		if (IsValid(rifaPlayerController))
+		{
+			levelSequencePlayer->OnFinished.AddDynamic(rifaPlayerController, &ARifaPlayerController::OnFinishedLevelSequence);
+		}
 	}
 }
 
@@ -75,14 +88,11 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				else
 				{
-					if (CharacterReference->FlyEnergyNum < 5)
-					{
-						CharacterReference->FlyEnergyNum++;
-						CharacterReference->MaxFlyEnergyPercent += 0.2f;
-						RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
-						CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
-						Destroy();
-					}
+					CharacterReference->SetFlyEnergyNum(CharacterReference->FlyEnergyNum++);
+					CharacterReference->MaxFlyEnergyPercent = 0.2f * (CharacterReference->FlyEnergyNum);
+					RifaGameInstance->FlyItemArr[ThisSkillItemIndex] = true;
+					CharacterReference->FlyEnergyPercent = CharacterReference->MaxFlyEnergyPercent;
+					Destroy();
 				}
 				break;
 			case EEnergyType::Swim:
@@ -92,13 +102,11 @@ void ASkillItem::PickupEnergyEvent()
 				}
 				else
 				{
-					if (CharacterReference->SwimEnergyNum < 5)
-					{
-						CharacterReference->SwimEnergyNum++;
-						CharacterReference->MaxSwimEnergyPercent += 0.2f;
-						RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
-						CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
-					}
+					CharacterReference->SetSwimEnergyNum(CharacterReference->SwimEnergyNum++);
+					CharacterReference->MaxSwimEnergyPercent = 0.2f * (CharacterReference->SwimEnergyNum);
+					RifaGameInstance->SwimItemArr[ThisSkillItemIndex] = true;
+					CharacterReference->SwimEnergyPercent = CharacterReference->MaxSwimEnergyPercent;
+
 					if (!RifaGameInstance->LevelSequencePlayerArr[1]) 
 					{
 						if (IsValid(LevelSequenceActor)) 
@@ -108,12 +116,9 @@ void ASkillItem::PickupEnergyEvent()
 							{
 								FTimerHandle LevelSequenceTimer;
 								FMovieSceneSequencePlaybackParams Param;
-								CharacterReference->DisableInput(Cast<APlayerController>(CharacterReference->Controller));
-								//CurrentLevelScriptActor->GameHUDWidgetAsset->CloseWidget();
-								auto LevelSequncePlayer = LevelSequenceActor->SequencePlayer.Get();
-								LevelSequncePlayer->SetPlaybackPosition(Param);
-								LevelSequncePlayer->Play();
-								GetWorld()->GetTimerManager().SetTimer(LevelSequenceTimer, this, &ASkillItem::EndLevelSequence, LevelSequncePlayer->GetDuration().AsSeconds(), false);
+								auto levelSequencePlayer = LevelSequenceActor->SequencePlayer;
+								levelSequencePlayer->SetPlaybackPosition(Param);
+								levelSequencePlayer->Play();
 							}
 						}
 					}
@@ -134,18 +139,6 @@ void ASkillItem::PickupEnergyEvent()
 
 void ASkillItem::EndLevelSequence()
 {
-	if (IsValid(CharacterReference)) 
-	{
-		RifaGameInstance->LevelSequencePlayerArr[1] = true;
-		auto CurrentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
-		if (IsValid(CurrentLevelScriptActor))
-		{
-			/*if (IsValid(CurrentLevelScriptActor->GameHUDWidgetAsset))
-			{
-				CurrentLevelScriptActor->GameHUDWidgetAsset->Init();
-			}*/
-		}
-		CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
-		Destroy();
-	}
+	RifaGameInstance->LevelSequencePlayerArr[1] = true;
+	Destroy();
 }

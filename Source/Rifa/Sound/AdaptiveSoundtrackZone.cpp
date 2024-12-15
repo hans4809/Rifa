@@ -30,6 +30,9 @@ void AAdaptiveSoundtrackZone::BeginPlay()
 void AAdaptiveSoundtrackZone::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	if(Trigger->OnComponentBeginOverlap.IsBound())
+		Trigger->OnComponentBeginOverlap.Clear();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AAdaptiveSoundtrackZone::OnCharacterOverlap);
 }
 
@@ -37,7 +40,8 @@ void AAdaptiveSoundtrackZone::PostInitializeComponents()
 
 void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ARifaCharacter>(OtherActor)) {
+	if (Cast<ARifaCharacter>(OtherActor)) 
+	{
 		if (RifaGameInstance->SoundTrack != SoundTrack)
 		{
 			RifaGameInstance->SoundTrack = SoundTrack;
@@ -46,6 +50,7 @@ void AAdaptiveSoundtrackZone::OnCharacterOverlap(UPrimitiveComponent* Overlapped
 		{
 			RifaGameInstance->BGMIndex = BGMIndex;
 		}
+
 		if (IsValid(CurrentLevelScriptActor))
 		{
 			if (CurrentLevelScriptActor->BGMActor)

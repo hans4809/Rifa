@@ -12,6 +12,8 @@
 #include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include <LevelScript/IslandLevelScriptActor.h>
+#include "Widget/TutorialWidget.h"
 
 // Sets default values
 ARifaNPC::ARifaNPC()
@@ -70,6 +72,15 @@ void ARifaNPC::Dialog()
 {
 	if (IsInRange) 
 	{
+		auto currentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+		if (IsValid(currentLevelScriptActor))
+		{
+			if (IsValid(currentLevelScriptActor->TutorialWidgetAsset))
+			{
+				currentLevelScriptActor->TutorialWidgetAsset->RemoveFromParent();
+			}
+		}
+
 		WidgetComponent->SetVisibility(false);
 		if (IsValid(CharacterReference))
 		{
@@ -98,7 +109,6 @@ void ARifaNPC::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		//PickupTextReference->AddToViewport();
 		WidgetComponent->SetVisibility(true);
 		IsInRange = true;
 	}
@@ -108,7 +118,6 @@ void ARifaNPC::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* 
 {
 	if (Cast<ARifaCharacter>(OtherActor))
 	{
-		//PickupTextReference->RemoveFromParent();
 		WidgetComponent->SetVisibility(false);
 		IsInRange = false;
 	}

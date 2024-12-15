@@ -31,13 +31,13 @@ void AFieldLevelScriptActor::BeginPlay()
 				RifaGameInstanceReference->LevelSequencePlayerArr[4] = true;
 			}
 		}
-		//if (CharacterReference) 
-		//{
-		//	if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
-		//	{
-		//		CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
-		//	}
-		//}
+		if (CharacterReference) 
+		{
+			if (RifaGameInstanceReference->SavePosition != FVector::ZeroVector) 
+			{
+				CharacterReference->SetActorLocation(RifaGameInstanceReference->SavePosition);
+			}
+		}
 	}
 
 	if (IsValid(BGMActor))
@@ -71,9 +71,4 @@ void AFieldLevelScriptActor::BeginPlay()
 		BGMActor->Play();
 		BGMActor->GetAudioComponent()->FadeIn(0.1f);
 	}
-}
-
-void AFieldLevelScriptActor::OnFinishedLevelSequence()
-{
-	CharacterReference->EnableInput(Cast<APlayerController>(CharacterReference->Controller));
 }

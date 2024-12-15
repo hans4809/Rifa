@@ -66,7 +66,6 @@ void UMyGameInstance::Save()
 	NewPlayerData->IsTutorialFinishedMap = IsTutorialFinishedMap;
 	NewPlayerData->bCanFly = bCanFly;
 	NewPlayerData->bCanSwim = bCanSwim;
-	//NewPlayerData->bCanSwim = true;
 	NewPlayerData->CurrentLevelName = CurrentLevelName;
 	NewPlayerData->bClearIslandForest = bClearIslandForest;
 	NewPlayerData->bClearFieldForest = bClearFieldForest;
@@ -87,10 +86,6 @@ void UMyGameInstance::Load()
 	BGMIndex = RIFASaveGame->BGMIndex;
 	FlyItemArr = RIFASaveGame->FlyItemArr;
 	SwimItemArr = RIFASaveGame->SwimItemArr;
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	SwimItemArr.Add(true);
-	//}
 	NPCDialogMap = RIFASaveGame->NPCDialogMap;
 	LevelSequencePlayerArr = RIFASaveGame->LevelSequencePlayerArr;
 	CurrentHairPartsArr = RIFASaveGame->CurrentHairPartsArr;
@@ -100,7 +95,6 @@ void UMyGameInstance::Load()
 	IsTutorialFinishedMap = RIFASaveGame->IsTutorialFinishedMap;
 	bCanFly = RIFASaveGame->bCanFly;
 	bCanSwim = RIFASaveGame->bCanSwim;
-	//bCanSwim = true;
 	CurrentLevelName = RIFASaveGame->CurrentLevelName;
 	bClearIslandForest = RIFASaveGame->bClearIslandForest;
 	bClearFieldForest = RIFASaveGame->bClearFieldForest;

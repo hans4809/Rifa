@@ -12,6 +12,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Widget/CreditWidget.h"
 #include "Widget/GameSettingWidget.h"
+#include "Widget/TutorialWidget.h"
+
 
 ARifaPlayerController::ARifaPlayerController()
 {
@@ -81,6 +83,7 @@ void ARifaPlayerController::PostInitializeComponents()
 
 void ARifaPlayerController::BeginPlay()
 {
+	Super::BeginPlay();
 }
 
 void ARifaPlayerController::Tick(float DeltaTime)
@@ -89,9 +92,11 @@ void ARifaPlayerController::Tick(float DeltaTime)
 
 void ARifaPlayerController::OnStartedLevelSequence()
 {
-	DisableInput(this);
+	//SetInputMode(FInputModeUIOnly());
+	//DisableInput(this);
 	auto character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+	character->DisableInput(this);
 
 	if (IsValid(GameHUDWidgetClass) && !IsValid(GameHUDWidgetAsset))
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -100,13 +105,25 @@ void ARifaPlayerController::OnStartedLevelSequence()
 	{
 		GameHUDWidgetAsset->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	auto currentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+
+	if (IsValid(currentLevelScriptActor))
+	{
+		if (IsValid(currentLevelScriptActor->TutorialWidgetAsset))
+		{
+			currentLevelScriptActor->TutorialWidgetAsset->RemoveFromParent();
+		}
+	}
 }
 
 void ARifaPlayerController::OnFinishedLevelSequence()
 {
-	EnableInput(this);
+	//SetInputMode(FInputModeGameOnly());
+	//EnableInput(this);
 	auto character = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	character->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+	character->EnableInput(this);
 
 	if (IsValid(GameHUDWidgetClass) && !IsValid(GameHUDWidgetAsset))
 		GameHUDWidgetAsset = Cast<UGameHUD>(CreateWidget(GetWorld(), GameHUDWidgetClass));
@@ -127,6 +144,15 @@ void ARifaPlayerController::OnFinishedGame()
 
 void ARifaPlayerController::OnPauseGame()
 {
+	auto currentLevelScriptActor = Cast<AIslandLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+	if (IsValid(currentLevelScriptActor))
+	{
+		if (IsValid(currentLevelScriptActor->TutorialWidgetAsset))
+		{
+			currentLevelScriptActor->TutorialWidgetAsset->RemoveFromParent();
+		}
+	}
+
 	if (IsValid(GameSettingWidgetClass) && !IsValid(GameSettingWidgetAsset))
 	{
 		GameSettingWidgetAsset = Cast<UGameSettingWidget>(CreateWidget(GetWorld(), GameSettingWidgetClass));

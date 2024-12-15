@@ -22,6 +22,11 @@ AEndingLevelSequencePlayActor::AEndingLevelSequencePlayActor()
 void AEndingLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
+	if (IsPendingKill())
+	{
+		return;
+	}
+
 	if (IsValid(EndingKeyWidgetClass))
 		EndingKeyWidgetAsset = CreateWidget<UEndingKeyWidget>(GetWorld(), EndingKeyWidgetClass);
 

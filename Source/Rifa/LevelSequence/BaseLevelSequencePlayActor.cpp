@@ -28,12 +28,16 @@ void ABaseLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	auto playerContorller = Cast<ARifaPlayerController>(CharacterReference->Controller);
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	CurrentLevelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
-	if (IsValid(RifaGameInstance)) {
+
+	if (IsValid(RifaGameInstance)) 
+	{
 		if (RifaGameInstance->LevelSequencePlayerArr[ThisLevelSequenceIndex])
+		{
 			Destroy();
+			return;
+		}
 	}
 
 	if (IsValid(LevelSequenceActor))

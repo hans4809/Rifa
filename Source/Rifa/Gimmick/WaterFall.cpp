@@ -63,10 +63,28 @@ void AWaterFall::BeginPlay()
 
 	if (bIsWaterFallActive == true)
 	{
-		TopTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFall::OnCharacterTopOverlap);
-		TopTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFall::EndCharacterTopOverlap);
-		BottomTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFall::OnCharacterBottomOverlap);
-		BottomTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFall::EndCharacterBottomOverlap);
+		if (IsValid(TopTrigger))
+		{
+			if (TopTrigger->OnComponentBeginOverlap.IsBound())
+				TopTrigger->OnComponentBeginOverlap.Clear();
+			if (TopTrigger->OnComponentEndOverlap.IsBound())
+				TopTrigger->OnComponentEndOverlap.Clear();
+
+			TopTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFall::OnCharacterTopOverlap);
+			TopTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFall::EndCharacterTopOverlap);
+		}
+
+		if (IsValid(BottomTrigger))
+		{
+			if(BottomTrigger->OnComponentBeginOverlap.IsBound())
+				BottomTrigger->OnComponentBeginOverlap.Clear();
+			if(BottomTrigger->OnComponentEndOverlap.IsBound())
+				BottomTrigger->OnComponentEndOverlap.Clear();
+
+			BottomTrigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterFall::OnCharacterBottomOverlap);
+			BottomTrigger->OnComponentEndOverlap.AddDynamic(this, &AWaterFall::EndCharacterBottomOverlap);
+		}
+
 	}
 	else
 	{

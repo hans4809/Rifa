@@ -10,8 +10,10 @@
  * 
  */
 UCLASS()
-class RIFA_API UWaterFallWidget : public UPopUpWidget
+class RIFA_API UWaterFallWidget : public UBaseWidget
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void Init() override;
+	virtual void CloseWidget() override;
 };

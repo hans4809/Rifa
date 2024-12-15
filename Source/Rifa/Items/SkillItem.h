@@ -33,10 +33,6 @@ private:
 	void PickupEnergyEvent();
 // Tutorial Section
 private:
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UUserWidget> TutorialWidgetClass;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UTutorialWidget> TutorialWidgetAsset;
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "LevelSequence", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class ALevelSequenceActor> LevelSequenceActor;
 	UFUNCTION()

@@ -27,4 +27,7 @@ public:
 	//Inventory 정보를 나중에 CharacterController에 옮기는게 좋을 수 있다.
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE ARifaCharacter* GetCharacterReference() { return CharacterReference; }
+
+	UFUNCTION(BlueprintCallable)
+	void SetCharacterReference(ARifaCharacter* NewCharacterReference) { CharacterReference = NewCharacterReference; }
 };

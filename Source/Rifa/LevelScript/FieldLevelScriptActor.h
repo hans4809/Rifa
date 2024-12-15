@@ -19,7 +19,4 @@ public:
 	TObjectPtr<class ALevelSequenceActor> LevelSequenceActor;
 private:
 	virtual void BeginPlay() override;
-protected:
-	UFUNCTION()
-	void OnFinishedLevelSequence();
 };

@@ -25,6 +25,11 @@ void UEndingKeyWidget::NativeConstruct()
 	Super::NativeConstruct();
 	RifaGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	auto characterController = Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetController());
+	if(characterController)
+	{
+		characterController->SetInputMode(FInputModeUIOnly());
+		characterController->bShowMouseCursor = false;
+	}
 
 	if (IsValid(EndingLevelSequence)) 
 	{
@@ -43,8 +48,6 @@ void UEndingKeyWidget::NativeConstruct()
 		}
 
 	}
-
-	characterController->bShowMouseCursor = false;
 }
 
 FReply UEndingKeyWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

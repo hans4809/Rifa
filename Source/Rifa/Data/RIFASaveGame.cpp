@@ -7,7 +7,6 @@ URIFASaveGame::URIFASaveGame()
 {
 	SavePosition = FVector(0, 0, 0);
 
-	//SoundItemMap = TMap<Item, bool>();
 	for (int i = 0; i < (int)EItem::MaxCount; i++) 
 	{
 		SoundItemHavingMap.Add((EItem)i, false);

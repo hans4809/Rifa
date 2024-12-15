@@ -26,6 +26,11 @@ ALevelSequencePlayActor::ALevelSequencePlayActor()
 void ALevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
+	if (IsPendingKill())
+	{
+		return;
+	}
+
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &ALevelSequencePlayActor::OnCharacterOverlap);
 
 	LevelSequencePlayer->OnFinished.AddDynamic(this, &ALevelSequencePlayActor::EndLevelSequence);

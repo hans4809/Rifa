@@ -11,6 +11,8 @@
 #include "Character/RifaCharacter.h"
 #include "LevelScript/BaseLevelScriptActor.h"
 #include "Widget/GameHUD.h"
+#include <Kismet/GameplayStatics.h>
+#include <Character/RifaPlayerController.h>
 
 AShrineLevelSequencePlayActor::AShrineLevelSequencePlayActor()
 {
@@ -29,8 +31,22 @@ AShrineLevelSequencePlayActor::AShrineLevelSequencePlayActor()
 void AShrineLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
+	if(IsPendingKill())
+	{
+		return;
+	}
+	auto pc = Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if(Trigger->OnComponentBeginOverlap.IsBound())
+		Trigger->OnComponentBeginOverlap.Clear();
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AShrineLevelSequencePlayActor::OnCharacterOverlap);
+
+	if(LevelSequencePlayer->OnFinished.IsBound())
+		LevelSequencePlayer->OnFinished.Clear();
 	LevelSequencePlayer->OnFinished.AddDynamic(this, &AShrineLevelSequencePlayActor::EndLevelSequence);
+	if(pc)
+		LevelSequencePlayer->OnFinished.AddDynamic(pc, &ARifaPlayerController::OnFinishedLevelSequence);
+
 	switch (ThisEnergyType)
 	{
 	case EEnergyType::Swim:

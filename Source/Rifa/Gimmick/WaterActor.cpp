@@ -45,16 +45,19 @@ AWaterActor::AWaterActor()
 void AWaterActor::BeginPlay()
 {
 	Super::BeginPlay();
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterActor::OnCharacterOverlap);
-	Trigger->OnComponentEndOverlap.AddDynamic(this, &AWaterActor::EndCharacterOverlap);
+	if (IsValid(Trigger))
+	{
+		if(Trigger->OnComponentBeginOverlap.IsBound())
+			Trigger->OnComponentBeginOverlap.Clear();
+		if(Trigger->OnComponentEndOverlap.IsBound())
+			Trigger->OnComponentEndOverlap.Clear();
+
+		Trigger->OnComponentBeginOverlap.AddDynamic(this, &AWaterActor::OnCharacterOverlap);
+		Trigger->OnComponentEndOverlap.AddDynamic(this, &AWaterActor::EndCharacterOverlap);
+	}
+
 	CharacterReference = Cast<ARifaCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	//WidgetComponent->SetVisibility(false);
-}
-
-// Called every frame
-void AWaterActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -66,16 +69,10 @@ void AWaterActor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor
 			if (IsValid(CharacterReference))
 			{
 				CharacterReference->bCanSwim = true;
-				//if (!CharacterReference->bIsSwimming && !CharacterReference->GetCharacterMovement()->IsFalling())
-				//{
-				//	//WidgetComponent->SetVisibility(true);
-				//}
+				CharacterReference->SwimHeight = GetActorLocation().Z;
 			}
 		}
-		FTimerHandle OverlapHandle;
-		GetWorld()->GetTimerManager().SetTimer(OverlapHandle, this, &AWaterActor::CharacterOverlapping, 0.1f, true);
 	}
-
 }
 
 void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
@@ -84,22 +81,10 @@ void AWaterActor::EndCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActo
 	{
 		if (RifaGameInstance->bCanSwim)
 		{
-			CharacterReference->bCanSwim = false;
-			//WidgetComponent->SetVisibility(false);
-			//PickupTextReference->RemoveFromParent();
+			if (IsValid(CharacterReference))
+			{
+				CharacterReference->bCanSwim = false;
+			}
 		}
 	}
-}
-
-void AWaterActor::CharacterOverlapping()
-{
-	if (IsOverlappingActor(CharacterReference)/*&& WidgetComponent->IsVisible()*/)
-	{
-		if (CharacterReference->bIsSwimming)
-		{
-			//PickupTextReference->RemoveFromParent();
-			//WidgetComponent->SetVisibility(false);
-		}
-	}
-
 }

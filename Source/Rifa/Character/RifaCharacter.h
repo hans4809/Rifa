@@ -68,6 +68,7 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
 	int FlyEnergyNum;
+	void SetFlyEnergyNum(int Value) { FlyEnergyNum = FMath::Clamp(FlyEnergyNum, 0, 5); }
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Fly")
 	float FlyHeight;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fly")
@@ -82,6 +83,7 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	int SwimEnergyNum;
+	void SetSwimEnergyNum(int Value) { SwimEnergyNum = FMath::Clamp(SwimEnergyNum, 0, 5); }
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
 	float SwimEnergyPercent;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
@@ -95,7 +97,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	FVector StartLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
-	FVector SwimStartLocation;
+	float WaterHeight;
 	UPROPERTY(BlueprintReadWrite, EditAnyWhere, Category = "Swim")
 	bool bIsSwimming;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Swim")
@@ -167,7 +169,7 @@ protected:
 	virtual void BeginPlay();
 	virtual void Tick(float DeltaTime) override;
 	virtual void EndPlay(EEndPlayReason::Type) override;
-	std::pair<FHitResult, bool> LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel);
+	std::pair<FHitResult, bool> LineHitResult(FVector DirectionVector, float LineLength, ECollisionChannel TraceChannel = ECollisionChannel::ECC_Visibility);
 private:
 
 	UPROPERTY()
