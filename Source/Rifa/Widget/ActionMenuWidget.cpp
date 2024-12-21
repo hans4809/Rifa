@@ -51,6 +51,9 @@ void UActionMenuWidget::BGMOnButtonClicked()
 				{
 					CurrentLevelScriptActor->InstSoundActor->Stop();
 				}
+
+				FName InstParam = FName(FString::Printf(TEXT("Inst%d"), InventorySlot));
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 0.f);
 			}
 		}
 		else 
@@ -64,6 +67,8 @@ void UActionMenuWidget::BGMOnButtonClicked()
 					CurrentLevelScriptActor->InstSoundActor->GetAudioComponent()->SetSound(InstSound);
 					CurrentLevelScriptActor->InstSoundActor->Play();
 				}
+				FName InstParam = FName(FString::Printf(TEXT("Inst%d"), InventorySlot));
+				CurrentLevelScriptActor->BGMActor->GetAudioComponent()->SetFloatParameter(InstParam, 1.f);
 			}
 		}
 	}

@@ -47,6 +47,8 @@ void AFieldLevelScriptActor::BeginPlay()
 			for (int i = 0; i < RifaGameInstanceReference->SoundItemOnOffMap.Num(); i++)
 			{
 				FName Parameter = FName(FString::Printf(TEXT("Inst%d"), i));
+				RifaGameInstanceReference->BGMIndex = 1;
+				BGMActor->GetAudioComponent()->SetIntParameter(FName(TEXT("BGMIndex")), RifaGameInstanceReference->BGMIndex);
 				if (RifaGameInstanceReference->SoundItemHavingMap[EItem(i)])
 				{
 					if (RifaGameInstanceReference->SoundItemOnOffMap[EItem(i)])
@@ -69,6 +71,5 @@ void AFieldLevelScriptActor::BeginPlay()
 			BGMActor->Stop();
 		}
 		BGMActor->Play();
-		BGMActor->GetAudioComponent()->FadeIn(0.1f);
 	}
 }

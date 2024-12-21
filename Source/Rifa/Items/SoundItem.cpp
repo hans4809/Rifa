@@ -88,10 +88,6 @@ void ASoundItem::PickupSoundItemEvent()
 				}
 			}
 		}
-		else 
-		{
-			Destroy();
-		}
 
 		RifaGameInstance->SoundItemHavingMap[(EItem)ThisSoundItemIndex] = true;
 		RifaGameInstance->SoundItemOnOffMap[(EItem)ThisSoundItemIndex] = true;

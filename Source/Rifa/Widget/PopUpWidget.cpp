@@ -7,6 +7,9 @@
 #include "SceneWidget.h"
 #include "GameHUD.h"
 #include "DialogWidget.h"
+#include "LevelScript/BaseLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 void UPopUpWidget::Init()
 {
@@ -27,6 +30,11 @@ void UPopUpWidget::CloseWidget()
 	{
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
+		auto levelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+		if (IsValid(levelScriptActor))
+		{
+			levelScriptActor->BGMActor->GetAudioComponent()->SetPaused(false);
+		}
 	}
 
 	RemoveFromParent();

@@ -13,6 +13,8 @@
 #include "Data/MyGameInstance.h"
 #include "Widget/GameHUD.h"
 #include "LevelScript/FieldLevelScriptActor.h"
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 AEndingLevelSequencePlayActor::AEndingLevelSequencePlayActor()
 {
@@ -38,6 +40,16 @@ void AEndingLevelSequencePlayActor::BeginPlay()
 void AEndingLevelSequencePlayActor::PlayLevelSequence()
 {
 	Super::PlayLevelSequence();
+	auto levelScriptActor = Cast<AFieldLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+	if (levelScriptActor)
+	{
+		auto gameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+		if (gameInstance)
+		{
+			gameInstance->BGMIndex = 4;
+		}
+		levelScriptActor->BGMActor->GetAudioComponent()->SetIntParameter(FName(TEXT("BGMIndex")), 4);
+	}
 }
 
 void AEndingLevelSequencePlayActor::EndLevelSequence()

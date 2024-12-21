@@ -27,7 +27,6 @@ enum class EItem : uint8
 	Piano_2_High,
 	StringInstrument_3_High,
 	Bell_2_High,
-	PercussionInstrument_3_High,
 	StringInstrument_4_High,
 	MaxCount
 };

@@ -137,7 +137,6 @@ void UBGMAudioComponent::BgmSetting()
             EItem::PercussionInstrument_1_Low ,
             EItem::StringInstrument_2_Medium ,
             EItem::Bell_2_High ,
-            EItem::PercussionInstrument_3_High
         };
     }
     else if (soundTrack == "Bgm7")

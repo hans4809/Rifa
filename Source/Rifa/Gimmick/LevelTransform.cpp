@@ -7,6 +7,9 @@
 #include "LevelSequence/Public/LevelSequenceActor.h"
 #include "LevelSequence/Public/LevelSequence.h"
 #include "LevelSequence/Public/LevelSequencePlayer.h"
+#include <LevelScript/BaseLevelScriptActor.h>
+#include "Sound/AmbientSound.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values
 ALevelTransform::ALevelTransform()
@@ -46,6 +49,11 @@ void ALevelTransform::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AA
 		if (IsValid(LevelSequencActor))
 		{
 			LevelSequencActor->SequencePlayer->Play();
+			auto levelScriptActor = Cast<ABaseLevelScriptActor>(GetWorld()->GetLevelScriptActor());
+			if (levelScriptActor)
+			{
+				levelScriptActor->BGMActor->GetAudioComponent()->SetPaused(true);
+			}
 			LevelSequencActor->SequencePlayer->OnFinished.AddDynamic(this, &ALevelTransform::OnFinishedLevelSequence);
 		}
 		else
