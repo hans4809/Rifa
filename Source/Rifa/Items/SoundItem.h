@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "InteractableActor.h"
-#include "Widget/InventoryStruct.h"
 #include "SoundItem.generated.h"
 
 /**

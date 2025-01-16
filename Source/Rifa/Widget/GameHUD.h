@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "InventoryStruct.h"
 #include "SceneWidget.h"
 #include "DoOnce.h"
 #include "GameHUD.generated.h"
