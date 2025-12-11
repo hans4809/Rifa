@@ -48,7 +48,7 @@ class ARifaCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* DashAction;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rifa Character", meta = (AllowPrivateAccess = "true"))
 	UCharacterMovementComponent* RifaCharacterMovement;
 
 public:
