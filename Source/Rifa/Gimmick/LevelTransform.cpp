@@ -4,9 +4,9 @@
 #include "Character/RifaCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/BoxComponent.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
+#include "LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
 #include <LevelScript/BaseLevelScriptActor.h>
 #include "Sound/AmbientSound.h"
 #include "Components/AudioComponent.h"

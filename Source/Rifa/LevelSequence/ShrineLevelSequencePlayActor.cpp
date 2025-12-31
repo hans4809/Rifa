@@ -4,10 +4,11 @@
 #include "LevelSequence/ShrineLevelSequencePlayActor.h"
 #include "Data/MyGameInstance.h"
 #include "NiagaraComponent.h"
+#include "NiagaraSystem.h"
 #include "Components/BoxComponent.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
+#include "LevelSequenceActor.h"
 #include "Character/RifaCharacter.h"
 #include "LevelScript/BaseLevelScriptActor.h"
 #include "Widget/GameHUD.h"
@@ -31,8 +32,7 @@ AShrineLevelSequencePlayActor::AShrineLevelSequencePlayActor()
 void AShrineLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if(IsPendingKill())
-	{
+	if (!IsValid(this)) {
 		return;
 	}
 	auto pc = Cast<ARifaPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));

@@ -4,9 +4,9 @@
 #include "LevelSequence/EndingLevelSequencePlayActor.h"
 #include "Widget/EndingKeyWidget.h"
 #include "Components/BoxComponent.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
+#include "LevelSequenceActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Character/RifaCharacter.h"
 #include "Animation/SkeletalMeshActor.h"
@@ -24,8 +24,7 @@ AEndingLevelSequencePlayActor::AEndingLevelSequencePlayActor()
 void AEndingLevelSequencePlayActor::BeginPlay()
 {
 	Super::BeginPlay();
-	if (IsPendingKill())
-	{
+	if (!IsValid(this)) {
 		return;
 	}
 

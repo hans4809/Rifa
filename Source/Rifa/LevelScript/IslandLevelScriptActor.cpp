@@ -5,9 +5,9 @@
 #include "Data/MyGameInstance.h"
 #include "Character/RifaCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
+#include "LevelSequenceActor.h"
 #include <Kismet/GameplayStatics.h>
 #include "Widget/GameHUD.h"
 #include "Widget/TutorialWidget.h"

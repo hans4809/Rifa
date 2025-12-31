@@ -3,9 +3,9 @@
 
 #include "BaseLevelSequencePlayActor.h"
 #include "Components/BoxComponent.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
+#include "LevelSequenceActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Character/RifaCharacter.h"
 #include "Data/MyGameInstance.h"

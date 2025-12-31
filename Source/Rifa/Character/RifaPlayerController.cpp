@@ -4,9 +4,10 @@
 #include "Character/RifaPlayerController.h"
 #include <Widget/GameHUD.h>
 #include <LevelScript/IslandLevelScriptActor.h>
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+// 기존 7, 8, 9행 경로 수정
+#include "LevelSequence.h"           // 7행:  삭제
+#include "LevelSequencePlayer.h"     // 8행:  삭제
+#include "LevelSequenceActor.h"      // 9행:  삭제
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"

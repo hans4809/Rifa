@@ -3,13 +3,14 @@
 
 #include "SoundItem.h"
 #include "NiagaraComponent.h"
+#include "NiagaraSystem.h"
 #include "Data/MyGameInstance.h"
 #include "Widget/PickupText.h"
 #include <Kismet/GameplayStatics.h>
 #include "Character/RifaCharacter.h"
-#include "LevelSequence/Public/LevelSequence.h"
-#include "LevelSequence/Public/LevelSequencePlayer.h"
-#include "LevelSequence/Public/LevelSequenceActor.h"
+#include "LevelSequenceActor.h"
+#include "LevelSequence.h"
+#include "LevelSequencePlayer.h"
 #include <LevelScript/IslandLevelScriptActor.h>
 #include "Widget/GameHUD.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
